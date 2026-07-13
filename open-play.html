@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wireframe — Open Play</title>
+<style>
+  :root{--g1:#f5f5f5;--g2:#e4e4e4;--g3:#cfcfcf;--g4:#9e9e9e;--g5:#616161;--g6:#333}
+  *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+  body{background:#fafafa;color:var(--g5)}
+  .toolbar{position:sticky;top:0;z-index:99;background:var(--g6);color:#fff;padding:8px 16px;font-size:12px;display:flex;gap:12px;align-items:center}
+  .toolbar a{color:#fff;font-size:12px;text-decoration:none;border:1px solid var(--g4);padding:5px 12px;border-radius:4px}
+  #frame{margin:0 auto;max-width:1200px;background:#fff;box-shadow:0 0 0 1px var(--g3);min-height:100vh}
+
+  .box{background:var(--g2);border:1px solid var(--g3);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--g4);font-size:12px}
+  .line{background:var(--g3);border-radius:3px;height:10px;margin:6px 0}
+  .line.short{width:40%}.line.med{width:70%}
+  .btn{display:inline-block;padding:10px 22px;background:var(--g5);color:#fff;border:none;border-radius:6px;font-size:13px;cursor:pointer}
+  .btn:hover{opacity:.8}
+
+  nav{display:flex;align-items:center;gap:20px;padding:16px 32px;border-bottom:1px solid var(--g3);position:relative;flex-wrap:wrap}
+  .logo{width:110px;height:34px}
+  nav .menu{display:flex;gap:18px;font-size:13px;flex:1}
+  nav .menu a{color:var(--g5);text-decoration:none;padding:6px 4px}
+  nav .menu a:hover{color:var(--g6);border-bottom:2px solid var(--g5)}
+  .cart{width:34px;height:34px;border-radius:50%}
+  .lang{display:flex;border:1px solid var(--g4);border-radius:20px;overflow:hidden;font-size:11px;cursor:pointer}
+  .lang span{padding:5px 10px}
+  .lang span.on{background:var(--g5);color:#fff}
+  .burger{display:none;font-size:20px;background:none;border:1px solid var(--g4);border-radius:4px;padding:4px 10px;cursor:pointer;color:var(--g5)}
+  .crumb{padding:14px 32px 0;font-size:13px;color:var(--g4)}
+  @media (max-width:640px){
+    nav .menu{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;padding:12px 24px;border-bottom:1px solid var(--g3);z-index:10}
+    nav .menu.open{display:flex}
+    .burger{display:block;margin-left:auto}
+  }
+
+  .pagehead{padding:40px 32px 0}
+  .pagehead h1{font-size:28px;color:var(--g6);margin-bottom:8px}
+  .pagehead p{font-size:13px;color:var(--g4);max-width:560px;line-height:1.6}
+
+  /* Tabs */
+  .tabs{display:flex;gap:4px;padding:24px 32px 0;border-bottom:1px solid var(--g3);flex-wrap:wrap}
+  .tabs button{padding:12px 22px;font-size:13px;background:var(--g1);border:1px solid var(--g3);border-bottom:none;border-radius:8px 8px 0 0;cursor:pointer;color:var(--g5)}
+  .tabs button.active{background:#fff;color:var(--g6);font-weight:bold;position:relative;top:1px}
+  .panel{display:none;padding:32px}
+  .panel.show{display:block}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .card{border:1px solid var(--g3);border-radius:8px;padding:18px;background:var(--g1)}
+  .card .box{height:90px;margin-bottom:12px}
+
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{border:1px solid var(--g3);padding:10px 12px;text-align:left}
+  th{background:var(--g2);color:var(--g6)}
+  td{color:var(--g4)}
+
+  .scrollarea{max-height:420px;overflow-y:auto;padding-right:16px;border:1px dashed var(--g3);border-radius:8px;padding:20px}
+  .scrollarea h3{color:var(--g6);margin-bottom:10px}
+  .scrollarea h4{color:var(--g6);margin:20px 0 8px;font-size:14px}
+  .scrollarea p{font-size:13px;color:var(--g4);line-height:1.7;margin-bottom:8px}
+  .scrollarea::-webkit-scrollbar{width:8px}
+  .scrollarea::-webkit-scrollbar-thumb{background:var(--g3);border-radius:4px}
+  .scrollarea .row{display:flex;gap:20px;align-items:center;margin:22px 0;padding:16px;background:var(--g1);border:1px solid var(--g3);border-radius:8px}
+  .scrollarea .row.rev{flex-direction:row-reverse}
+  .scrollarea .row .box{width:200px;height:130px;flex-shrink:0}
+  .scrollarea .row h4{margin-top:0}
+  @media (max-width:640px){.scrollarea .row,.scrollarea .row.rev{flex-direction:column;align-items:stretch}.scrollarea .row .box{width:100%}}
+
+  @media (max-width:640px){.grid3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <a href="index.html">← Kembali ke Landing Page</a>
+  <span>WIREFRAME · Open Play (Single Page)</span>
+</div>
+
+<div id="frame">
+  <nav>
+    <a href="index.html" class="box logo" style="text-decoration:none">LOGO</a>
+    <button class="burger" onclick="document.querySelector('.menu').classList.toggle('open')">☰</button>
+    <div class="menu">
+      <a href="index.html#s5">Activity</a>
+      <a href="index.html#s6">Booking</a>
+      <a href="index.html#s8">Community</a>
+      <a href="index.html#s9">Partner with Us</a>
+      <a href="#">Blog</a>
+    </div>
+    <div class="box cart" title="Cart">🛒</div>
+    <div class="lang" onclick="this.querySelectorAll('span').forEach(s=>s.classList.toggle('on'))">
+      <span class="on">ID</span><span>EN</span>
+    </div>
+  </nav>
+  <div class="crumb">Home / Activity / <b style="color:var(--g6)">Open Play</b></div>
+
+  <div class="pagehead">
+    <h1>Open Play</h1>
+    <p>Dummy description: penjelasan singkat tentang Open Play. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+  </div>
+
+  <div class="tabs">
+    <button class="active" onclick="tab(this,0)">SKOR</button>
+    <button onclick="tab(this,1)">Placeholder</button>
+    <button onclick="tab(this,2)">Placeholder</button>
+    <button onclick="tab(this,3)">Placeholder</button>
+  </div>
+
+  <!-- Tab 0: SKOR (informative scrollable content) -->
+  <div class="panel show">
+    <div class="scrollarea">
+      <h3>SKOR — powered by Gametime</h3>
+      <p>Intro dummy: SKOR adalah fitur Gametime di AYO untuk mencatat dan menampilkan skor permainanmu secara real-time. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+      <div class="row">
+        <div class="box">Screenshot Gametime 1</div>
+        <div>
+          <h4>Live Scoring</h4>
+          <p>Copy dummy: catat skor langsung dari lapangan, semua pemain bisa memantau jalannya pertandingan secara real-time. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+          <div class="line med"></div><div class="line short"></div>
+        </div>
+      </div>
+
+      <div class="row rev">
+        <div class="box">Screenshot Gametime 2</div>
+        <div>
+          <h4>Riwayat Pertandingan</h4>
+          <p>Copy dummy: semua hasil pertandinganmu tersimpan otomatis, lengkap dengan statistik per game. Duis aute irure dolor in reprehenderit in voluptate velit esse.</p>
+          <div class="line med"></div><div class="line short"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="box">Screenshot Gametime 3</div>
+        <div>
+          <h4>Level &amp; Progres Pemain</h4>
+          <p>Copy dummy: skor yang terkumpul membentuk level permainanmu, membuat matchmaking lebih seimbang. Excepteur sint occaecat cupidatat non proident.</p>
+          <div class="line med"></div><div class="line short"></div>
+        </div>
+      </div>
+
+      <div class="row rev">
+        <div class="box">Screenshot Gametime 4</div>
+        <div>
+          <h4>Bagikan ke Komunitas</h4>
+          <p>Copy dummy: bagikan hasil pertandingan ke komunitasmu dan tantang pemain lain. Sed ut perspiciatis unde omnis iste natus error sit voluptatem.</p>
+          <div class="line med"></div><div class="line short"></div>
+        </div>
+      </div>
+
+      <button class="btn">Coba Gametime</button>
+    </div>
+  </div>
+
+  <!-- Tab 1: Jadwal -->
+  <div class="panel">
+    <table>
+      <tr><th>Tanggal</th><th>Venue</th><th>Waktu</th><th>Slot</th></tr>
+      <tr><td>Dummy date</td><td>Venue A</td><td>19:00</td><td>4/8</td></tr>
+      <tr><td>Dummy date</td><td>Venue B</td><td>20:00</td><td>6/8</td></tr>
+      <tr><td>Dummy date</td><td>Venue C</td><td>08:00</td><td>2/8</td></tr>
+    </table>
+  </div>
+
+  <!-- Tab 2: Placeholder -->
+  <div class="panel">
+    <div class="line med"></div>
+    <div class="line"></div>
+    <div class="line short" style="margin-bottom:20px"></div>
+    <div class="grid3">
+      <div class="card"><div class="box">Image</div><div class="line med"></div><div class="line short"></div></div>
+      <div class="card"><div class="box">Image</div><div class="line med"></div><div class="line short"></div></div>
+      <div class="card"><div class="box">Image</div><div class="line med"></div><div class="line short"></div></div>
+    </div>
+  </div>
+
+  <!-- Tab 3: Peserta -->
+  <div class="panel">
+    <div class="grid3">
+      <div class="card"><div class="box" style="width:44px;height:44px;border-radius:50%">👤</div><div class="line med"></div><div class="line short"></div></div>
+      <div class="card"><div class="box" style="width:44px;height:44px;border-radius:50%">👤</div><div class="line med"></div><div class="line short"></div></div>
+      <div class="card"><div class="box" style="width:44px;height:44px;border-radius:50%">👤</div><div class="line med"></div><div class="line short"></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function tab(btn,i){
+  document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.panel').forEach((p,x)=>p.classList.toggle('show',x===i));
+}
+</script>
+</body>
+</html>
