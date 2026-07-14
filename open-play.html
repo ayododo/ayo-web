@@ -49,10 +49,13 @@
   .card{border:1px solid var(--g3);border-radius:8px;padding:18px;background:var(--g1)}
   .card .box{height:90px;margin-bottom:12px}
 
-  table{width:100%;border-collapse:collapse;font-size:13px}
-  th,td{border:1px solid var(--g3);padding:10px 12px;text-align:left}
-  th{background:var(--g2);color:var(--g6)}
-  td{color:var(--g4)}
+  /* Media list — image kiri, konten kanan, disusun ke bawah */
+  .medialist{display:flex;flex-direction:column;gap:16px}
+  .medialist .item{display:flex;gap:20px;align-items:center;padding:16px;background:var(--g1);border:1px solid var(--g3);border-radius:8px}
+  .medialist .item .box{width:200px;height:130px;flex-shrink:0}
+  .medialist .item h4{color:var(--g6);font-size:14px;margin-bottom:8px}
+  .medialist .item p{font-size:13px;color:var(--g4);line-height:1.7;margin-bottom:8px}
+  @media (max-width:640px){.medialist .item{flex-direction:column;align-items:stretch}.medialist .item .box{width:100%}}
 
   .scrollarea{border:1px dashed var(--g3);border-radius:8px;padding:20px}
   .scrollarea h3{color:var(--g6);margin-bottom:10px}
@@ -152,14 +155,34 @@
     </div>
   </div>
 
-  <!-- Tab 1: Jadwal -->
+  <!-- Tab 1: Placeholder -->
   <div class="panel">
-    <table>
-      <tr><th>Tanggal</th><th>Venue</th><th>Waktu</th><th>Slot</th></tr>
-      <tr><td>Dummy date</td><td>Venue A</td><td>19:00</td><td>4/8</td></tr>
-      <tr><td>Dummy date</td><td>Venue B</td><td>20:00</td><td>6/8</td></tr>
-      <tr><td>Dummy date</td><td>Venue C</td><td>08:00</td><td>2/8</td></tr>
-    </table>
+    <div class="medialist">
+      <div class="item">
+        <div class="box">Image</div>
+        <div>
+          <h4>Placeholder Judul 1</h4>
+          <p>Copy dummy: deskripsi singkat untuk konten pertama. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+          <div class="line med"></div><div class="line short"></div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="box">Image</div>
+        <div>
+          <h4>Placeholder Judul 2</h4>
+          <p>Copy dummy: deskripsi singkat untuk konten kedua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+          <div class="line med"></div><div class="line short"></div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="box">Image</div>
+        <div>
+          <h4>Placeholder Judul 3</h4>
+          <p>Copy dummy: deskripsi singkat untuk konten ketiga. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+          <div class="line med"></div><div class="line short"></div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Tab 2: Placeholder -->
