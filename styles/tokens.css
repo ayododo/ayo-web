@@ -1,0 +1,51 @@
+/* ==========================================================================
+   AYO — Design Foundation (Kickoff Design System 2.0)
+   Phase 1: Color + Type only. Mirrors Figma "New-Color-Tokens" collection.
+   Keep names in sync with the Figma variable paths noted alongside each token.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
+
+:root {
+  /* ---- Typography ---------------------------------------------------------- */
+  --font-sans: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  /* Figtree weights available: 300 Light, 400 Regular, 500 Medium,
+     600 SemiBold, 700 Bold, 800 ExtraBold, 900 Black */
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+  --fw-black: 900;
+
+  /* ---- Color · Background (Colors/Background/Neutral/*) --------------------- */
+  --bg-white: #ffffff;        /* /White */
+  --bg-cream: #f7f5f3;        /* /Cream-surface */
+  --bg-subtle: #f7f7f7;       /* /Subtle */
+  --bg-subtle-bold: #f2f2f2;  /* /Subtle-bold */
+  --bg-disabled: #ededed;     /* /Disabled */
+  --bg-dark: #1a1919;         /* /Dark */
+  --bg-dark-soft: #2c2c2c;    /* /Dark-soft */
+  --bg-overlay: rgba(26, 25, 25, 0.75); /* /Overlay (#1a1919 @ 75%) */
+
+  /* ---- Color · Text (Colors/Text/Neutral/*) -------------------------------- */
+  --text-default: #1a1919;    /* /Default */
+  --text-secondary: #787373;  /* /Secondary */
+  --text-subtle: #9b9797;     /* /Subtle */
+  --text-disabled: #bebbbb;   /* /Disabled */
+  --text-white: #ffffff;      /* /White */
+  --text-dark-soft: #2c2c2c;  /* /Dark-soft */
+
+  /* ---- Color · Brand ------------------------------------------------------- */
+  --brand: #ec2435;           /* AYO primary */
+  --accent-neon: #cef249;     /* AYO neon accent (minor hint) */
+}
+
+/* Base defaults so pages inherit the foundation */
+html {
+  font-family: var(--font-sans);
+  color: var(--text-default);
+  background: var(--bg-white);
+}
