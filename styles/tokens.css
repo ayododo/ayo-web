@@ -60,7 +60,7 @@
   --radius-lg: 12px;     /* large cards, modals (was 20) */
   --radius-xl: 16px;     /* hero panels, sheets */
   --radius-pill: 999px;  /* pill buttons, badges */
-  --radius-circle: 50%;  /* avatars, icon circles */
+  /* circular (avatars/icon circles): use border-radius:50% directly — no token. */
 
   /* ---- Color · Background (Colors/Background/Neutral/*) --------------------- */
   --bg-white: #ffffff;        /* /White */
