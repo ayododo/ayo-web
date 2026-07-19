@@ -20,6 +20,18 @@
   --fw-extrabold: 800;
   --fw-black: 900;
 
+  /* ---- Type scale · DESKTOP (1440) ----------------------------------------
+     Headers carry desktop-specific sizes. Mobile overrides come in a later
+     phase (media queries). Sizes in px to mirror Figma 1:1. */
+  --fs-display: 64px;   --lh-display: 1.1;   /* hero headline */
+  --fs-h1: 44px;        --lh-h1: 1.15;       /* page title */
+  --fs-h2: 28px;        --lh-h2: 1.25;       /* section heading */
+  --fs-h3: 20px;        --lh-h3: 1.35;       /* card / sub heading */
+  --fs-body-lg: 16px;   --lh-body-lg: 1.6;   /* lead / large body */
+  --fs-body: 14px;      --lh-body: 1.6;      /* default body */
+  --fs-small: 13px;     --lh-small: 1.5;     /* small text / labels */
+  --fs-caption: 12px;   --lh-caption: 1.4;   /* caption / tags */
+
   /* ---- Color · Background (Colors/Background/Neutral/*) --------------------- */
   --bg-white: #ffffff;        /* /White */
   --bg-cream: #f7f5f3;        /* /Cream-surface */
@@ -49,3 +61,13 @@ html {
   color: var(--text-default);
   background: var(--bg-white);
 }
+
+/* ---- Type utility classes (desktop) --------------------------------------- */
+.type-display { font-size: var(--fs-display); line-height: var(--lh-display); font-weight: var(--fw-extrabold); letter-spacing: -0.02em; }
+.type-h1      { font-size: var(--fs-h1);      line-height: var(--lh-h1);      font-weight: var(--fw-bold);      letter-spacing: -0.015em; }
+.type-h2      { font-size: var(--fs-h2);      line-height: var(--lh-h2);      font-weight: var(--fw-bold);      letter-spacing: -0.01em; }
+.type-h3      { font-size: var(--fs-h3);      line-height: var(--lh-h3);      font-weight: var(--fw-semibold); }
+.type-body-lg { font-size: var(--fs-body-lg); line-height: var(--lh-body-lg); font-weight: var(--fw-regular); }
+.type-body    { font-size: var(--fs-body);    line-height: var(--lh-body);    font-weight: var(--fw-regular); }
+.type-small   { font-size: var(--fs-small);   line-height: var(--lh-small);   font-weight: var(--fw-regular); }
+.type-caption { font-size: var(--fs-caption); line-height: var(--lh-caption); font-weight: var(--fw-regular); }

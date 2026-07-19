@@ -28,6 +28,11 @@
   .meta .name { font-weight: 600; font-size: 13px; }
   .meta .hex { color: var(--text-secondary); font-size: 12px; margin-top: 2px; font-variant-numeric: tabular-nums; }
   .ring { box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06); }
+
+  /* type scale rows */
+  .scale { display: grid; gap: 18px; }
+  .scale .row { display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap; }
+  .scale .spec { color: var(--text-subtle); font-size: 12px; font-weight: 400; font-variant-numeric: tabular-nums; }
 </style>
 </head>
 <body>
@@ -44,6 +49,18 @@
     <div class="w700">Kelola venue Anda dari genggaman <span>700 · Bold</span></div>
     <div class="w800">Kelola venue Anda dari genggaman <span>800 · ExtraBold</span></div>
     <div class="w900">Kelola venue Anda dari genggaman <span>900 · Black</span></div>
+  </div>
+
+  <h2>Type Scale · Desktop (1440)</h2>
+  <div class="scale">
+    <div class="row"><span class="type-display">Display</span><span class="spec">64 / ExtraBold · hero headline</span></div>
+    <div class="row"><span class="type-h1">Heading 1</span><span class="spec">44 / Bold · page title</span></div>
+    <div class="row"><span class="type-h2">Heading 2</span><span class="spec">28 / Bold · section</span></div>
+    <div class="row"><span class="type-h3">Heading 3</span><span class="spec">20 / SemiBold · card</span></div>
+    <div class="row"><span class="type-body-lg">Body large — the quick brown fox</span><span class="spec">16 / Regular</span></div>
+    <div class="row"><span class="type-body">Body — the quick brown fox</span><span class="spec">14 / Regular</span></div>
+    <div class="row"><span class="type-small">Small — the quick brown fox</span><span class="spec">13 / Regular</span></div>
+    <div class="row"><span class="type-caption">Caption — the quick brown fox</span><span class="spec">12 / Regular</span></div>
   </div>
 
   <h2>Brand</h2>
