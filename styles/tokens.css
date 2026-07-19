@@ -32,6 +32,36 @@
   --fs-small: 13px;     --lh-small: 1.5;     /* small text / labels */
   --fs-caption: 12px;   --lh-caption: 1.4;   /* caption / tags */
 
+  /* ---- Spacing · 4/8px grid ------------------------------------------------
+     WEB-DEFINED (2026-07-19): Kickoff DS has no spacing collection yet
+     (searched "spacing"/"space" — none). Applied via var() in component CSS;
+     mirror back into Figma when a spacing collection lands. */
+  --space-1: 4px;    /* hairline gap, icon nudge */
+  --space-2: 8px;    /* tight gap */
+  --space-3: 12px;   /* control inner padding */
+  --space-4: 16px;   /* default gap / card padding */
+  --space-5: 20px;
+  --space-6: 24px;   /* comfortable padding */
+  --space-8: 32px;   /* block spacing */
+  --space-10: 40px;
+  --space-12: 48px;  /* section inner rhythm */
+  --space-16: 64px;  /* section gap */
+  --space-20: 80px;  /* large section gap */
+  --space-24: 96px;  /* hero / major section padding */
+
+  /* ---- Radius · iOS-style ---------------------------------------------------
+     WEB-DEFINED (2026-07-19): Kickoff DS has no radius collection yet.
+     Wireframe rounding was too soft (cards at 20px); this scale targets
+     iOS-style ~60% of that (20 → 12). Foundation tokens only — existing
+     pages not yet migrated to var(). */
+  --radius-xs: 4px;      /* tags, small chips */
+  --radius-sm: 6px;      /* inputs, small buttons */
+  --radius-md: 8px;      /* buttons, cards (default) */
+  --radius-lg: 12px;     /* large cards, modals (was 20) */
+  --radius-xl: 16px;     /* hero panels, sheets */
+  --radius-pill: 999px;  /* pill buttons, badges */
+  --radius-circle: 50%;  /* avatars, icon circles */
+
   /* ---- Color · Background (Colors/Background/Neutral/*) --------------------- */
   --bg-white: #ffffff;        /* /White */
   --bg-cream: #f7f5f3;        /* /Cream-surface */
