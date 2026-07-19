@@ -42,13 +42,16 @@
   --bg-dark-soft: #2c2c2c;    /* /Dark-soft */
   --bg-overlay: rgba(26, 25, 25, 0.75); /* /Overlay (#1a1919 @ 75%) */
 
-  /* ---- Color · Text (Colors/Text/Neutral/*) -------------------------------- */
-  --text-default: #1a1919;    /* /Default */
-  --text-secondary: #787373;  /* /Secondary */
-  --text-subtle: #9b9797;     /* /Subtle */
-  --text-disabled: #bebbbb;   /* /Disabled */
-  --text-white: #ffffff;      /* /White */
-  --text-dark-soft: #2c2c2c;  /* /Dark-soft */
+  /* ---- Color · Text (Content/Text/*) --------------------------------------- */
+  --text-default: #1a1a1a;      /* /Default */
+  --text-subtle: #3d3d3d;       /* /Subtle */
+  --text-dim: #707070;          /* /Dim */
+  --text-placeholder: #a3a3a3;  /* /Placeholder */
+  --text-disabled: #bfbfbf;     /* /Disabled */
+  --text-inverse: #ffffff;      /* /Inverse (text on dark) */
+
+  /* ---- Color · Outline (Outline/*) ----------------------------------------- */
+  --border-default: #bfbfbf;    /* /Default */
 
   /* ---- Color · Brand ------------------------------------------------------- */
   --brand: #ec2435;           /* AYO primary */
