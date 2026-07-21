@@ -4,11 +4,15 @@
    Keep names in sync with the Figma variable paths noted alongside each token.
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
 
 :root {
   /* ---- Typography ---------------------------------------------------------- */
   --font-sans: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  /* Data layer — voice stays Figtree. Big stat/display numbers = IBM Plex Sans;
+     small data labels / timestamps = IBM Plex Mono. */
+  --font-num: 'IBM Plex Sans', var(--font-sans);
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* Figtree weights available: 300 Light, 400 Regular, 500 Medium,
      600 SemiBold, 700 Bold, 800 ExtraBold, 900 Black */
