@@ -1,0 +1,66 @@
+/* ==========================================================================
+   AYO — Button
+   Depends on: styles/tokens.css (tokens only — no page-level CSS required).
+   Extracted from index.html (was spread across 6 blocks, 2 of them dead).
+
+   Anatomy:  .btn  +  variant (.primary | .ghost)  +  size (.lg)
+             +  optional surface (.on-dark | .on-brand)
+
+   "Surface" replaces the old parent-dependent rules (.nav .btn, .ctaband .btn).
+   A button should style itself, not depend on what wraps it.
+   ========================================================================== */
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans); font-weight: var(--fw-semibold);
+  font-size: var(--fs-body); line-height: 1;
+  padding: var(--space-3) var(--space-6);
+  border: 1.5px solid transparent; border-radius: var(--radius-md);
+  cursor: pointer; white-space: nowrap; text-decoration: none;
+  transition: filter .15s, background .15s, border-color .15s, transform .15s;
+}
+.btn svg { width: 1em; height: 1em; flex-shrink: 0; }
+
+/* ---- Variants -------------------------------------------------------------- */
+.btn.primary       { background: var(--brand); color: var(--text-inverse); }
+.btn.primary:hover { filter: brightness(.93); transform: translateY(-2px); }
+
+.btn.ghost         { background: transparent; color: var(--text-default); border-color: var(--border-default); }
+.btn.ghost:hover   { border-color: var(--text-default); }
+
+/* ---- Size ------------------------------------------------------------------
+   Large controls step up one radius level (md → lg), matching the hero CTA. */
+.btn.lg {
+  padding: var(--space-4) var(--space-6);
+  font-size: var(--fs-body-lg);
+  border-radius: var(--radius-lg);
+}
+
+/* ---- Surface: on a dark photo / video (was `.nav .btn.primary`) -------------
+   Frosted glass so the button stays legible over unpredictable footage. */
+.btn.on-dark.primary {
+  background: rgba(255,255,255,.16); color: var(--text-inverse);
+  border-color: rgba(255,255,255,.42);
+  backdrop-filter: blur(10px) saturate(1.4);
+  -webkit-backdrop-filter: blur(10px) saturate(1.4);
+}
+.btn.on-dark.primary:hover { background: rgba(255,255,255,.28); border-color: rgba(255,255,255,.7); filter: none; }
+.btn.on-dark.ghost         { color: var(--text-inverse); border-color: rgba(255,255,255,.5); }
+.btn.on-dark.ghost:hover   { background: var(--bg-white); color: var(--text-default); border-color: var(--bg-white); }
+
+/* ---- Surface: on brand red (was `.ctaband .btn.primary`) -------------------- */
+.btn.on-brand.primary       { background: var(--bg-white); color: var(--brand); border-color: transparent; }
+.btn.on-brand.primary:hover { background: var(--bg-cream); filter: none; transform: translateY(-2px); }
+
+/* ---- Focus ----------------------------------------------------------------- */
+/* index.html sets a global brand-red focus ring. On the red CTA band that ring
+   is invisible against its own background, so surfaces override it to white. */
+.btn:focus-visible                 { outline: 3px solid var(--brand); outline-offset: 3px; }
+.btn.on-brand:focus-visible,
+.btn.on-dark:focus-visible         { outline-color: var(--bg-white); }
+
+/* ---- Reduced motion -------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .btn, .btn:hover { transition: none; transform: none; }
+}

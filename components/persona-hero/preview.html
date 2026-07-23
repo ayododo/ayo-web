@@ -1,0 +1,77 @@
+<!-- @dsCard group="Components" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AYO — Persona Hero</title>
+<link rel="stylesheet" href="../../styles/tokens.css">
+<link rel="stylesheet" href="persona-hero.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font-sans); background: var(--bg-dark); }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 3px solid var(--text-inverse); outline-offset: 3px; }
+</style>
+</head>
+<body>
+
+<!-- Background layers: use --ph-image for a photo, and/or <video class="ph-video">.
+     Photo only, for example:  style="--ph-image: url('../../assets/hero-poster.jpg')" -->
+<section class="persona-hero" data-persona-hero aria-label="AYO persona hero">
+  <div class="ph-media" aria-hidden="true"></div>
+  <video class="ph-video is-active" src="../../assets/hero.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+  <div class="ph-scrim" aria-hidden="true"></div>
+
+  <div class="ph-main">
+    <div class="ph-wrap">
+      <!-- Default content (Player) — static fallback when JS is off. JS overwrites it. -->
+      <div class="ph-content" data-ph-content>
+        <p class="ph-eyebrow">Open Play · Open Match · Booking · Community</p>
+        <h1 class="ph-title">Join Activities, made <span class="ph-hl">easy</span>.</h1>
+        <p class="ph-sub">90,000+ active players across 150 cities. Find a court, join an Open Play or Open Match session, and set up your own game — all from one app.</p>
+        <div class="ph-ctas">
+          <a class="ph-btn ghost" href="#">Download the App</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ph-wrap">
+    <div class="ph-switcher">
+      <div class="ph-switch-main">
+        <button class="ph-toggle" type="button" data-ph-toggle aria-label="Pause persona rotation">
+          <svg class="ph-ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+          <svg class="ph-ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+        </button>
+        <div>
+          <p class="ph-switch-label">Viewing as</p>
+          <!-- Static tabs = no-JS fallback. JS rebuilds them from data. -->
+          <div class="ph-tabs" role="tablist" aria-label="Choose persona" data-ph-tabs>
+            <button class="ph-tab is-active" type="button" role="tab" aria-selected="true">Player</button>
+            <button class="ph-tab" type="button" role="tab" aria-selected="false">Host</button>
+            <button class="ph-tab" type="button" role="tab" aria-selected="false">Venue Owner</button>
+            <button class="ph-tab" type="button" role="tab" aria-selected="false">Business Partner</button>
+          </div>
+        </div>
+      </div>
+      <!-- The .ph-proof slot goes here (see components/store-rating) — deliberately
+           not duplicated into this preview so the markup lives in one place only. -->
+    </div>
+  </div>
+
+  <div class="ph-stats">
+    <div class="ph-wrap">
+      <div class="ph-stats-in">
+        <div class="ph-stat"><span class="ph-stat-num">90,000+</span><span class="ph-stat-lbl">Active players</span></div>
+        <div class="ph-stat"><span class="ph-stat-num">150+</span><span class="ph-stat-lbl">Cities</span></div>
+        <div class="ph-stat"><span class="ph-stat-num">1,500+</span><span class="ph-stat-lbl">Sports venues</span></div>
+        <div class="ph-stat"><span class="ph-stat-num">3,000+</span><span class="ph-stat-lbl">Courts</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="persona-hero.js"></script>
+</body>
+</html>

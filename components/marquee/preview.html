@@ -1,0 +1,108 @@
+<!-- @dsCard group="Components" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AYO — Marquee</title>
+<link rel="stylesheet" href="../../styles/tokens.css">
+<link rel="stylesheet" href="marquee.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font-sans); background: var(--bg-dark); color: var(--text-inverse); padding: 48px 0 96px; }
+  .doc { max-width: 880px; margin: 0 auto; padding: 0 32px; }
+  h1 { font-size: 26px; font-weight: var(--fw-extrabold); letter-spacing: -.02em; }
+  .lead { color: rgba(255,255,255,.6); margin-top: 6px; font-size: var(--fs-body-lg); }
+  h2 { font-size: var(--fs-small); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: .08em;
+       color: rgba(255,255,255,.45); margin: 40px 0 16px; }
+  .note { color: rgba(255,255,255,.5); font-size: var(--fs-small); margin-top: 12px; line-height: 1.55; }
+  code { font-family: var(--font-mono); font-size: var(--fs-caption);
+         background: rgba(255,255,255,.12); border-radius: var(--radius-xs); padding: 1px 6px; }
+  .tall { height: 90vh; }
+</style>
+</head>
+<body>
+
+<div class="doc">
+  <h1>Marquee</h1>
+  <p class="lead">Running-text band. Same dark surface and display type as the persona hero, so it reads as a continuation of the header.</p>
+  <h2>Default — two rows, opposite directions</h2>
+</div>
+
+<section class="marquee" aria-label="AYO cities and court coverage">
+
+  <div class="mq-row" data-mq-row data-mq-speed="70" data-mq-dir="left">
+    <div class="mq-track" data-mq-track>
+      <div class="mq-group" data-mq-group>
+        <span class="mq-item is-outline">Jakarta</span>
+        <span class="mq-item is-outline">Surabaya</span>
+        <span class="mq-item is-outline">Bandung</span>
+        <span class="mq-item is-outline">Medan</span>
+        <span class="mq-item is-outline">Semarang</span>
+        <span class="mq-item is-outline">Makassar</span>
+        <span class="mq-item is-outline">Denpasar</span>
+        <span class="mq-item is-outline">Yogyakarta</span>
+        <span class="mq-item is-outline">Kuala Lumpur</span>
+        <span class="mq-item is-outline">Johor Bahru</span>
+        <span class="mq-item is-outline">Penang</span>
+        <span class="mq-item is-outline">Ipoh</span>
+        <span class="mq-item is-outline">Kota Kinabalu</span>
+        <span class="mq-item is-outline">Singapore</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="mq-row is-sub" data-mq-row data-mq-speed="45" data-mq-dir="right">
+    <div class="mq-track" data-mq-track>
+      <div class="mq-group" data-mq-group>
+        <span class="mq-item">3,700+ Padel Courts</span>
+        <span class="mq-dot" aria-hidden="true"></span>
+        <span class="mq-item">1,400+ Badminton Courts</span>
+        <span class="mq-dot" aria-hidden="true"></span>
+        <span class="mq-item">400+ Tennis Courts</span>
+        <span class="mq-dot" aria-hidden="true"></span>
+        <span class="mq-item">200+ Mini Soccer Courts</span>
+        <span class="mq-dot" aria-hidden="true"></span>
+        <span class="mq-item">200+ Futsal Courts</span>
+        <span class="mq-dot" aria-hidden="true"></span>
+        <span class="mq-item">100+ Pickleball Courts</span>
+        <span class="mq-dot" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<div class="doc">
+  <p class="note">
+    Per row: <code>data-mq-speed</code> in px/second, <code>data-mq-dir</code> is <code>left</code> or <code>right</code>.
+    Item modifier: <code>.is-outline</code> (hollow) — carried by every phrase in the display row, so it reads as one even texture.
+    The display row separates on whitespace; <code>.mq-dot</code> is for the sub row.
+    Only the first <code>.mq-group</code> is authored — JS clones it to fill the row and hides the copies from screen readers.
+  </p>
+
+  <h2>Surface — <code>.on-light</code></h2>
+</div>
+
+<section class="marquee on-light" aria-label="Marquee on a light section">
+  <div class="mq-row" data-mq-row data-mq-speed="60" data-mq-dir="left">
+    <div class="mq-track" data-mq-track>
+      <div class="mq-group" data-mq-group>
+        <span class="mq-item is-outline">Jakarta</span>
+        <span class="mq-item is-outline">Surabaya</span>
+        <span class="mq-item is-outline">Kuala Lumpur</span>
+        <span class="mq-item is-outline">Penang</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="doc">
+  <p class="note">Scroll the page — the rows speed up with the scroll, then settle. Hover holds a row still. Under <code>prefers-reduced-motion</code> nothing animates and each row becomes a horizontal scroller.</p>
+  <div class="tall"></div>
+  <p class="note">Empty space above exists so the scroll reaction is testable in this preview.</p>
+</div>
+
+<script src="marquee.js"></script>
+</body>
+</html>

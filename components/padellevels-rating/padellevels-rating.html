@@ -1,0 +1,79 @@
+<!-- ==========================================================================
+     AYO — PadelLevels Rating
+     Static markup. Paste into the page and load padellevels-rating.css.
+     No JS: nothing here toggles or animates.
+
+     To wire real data, four things move together:
+       - .plr__level        the figure
+       - .plr__stat-val     status + confidence text
+       - --plr-confidence   on .plr__card, which sets the bar width
+       - .plr__desc         status-dependent copy
+     The CTA lives in the right-hand column, not the card.
+     ========================================================================== -->
+<section class="plr" id="rating" aria-labelledby="plr-title">
+  <div class="plr__shell">
+    <div class="plr__board reveal">
+
+      <div class="plr__header">
+        <p class="plr__eyebrow">
+          PadelLevels × AYO
+        </p>
+        <h2 class="plr__title" id="plr-title">Every player, one global rating.</h2>
+      </div>
+
+      <div class="plr__body">
+        <div class="plr__gutter">
+          <div class="plr__card">
+
+            <div class="plr__card-head">
+              <img class="plr__mark" src="assets/padellevels-logo.png" alt="" width="18" height="15">
+              PadelLevels Rating
+            </div>
+
+            <div class="plr__meter">
+              <div class="plr__stats">
+                <div class="plr__stat">
+                  <span class="plr__stat-lbl">Level</span>
+                  <span class="plr__level-row">
+                    <span class="plr__level">5.2</span>
+                    <span class="plr__scale">/ 7.0</span>
+                  </span>
+                </div>
+                <div class="plr__stat plr__stat--status">
+                  <span class="plr__stat-lbl">Status</span>
+                  <span class="plr__stat-val">Calibrated</span>
+                </div>
+                <div class="plr__stat plr__stat--conf">
+                  <span class="plr__stat-lbl">Confidence</span>
+                  <span class="plr__stat-val">74%</span>
+                </div>
+              </div>
+              <!-- Width comes from --plr-confidence on .plr__card, so the bar can
+                   never drift out of step with the percentage above it. -->
+              <div class="plr__track">
+                <span class="plr__fill"></span>
+              </div>
+            </div>
+
+            <p class="plr__desc">Stable enough to display across connected experiences. Your rating stays current as new results come in.</p>
+
+
+          </div>
+        </div>
+
+        <div class="plr__explain">
+          <p class="plr__label">How it’s calculated</p>
+          <p class="plr__copy">Your performance rating is calculated from match scores and the level of the opponents you face. Beating stronger players counts for more.</p>
+              <a class="plr__cta" href="#">
+                View full PadelLevels profile
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M8 16L16 8"/><path d="M9 8h7v7"/>
+                </svg>
+              </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

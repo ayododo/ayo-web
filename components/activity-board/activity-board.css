@@ -1,0 +1,432 @@
+/* ==========================================================================
+   AYO — Activity Board
+   Vertical tab selector + editorial hairline board panel that crossfades on
+   change. White only. Depends on: styles/tokens.css (tokens only).
+
+   Anatomy:  .actb                       section
+               .actb__shell              site container (aligns with nav/hero)
+                 .actb__frame            reveal-on-scroll target
+                   .actb__board          the grid — its 1px tracks ARE the lines
+                     .actb__header       spans the full width, row 1
+                     .actb__node         crosshair where the lines meet
+                     .actb__tabs         left column, row 3
+                     .actb__panel        right column, row 3  (built by JS)
+
+   The board paints its background with the hairline colour; the cells paint
+   white on top. Every line you see is a 1px grid track showing through. There
+   is no outer frame and no shadow — the two internal lines are the whole
+   structure, so the section reads as page, not as a card laid on top of it.
+   ========================================================================== */
+
+.actb {
+  /* Component-local names on the left, design-system tokens on the right.
+     Values with no token equivalent are written literally and marked. */
+  --actb-red: var(--brand);
+  --actb-ink: var(--text-default);
+  --actb-ink-muted: var(--text-dim);
+  --actb-ink-faint: rgb(140, 140, 140);      /* no token: between dim + placeholder */
+  --actb-tab-num: var(--text-placeholder);
+  --actb-tab-title: rgb(150, 150, 150);      /* no token */
+  --actb-hairline: rgba(26, 25, 25, .14);
+  --actb-hairline-soft: rgba(26, 25, 25, .12);
+  --actb-panel: var(--bg-white);
+  --actb-caption: rgb(70, 70, 70);           /* no token: between subtle + dim */
+  /* Status blue, deliberately outside the brand palette. Red is the brand's
+     "look here" colour and is already spent on the toggle underline and the
+     eyebrow; a red dot here would read as another call to action instead of a
+     state. Blue is the one hue on the page that carries no other job. */
+  --actb-live: #0071e3;
+  --actb-live-halo: rgba(0, 113, 227, .18);
+
+  padding: clamp(36px, 5vw, 72px) 0;
+  background: var(--bg-white);
+  color: var(--actb-ink);
+  font-family: var(--font-sans);
+}
+
+/* Fallbacks apply when the component stands alone (preview); inside a page the
+   host page's own --container/--edge win. */
+.actb__shell {
+  width: 100%; max-width: var(--container, 1440px);
+  margin: 0 auto; padding: 0 var(--edge, clamp(16px, 2.5vw, 40px));
+}
+/* Nothing to draw and nothing to clip once the outline and the shadow are gone —
+   this element exists only as the reveal-on-scroll target, kept separate from
+   .actb__shell so the fade moves the board and not the page gutter. */
+.actb__frame { position: relative; }
+
+/* ---- The board ------------------------------------------------------------
+   Columns: tabs | divider | panel
+   Rows:    header | divider | body
+   Only the two INTERNAL 1px tracks remain — the outer frame tracks are gone, so
+   the board has no outline and reads as part of the page rather than a card.
+   The tracks hold no cells, so the board's own background shows through them.
+   That is why the lines stay exactly 1px at any zoom or DPR — nothing is being
+   rounded down from a border or a transform. */
+.actb__board {
+  display: grid;
+  grid-template-columns: 0.82fr 1px 1.18fr;
+  grid-template-rows: auto 1px auto;
+  background: var(--actb-hairline);
+}
+.actb__header,
+.actb__tabs,
+.actb__panel { background: var(--actb-panel); }
+
+/* ---- Header ---------------------------------------------------------------- */
+.actb__header {
+  grid-column: 1 / 4; grid-row: 1;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: var(--space-8); padding: 44px;
+}
+.actb__eyebrow {
+  font-family: var(--font-mono); font-size: var(--fs-caption); font-weight: var(--fw-semibold);
+  text-transform: uppercase; letter-spacing: .14em;
+  color: var(--actb-red); margin-bottom: var(--space-3);
+}
+.actb__title {
+  font-weight: var(--fw-extrabold);
+  font-size: clamp(30px, 3.8vw, 54px); line-height: 1.06; letter-spacing: -.03em;
+}
+.actb__hl {
+  display: inline-block;
+  background: var(--actb-red); color: var(--text-inverse);
+  border-radius: 8px; padding: 0 12px;
+}
+.actb__caption {
+  flex-shrink: 0; max-width: 260px; text-align: right;
+  font-family: var(--font-mono); font-size: var(--fs-caption); line-height: 1.5;
+  color: var(--actb-caption);
+}
+
+/* ---- Crosshair node --------------------------------------------------------
+   Sits in the 1px cell where the header rule crosses the vertical divider and
+   overflows it symmetrically, so it reads as a crosshair rather than a dot
+   parked on a line. */
+.actb__node {
+  grid-row: 2; grid-column: 2; place-self: center;
+  width: 9px; height: 9px; background: var(--actb-red);
+  z-index: 3;
+}
+
+/* ---- Tabs ------------------------------------------------------------------ */
+.actb__tabs {
+  grid-column: 1; grid-row: 3;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.actb__tab {
+  display: flex; align-items: center; gap: var(--space-4);
+  width: 100%; padding: 34px 40px;
+  background: none; border: 0; border-bottom: 1px solid var(--actb-hairline-soft);
+  font-family: inherit; text-align: left; cursor: pointer;
+}
+.actb__tab-num {
+  min-width: 26px; flex-shrink: 0;
+  font-family: var(--font-mono); font-size: 14px; font-weight: var(--fw-semibold);
+  color: var(--actb-tab-num); transition: color .3s;
+}
+.actb__tab-title {
+  font-weight: var(--fw-extrabold); font-size: clamp(22px, 2.1vw, 30px);
+  letter-spacing: -.02em; color: var(--actb-tab-title);
+  transition: transform .3s, color .3s;
+}
+.actb__tab-arrow {
+  margin-left: auto; display: inline-flex; flex-shrink: 0;
+  color: var(--actb-red); opacity: 0; transition: opacity .3s;
+}
+.actb__tab-arrow svg { width: 20px; height: 20px; display: block; }
+
+.actb__tab[aria-selected="true"] .actb__tab-num   { color: var(--actb-red); }
+.actb__tab[aria-selected="true"] .actb__tab-title { color: var(--actb-ink); transform: translateX(10px); }
+.actb__tab[aria-selected="true"] .actb__tab-arrow { opacity: 1; }
+.actb__tab:hover:not([aria-selected="true"]) .actb__tab-title { color: var(--actb-ink-muted); }
+.actb__tab:focus-visible { outline: 3px solid var(--actb-red); outline-offset: -3px; }
+
+/* ---- Panel ----------------------------------------------------------------- */
+.actb__panel {
+  grid-column: 3; grid-row: 3;
+  display: flex; flex-direction: column; gap: var(--space-6);
+  padding: 40px;
+}
+
+.actb__media {
+  position: relative; height: 300px; flex-shrink: 0;
+  border-radius: 16px; overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(26, 25, 25, .1);
+}
+.actb__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Mandatory, not decorative. These are bright shots — a badminton hall full of
+   floodlights, a sunlit clay court — and white type laid straight onto them
+   drops well under 4.5:1. The gradient only darkens the lower third, so the
+   photo itself stays legible. */
+.actb__scrim {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to top,
+    rgba(26, 25, 25, .88) 0%,
+    rgba(26, 25, 25, .55) 22%,
+    rgba(26, 25, 25, 0) 52%);
+}
+
+/* Carries the figure and its label only — the faces stay down on the white
+   panel, where they read as people rather than as part of the photograph. */
+.actb__overlay {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  display: flex; flex-direction: column; align-items: flex-start;
+  gap: var(--space-2); padding: 24px;
+}
+/* Frosted, not solid: the photo stays readable through it. The tint is DARK
+   rather than white — these court shots are bright, and white text over a light
+   frost drops under 4.5:1 the moment a floodlight sits behind the chip. */
+.actb__chip {
+  position: absolute; top: 18px; left: 18px;
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  font-family: var(--font-mono); font-size: 11px; font-weight: var(--fw-semibold);
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--text-inverse);
+  background: rgba(26, 25, 25, .34);
+  backdrop-filter: blur(14px) saturate(1.3);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .28);
+  padding: 7px 14px; border-radius: var(--radius-pill);
+}
+/* Without the blur the tint alone is too thin to carry white text, so the
+   fallback trades the see-through effect for legibility. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .actb__chip { background: rgba(26, 25, 25, .62); }
+}
+/* Square, matching the separator in the marquee band. White rather than brand
+   red: at 5px on a frosted tint the red went muddy, and it competed with the
+   red toggle underline sitting right below the image. */
+.actb__chip-sep {
+  width: 5px; height: 5px; flex-shrink: 0;
+  background: currentColor;
+}
+
+/* Copy on the left, faces on the right. Centred rather than top-aligned: the
+   stack is 44px against a three-line paragraph, and pinning it to the top would
+   leave it floating beside the toggle instead of beside the text. */
+.actb__lead {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--space-6);
+}
+.actb__lead-main { flex: 1; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.actb__desc {
+  font-size: var(--fs-body-lg); line-height: 1.6;
+  color: var(--actb-ink-muted); max-width: 62ch;
+}
+
+/* Role toggle (Open Play only) */
+.actb__roles { display: flex; gap: var(--space-8); }
+.actb__role {
+  position: relative;
+  background: none; border: 0; padding: 0 0 9px; cursor: pointer;
+  font-family: var(--font-mono); font-size: 16px; font-weight: var(--fw-semibold);
+  letter-spacing: .1em; text-transform: uppercase;
+  color: rgb(170, 170, 170); transition: color .25s, box-shadow .25s;
+}
+/* Underline scales with the type — 2px under 16px caps reads as a hairline
+   rather than as the marker for the selected state. */
+.actb__role[aria-pressed="true"] {
+  color: var(--actb-ink);
+  box-shadow: inset 0 -3px 0 var(--actb-red);
+}
+/* The control is only ~24px tall, which fails the 44px touch minimum. This
+   grows the hit area vertically without moving the underline off the text. */
+.actb__role::before {
+  content: ''; position: absolute; left: 0; right: 0;
+  top: 50%; transform: translateY(-50%); height: 44px;
+}
+.actb__role:focus-visible { outline: 3px solid var(--actb-red); outline-offset: 4px; }
+
+/* Lives inside the image now, so both colours are white-on-scrim rather than
+   ink-on-panel. */
+.actb__giant {
+  font-family: var(--font-num); font-weight: var(--fw-bold);
+  font-size: clamp(40px, 4.4vw, 64px); line-height: .85; letter-spacing: -.03em;
+  color: var(--text-inverse); font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.actb__giant-lbl {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em;
+  text-transform: uppercase; color: rgba(255, 255, 255, .8); white-space: nowrap;
+}
+
+/* ---- Avatar stack ----------------------------------------------------------
+   The ring is a box-shadow, not a border: a border would sit inside the 44px
+   box and shrink the photo, and the ring has to paint OUTSIDE the circle to cut
+   cleanly into the avatar it overlaps. Panel white, since these sit on the
+   white panel and not on the photograph. */
+/* Right-aligned so the note ends flush with the last avatar rather than
+   trailing off past it. */
+.actb__proof {
+  flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end;
+  gap: var(--space-3);
+}
+.actb__proof-note {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em;
+  /* Tight, so the box hugs the ink. On `normal` the line box carries leading
+     that belongs to no visible glyph, and centring the block then centres that
+     invisible space along with the text. */
+  line-height: 1;
+  /* Letter-spacing is added AFTER the final character too, so the text box ends
+     one gap past the last letter and never sits flush with the avatars above.
+     Pulling that gap back is what squares the right edge. */
+  margin-right: -.06em;
+  text-transform: uppercase; color: var(--actb-ink-faint); white-space: nowrap;
+}
+/* Solid core inside a soft halo — the halo is what makes it read as a live
+   state rather than a bullet point. It is a box-shadow, so it spills past the
+   dot without taking any layout space. */
+.actb__proof-note::before {
+  content: ''; flex-shrink: 0;
+  width: 7px; height: 7px; border-radius: var(--radius-pill);
+  background: var(--actb-live);
+  box-shadow: 0 0 0 3px var(--actb-live-halo);
+  animation: actb-pulse 2.6s cubic-bezier(.3, 0, .2, 1) infinite;
+}
+/* Two shadows: the first is the resting halo and never moves, the second is the
+   ring that expands and fades. Keeping them separate means the dot still has
+   its halo at every point in the cycle instead of going bare between beats.
+   The ring fades to a transparent BLUE, not to `transparent` — that keyword
+   resolves to transparent black, and some engines interpolate through grey.
+   A long tail after the beat (70%→100% idle) is what makes it read as a slow
+   heartbeat rather than a blinking light. */
+@keyframes actb-pulse {
+  0%   { box-shadow: 0 0 0 3px var(--actb-live-halo), 0 0 0 2px var(--actb-live-halo); }
+  70%  { box-shadow: 0 0 0 3px var(--actb-live-halo), 0 0 0 11px rgba(0, 113, 227, 0); }
+  100% { box-shadow: 0 0 0 3px var(--actb-live-halo), 0 0 0 11px rgba(0, 113, 227, 0); }
+}
+/* The 3px ring is a box-shadow, so it paints outside the layout box: the row is
+   44px tall to the browser but 50px to the eye. Padding puts the overhang back
+   inside the box, so centring the block actually centres what is visible. */
+.actb__avatars { display: flex; padding: 3px; margin-right: -3px; }
+.actb__avatar {
+  width: 44px; height: 44px; display: block;
+  border-radius: var(--radius-pill); object-fit: cover;
+  box-shadow: 0 0 0 3px var(--actb-panel);
+}
+.actb__avatar + .actb__avatar { margin-left: -13px; }
+
+/* ---- Footer ---------------------------------------------------------------- */
+.actb__foot {
+  margin-top: auto;
+  display: flex; align-items: center; gap: var(--space-5);
+  border-top: 1px solid var(--actb-hairline); padding-top: 20px;
+}
+.actb__micros { flex: 1; display: flex; align-items: stretch; gap: var(--space-8); }
+.actb__mdiv { width: 1px; background: var(--actb-hairline); flex-shrink: 0; }
+.actb__micro { display: flex; flex-direction: column; gap: var(--space-1); }
+.actb__micro-val {
+  display: flex; align-items: center; gap: var(--space-2);
+  font-family: var(--font-num); font-weight: var(--fw-bold); font-size: 24px;
+  color: var(--actb-ink); font-variant-numeric: tabular-nums;
+}
+/* The star inherits currentColor, so the red lives here rather than in the
+   markup the script writes. */
+.actb__micro-val svg { flex-shrink: 0; display: block; color: var(--actb-red); }
+.actb__micro-lbl {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--actb-ink-faint);
+}
+
+.actb__cta {
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; gap: 10px;
+  min-height: 44px; padding: 12px 20px;
+  font-size: var(--fs-body); font-weight: var(--fw-bold);
+  color: var(--actb-ink); text-decoration: none;
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 0 0 1px rgba(26, 25, 25, .22);
+  transition: box-shadow .2s, background .2s;
+}
+.actb__cta:hover { box-shadow: inset 0 0 0 1px var(--actb-ink); background: var(--bg-subtle); }
+.actb__cta svg { width: 16px; height: 16px; color: var(--actb-red); flex-shrink: 0; }
+.actb__cta:focus-visible { outline: 3px solid var(--actb-red); outline-offset: 3px; }
+
+/* ---- Panel entrance -------------------------------------------------------- */
+/* JS removes then re-adds the class (forcing a reflow between) so the animation
+   restarts on every tab AND role change, not just the first. */
+@keyframes actb-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+.actb__panel--enter { animation: actb-rise .45s ease-out; }
+
+/* The faces land one after another, after the panel itself has settled.
+   `backwards` holds them hidden through their delay — without it they would
+   flash at full size before their turn comes. */
+@keyframes actb-pop {
+  from { opacity: 0; transform: scale(.7); }
+  to   { opacity: 1; transform: none; }
+}
+/* The delay is computed from the element's own position, so the stagger holds
+   for any number of avatars — adding a sixth to the data needs no CSS change.
+   (A fixed nth-child list would leave every extra face landing first.) */
+.actb__panel--enter .actb__avatar {
+  animation: actb-pop .34s ease-out backwards;
+  animation-delay: calc(.20s + (sibling-index() - 1) * .07s);
+}
+/* sibling-index() is recent; where it is missing every face still animates,
+   just together rather than one after another. */
+@supports not (top: calc(sibling-index() * 1px)) {
+  .actb__panel--enter .actb__avatar:nth-child(1) { animation-delay: .20s; }
+  .actb__panel--enter .actb__avatar:nth-child(2) { animation-delay: .27s; }
+  .actb__panel--enter .actb__avatar:nth-child(3) { animation-delay: .34s; }
+  .actb__panel--enter .actb__avatar:nth-child(4) { animation-delay: .41s; }
+  .actb__panel--enter .actb__avatar:nth-child(5) { animation-delay: .48s; }
+  .actb__panel--enter .actb__avatar:nth-child(6) { animation-delay: .55s; }
+}
+
+/* ---- Responsive ------------------------------------------------------------
+   Below 900px the two-column board can't hold: the panel would be too narrow
+   for a 300px image plus a 80px numeral. The 1px-track grid is dropped for a
+   plain single column with ordinary borders, and the crosshair goes with it —
+   it only means something where two lines actually cross. */
+@media (max-width: 900px) {
+  .actb__board {
+    display: block;
+    background: var(--actb-panel);
+  }
+  .actb__node { display: none; }
+  .actb__header {
+    flex-direction: column; align-items: flex-start; gap: var(--space-5);
+    padding: var(--space-8);
+    border-bottom: 1px solid var(--actb-hairline);
+  }
+  .actb__caption { text-align: left; max-width: 42ch; }
+  .actb__tabs { border-bottom: 1px solid var(--actb-hairline); }
+  .actb__tab { padding: var(--space-6) var(--space-8); }
+  .actb__tab:last-child { border-bottom: 0; }
+  .actb__panel { padding: var(--space-8); }
+  .actb__media { height: 240px; }
+  .actb__overlay { padding: var(--space-5); }
+  .actb__desc { max-width: none; }
+}
+
+@media (max-width: 560px) {
+  /* Copy and faces stop fitting side by side — the stack drops below the
+     paragraph rather than squeezing it into a two-word column. */
+  .actb__lead { flex-direction: column; align-items: flex-start; gap: var(--space-6); }
+  .actb__proof { align-items: flex-start; }
+  .actb__avatar { width: 40px; height: 40px; }
+  .actb__avatar + .actb__avatar { margin-left: -12px; }
+  .actb__foot { flex-direction: column; align-items: stretch; gap: var(--space-6); }
+  .actb__micros { gap: var(--space-6); }
+  .actb__cta { justify-content: center; }
+}
+
+/* ---- Reduced motion --------------------------------------------------------
+   The content still swaps — only the movement is dropped. */
+@media (prefers-reduced-motion: reduce) {
+  .actb__panel--enter,
+  .actb__panel--enter .actb__avatar { animation: none; }
+  /* The dot keeps its resting halo — only the beat stops. */
+  .actb__proof-note::before { animation: none; }
+  .actb__tab-title,
+  .actb__tab-arrow,
+  .actb__tab-num,
+  .actb__role,
+  .actb__cta { transition: none; }
+  .actb__tab[aria-selected="true"] .actb__tab-title { transform: none; }
+}

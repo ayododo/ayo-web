@@ -1,0 +1,127 @@
+/* ==========================================================================
+   AYO — Marquee
+   Running-text band. Reads as a continuation of the persona hero: same dark
+   surface, same Figtree extrabold display type, same brand-red highlight block.
+   Depends on: styles/tokens.css (tokens only).
+
+   Anatomy:  .marquee  +  optional surface (.on-light)
+               .mq-row            one running line   (+ .is-sub for the mono line)
+                 .mq-track        moved by JS
+                   .mq-group      the content unit — JS clones it to fill the row
+                     .mq-item     a phrase  (+ .is-outline)
+                     .mq-dot      separator — sub row only; the display row
+                                  separates on whitespace alone
+
+   Speed and direction are set per row in the markup (data-mq-speed / data-mq-dir)
+   so the same CSS serves rows running opposite ways.
+   ========================================================================== */
+
+.marquee {
+  /* Display-row gap only — the sub row sets its own below. Wide because that
+     row has no dots: the whitespace IS the separator, so it has to be clearly
+     bigger than a word space or two city names read as one phrase. */
+  --mq-gap: clamp(48px, 7vw, 112px);
+  --mq-ink: var(--text-inverse);
+  --mq-rule: rgba(255, 255, 255, .14);
+  /* Two greys, two jobs — they must move independently. The city row is hollow
+     throughout, so it has far less ink than the solid sub row; matching their
+     values makes the small stats line out-shout the big city names. */
+  --mq-stroke: rgba(255, 255, 255, .72);   /* city outlines — the primary row */
+  --mq-quiet:  rgba(255, 255, 255, .42);   /* sub row — clearly second */
+
+  position: relative;
+  background: var(--bg-dark); color: var(--mq-ink);
+  border-top: 1px solid var(--mq-rule);
+  /* Tight on purpose. The 1.35 line-height on .mq-item already bakes half-leading
+     above and below the glyphs, so generous padding on top of that reads as dead
+     space and the band starts outweighing the hero stat row above it. */
+  padding: clamp(16px, 1.8vw, 26px) 0;
+  overflow: hidden;
+}
+
+/* ---- Row -------------------------------------------------------------------
+   The mask fades both ends so phrases enter and leave instead of being cut off
+   at a hard edge — without it the band reads as clipped text, not motion. */
+.mq-row {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+}
+.mq-row + .mq-row { margin-top: clamp(10px, 1.4vw, 20px); }
+
+.mq-track {
+  display: flex; width: max-content;
+  will-change: transform;
+}
+/* The trailing padding is part of the unit: it keeps the gap intact across the
+   seam where a clone follows the original, so the loop has no visible join. */
+.mq-group {
+  display: flex; align-items: center;
+  gap: var(--mq-gap); padding-right: var(--mq-gap);
+}
+
+/* ---- Item ------------------------------------------------------------------ */
+.mq-item {
+  font-family: var(--font-sans); font-weight: var(--fw-extrabold);
+  /* One step under .ph-stat-num in the hero stat band directly above, so the
+     two dark bands stack as a hierarchy instead of competing at equal weight. */
+  font-size: clamp(24px, 2.8vw, 40px);
+  /* Roomy on purpose. The row clips (overflow: hidden drives the mask), so a
+     tight line-height cuts descenders — the g in "Bandung", the J in "Johor".
+     The line box has to clear the font's full ascender-to-descender extent,
+     plus the outline stroke that sits just outside the glyph. */
+  line-height: 1.35; letter-spacing: -.02em;
+  white-space: nowrap;
+}
+/* The display row runs hollow throughout — one even texture rather than a
+   solid/hollow alternation, which flickered while the row was in motion and
+   left half the names harder to read than the other half. Because nothing
+   alternates, the phrase count per .mq-group is now free (it used to have to
+   be even so the pattern survived the loop seam).
+   The red block used in the hero is deliberately NOT repeated here: at marquee
+   scale it stops reading as emphasis and starts reading as a button. */
+.mq-item.is-outline {
+  color: transparent;
+  /* Fixed width against type that scales: heavy enough to hold the row now that
+     nothing in it is solid, thin enough not to close the counters at 24px. */
+  -webkit-text-stroke: 1.2px var(--mq-stroke);
+}
+
+/* Sub row only (see anatomy). A true square, sharp-cornered: against the mono
+   row's flat, tracked-out caps a circle was the one round shape in the line and
+   read as a bullet rather than a divider. */
+.mq-dot {
+  width: 6px; height: 6px; flex-shrink: 0;
+  border-radius: 0; background: var(--brand);
+}
+
+/* ---- Sub row (mono, quiet) -------------------------------------------------
+   A second line at label scale. Runs the other way so the two rows read as one
+   mechanism rather than two copies of the same effect. */
+.mq-row.is-sub .mq-item {
+  font-family: var(--font-mono); font-weight: var(--fw-semibold);
+  font-size: var(--fs-small); letter-spacing: .12em;
+  text-transform: uppercase; color: var(--mq-quiet);
+}
+.mq-row.is-sub .mq-group { gap: var(--space-6); padding-right: var(--space-6); }
+
+/* ---- Surface: on a light page section -------------------------------------- */
+.marquee.on-light {
+  --mq-ink: var(--text-default);
+  --mq-rule: var(--bg-subtle-bold);
+  --mq-stroke: var(--text-subtle);
+  --mq-quiet: var(--text-dim);
+  background: var(--bg-cream);
+  border-bottom: 1px solid var(--mq-rule);
+}
+
+/* ---- Reduced motion --------------------------------------------------------
+   JS never starts the loop. The row becomes a plain horizontal scroller and the
+   mask is dropped, so every phrase stays reachable. */
+@media (prefers-reduced-motion: reduce) {
+  .mq-row {
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    -webkit-mask-image: none; mask-image: none;
+  }
+  .mq-track { transform: none !important; will-change: auto; }
+}

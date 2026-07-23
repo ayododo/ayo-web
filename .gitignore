@@ -1,0 +1,5 @@
+# macOS Finder metadata — never belongs in the repo
+.DS_Store
+
+# Vercel CLI link (machine-specific project id)
+.vercel

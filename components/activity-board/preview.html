@@ -1,0 +1,67 @@
+<!-- @dsCard group="Components" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AYO — Activity Board</title>
+<link rel="stylesheet" href="../../styles/tokens.css">
+<link rel="stylesheet" href="activity-board.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font-sans); background: var(--bg-cream); color: var(--text-default); padding: 40px 0 80px; }
+  .doc { max-width: 880px; margin: 0 auto 8px; padding: 0 32px; }
+  h1 { font-size: 26px; font-weight: var(--fw-extrabold); letter-spacing: -.02em; }
+  .lead { color: var(--text-dim); margin-top: 6px; font-size: var(--fs-body-lg); }
+  .note { color: var(--text-dim); font-size: var(--fs-small); margin-top: 16px; line-height: 1.6; }
+  code { font-family: var(--font-mono); font-size: var(--fs-caption);
+         background: var(--bg-subtle-bold); border-radius: var(--radius-xs); padding: 1px 6px; }
+</style>
+</head>
+<body>
+
+<div class="doc">
+  <h1>Activity Board</h1>
+  <p class="lead">Vertical tab selector plus an editorial hairline board. Every line is a 1px grid track showing the board background through.</p>
+</div>
+
+<!-- data-actb-assets makes the image path relative to THIS file; the page sets
+     its own. Everything else is built by activity-board.js. -->
+<section class="actb" data-actb data-actb-assets="../../assets/" aria-labelledby="actb-title">
+  <div class="actb__shell">
+    <div class="actb__frame">
+      <div class="actb__board">
+
+        <div class="actb__header">
+          <div>
+            <p class="actb__eyebrow">Activity</p>
+            <h2 class="actb__title" id="actb-title">Join activities, <span class="actb__hl">hassle-free</span>.</h2>
+          </div>
+          <p class="actb__caption">Two ways to play on AYO — host your own or challenge a rival.</p>
+        </div>
+
+        <span class="actb__node" aria-hidden="true"></span>
+
+        <div class="actb__tabs" role="tablist" aria-orientation="vertical"
+             aria-label="Activities" data-actb-tabs></div>
+
+        <div class="actb__panel" id="actb-panel" role="tabpanel" tabindex="0" data-actb-panel></div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="doc">
+  <p class="note">
+    Tabs are a real vertical <code>tablist</code>: <code>ArrowUp</code>/<code>ArrowDown</code> move between them,
+    <code>Home</code>/<code>End</code> jump to the ends. The <code>PLAYER</code>/<code>HOST</code> toggle appears on
+    Open Play only and swaps the description, the giant number, its label, and the CTA — the micro stats stay put.
+    Switching tabs does not reset the role. The panel replays its entrance on both tab and role change; under
+    <code>prefers-reduced-motion</code> the content still swaps but nothing moves.
+  </p>
+</div>
+
+<script src="activity-board.js" defer></script>
+</body>
+</html>

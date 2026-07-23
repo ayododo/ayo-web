@@ -1,0 +1,85 @@
+<!-- @dsCard group="Components" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AYO — Button</title>
+<link rel="stylesheet" href="../../styles/tokens.css">
+<link rel="stylesheet" href="button.css">
+<style>
+  /* Preview chrome only — not part of the component. */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font-sans); color: var(--text-default); background: var(--bg-cream); padding: 40px 32px 64px; }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  h1 { font-size: 28px; font-weight: var(--fw-extrabold); letter-spacing: -0.02em; }
+  .lead { color: var(--text-dim); margin-top: 6px; font-size: var(--fs-body-lg); }
+  h2 { font-size: var(--fs-small); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin: 40px 0 14px; }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
+  .panel { padding: 28px; border-radius: var(--radius-lg); }
+  .panel.dark  { background: var(--bg-dark); }
+  .panel.brand { background: var(--brand); }
+  .note { color: var(--text-dim); font-size: var(--fs-small); margin-top: 10px; line-height: 1.5; }
+  .panel .note { color: rgba(255,255,255,.7); }
+  code { font-family: var(--font-mono); font-size: var(--fs-caption); background: var(--bg-subtle-bold); border-radius: var(--radius-xs); padding: 1px 6px; }
+  .panel code { background: rgba(255,255,255,.15); color: #fff; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Button</h1>
+  <p class="lead">One base class, two variants, one optional size, two surfaces. Never depends on its wrapper.</p>
+
+  <h2>Variants</h2>
+  <div class="row">
+    <a class="btn primary" href="#">Download the App</a>
+    <a class="btn ghost" href="#">Contact Us</a>
+  </div>
+  <p class="note"><code>.btn.primary</code> · <code>.btn.ghost</code></p>
+
+  <h2>Size</h2>
+  <div class="row">
+    <a class="btn primary" href="#">Default — 14px</a>
+    <a class="btn primary lg" href="#">Large — 16px</a>
+  </div>
+  <p class="note"><code>.btn</code> · <code>.btn.lg</code> — used for the primary CTA in the hero and the CTA band.</p>
+
+  <h2>With icon</h2>
+  <div class="row">
+    <a class="btn primary" href="#">Read more
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg>
+    </a>
+    <a class="btn ghost" href="#">Become a Venue Partner
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg>
+    </a>
+  </div>
+  <p class="note">Icons scale with the text automatically (<code>width: 1em</code>) — no per-location sizing needed.</p>
+
+  <h2>Surface — over dark photo/video</h2>
+  <div class="panel dark">
+    <div class="row">
+      <a class="btn primary on-dark" href="#">Login</a>
+      <a class="btn ghost on-dark" href="#">Learn more first</a>
+    </div>
+    <p class="note"><code>.on-dark</code> — frosted glass, used by the navbar while it floats over the hero.</p>
+  </div>
+
+  <h2>Surface — over brand red</h2>
+  <div class="panel brand">
+    <div class="row">
+      <a class="btn primary lg on-brand" href="#">Download the app</a>
+    </div>
+    <p class="note"><code>.on-brand</code> — white with red text, used in the CTA band.</p>
+  </div>
+
+  <h2>Focus (press Tab to see)</h2>
+  <div class="row">
+    <a class="btn primary" href="#">Red focus ring</a>
+    <a class="btn primary on-brand" href="#" style="background:var(--bg-white);color:var(--brand)">White focus ring</a>
+  </div>
+  <p class="note">The focus ring follows the surface — red on light, white on red/dark so it stays visible.</p>
+
+</div>
+</body>
+</html>

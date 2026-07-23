@@ -1,0 +1,201 @@
+/* ==========================================================================
+   AYO — PadelLevels Rating
+   Calm two-panel band: a white rating card on the left, explainer copy on the
+   right. Full-bleed off-white field, no frame and no rules — the field and
+   the white card carry the structure on their own. Supporting section, not a
+   hero — quiet on purpose.
+   Depends on: styles/tokens.css (tokens only). No JS.
+
+   Anatomy:  .plr                      section
+               .plr__shell             site container (aligns with nav/hero)
+                 .plr__board           reveal wrapper (colour is on .plr)
+                   .plr__header        logo + eyebrow + title
+                   .plr__body          two columns
+                     .plr__gutter      left cell — holds the card
+                     .plr__explain     right cell — copy + the section's one CTA
+                       .plr__card      white rating card (no CTA — see below)
+   ========================================================================== */
+
+.plr {
+  /* Component-local names on the left, design-system tokens on the right.
+     Values with no token equivalent are written literally and marked. */
+  --plr-red: var(--brand);
+  --plr-ink: var(--text-default);
+  --plr-ink-muted: rgb(97, 97, 97);          /* no token */
+  --plr-ink-faint: rgb(140, 140, 140);       /* no token */
+  --plr-slash: rgb(150, 150, 150);           /* no token */
+  /* oklch(0.98 0 0) — neutral, no chroma. Declared twice on purpose: engines
+     without oklch keep the hex, newer ones take the second and get the exact
+     value the picker produced instead of a rounded 8-bit approximation.
+     Full-bleed, so this is the section's own colour, not a panel on the page. */
+  --plr-field: #f8f8f8;
+  --plr-field: oklch(0.98 0 0);
+  --plr-card: var(--bg-white);
+  /* Raised from .07: against the old cream the card read on its fill alone, but
+     white on #fcf9fa is a 1% difference — the border is now the only thing
+     holding the card's edge. */
+  --plr-card-border: rgba(26, 25, 25, .14);
+  --plr-track: rgba(26, 25, 25, .1);
+  --plr-btn-border: rgba(26, 25, 25, .22);
+
+  padding: clamp(36px, 5vw, 72px) 0;
+  background: var(--plr-field);
+  color: var(--plr-ink);
+  font-family: var(--font-sans);
+}
+
+/* Fallbacks apply when the component stands alone (preview); inside a page the
+   host page's own --container/--edge win. */
+.plr__shell {
+  width: 100%; max-width: var(--container, 1440px);
+  margin: 0 auto; padding: 0 var(--edge, clamp(16px, 2.5vw, 40px));
+}
+/* The colour lives on .plr and runs edge to edge, so this is a plain wrapper —
+   it exists only to carry the reveal-on-scroll class. No radius: rounded corners
+   on a full-bleed band would leave page-white slivers at each corner, which is
+   the exact gap this change removes. */
+/* ---- Header ---------------------------------------------------------------- */
+/* Horizontal padding removed with the frame: the board used to be an inset
+   panel, so 44px of its own made sense. Full-bleed, that same padding pushes
+   the title 44px further in than the nav and the hero. The shell sets the edge
+   now — everything below aligns to it. */
+.plr__header {
+  padding: 40px 0 32px;
+}
+.plr__eyebrow {
+  font-family: var(--font-mono); font-size: 13px; font-weight: var(--fw-semibold);
+  text-transform: uppercase; letter-spacing: .14em;
+  color: var(--plr-red);
+}
+.plr__title {
+  margin-top: 12px;
+  font-weight: var(--fw-extrabold);
+  font-size: clamp(28px, 3vw, 40px); line-height: 1.04; letter-spacing: -.02em;
+}
+
+/* ---- Body ------------------------------------------------------------------ */
+/* Card first, explainer second — the figure is the point of the section and
+   the copy annotates it. The card column is the NARROWER of the two: its job is
+   to hold one row of numbers, and past that width the stats drift apart and the
+   card starts reading as an empty panel. */
+.plr__body {
+  display: grid; grid-template-columns: 0.78fr 1.22fr;
+  gap: clamp(24px, 3vw, 56px);
+}
+
+.plr__explain {
+  padding: 0 0 40px;
+  display: flex; flex-direction: column; justify-content: center; gap: 20px;
+}
+.plr__label {
+  font-family: var(--font-mono); font-size: 13px; font-weight: var(--fw-semibold);
+  text-transform: uppercase; letter-spacing: .12em;
+  color: var(--plr-ink-faint);
+}
+.plr__copy {
+  max-width: 420px;
+  font-size: 17px; line-height: 1.6; color: var(--plr-ink-muted);
+}
+
+/* ---- Rating card -----------------------------------------------------------
+   Dialled down a step across the board — padding, gaps, type and the numeral.
+   The card no longer carries the CTA, so it holds less and a smaller frame reads
+   as deliberate rather than half-empty. */
+.plr__gutter { padding: 0 0 40px; display: flex; }
+.plr__card {
+  /* Confidence drives BOTH the percentage text and the bar. Set it here and the
+     bar follows; the text below is written out, so the two must be kept in step
+     until something injects real data. */
+  --plr-confidence: 74%;
+
+  flex: 1; min-width: 0;
+  background: var(--plr-card);
+  border-radius: 16px;
+  box-shadow: inset 0 0 0 1px var(--plr-card-border);
+  padding: 26px;
+  display: flex; flex-direction: column; gap: 18px;
+}
+.plr__card-head {
+  display: flex; align-items: center; gap: 9px;
+  font-weight: var(--fw-semibold); font-size: 14px; color: var(--plr-ink);
+}
+.plr__card-head .plr__mark { flex-shrink: 0; display: block; }
+/* Only the card carries the mark now. Belt and braces: if only one of the
+   width/height attributes is ever edited, this keeps it from stretching. */
+.plr__mark { aspect-ratio: 108 / 90; height: auto; }
+
+/* Numbers and bar share one column so the bar sits tight under the figures
+   rather than floating in the card's 22px rhythm. */
+.plr__meter { display: flex; flex-direction: column; gap: 9px; }
+.plr__stats { display: flex; align-items: flex-end; gap: 28px; }
+.plr__stat-lbl {
+  display: block;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--plr-ink-faint);
+}
+.plr__stat--status,
+.plr__stat--conf { padding-bottom: 6px; }
+/* Pushed to the far edge so the row reads level → status → confidence with the
+   percentage landing over the end of the bar it describes. */
+.plr__stat--conf { margin-left: auto; text-align: right; }
+.plr__stat-val { font-weight: var(--fw-bold); font-size: 18px; color: var(--plr-ink); }
+
+.plr__level-row { display: flex; align-items: flex-end; gap: 6px; }
+.plr__level {
+  font-family: var(--font-num); font-weight: var(--fw-bold);
+  font-size: clamp(44px, 4vw, 58px); line-height: .78; letter-spacing: -.03em;
+  color: var(--plr-ink); font-variant-numeric: tabular-nums;
+}
+.plr__scale {
+  font-family: var(--font-mono); font-size: 12px; color: var(--plr-slash);
+  padding-bottom: 6px;
+}
+
+.plr__track {
+  position: relative; height: 7px;
+  border-radius: var(--radius-pill); background: var(--plr-track);
+}
+.plr__fill {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: var(--plr-confidence);
+  border-radius: var(--radius-pill); background: var(--plr-red);
+}
+
+.plr__desc {
+  max-width: 520px;
+  font-size: 14px; line-height: 1.6; color: var(--plr-ink-muted);
+}
+
+.plr__cta {
+  align-self: flex-start;
+  display: inline-flex; align-items: center; gap: 10px;
+  min-height: 44px; padding: 14px 24px;
+  font-weight: var(--fw-bold); font-size: 14px;
+  color: var(--plr-ink); text-decoration: none;
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 0 0 1px var(--plr-btn-border);
+  transition: box-shadow .2s, background .2s;
+}
+.plr__cta:hover { box-shadow: inset 0 0 0 1px var(--plr-ink); background: var(--bg-subtle); }
+.plr__cta svg { width: 16px; height: 16px; color: var(--plr-red); flex-shrink: 0; }
+.plr__cta:focus-visible { outline: 3px solid var(--plr-red); outline-offset: 3px; }
+
+/* ---- Responsive ------------------------------------------------------------
+   The card needs room for a 72px numeral plus three stat blocks on one line;
+   below this the two columns stop working. */
+@media (max-width: 900px) {
+  .plr__body { grid-template-columns: 1fr; }
+  .plr__header { padding: var(--space-6) 0 var(--space-6); }
+  .plr__explain { padding: 0 0 var(--space-8); }
+  .plr__gutter { padding: 0 0 var(--space-8); }
+  .plr__card { padding: var(--space-6); }
+  .plr__copy { max-width: none; }
+}
+
+@media (max-width: 560px) {
+  /* Three stat blocks stop fitting on one line — confidence drops below rather
+     than being crushed against the level number. */
+  .plr__stats { flex-wrap: wrap; gap: var(--space-6); }
+  .plr__stat--conf { margin-left: 0; text-align: left; }
+  .plr__cta { align-self: stretch; justify-content: center; }
+}

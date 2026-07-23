@@ -60,8 +60,10 @@
      pages not yet migrated to var(). */
   --radius-xs: 4px;      /* tags, small chips */
   --radius-sm: 6px;      /* inputs, small buttons */
-  --radius-md: 8px;      /* buttons, cards (default) */
-  --radius-lg: 12px;     /* large cards, modals (was 20) */
+  /* Radius follows control size: standard controls use md, large controls
+     (hero CTA, .lg buttons) step up to lg. */
+  --radius-md: 8px;      /* cards, default buttons */
+  --radius-lg: 12px;     /* large CTA buttons, large cards, modals (was 20) */
   --radius-xl: 16px;     /* hero panels, sheets */
   --radius-pill: 999px;  /* pill buttons, badges */
   /* circular (avatars/icon circles): use border-radius:50% directly — no token. */

@@ -1,0 +1,66 @@
+<!-- @dsCard group="Components" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AYO — Store Rating</title>
+<link rel="stylesheet" href="../../styles/tokens.css">
+<link rel="stylesheet" href="store-rating.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font-sans); background: var(--bg-dark); color: var(--text-inverse); padding: 48px 32px; }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  h1 { font-size: 26px; font-weight: var(--fw-extrabold); letter-spacing: -.02em; }
+  .lead { color: rgba(255,255,255,.6); margin-top: 6px; font-size: var(--fs-body-lg); }
+  h2 { font-size: var(--fs-small); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: .08em;
+       color: rgba(255,255,255,.45); margin: 40px 0 16px; }
+  .stage { padding: 26px 28px; border-radius: var(--radius-lg); background: rgba(255,255,255,.04);
+           border: 1px solid rgba(255,255,255,.1); }
+  .note { color: rgba(255,255,255,.5); font-size: var(--fs-small); margin-top: 12px; line-height: 1.55; }
+  code { font-family: var(--font-mono); font-size: var(--fs-caption);
+         background: rgba(255,255,255,.12); border-radius: var(--radius-xs); padding: 1px 6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Store Rating</h1>
+  <p class="lead">Social proof from app-store ratings. White text, store icons keep their own brand colours.</p>
+
+  <h2>Default</h2>
+  <div class="stage">
+
+    <div class="store-rating">
+      <p class="sr-label">User rating</p>
+      <div class="sr-items">
+
+        <a class="sr-item" href="#" aria-label="AYO rating on the App Store: 4.9 out of 5">
+          <img class="sr-ico" src="../../assets/appstore.svg" alt="" width="32" height="32">
+          <span class="sr-text">
+            <span class="sr-score">4.9
+              <svg class="sr-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 14.47 8.6 21.51 8.91 15.99 13.3 17.88 20.09 12 16.2 6.12 20.09 8.01 13.3 2.49 8.91 9.53 8.6Z"/></svg>
+            </span>
+            <span class="sr-store">App Store</span>
+          </span>
+        </a>
+
+        <a class="sr-item" href="#" aria-label="AYO rating on Google Play: 4.8 out of 5">
+          <img class="sr-ico" src="../../assets/googleplay.svg" alt="" width="29" height="32">
+          <span class="sr-text">
+            <span class="sr-score">4.8
+              <svg class="sr-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 14.47 8.6 21.51 8.91 15.99 13.3 17.88 20.09 12 16.2 6.12 20.09 8.01 13.3 2.49 8.91 9.53 8.6Z"/></svg>
+            </span>
+            <span class="sr-store">Google Play</span>
+          </span>
+        </a>
+
+      </div>
+    </div>
+
+    <p class="note">Store icons deliberately do not inherit <code>currentColor</code> — each is locked to its own brand colours. For production, swap in the official badge assets from Apple and Google (both publish their own brand guidelines).</p>
+  </div>
+
+</div>
+</body>
+</html>
