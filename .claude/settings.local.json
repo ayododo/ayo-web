@@ -210,7 +210,9 @@
       "Bash(git rev-list *)",
       "Bash(awk '{print \"  di belakang: \"$1\"   di depan: \"$2}')",
       "Bash(vercel projects *)",
-      "Bash(vercel teams *)"
+      "Bash(vercel teams *)",
+      "Bash(vercel --prod --yes)",
+      "Bash(vercel inspect *)"
     ]
   }
 }

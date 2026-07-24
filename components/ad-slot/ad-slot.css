@@ -1,0 +1,113 @@
+/* ==========================================================================
+   AYO — Ad Slot
+   A quiet, framed brand-partner ad band: a labeled header rail above one framed
+   creative slot. Supporting section — deliberately
+   low-key, never competes with the content around it.
+   Depends on: styles/tokens.css (tokens only). No JS.
+
+   Anatomy:  .adslot                   section
+               .adslot__shell          site container (aligns with nav/hero)
+                 .adslot__band         white band, rounded, no shadow
+                   .adslot__rail       ADVERTISEMENT + heading + SPONSORED pill
+                   .adslot__slot       the framed creative (img / video / iframe)
+   ========================================================================== */
+
+.adslot {
+  /* Component-local names on the left, design-system tokens on the right.
+     Values with no token equivalent are written literally and marked. */
+  --ad-ink: var(--text-default);
+  --ad-muted: rgb(150, 146, 140);            /* no token: warm mid-grey */
+  --ad-card: var(--bg-white);
+  --ad-slot-fill: rgb(247, 245, 243);        /* matches --bg-cream family */
+  --ad-slot-border: rgba(26, 25, 25, .14);
+  --ad-pill-border: rgba(26, 25, 25, .18);
+
+  padding: clamp(36px, 5vw, 72px) 0;
+  background: var(--ad-card);
+  color: var(--ad-ink);
+  font-family: var(--font-sans);
+}
+
+/* Fallbacks apply when the component stands alone (preview); inside a page the
+   host page's own --container/--edge win, so the band lines up with every other
+   section's content edge. */
+.adslot__shell {
+  width: 100%; max-width: var(--container, 1440px);
+  margin: 0 auto; padding: 0 var(--edge, clamp(16px, 2.5vw, 40px));
+}
+
+/* No drop shadow in production: this band supports, it does not float above the
+   page. The rounded corners plus the slot's own hairline are the whole frame. */
+.adslot__band {
+  background: var(--ad-card);
+  border-radius: 18px; overflow: hidden;
+}
+.adslot__inner {
+  box-sizing: border-box;
+  padding: 28px 36px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+/* ---- Header rail ----------------------------------------------------------- */
+.adslot__rail {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: var(--space-4);
+}
+.adslot__rail-main { display: flex; flex-direction: column; gap: 6px; }
+.adslot__kicker {
+  font-family: var(--font-mono); font-size: 12px; font-weight: var(--fw-semibold);
+  text-transform: uppercase; letter-spacing: .14em; color: var(--ad-muted);
+}
+.adslot__heading {
+  font-weight: var(--fw-bold); font-size: 18px; color: var(--ad-ink);
+}
+.adslot__pill {
+  flex-shrink: 0;
+  font-family: var(--font-mono); font-size: 11px; font-weight: var(--fw-semibold);
+  text-transform: uppercase; letter-spacing: .1em; color: var(--ad-muted);
+  border: 1px solid var(--ad-pill-border); border-radius: var(--radius-pill);
+  padding: 4px 10px;
+}
+
+/* ---- Creative slot ---------------------------------------------------------
+   The fallback text sits UNDER the creative (z-order), so an <img>/<video> that
+   fills the slot simply covers it. No JS needed to hide the placeholder — if a
+   creative loads, it is on top; if the slot is empty, the text shows through. */
+.adslot__slot {
+  position: relative;
+  width: 100%; height: 236px;
+  border-radius: 14px; overflow: hidden;
+  background: var(--ad-slot-fill);
+  box-shadow: inset 0 0 0 1px var(--ad-slot-border);
+}
+.adslot__fallback {
+  position: absolute; inset: 0; z-index: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--ad-muted);
+}
+.adslot__creative,
+.adslot__slot > a {
+  position: relative; z-index: 1; display: block;
+  width: 100%; height: 100%;
+}
+.adslot__creative { object-fit: cover; }
+.adslot__slot > a .adslot__creative { position: static; }
+/* An advertiser link should show it is interactive. */
+.adslot__slot > a:focus-visible { outline: 3px solid var(--ad-ink); outline-offset: -3px; }
+
+
+/* ---- Responsive ------------------------------------------------------------ */
+@media (max-width: 900px) {
+  .adslot__inner { padding: var(--space-6); gap: var(--space-4); }
+  .adslot__slot { height: clamp(140px, 22vw, 160px); }
+  /* Not wide enough to hold the heading and the pill on one line — the pill
+     drops under the heading rather than crushing it. */
+  .adslot__rail { flex-wrap: wrap; align-items: flex-start; gap: var(--space-3); }
+}
+
+/* ---- Reduced motion --------------------------------------------------------
+   Any video creative must not autoplay motion; the poster frame stands in. */
+@media (prefers-reduced-motion: reduce) {
+  .adslot__creative[autoplay] { display: none; }
+}

@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="components/marquee/marquee.css">
 <link rel="stylesheet" href="components/activity-board/activity-board.css">
 <link rel="stylesheet" href="components/padellevels-rating/padellevels-rating.css">
+<link rel="stylesheet" href="components/ad-slot/ad-slot.css">
 <style>
   :root{ --container:1440px; --edge:clamp(16px,2.5vw,40px); --hair:rgba(26,25,25,.12); }
   *{margin:0;padding:0;box-sizing:border-box}
@@ -193,13 +194,10 @@
   #cerita{background:var(--bg-white)}
   .vtabs{display:grid;grid-template-columns:minmax(0,340px) 1fr;gap:clamp(28px,4vw,64px);margin-top:var(--space-20);align-items:start}
   .vtab-list{display:flex;flex-direction:column}
-  .vtab{display:flex;align-items:baseline;gap:var(--space-4);text-align:left;background:none;border:0;border-bottom:1px solid var(--hair);cursor:pointer;padding:var(--space-5) var(--space-2);font-family:var(--font-sans);color:var(--text-dim);transition:color .25s,padding-left .3s cubic-bezier(.2,.7,.2,1)}
-  .vtab .vicon{flex-shrink:0;display:inline-flex;color:var(--text-placeholder);transition:color .25s,transform .25s}
-  .vtab .vicon svg{width:18px;height:18px;display:block}
+  .vtab{display:flex;align-items:baseline;gap:var(--space-4);text-align:left;background:none;border:0;cursor:pointer;padding:var(--space-5) var(--space-2);font-family:var(--font-sans);color:var(--text-dim);transition:color .25s,padding-left .3s cubic-bezier(.2,.7,.2,1)}
   .vtab .vt{font-size:clamp(19px,2vw,26px);font-weight:var(--fw-bold);letter-spacing:-.01em;line-height:1.15}
   .vtab:hover{color:var(--text-default)}
   .vtab[aria-selected="true"]{color:var(--text-default);padding-left:var(--space-5)}
-  .vtab[aria-selected="true"] .vicon{color:var(--brand)}
   .vpane{display:none}
   .vpane.active{display:grid;grid-template-columns:auto 1fr;gap:clamp(24px,3vw,48px);align-items:center;animation:vfade .4s ease-out}
   @keyframes vfade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
@@ -609,6 +607,31 @@
   </div>
 </section>
 
+<!-- 7.5 AD SLOT — brand-partner ad band -->
+<section class="adslot" aria-label="Advertisement">
+  <div class="adslot__shell">
+    <div class="adslot__band reveal">
+      <div class="adslot__inner">
+
+        <div class="adslot__rail">
+          <div class="adslot__rail-main">
+            <p class="adslot__kicker">Advertisement</p>
+            <p class="adslot__heading">Featured brand partner</p>
+          </div>
+          <span class="adslot__pill">Sponsored</span>
+        </div>
+
+        <div class="adslot__slot">
+          <span class="adslot__fallback">Brand partner creative</span>
+          <!-- Creative goes here (img / video / ad-tag iframe). -->
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- 8. TESTIMONIALS -->
 <section class="sec" id="cerita">
   <div class="wrap">
@@ -616,9 +639,9 @@
     <h2 class="sec-title reveal">From the people who <span class="hl">play every week</span>.</h2>
     <div class="vtabs reveal">
       <div class="vtab-list" role="tablist" aria-orientation="vertical" aria-label="Story categories">
-        <button class="vtab" role="tab" aria-selected="true"><span class="vicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></span><span class="vt">Finding opponents</span></button>
-        <button class="vtab" role="tab" aria-selected="false"><span class="vicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></span><span class="vt">Booking courts</span></button>
-        <button class="vtab" role="tab" aria-selected="false"><span class="vicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></span><span class="vt">Community</span></button>
+        <button class="vtab" role="tab" aria-selected="true"><span class="vt">Finding opponents</span></button>
+        <button class="vtab" role="tab" aria-selected="false"><span class="vt">Booking courts</span></button>
+        <button class="vtab" role="tab" aria-selected="false"><span class="vt">Community</span></button>
       </div>
       <div class="vpanel">
         <div class="vpane active" role="tabpanel">

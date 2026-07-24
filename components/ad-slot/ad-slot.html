@@ -1,0 +1,41 @@
+<!-- ==========================================================================
+     AYO — Ad Slot
+     Static markup. Paste into the page and load ad-slot.css. No JS.
+
+     The empty state below is the default. To fill it, drop a creative INSIDE
+     .adslot__slot — it renders on top of the fallback text, no toggle needed:
+
+       <img class="adslot__creative" src="..." alt="Advertiser name — campaign">
+
+     or, to make the whole slot a link:
+
+       <a href="https://advertiser.example" target="_blank" rel="sponsored noopener">
+         <img class="adslot__creative" src="..." alt="...">
+       </a>
+
+     Serve the creative at 1368 × 236 (2× = 2736 × 472). Video: add `poster`
+     and omit `autoplay` — reduced-motion users get the poster frame.
+     ========================================================================== -->
+<section class="adslot" aria-label="Advertisement">
+  <div class="adslot__shell">
+    <div class="adslot__band reveal">
+      <div class="adslot__inner">
+
+        <div class="adslot__rail">
+          <div class="adslot__rail-main">
+            <p class="adslot__kicker">Advertisement</p>
+            <p class="adslot__heading">Featured brand partner</p>
+          </div>
+          <span class="adslot__pill">Sponsored</span>
+        </div>
+
+        <div class="adslot__slot">
+          <span class="adslot__fallback">Brand partner creative</span>
+          <!-- Creative goes here (img / video / ad-tag iframe). -->
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</section>
