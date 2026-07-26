@@ -42,9 +42,11 @@
   background: var(--ad-card);
   border-radius: 18px; overflow: hidden;
 }
+/* No horizontal padding: the band's content edge must line up with the sections
+   above and below, which sit flush against the shell's --edge. */
 .adslot__inner {
   box-sizing: border-box;
-  padding: 28px 36px;
+  padding: 28px 0;
   display: flex; flex-direction: column; gap: 16px;
 }
 
@@ -75,7 +77,7 @@
    creative loads, it is on top; if the slot is empty, the text shows through. */
 .adslot__slot {
   position: relative;
-  width: 100%; height: 236px;
+  width: 100%; height: 200px;
   border-radius: 14px; overflow: hidden;
   background: var(--ad-slot-fill);
   box-shadow: inset 0 0 0 1px var(--ad-slot-border);
@@ -99,7 +101,7 @@
 
 /* ---- Responsive ------------------------------------------------------------ */
 @media (max-width: 900px) {
-  .adslot__inner { padding: var(--space-6); gap: var(--space-4); }
+  .adslot__inner { padding: var(--space-6) 0; gap: var(--space-4); }
   .adslot__slot { height: clamp(140px, 22vw, 160px); }
   /* Not wide enough to hold the heading and the pill on one line — the pill
      drops under the heading rather than crushing it. */

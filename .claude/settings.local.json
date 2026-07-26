@@ -212,7 +212,13 @@
       "Bash(vercel projects *)",
       "Bash(vercel teams *)",
       "Bash(vercel --prod --yes)",
-      "Bash(vercel inspect *)"
+      "Bash(vercel inspect *)",
+      "Bash(perl -ni -e 'print unless /^\\\\s*<a class=\"link\" href=\"#\">Baca cerita <span class=\"arr\">→<\\\\/span><\\\\/a>\\\\s*$/' index.html)",
+      "Bash(echo \"exit:$?\")",
+      "Bash(node --check /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0be404dc-99e1-48ad-89f9-3a141df12b25/scratchpad/inline.js)",
+      "Bash(sips -c 2886 1440 --cropOffset 0 0 full.png --out top.png)",
+      "Bash(sips -c 2886 1440 --cropOffset 2886 0 full.png --out bottom.png)",
+      "Bash(sips -g pixelWidth -g pixelHeight full.png)"
     ]
   }
 }

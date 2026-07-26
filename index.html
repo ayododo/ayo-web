@@ -194,22 +194,41 @@
   #cerita{background:var(--bg-white)}
   .vtabs{display:grid;grid-template-columns:minmax(0,340px) 1fr;gap:clamp(28px,4vw,64px);margin-top:var(--space-20);align-items:start}
   .vtab-list{display:flex;flex-direction:column}
-  .vtab{display:flex;align-items:baseline;gap:var(--space-4);text-align:left;background:none;border:0;cursor:pointer;padding:var(--space-5) var(--space-2);font-family:var(--font-sans);color:var(--text-dim);transition:color .25s,padding-left .3s cubic-bezier(.2,.7,.2,1)}
+  .vtab{position:relative;display:flex;align-items:baseline;gap:var(--space-4);text-align:left;background:none;border:0;cursor:pointer;padding:var(--space-5) var(--space-2);font-family:var(--font-sans);color:var(--text-dim);transition:color .18s,padding-left .22s cubic-bezier(.22,1,.36,1)}
+  /* Invisible on purpose. This pseudo-element is the CLOCK, not decoration: the
+     slide advances on its animationend (see JS), and because the timing lives in
+     CSS, the pause rules below cost no JS bookkeeping and can never drift out of
+     sync. It is never painted — no size, no fill — so do not "clean it up". */
+  .vtab::before{content:"";position:absolute;left:0;top:0;width:0;height:0;opacity:0;pointer-events:none}
+  .vtab.ticking::before{animation:vtick var(--vdur,6s) linear forwards}
+  @keyframes vtick{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+  /* Hover deliberately does NOT hold the timer — a cursor resting here while
+     scrolling is not a decision. Only an outright click stops it (see JS), which
+     is why there is no :hover branch below. Keyboard focus does hold it, so the
+     selected tab cannot move out from under someone navigating with arrows. */
+  .vtabs:focus-within .vtab::before,.vtabs.paused .vtab::before{animation-play-state:paused}
   .vtab .vt{font-size:clamp(19px,2vw,26px);font-weight:var(--fw-bold);letter-spacing:-.01em;line-height:1.15}
   .vtab:hover{color:var(--text-default)}
   .vtab[aria-selected="true"]{color:var(--text-default);padding-left:var(--space-5)}
-  .vpane{display:none}
-  .vpane.active{display:grid;grid-template-columns:auto 1fr;gap:clamp(24px,3vw,48px);align-items:center;animation:vfade .4s ease-out}
-  @keyframes vfade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  /* Every pane sits in the SAME grid cell so one can dissolve into the next.
+     Two things fall out of this that display:none could never give us: the old
+     slide fades instead of vanishing in a single frame, and the panel is always
+     as tall as its tallest quote, so switching never jolts the page height. */
+  .vpanel{display:grid}
+  .vpane{grid-area:1/1;display:grid;grid-template-columns:auto 1fr;gap:clamp(24px,3vw,48px);align-items:center;
+    opacity:0;visibility:hidden;transform:translateY(6px);
+    transition:opacity .14s linear,transform .14s linear,visibility 0s linear .14s}
+  /* The incoming slide starts a beat late and settles on a decelerating curve, so
+     the two never sit at half-opacity together — that overlap is what reads as
+     muddy. Out fast and flat, in slightly slower and eased. */
+  .vpane.active{opacity:1;visibility:visible;transform:none;
+    transition:opacity .2s ease-out .06s,transform .3s cubic-bezier(.22,1,.36,1) .06s,visibility 0s}
   .vpane blockquote{font-size:clamp(22px,2.6vw,32px);font-weight:var(--fw-medium);line-height:1.4;letter-spacing:-.01em;color:var(--text-default)}
   .q-head{display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-4)}
   .q-photo{width:clamp(140px,24vw,260px);aspect-ratio:1;border-radius:var(--radius-lg);background:var(--bg-subtle);border:1px solid var(--bg-subtle-bold);flex-shrink:0;overflow:hidden;display:grid;place-items:center;font-weight:var(--fw-bold);color:var(--text-dim);font-family:var(--font-mono);font-size:clamp(24px,4vw,48px);letter-spacing:.05em}
   .q-photo img{width:100%;height:100%;object-fit:cover;display:block}
   .q-who .by{font-weight:var(--fw-bold);color:var(--text-default);font-size:var(--fs-h3)}
   .q-who .by-sub{color:var(--text-dim);font-size:var(--fs-body-lg);margin-top:2px}
-  .vpane .link{display:inline-flex;align-items:center;gap:var(--space-2);font-weight:var(--fw-semibold);color:var(--brand);margin-top:var(--space-6)}
-  .vpane .link .arr{transition:transform .18s}
-  .vpane .link:hover .arr{transform:translateX(4px)}
 
   /* ---------- 9. CTA band ---------- */
   .ctaband{background:var(--brand);color:#fff;text-align:center;padding:clamp(48px,7vw,96px) 0}
@@ -289,7 +308,7 @@
     .hcell + .hcell{border-left:0;border-top:1px solid var(--hair)}
     .b2b{grid-template-columns:1fr}
     .vtabs{grid-template-columns:1fr;gap:var(--space-8)}
-    .vpane.active{grid-template-columns:1fr;gap:var(--space-6)}
+    .vpane{grid-template-columns:1fr;gap:var(--space-6)}
     .foot-cols{grid-template-columns:1fr 1fr}
   }
 
@@ -311,8 +330,10 @@
       <div class="nav-item has-sub">
         <button class="nav-top" aria-expanded="false" aria-haspopup="true">Activities <span class="chev" aria-hidden="true"></span></button>
         <div class="submenu">
-          <a href="open-play.html">Join activity</a>
-          <a href="open-play.html">Hosting activity</a>
+          <a href="https://ayo.co.id/main-bareng">Join activity</a>
+          <!-- TODO: gets its own single page once that design exists. Deliberately
+               parked on # — the wireframe it used to point at has been deleted. -->
+          <a href="#">Hosting activity</a>
         </div>
       </div>
       <div class="nav-item"><a class="nav-top" href="#booking">For Venue Owners</a></div>
@@ -639,9 +660,12 @@
     <h2 class="sec-title reveal">From the people who <span class="hl">play every week</span>.</h2>
     <div class="vtabs reveal">
       <div class="vtab-list" role="tablist" aria-orientation="vertical" aria-label="Story categories">
-        <button class="vtab" role="tab" aria-selected="true"><span class="vt">Finding opponents</span></button>
-        <button class="vtab" role="tab" aria-selected="false"><span class="vt">Booking courts</span></button>
-        <button class="vtab" role="tab" aria-selected="false"><span class="vt">Community</span></button>
+        <!-- --vdur is per slide, scaled to how much there is to read (~2s + 0.32s
+             per word). A single duration would cut the longest quote short or
+             leave the shortest one hanging. -->
+        <button class="vtab" role="tab" aria-selected="true" style="--vdur:10s"><span class="vt">Finding opponents</span></button>
+        <button class="vtab" role="tab" aria-selected="false" style="--vdur:8.5s"><span class="vt">Booking courts</span></button>
+        <button class="vtab" role="tab" aria-selected="false" style="--vdur:7.5s"><span class="vt">Community</span></button>
       </div>
       <div class="vpanel">
         <div class="vpane active" role="tabpanel">
@@ -651,7 +675,6 @@
           </div>
           <div class="q-body">
             <blockquote>“It used to be hard to find opponents at my level. Now there’s an Open Play session near home every Saturday — and the match-ups are spot on.”</blockquote>
-            <a class="link" href="#">Baca cerita <span class="arr">→</span></a>
           </div>
         </div>
         <div class="vpane" role="tabpanel">
@@ -661,7 +684,6 @@
           </div>
           <div class="q-body">
             <blockquote>“Booking a futsal court takes two minutes, paid with QRIS. No more endless phone calls on behalf of the group.”</blockquote>
-            <a class="link" href="#">Baca cerita <span class="arr">→</span></a>
           </div>
         </div>
         <div class="vpane" role="tabpanel">
@@ -671,7 +693,6 @@
           </div>
           <div class="q-body">
             <blockquote>“I went from first-timer to having a regular playing circle. The SKOR rating makes levelling up addictive.”</blockquote>
-            <a class="link" href="#">Baca cerita <span class="arr">→</span></a>
           </div>
         </div>
       </div>
@@ -805,18 +826,48 @@
     addEventListener('resize',function(){ moveInd(list.querySelector('.itab[aria-selected="true"]')); });
   });
 
-  /* Testimonial tabs — click + ArrowLeft/Right */
+  /* Testimonial tabs — auto-advance, click + ArrowUp/Down.
+     The CSS countdown rail IS the timer: each step ends when its animation ends,
+     so the focus / off-screen pausing done in CSS needs no JS bookkeeping and
+     the bar can never drift out of sync with the slide it belongs to. */
   var vtabs=[].slice.call(document.querySelectorAll('.vtab')), vpanes=[].slice.call(document.querySelectorAll('.vpane'));
+  var vwrap=document.querySelector('.vtabs'), vcur=0;
+  /* Under reduced motion the global rule collapses every animation to ~0ms, so
+     an auto-advance would strobe. Those users get the plain click-to-switch tabs. */
+  var vauto = !!vwrap && vtabs.length>1 && !rm;
+  /* Set once a user picks a slide by hand. Auto-advance exists only to show that
+     more than one story is here; a click proves that landed, so it retires and
+     never moves the content out from under the choice just made. */
+  var vtaken = false;
+
+  function vshow(i){
+    vcur=i;
+    vtabs.forEach(function(x,j){ x.setAttribute('aria-selected', i===j); x.classList.remove('ticking'); });
+    vpanes.forEach(function(p,j){ p.classList.toggle('active', i===j); });
+    if(vauto && !vtaken){ void vtabs[i].offsetWidth; vtabs[i].classList.add('ticking'); }  /* reflow restarts the rail */
+  }
+
   vtabs.forEach(function(b,i){
-    b.addEventListener('click',function(){
-      vtabs.forEach(function(x,j){ x.setAttribute('aria-selected', i===j); });
-      vpanes.forEach(function(p,j){ p.classList.toggle('active', i===j); });
-    });
+    /* Arrow keys route through .click(), so keyboard selection retires it too. */
+    b.addEventListener('click',function(){ vtaken=true; vshow(i); });
     b.addEventListener('keydown',function(e){
       if(e.key==='ArrowDown'||e.key==='ArrowUp'){ e.preventDefault();
         var n=(i+(e.key==='ArrowDown'?1:vtabs.length-1))%vtabs.length; vtabs[n].focus(); vtabs[n].click(); }
     });
+    if(vauto) b.addEventListener('animationend',function(e){
+      if(e.animationName==='vtick' && b.classList.contains('ticking')) vshow((vcur+1)%vtabs.length);
+    });
   });
+
+  if(vauto){
+    if('IntersectionObserver' in window){
+      vwrap.classList.add('paused');   /* hold until the section is actually on screen */
+      new IntersectionObserver(function(es){
+        vwrap.classList.toggle('paused', !es[0].isIntersecting);
+      },{threshold:.25}).observe(vwrap);
+    }
+    vshow(0);
+  }
 
   /* reveal on scroll */
   var reveals=[].slice.call(document.querySelectorAll('.reveal'));
