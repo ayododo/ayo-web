@@ -218,7 +218,25 @@
       "Bash(node --check /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0be404dc-99e1-48ad-89f9-3a141df12b25/scratchpad/inline.js)",
       "Bash(sips -c 2886 1440 --cropOffset 0 0 full.png --out top.png)",
       "Bash(sips -c 2886 1440 --cropOffset 2886 0 full.png --out bottom.png)",
-      "Bash(sips -g pixelWidth -g pixelHeight full.png)"
+      "Bash(sips -g pixelWidth -g pixelHeight full.png)",
+      "Bash(timeout 30 npx vercel ls)",
+      "Bash(npx vercel *)",
+      "Bash(git ls-tree *)",
+      "mcp__claude_ai_Figma__download_assets",
+      "Bash('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' --headless --disable-gpu --hide-scrollbars --window-size=1440,6200 --screenshot=/private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/local-full.png --virtual-time-budget=6000 http://localhost:8899/)",
+      "Bash(sips -Z 1400 /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/local-full.png -o /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/local-small.png)",
+      "Bash(ln -s /Users/rizkywibowo/Projects/ayo-revamp-web/assets /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/preview/assets)",
+      "Bash(ln -s /Users/rizkywibowo/Projects/ayo-revamp-web/components /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/preview/components)",
+      "Bash(ln -s /Users/rizkywibowo/Projects/ayo-revamp-web/styles /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/preview/styles)",
+      "Bash(sips -c 900 1440 --cropOffset 1560 0 /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/prev-full.png -o /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/crop-plr.png)",
+      "Bash(sips -c 760 1440 --cropOffset 2280 0 /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/prev-full.png -o /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/crop-booking.png)",
+      "Bash(sips -c 700 1440 --cropOffset 2980 0 /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/prev-full.png -o /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/crop-b2b.png)",
+      "Bash('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' --headless --disable-gpu --hide-scrollbars --window-size=390,7000 --screenshot=/private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/prev-390.png --virtual-time-budget=8000 http://localhost:8901/)",
+      "Bash(sips -c 1500 390 --cropOffset 1500 0 /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/prev-390.png -o /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/crop-390.png)",
+      "Bash(pkill -f \"http.server 8899\")",
+      "Bash(pkill -f \"http.server 8901\")",
+      "Bash(pkill -f \"http.server 8902\")",
+      "Bash(rm -rf __TRACKED_VAR__/preview __TRACKED_VAR__/preview-head)"
     ]
   }
 }
