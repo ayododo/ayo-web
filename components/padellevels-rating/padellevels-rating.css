@@ -31,10 +31,6 @@
   --plr-field: #f8f8f8;
   --plr-field: oklch(0.98 0 0);
   --plr-card: var(--bg-white);
-  /* Raised from .07: against the old cream the card read on its fill alone, but
-     white on #fcf9fa is a 1% difference — the border is now the only thing
-     holding the card's edge. */
-  --plr-card-border: rgba(26, 25, 25, .14);
   --plr-track: rgba(26, 25, 25, .1);
   --plr-btn-border: rgba(26, 25, 25, .22);
 
@@ -101,15 +97,17 @@
    Dialled down a step across the board — padding, gaps, type and the numeral.
    The card no longer carries the CTA, so it holds less and a smaller frame reads
    as deliberate rather than half-empty. */
-/* The card sits on a court photo rather than the page background. The inset is
-   78px at the 571px width the Figma frame is drawn at — expressed as a
-   percentage so all four sides stay equal as the column resizes, capped so it
-   stops growing once the column is wider than the frame. */
+/* The card sits on a court photo rather than the page background. The panel
+   carries the background asset's own ratio so the artwork shows the crop it was
+   exported with instead of being re-cropped by object-fit. Not a hard cap: if
+   the card ever outgrows the ratio (narrow viewports, where the stats wrap) the
+   panel grows taller and the photo simply covers more. */
 .plr__gutter {
   position: relative;
-  display: flex;
-  padding: clamp(20px, 13.6%, 78px);
-  border-radius: 16px;
+  display: flex; align-items: center;
+  aspect-ratio: 563 / 375;
+  padding: clamp(16px, 9.6%, 56px);
+  border-radius: 20px;
   overflow: hidden;
 }
 .plr__photo {
@@ -130,7 +128,6 @@
   flex: 1; min-width: 0;
   background: var(--plr-card);
   border-radius: 16px;
-  box-shadow: inset 0 0 0 1px var(--plr-card-border);
   padding: 26px;
   display: flex; flex-direction: column; gap: 18px;
 }

@@ -131,20 +131,6 @@
 .persona-hero.is-paused .ph-toggle .ph-ico-play  { display: block; }
 .persona-hero.is-paused .ph-toggle .ph-ico-pause { display: none; }
 
-/* The rule in front of the label echoes the hero eyebrow, so this control
-   reads as a deliberate system element rather than text stranded over video.
-   Muted white on purpose, not --brand, so it doesn't compete with the red
-   progress bar sitting directly below it. */
-.ph-switch-label {
-  display: flex; align-items: center; gap: var(--space-3);
-  font-family: var(--font-mono); font-size: var(--fs-caption); font-weight: var(--fw-semibold);
-  text-transform: uppercase; letter-spacing: .12em;
-  color: rgba(255,255,255,.55); margin-bottom: var(--space-3);
-}
-.ph-switch-label::before {
-  content: ''; width: 24px; height: 1.5px; flex-shrink: 0;
-  background: rgba(255,255,255,.45);
-}
 /* A continuous rail spans from the first tab to the last; the red progress
    fills the active tab's segment on top of that rail. */
 .ph-tabs {
