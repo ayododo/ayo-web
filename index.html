@@ -137,7 +137,11 @@
      The hairlines are the grid showing through — one background colour, 1px of
      padding and 1px gaps, with white children on top. Cheaper and more even than
      borders per cell, which double up wherever two cells meet. */
-  #booking{background:var(--bg-white)}
+  /* PadelLevels above runs its illustration flush into its own bottom edge, so
+     without this the first hairline starts the moment that photo stops. Same
+     value every other section uses, so the gap reads as the page's rhythm
+     rather than a one-off. Top only — the section still ends flush. */
+  #booking{background:var(--bg-white);padding-top:clamp(24px,2.8vw,40px)}
   /* No padding, so no hairline around the outside at all. What is left is drawn
      by the gap alone: the rule under the header and the divider between the two
      cards. The background colour only ever shows through those 1px seams. */
@@ -153,8 +157,8 @@
 
   /* Outer edge flush with the content column, inner edge held off the centre
      divider — so the text lines up with every section above and below. */
-  .bkg__card{background:var(--bg-white);padding:40px 40px 40px 0;display:flex;flex-direction:column;gap:26px}
-  .bkg__card--owners{padding:40px 0 40px 40px}
+  .bkg__card{background:var(--bg-white);padding:40px 40px 64px 0;display:flex;flex-direction:column;gap:26px}
+  .bkg__card--owners{padding:40px 0 64px 40px}
   .bkg__media{position:relative;aspect-ratio:639/300;border-radius:16px;overflow:hidden;background:rgb(242,240,238);box-shadow:inset 0 0 0 1px rgba(26,25,25,.1)}
   .bkg__media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
   /* Scrim over the lower 60% so the stat stays legible whatever the photo does. */
@@ -184,7 +188,7 @@
     .bkg__grid{grid-template-columns:1fr}
     .bkg__head{flex-direction:column;align-items:flex-start;gap:var(--space-5);padding:clamp(22px,4vw,44px) 0}
     .bkg__note{text-align:left}
-    .bkg__card,.bkg__card--owners{padding:clamp(22px,4vw,40px) 0}
+    .bkg__card,.bkg__card--owners{padding:clamp(22px,4vw,40px) 0 clamp(32px,5vw,64px)}
   }
 
   /* ---------- 7. Marketing B2B (editorial + reach stats) ---------- */
