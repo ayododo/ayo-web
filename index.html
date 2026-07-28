@@ -151,7 +151,11 @@
      by the gap alone: the rule under the header and the divider between the two
      cards. The background colour only ever shows through those 1px seams. */
   .bkg__grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(26,25,25,.16)}
-  .bkg__head{grid-column:1/-1;background:var(--bg-white);display:flex;align-items:flex-end;justify-content:space-between;gap:clamp(24px,4vw,64px);padding:44px 0}
+  .bkg__head{position:relative;grid-column:1/-1;background:var(--bg-white);display:flex;align-items:flex-end;justify-content:space-between;gap:clamp(24px,4vw,64px);padding:44px 0}
+  /* The 9px mark where the header rule meets the divider. Hung off the header's
+     bottom edge rather than measured from the top, since the header's height is
+     set by its own text. Positioned, so it paints over the cards' backgrounds. */
+  .bkg__head::after{content:'';position:absolute;left:50%;bottom:0;width:9px;height:9px;background:var(--brand);transform:translate(-50%,calc(50% + .5px))}
   .bkg__head-main{display:flex;flex-direction:column;gap:10px;min-width:0}
   .bkg__eyebrow{font-family:var(--font-mono);font-size:13px;font-weight:var(--fw-semibold);letter-spacing:1.82px;color:var(--brand)}
   .bkg__title{font-weight:var(--fw-extrabold);font-size:clamp(30px,3.75vw,54px);line-height:1.02;letter-spacing:-.03em}
@@ -192,6 +196,8 @@
   @media (max-width:900px){
     .bkg__grid{grid-template-columns:1fr}
     .bkg__head{flex-direction:column;align-items:flex-start;gap:var(--space-5);padding:clamp(22px,4vw,44px) 0}
+    /* One column, so there is no divider for the mark to sit on. */
+    .bkg__head::after{display:none}
     .bkg__note{text-align:left}
     .bkg__card,.bkg__card--owners{padding:clamp(22px,4vw,40px) 0 clamp(32px,5vw,64px)}
   }
