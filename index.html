@@ -54,7 +54,12 @@
 
   /* ---------- 1. Adaptive floating nav ---------- */
   .nav{position:fixed;top:0;left:0;right:0;z-index:50;background:transparent;color:var(--text-inverse);
-    transition:top .35s cubic-bezier(.2,.7,.2,1),left .35s cubic-bezier(.2,.7,.2,1),right .35s cubic-bezier(.2,.7,.2,1),background .3s,box-shadow .3s,border-radius .35s,color .3s}
+    transition:top .35s cubic-bezier(.2,.7,.2,1),left .35s cubic-bezier(.2,.7,.2,1),right .35s cubic-bezier(.2,.7,.2,1),background .3s,box-shadow .3s,border-radius .35s,color .3s,transform .3s cubic-bezier(.2,.7,.2,1)}
+  /* Reading downward, the nav is in the way; heading back up is usually the
+     move that wants it. -140% clears the floating state's 14px offset and its
+     shadow, so nothing peeks. */
+  .nav.nav--away{transform:translateY(-140%)}
+  @media (prefers-reduced-motion: reduce){ .nav{transition:none} }
   .nav-in{display:flex;align-items:center;gap:var(--space-8);max-width:var(--container);margin:0 auto;padding:var(--space-5) var(--edge);transition:padding .35s;position:relative}
   .nav-actions{display:flex;align-items:center;gap:var(--space-4);margin-left:auto}
   .nav .brand img{height:30px;width:auto}
@@ -791,9 +796,21 @@
   var links=document.getElementById('navlinks');
   if(links)links.addEventListener('click',function(e){ if(e.target.tagName==='A')links.classList.remove('open'); });
 
-  /* nav float (rAF-throttled) */
-  var nav=document.querySelector('.nav'), tick=false;
-  function navCheck(){ nav.classList.toggle('floating', scrollY>60); tick=false; }
+  /* nav float + hide going down, show coming back up (rAF-throttled) */
+  var nav=document.querySelector('.nav'), tick=false, lastY=Math.max(0,scrollY);
+  function navCheck(){
+    var y=Math.max(0,scrollY), dy=y-lastY;
+    nav.classList.toggle('floating', y>60);
+    /* An open menu or focus inside the nav means someone is using it — sliding
+       it out from under them would be hostile. Near the top there is nothing to
+       reclaim, so it stays put there too. */
+    if(nav.querySelector('.open') || nav.contains(document.activeElement) || y<120){
+      nav.classList.remove('nav--away');
+    } else if(Math.abs(dy)>6){          /* ignore trackpad jitter and rubber-banding */
+      nav.classList.toggle('nav--away', dy>0);
+    }
+    lastY=y; tick=false;
+  }
   addEventListener('scroll',function(){ if(!tick){ tick=true; requestAnimationFrame(navCheck); } },{passive:true});
   navCheck();
 
