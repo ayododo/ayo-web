@@ -119,18 +119,8 @@
 
   /* ---------- 4. Activity (hairline editorial grid, blends with page) ---------- */
   #aktivitas{background:var(--bg-white)}
-  /* extend the centre hairline down to meet PadelLevels — anchored to the grid so it lines up exactly with the column divider */
-  #aktivitas .hgrid{border-bottom:0;position:relative}
-  #aktivitas .hgrid::after{content:'';position:absolute;left:50%;top:100%;width:1px;height:clamp(36px,5vw,72px);background:var(--hair);pointer-events:none}
   .eyebrow-num{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-mono);font-size:var(--fs-small);letter-spacing:.12em;text-transform:uppercase;color:var(--brand);font-weight:var(--fw-semibold);margin-bottom:var(--space-3)}
   .ey-icon{width:16px;height:16px;flex-shrink:0}
-  .hgrid{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);margin-top:var(--space-8)}
-  .hcell{padding:clamp(28px,3.5vw,48px) clamp(22px,2.5vw,40px)}
-  .hcell + .hcell{border-left:1px solid var(--hair)}
-  .hcell:first-child{padding-left:0}
-  .hcell:last-child{padding-right:0}
-  .hname{font-size:clamp(24px,2.6vw,34px);font-weight:var(--fw-bold);letter-spacing:-.01em;margin-bottom:var(--space-3)}
-  .hcell .ipane p{color:var(--text-dim);line-height:1.6;font-size:var(--fs-body-lg);max-width:46ch}
   .hmeta{display:flex;flex-wrap:wrap;row-gap:var(--space-5);margin:var(--space-6) 0 var(--space-12)}
   .stat{display:flex;align-items:center;gap:var(--space-4);padding:var(--space-1) var(--space-8)}
   .stat:first-child{padding-left:0}
@@ -155,18 +145,55 @@
   .ipane{display:none}
   .ipane.active{display:block}
 
-  /* ---------- 6. Booking (hairline, checklist) ---------- */
+  /* ---------- 6. Booking (two panels in a hairline grid) ----------
+     Full-bleed on purpose: the hairline box sits at the frame edge in Figma, so
+     this band ignores the page's --edge and relies on its own 44/40px padding.
+     The hairlines are the grid showing through — one background colour, 1px of
+     padding and 1px gaps, with white children on top. Cheaper and more even than
+     borders per cell, which double up wherever two cells meet. */
   #booking{background:var(--bg-white)}
-  #booking .hgrid{border-top:0;border-bottom:0}
-  #booking .hcell + .hcell{border-left:0}   /* no vertical divider in Booking */
-  .hcell .hdesc{color:var(--text-dim);line-height:1.6;font-size:var(--fs-body-lg);max-width:46ch}
-  .chips{display:flex;flex-wrap:wrap;gap:var(--space-2);margin:var(--space-5) 0 var(--space-6)}
-  .chip{display:inline-flex;align-items:center;font-size:var(--fs-body-lg);font-weight:var(--fw-medium);color:var(--text-subtle);background:transparent;border:1px solid var(--hair);border-radius:var(--radius-pill);padding:var(--space-3) var(--space-5);white-space:nowrap}
-  /* Booking visual tiles — portrait photo, ratio taken from the Figma frame (168×258) */
-  #booking .hcell{display:grid;grid-template-columns:clamp(120px,14vw,168px) 1fr;gap:clamp(24px,2.8vw,40px);align-items:start}
-  .bk-visual{aspect-ratio:168/258;border-radius:var(--radius-lg);overflow:hidden;background:var(--bg-disabled)}
-  .bk-visual img{width:100%;height:100%;object-fit:cover;display:block}
-  @media (max-width:520px){ #booking .hcell{grid-template-columns:1fr} .bk-visual{max-width:240px} }
+  .bkg__grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;padding:1px;background:rgba(26,25,25,.16);max-width:var(--container);margin:0 auto}
+  .bkg__head{grid-column:1/-1;background:var(--bg-white);display:flex;align-items:flex-end;justify-content:space-between;gap:clamp(24px,4vw,64px);padding:44px}
+  .bkg__head-main{display:flex;flex-direction:column;gap:10px;min-width:0}
+  .bkg__eyebrow{font-family:var(--font-mono);font-size:13px;font-weight:var(--fw-semibold);letter-spacing:1.82px;color:var(--brand)}
+  .bkg__title{font-weight:var(--fw-extrabold);font-size:clamp(30px,3.75vw,54px);line-height:1.02;letter-spacing:-.03em}
+  /* 8px radius and a 12px inset, not the .hl treatment used elsewhere — this
+     heading's highlight is a wider, softer block. */
+  .bkg__hl{background:var(--brand);color:var(--bg-white);border-radius:8px;padding:0 12px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+  .bkg__note{flex-shrink:0;text-align:right;font-family:var(--font-mono);font-weight:var(--fw-medium);font-size:14px;line-height:1.5;color:rgb(70,70,70)}
+
+  .bkg__card{background:var(--bg-white);padding:40px;display:flex;flex-direction:column;gap:26px}
+  .bkg__media{position:relative;aspect-ratio:639/300;border-radius:16px;overflow:hidden;background:rgb(242,240,238);box-shadow:inset 0 0 0 1px rgba(26,25,25,.1)}
+  .bkg__media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+  /* Scrim over the lower 60% so the stat stays legible whatever the photo does. */
+  .bkg__media::after{content:'';position:absolute;left:0;right:0;bottom:0;height:60%;background:linear-gradient(to bottom,rgba(10,10,10,0),rgba(10,10,10,.78));pointer-events:none}
+  .bkg__badge{position:absolute;top:18px;left:18px;z-index:1;padding:7px 14px;border-radius:var(--radius-pill);font-family:var(--font-mono);font-size:11px;font-weight:var(--fw-semibold);letter-spacing:1.1px;text-transform:uppercase;background:var(--brand);color:var(--bg-white)}
+  .bkg__card--owners .bkg__badge{background:var(--bg-white);color:var(--text-default)}
+  .bkg__stat{position:absolute;left:22px;bottom:19px;z-index:1;display:flex;flex-direction:column;gap:2px}
+  .bkg__stat-num{font-family:var(--font-num);font-weight:var(--fw-bold);font-size:clamp(40px,4.4vw,64px);line-height:.85;letter-spacing:-.03em;color:var(--bg-white);font-variant-numeric:tabular-nums}
+  .bkg__stat-lbl{font-family:var(--font-mono);font-weight:var(--fw-medium);font-size:11px;letter-spacing:1.1px;text-transform:uppercase;color:rgba(255,255,255,.8)}
+
+  .bkg__lead{display:flex;flex-direction:column;gap:11px}
+  .bkg__name{font-weight:var(--fw-extrabold);font-size:clamp(24px,2.4vw,34px);line-height:1;letter-spacing:-.02em}
+  .bkg__desc{max-width:440px;font-size:16px;line-height:1.6;color:var(--text-dim)}
+
+  .bkg__list{list-style:none;margin:0;padding:0}
+  .bkg__list li{display:flex;align-items:center;gap:14px;padding:17px 0 16px;border-top:1px solid rgba(26,25,25,.14);font-weight:var(--fw-semibold);font-size:15px}
+  .bkg__list li:last-child{padding-bottom:17px}
+  .bkg__tick{flex-shrink:0;width:20px;height:20px;border-radius:5px;background:var(--brand);color:var(--bg-white);display:grid;place-items:center}
+  .bkg__tick svg{width:12px;height:12px;display:block}
+
+  .bkg__cta{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;padding:14px 24px;font-weight:var(--fw-bold);font-size:14px;color:var(--text-default);text-decoration:none;background:var(--bg-white);border-radius:var(--radius-pill);box-shadow:inset 0 0 0 1px rgba(26,25,25,.22);transition:box-shadow .2s,background .2s}
+  .bkg__cta:hover{box-shadow:inset 0 0 0 1px var(--text-default);background:var(--bg-subtle)}
+  .bkg__cta svg{width:16px;height:16px;flex-shrink:0}
+  .bkg__cta:focus-visible{outline:3px solid var(--brand);outline-offset:3px}
+
+  @media (max-width:900px){
+    .bkg__grid{grid-template-columns:1fr}
+    .bkg__head{flex-direction:column;align-items:flex-start;gap:var(--space-5);padding:clamp(22px,4vw,44px)}
+    .bkg__note{text-align:left}
+    .bkg__card{padding:clamp(22px,4vw,40px)}
+  }
 
   /* ---------- 7. Marketing B2B (editorial + reach stats) ---------- */
   .b2b-head{max-width:62ch}
@@ -302,9 +329,6 @@
     .burger{display:inline-flex}
     .lang{display:none}
     .duo{grid-template-columns:1fr}
-    .hgrid{grid-template-columns:1fr}
-    .hcell{padding-left:0;padding-right:0}
-    .hcell + .hcell{border-left:0;border-top:1px solid var(--hair)}
     .b2b{grid-template-columns:1fr}
     .vtabs{grid-template-columns:1fr;gap:var(--space-8)}
     .vpane{grid-template-columns:1fr;gap:var(--space-6)}
@@ -540,42 +564,65 @@
 </section>
 
 <!-- 6. BOOKING -->
-<section class="sec" id="booking">
-  <div class="wrap">
-    <p class="eyebrow-num reveal">Booking</p>
-    <h2 class="sec-title reveal">Book a court, <span class="hl">done in 2 minutes</span>.</h2>
-    <div class="hgrid reveal">
-      <div class="hcell">
-        <div class="bk-visual">
-          <img src="assets/booking-player.jpg" alt="" loading="lazy">
-        </div>
-        <div class="bk-body">
-          <h3 class="hname">For Players</h3>
-          <p class="hdesc">Find &amp; book your favourite court in a matter of minutes. Browse available slots, pick a time that works for you, and get ready to play.</p>
-          <div class="chips">
-            <span class="chip">1,500+ venues</span>
-            <span class="chip">Choose your payment method</span>
-            <span class="chip">Add your coach</span>
-          </div>
-          <a class="btn primary" href="#">Find a court <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
-        </div>
+<section id="booking" aria-labelledby="bkg-title">
+  <div class="bkg__grid reveal">
+
+    <div class="bkg__head">
+      <div class="bkg__head-main">
+        <p class="bkg__eyebrow">Booking</p>
+        <h2 class="bkg__title" id="bkg-title">Book courts, <span class="bkg__hl">done in 2 minutes</span>.</h2>
       </div>
-      <div class="hcell">
-        <div class="bk-visual">
-          <img src="assets/booking-venue-owner.jpg" alt="" loading="lazy">
-        </div>
-        <div class="bk-body">
-          <h3 class="hname">For Venue Owners</h3>
-          <p class="hdesc">Manage your venue, schedule, and revenue all from a single dashboard, powered by the AYO Venue Management app.</p>
-          <div class="chips">
-            <span class="chip">Schedule management</span>
-            <span class="chip">Real-time revenue</span>
-            <span class="chip">Help organize your venue</span>
-          </div>
-          <a class="btn primary" href="#partner">Become a venue partner <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
-        </div>
-      </div>
+      <p class="bkg__note">Players find their game. Owners<br>fill their courts.</p>
     </div>
+
+      <article class="bkg__card">
+        <div class="bkg__media">
+          <img src="assets/booking-players.jpg" alt="" loading="lazy">
+          <span class="bkg__badge">For players</span>
+          <p class="bkg__stat">
+            <span class="bkg__stat-num">90,000+</span>
+            <span class="bkg__stat-lbl">Active players</span>
+          </p>
+        </div>
+
+        <div class="bkg__lead">
+          <h3 class="bkg__name">Find your game</h3>
+          <p class="bkg__desc">Book a court, join an open session, or challenge a rated opponent — all from one app.</p>
+        </div>
+
+        <ul class="bkg__list">
+          <li><span class="bkg__tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>Instant court booking, no calls</li>
+          <li><span class="bkg__tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>Open sessions with fees split automatically</li>
+          <li><span class="bkg__tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>A verified rating that follows you</li>
+        </ul>
+
+        <a class="bkg__cta" href="#">Start playing <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
+      </article>
+
+      <article class="bkg__card bkg__card--owners">
+        <div class="bkg__media">
+          <img src="assets/booking-owners.jpg" alt="" loading="lazy">
+          <span class="bkg__badge">For owners</span>
+          <p class="bkg__stat">
+            <span class="bkg__stat-num">1,500+</span>
+            <span class="bkg__stat-lbl">Venues onboard</span>
+          </p>
+        </div>
+
+        <div class="bkg__lead">
+          <h3 class="bkg__name">Fill your courts</h3>
+          <p class="bkg__desc">Put empty slots in front of players already looking — and run the whole operation from one dashboard.</p>
+        </div>
+
+        <ul class="bkg__list">
+          <li><span class="bkg__tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>Live schedule, no double bookings</li>
+          <li><span class="bkg__tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>Payments settled and reconciled for you</li>
+          <li><span class="bkg__tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>Occupancy insights per court, per hour</li>
+        </ul>
+
+        <a class="bkg__cta" href="#partner">Become venue partner <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
+      </article>
+
   </div>
 </section>
 
