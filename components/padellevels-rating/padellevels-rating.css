@@ -9,11 +9,11 @@
    Anatomy:  .plr                      section
                .plr__shell             site container (aligns with nav/hero)
                  .plr__board           reveal wrapper (colour is on .plr)
-                   .plr__header        logo + eyebrow + title
                    .plr__body          two columns
-                     .plr__gutter      left cell — holds the card
-                     .plr__explain     right cell — copy + the section's one CTA
-                       .plr__card      white rating card (no CTA — see below)
+                     .plr__gutter      left cell — the illustration
+                     .plr__explain     right cell, centred on the illustration
+                       .plr__intro     eyebrow + section heading
+                       .plr__detail    label + copy + the section's one CTA
    ========================================================================== */
 
 .plr {
@@ -34,7 +34,7 @@
   --plr-track: rgba(26, 25, 25, .1);
   --plr-btn-border: rgba(26, 25, 25, .22);
 
-  padding: clamp(36px, 5vw, 72px) 0 0;
+  padding: clamp(48px, 8.6vw, 124px) 0;
   background: var(--plr-field);
   color: var(--plr-ink);
   font-family: var(--font-sans);
@@ -55,16 +55,12 @@
    panel, so 44px of its own made sense. Full-bleed, that same padding pushes
    the title 44px further in than the nav and the hero. The shell sets the edge
    now — everything below aligns to it. */
-.plr__header {
-  padding: 40px 0;
-}
 .plr__eyebrow {
   font-family: var(--font-mono); font-size: 13px; font-weight: var(--fw-semibold);
   text-transform: uppercase; letter-spacing: .14em;
   color: var(--plr-red);
 }
 .plr__title {
-  margin-top: 12px;
   font-weight: var(--fw-extrabold);
   font-size: clamp(28px, 3vw, 40px); line-height: 1.04; letter-spacing: -.02em;
 }
@@ -79,9 +75,15 @@
   gap: clamp(24px, 3vw, 42px);
 }
 
+/* Both columns are centred on the same axis, which is what holds the section
+   together now that the heading sits beside the artwork instead of above it. */
 .plr__explain {
-  display: flex; flex-direction: column; justify-content: flex-start; gap: 20px;
+  display: flex; flex-direction: column; justify-content: center; gap: 60px;
 }
+/* Two groups, tight inside and far apart: the heading reads as one unit, the
+   explainer as another, and the space between them is what separates them. */
+.plr__intro  { display: flex; flex-direction: column; gap: 12px; }
+.plr__detail { display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
 .plr__label {
   font-family: var(--font-mono); font-size: 13px; font-weight: var(--fw-semibold);
   text-transform: uppercase; letter-spacing: .12em;
@@ -96,11 +98,13 @@
    One flat image. The rating card used to be built here in markup, over a photo;
    it is now baked into the artwork and exported from Figma as a single asset, so
    this cell is a frame and nothing else.
-   Square and flush to the section's bottom edge — no radius, because the panel
-   is not a card here, it is the section's own bleed. The ratio is the asset's
-   own (579×391), so object-fit never has anything to crop. */
+   A contained panel again, not a bleed — the heading sits beside it now, so it
+   reads as a figure rather than the section's own edge. Radius matches the card
+   baked into the artwork. The ratio is the asset's own (579×391), so object-fit
+   never has anything to crop. */
 .plr__gutter {
   aspect-ratio: 579 / 391;
+  border-radius: 24px;
   overflow: hidden;
 }
 .plr__photo {
@@ -193,16 +197,17 @@
    Two columns need room for the illustration to stay legible beside the copy;
    below this they stack. */
 @media (max-width: 900px) {
-  .plr__body { grid-template-columns: 1fr; }
-  .plr__header { padding: var(--space-6) 0 var(--space-6); }
-  .plr__gutter { margin: 0 0 var(--space-8); }
+  .plr__body { grid-template-columns: 1fr; row-gap: var(--space-8); }
   .plr__copy { max-width: none; }
-  /* The section drops its bottom padding so the illustration can bleed into the
-     edge — but that only holds while the illustration is last in the section.
-     Stacked, the CTA is last instead, and with no padding it collides with the
-     section below. Figma specifies the desktop layout only, so this restores the
-     padding for the case its rule was never about. */
-  .plr { padding-bottom: clamp(36px, 5vw, 72px); }
+  /* Side by side, the heading can sit level with the artwork. Stacked it cannot:
+     dropping it below the picture leaves the section opening on an image with
+     nothing to say what it is. display:contents lifts the two groups out of the
+     explainer and into the body's own grid, which is what makes them orderable
+     around the illustration. */
+  .plr__explain { display: contents; }
+  .plr__intro  { order: 1; }
+  .plr__gutter { order: 2; }
+  .plr__detail { order: 3; }
 }
 
 @media (max-width: 560px) {
