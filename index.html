@@ -515,43 +515,11 @@
 
       <div class="plr__body">
         <div class="plr__gutter">
-          <img class="plr__photo" src="assets/padellevels-court.jpg" alt="" loading="lazy">
-          <div class="plr__card">
-
-            <div class="plr__card-head">
-              <img class="plr__mark" src="assets/padellevels-logo.png" alt="" width="18" height="15">
-              PadelLevels Rating
-            </div>
-
-            <div class="plr__meter">
-              <div class="plr__stats">
-                <div class="plr__stat">
-                  <span class="plr__stat-lbl">Level</span>
-                  <span class="plr__level-row">
-                    <span class="plr__level">5.2</span>
-                    <span class="plr__scale">/ 7.0</span>
-                  </span>
-                </div>
-                <div class="plr__stat plr__stat--status">
-                  <span class="plr__stat-lbl">Status</span>
-                  <span class="plr__stat-val">Calibrated</span>
-                </div>
-                <div class="plr__stat plr__stat--conf">
-                  <span class="plr__stat-lbl">Confidence</span>
-                  <span class="plr__stat-val">74%</span>
-                </div>
-              </div>
-              <!-- Width comes from --plr-confidence on .plr__card, so the bar can
-                   never drift out of step with the percentage above it. -->
-              <div class="plr__track">
-                <span class="plr__fill"></span>
-              </div>
-            </div>
-
-            <p class="plr__desc">Stable enough to display across connected experiences. Your rating stays current as new results come in.</p>
-
-
-          </div>
+          <!-- The rating card is part of the artwork, exported from Figma as one
+               asset. Alt carries what the card says, since it is no longer text. -->
+          <img class="plr__photo" src="assets/padellevels-panel.jpg"
+               alt="PadelLevels Rating card: level 5.2 of 7.0, status calibrated, confidence 74%."
+               width="579" height="391" loading="lazy">
         </div>
 
         <div class="plr__explain">

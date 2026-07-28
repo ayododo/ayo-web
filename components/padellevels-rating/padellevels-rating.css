@@ -34,7 +34,7 @@
   --plr-track: rgba(26, 25, 25, .1);
   --plr-btn-border: rgba(26, 25, 25, .22);
 
-  padding: clamp(36px, 5vw, 72px) 0;
+  padding: clamp(36px, 5vw, 72px) 0 0;
   background: var(--plr-field);
   color: var(--plr-ink);
   font-family: var(--font-sans);
@@ -56,7 +56,7 @@
    the title 44px further in than the nav and the hero. The shell sets the edge
    now — everything below aligns to it. */
 .plr__header {
-  padding: 40px 0 32px;
+  padding: 40px 0;
 }
 .plr__eyebrow {
   font-family: var(--font-mono); font-size: 13px; font-weight: var(--fw-semibold);
@@ -75,13 +75,12 @@
    to hold one row of numbers, and past that width the stats drift apart and the
    card starts reading as an empty panel. */
 .plr__body {
-  display: grid; grid-template-columns: 0.78fr 1.22fr;
-  gap: clamp(24px, 3vw, 56px);
+  display: grid; grid-template-columns: 579fr 747fr;
+  gap: clamp(24px, 3vw, 42px);
 }
 
 .plr__explain {
-  padding: 0 0 40px;
-  display: flex; flex-direction: column; justify-content: center; gap: 20px;
+  display: flex; flex-direction: column; justify-content: flex-start; gap: 20px;
 }
 .plr__label {
   font-family: var(--font-mono); font-size: 13px; font-weight: var(--fw-semibold);
@@ -90,28 +89,21 @@
 }
 .plr__copy {
   max-width: 420px;
-  font-size: 17px; line-height: 1.6; color: var(--plr-ink-muted);
+  font-size: 20px; line-height: 1.6; color: var(--plr-ink-muted);
 }
 
-/* ---- Rating card -----------------------------------------------------------
-   Dialled down a step across the board — padding, gaps, type and the numeral.
-   The card no longer carries the CTA, so it holds less and a smaller frame reads
-   as deliberate rather than half-empty. */
-/* The card sits on a court photo rather than the page background. The panel
-   carries the background asset's own ratio so the artwork shows the crop it was
-   exported with instead of being re-cropped by object-fit. Not a hard cap: if
-   the card ever outgrows the ratio (narrow viewports, where the stats wrap) the
-   panel grows taller and the photo simply covers more. */
+/* ---- Illustration ----------------------------------------------------------
+   One flat image. The rating card used to be built here in markup, over a photo;
+   it is now baked into the artwork and exported from Figma as a single asset, so
+   this cell is a frame and nothing else.
+   Square and flush to the section's bottom edge — no radius, because the panel
+   is not a card here, it is the section's own bleed. The ratio is the asset's
+   own (579×391), so object-fit never has anything to crop. */
 .plr__gutter {
-  position: relative;
-  display: flex; align-items: center;
-  aspect-ratio: 563 / 375;
-  padding: clamp(16px, 9.6%, 56px);
-  border-radius: 20px;
+  aspect-ratio: 579 / 391;
   overflow: hidden;
 }
 .plr__photo {
-  position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover; display: block;
 }
@@ -188,6 +180,7 @@
   min-height: 44px; padding: 14px 24px;
   font-weight: var(--fw-bold); font-size: 14px;
   color: var(--plr-ink); text-decoration: none;
+  background: var(--plr-card);
   border-radius: var(--radius-pill);
   box-shadow: inset 0 0 0 1px var(--plr-btn-border);
   transition: box-shadow .2s, background .2s;
@@ -197,22 +190,21 @@
 .plr__cta:focus-visible { outline: 3px solid var(--plr-red); outline-offset: 3px; }
 
 /* ---- Responsive ------------------------------------------------------------
-   The card needs room for a 72px numeral plus three stat blocks on one line;
-   below this the two columns stop working. */
+   Two columns need room for the illustration to stay legible beside the copy;
+   below this they stack. */
 @media (max-width: 900px) {
   .plr__body { grid-template-columns: 1fr; }
   .plr__header { padding: var(--space-6) 0 var(--space-6); }
-  .plr__explain { padding: 0 0 var(--space-8); }
-  /* Margin, not padding — the padding is the photo inset and must survive. */
   .plr__gutter { margin: 0 0 var(--space-8); }
-  .plr__card { padding: var(--space-6); }
   .plr__copy { max-width: none; }
+  /* The section drops its bottom padding so the illustration can bleed into the
+     edge — but that only holds while the illustration is last in the section.
+     Stacked, the CTA is last instead, and with no padding it collides with the
+     section below. Figma specifies the desktop layout only, so this restores the
+     padding for the case its rule was never about. */
+  .plr { padding-bottom: clamp(36px, 5vw, 72px); }
 }
 
 @media (max-width: 560px) {
-  /* Three stat blocks stop fitting on one line — confidence drops below rather
-     than being crushed against the level number. */
-  .plr__stats { flex-wrap: wrap; gap: var(--space-6); }
-  .plr__stat--conf { margin-left: 0; text-align: left; }
   .plr__cta { align-self: stretch; justify-content: center; }
 }
