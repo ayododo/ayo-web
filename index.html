@@ -130,9 +130,14 @@
   /* ---- Left rail ---- */
   .st__rail{background:var(--bg-white);padding:40px 0;display:flex;flex-direction:column}
   /* No grid gap: a 0fr row still leaves its gap behind, so every collapsed tab
-     would carry 12px it never uses. The spacing lives inside the clipped part. */
-  .st__tab{text-align:left;background:none;border:0;cursor:pointer;font-family:var(--font-sans);width:100%;
-    display:grid;gap:0;padding:21px 40px 22px 0;transition:background .25s}
+     would carry 12px it never uses. The spacing lives inside the clipped part.
+     The tint is pulled out to the page edge while the text stays on the content
+     column — flush against its own background it read as cramped, and insetting
+     the text instead would have pushed the topics off the line the heading and
+     every other section sit on. */
+  .st__tab{text-align:left;background:none;border:0;cursor:pointer;font-family:var(--font-sans);
+    display:grid;gap:0;padding:21px 40px 22px var(--edge);margin-left:calc(var(--edge) * -1);
+    border-radius:0 6px 6px 0;transition:background .25s}
   .st__tab-head{display:flex;align-items:baseline;gap:14px}
   .st__num{font-family:var(--font-mono);font-size:12px;font-weight:var(--fw-semibold);letter-spacing:1.2px;color:rgb(190,190,190);transition:color .25s}
   .st__topic{font-weight:var(--fw-extrabold);font-size:28px;line-height:1.05;letter-spacing:-.02em;color:rgb(163,163,163);transition:color .25s}
@@ -737,18 +742,19 @@
   /* Under reduced motion the global rule collapses every animation to ~0ms, so
      an auto-advance would strobe. Those users get plain click-to-switch tabs. */
   var stAuto = !!stGrid && stTabs.length > 1 && !rm;
-  var stTaken = false;   /* a deliberate pick retires the rotation for good */
 
   function stShow(i){
     stCur = i;
     stTabs.forEach(function(t,j){ t.setAttribute('aria-selected', i===j); t.classList.remove('ticking'); });
     stStories.forEach(function(p,j){ p.classList.toggle('is-active', i===j); });
-    if(stAuto && !stTaken){ void stTabs[i].offsetWidth; stTabs[i].classList.add('ticking'); }  /* reflow restarts the bar */
+    if(stAuto){ void stTabs[i].offsetWidth; stTabs[i].classList.add('ticking'); }  /* reflow restarts the bar */
   }
 
   stTabs.forEach(function(b,i){
-    /* Arrow keys route through .click(), so keyboard selection retires it too. */
-    b.addEventListener('click', function(){ stTaken = true; stShow(i); });
+    /* Picking a topic moves the rotation there rather than ending it. It used to
+       end it, back when hovering off the section was the only way to stop —
+       the pause control is the way to stop now, and it says so. */
+    b.addEventListener('click', function(){ stShow(i); });
     b.addEventListener('keydown', function(e){
       if(e.key==='ArrowDown'||e.key==='ArrowUp'){ e.preventDefault();
         var n=(i+(e.key==='ArrowDown'?1:stTabs.length-1))%stTabs.length; stTabs[n].focus(); stTabs[n].click(); }
@@ -758,9 +764,9 @@
     });
   });
 
-  /* Pause is a real toggle, not a hover accident: it holds until pressed again,
-     and it keeps working after the rotation has retired so the control never
-     goes dead under the pointer. */
+  /* Pause is a real toggle, not a hover accident: it holds until pressed again.
+     It is the only thing that stops the rotation, which is why picking a topic
+     no longer does. */
   if(stPause && stGrid){
     stPause.addEventListener('click', function(){
       var held = stGrid.classList.toggle('is-paused');
