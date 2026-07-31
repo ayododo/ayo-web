@@ -54,8 +54,12 @@
      edge — that overhang is what says "there is more". */
   .pt-rail{display:grid;grid-auto-flow:column;grid-auto-columns:clamp(260px,26vw,340px);gap:var(--space-5);
     margin-top:var(--space-8);padding:0 var(--edge) var(--space-4);margin-inline:calc(var(--edge) * -1);
-    overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:thin}
-  .pt-case{scroll-snap-align:start;background:var(--bg-white);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+    overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin}
+  /* No scroll-snap: it exists to land on discrete slides, and it fights a
+     scrollLeft that moves every frame — the rail would keep being tugged back to
+     the nearest card. The loop makes snapping unnecessary anyway, since there is
+     no start or end to land on. */
+  .pt-case{background:var(--bg-white);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
   .pt-case-art{aspect-ratio:4/3;background:rgb(242,240,238);box-shadow:inset 0 0 0 1px rgba(26,25,25,.1);
     display:grid;place-items:center;font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;
     text-transform:uppercase;color:rgb(150,146,140)}
@@ -234,7 +238,7 @@
         <p class="eyebrow-num">Case studies</p>
         <h2 class="sec-title">Campaigns we&rsquo;ve run.</h2>
       </div>
-      <p class="pt-hint">Scroll for more →</p>
+      <p class="pt-hint">Drag or scroll &mdash; it loops</p>
     </div>
     <div class="pt-rail reveal" tabindex="0" role="region" aria-label="Case studies, scrollable">
       <article class="pt-case"><div class="pt-case-art">Campaign image</div><div class="pt-case-body"><p class="pt-case-brand">AYO × Adidas</p><h3>Court takeover</h3><p>Placeholder summary of the activation and how it ran.</p><p class="result">Placeholder result</p></div></article>
@@ -338,6 +342,104 @@
 <script src="scripts/chrome.js"></script>
 <script src="components/marquee/marquee.js"></script>
 <script>
+/* ==========================================================================
+   Case-study rail — loops, and stays a scrollable rail while it does.
+   The logo marquee moves a transform, which is smooth but cannot be dragged.
+   This drives scrollLeft instead, so native scrolling, trackpad momentum, the
+   scrollbar and keyboard all keep working; the loop is a wrap applied every
+   frame, in both directions, so scrolling backwards past the start also
+   continues rather than stopping dead.
+   ========================================================================== */
+(function(){
+  var rail = document.querySelector('.pt-rail');
+  if(!rail) return;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var SPEED = 26;                 /* px per second — slow enough to read past */
+  var originals = [].slice.call(rail.children);
+  if(originals.length < 2) return;
+
+  var unit = 0, clones = [];
+
+  function cloneSet(){
+    originals.forEach(function(el){
+      var c = el.cloneNode(true);
+      c.setAttribute('aria-hidden','true');     /* duplicates are decoration */
+      [].slice.call(c.querySelectorAll('a,button,input')).forEach(function(f){ f.tabIndex = -1; });
+      rail.appendChild(c); clones.push(c);
+    });
+  }
+
+  /* Three sets, and the rail parks on the middle one. Two would be enough to
+     loop forwards, but scrollLeft cannot go below zero — the browser clamps it —
+     so scrolling back off the start would just stop. Sitting a whole set in from
+     the left leaves room to travel backwards and be wrapped like any other move. */
+  function measure(){
+    clones.forEach(function(c){ c.remove(); });
+    clones = [];
+    cloneSet();
+    /* One unit is the distance to the first clone: measured, not derived from
+       scrollWidth, because the gaps between cards do not divide evenly. */
+    unit = clones[0].offsetLeft - originals[0].offsetLeft;
+    var guard = 0;
+    while(rail.scrollWidth < rail.clientWidth + unit * 2 && guard++ < 8) cloneSet();
+    rail.scrollLeft = unit;
+  }
+  measure();
+  var rt=null;
+  addEventListener('resize', function(){ clearTimeout(rt); rt=setTimeout(function(){
+    var into = unit ? (rail.scrollLeft - unit) : 0; measure(); rail.scrollLeft = unit + into;
+  }, 150); });
+
+  /* Runs whether or not the rail is advancing itself, so a hand-scroll off
+     either end carries on instead of hitting a wall. */
+  function wrap(){
+    if(!unit) return;
+    if(rail.scrollLeft >= unit * 2) rail.scrollLeft -= unit;
+    else if(rail.scrollLeft < 1) rail.scrollLeft += unit;
+  }
+  rail.addEventListener('scroll', wrap, {passive:true});
+
+  /* Held while someone is using it: hovering to read, tabbing through, or
+     mid-drag. Moving the rail under any of those would be hostile. */
+  var hold = false, idle = null;
+  function pause(){ hold = true; clearTimeout(idle); }
+  function resume(){ clearTimeout(idle); idle = setTimeout(function(){ hold = false; }, 1200); }
+  if(matchMedia('(hover: hover)').matches){
+    rail.addEventListener('pointerenter', pause);
+    rail.addEventListener('pointerleave', resume);
+  }
+  rail.addEventListener('pointerdown', pause);
+  addEventListener('pointerup', resume);
+  rail.addEventListener('focusin', pause);
+  rail.addEventListener('focusout', resume);
+  rail.addEventListener('wheel', function(){ pause(); resume(); }, {passive:true});
+
+  /* Off screen it should not be moving at all. */
+  var seen = true;
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){ seen = es[0].isIntersecting; }, {threshold:.05}).observe(rail);
+  }
+
+  var carry = 0, prev = performance.now();
+  requestAnimationFrame(function tick(now){
+    var dt = Math.min((now - prev)/1000, .05);   /* clamped: a background tab would jump it */
+    prev = now;
+    /* Wrapped every frame, not only while advancing. The scroll event covers most
+       cases, but a drag holds the rail — and a drag is exactly when someone runs
+       off the end and needs the wrap most. */
+    wrap();
+    if(!reduce && !hold && seen && unit){
+      /* scrollLeft rounds to whole pixels, so sub-pixel steps are carried over
+         rather than thrown away — otherwise a slow speed never moves at all. */
+      carry += SPEED * dt;
+      var step = Math.floor(carry);
+      if(step){ carry -= step; rail.scrollLeft += step; }
+    }
+    requestAnimationFrame(tick);
+  });
+})();
+
 (function(){
   var dlg = document.getElementById('mediakit');
   if(!dlg || !dlg.showModal) return;          /* no <dialog> support: buttons stay inert rather than half-working */
