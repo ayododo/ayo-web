@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Partner with AYO — For Brands &amp; Sponsors</title>
+<meta name="description" content="Reach 90,000+ active players across 150+ cities. Campaign formats, case studies and the AYO media kit for brands and sponsors.">
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#ec2435">
+
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="styles/chrome.css">
+<link rel="stylesheet" href="components/marquee/marquee.css">
+
+<style>
+  /* ---------- Hero ---------- */
+  .pt-hero{padding:clamp(120px,13vw,180px) 0 clamp(48px,6vw,80px);background:var(--bg-white)}
+  .pt-hero h1{font-size:clamp(34px,5.4vw,72px);font-weight:var(--fw-extrabold);letter-spacing:-.03em;line-height:1.02;margin:var(--space-4) 0 var(--space-5);max-width:20ch;text-wrap:balance}
+  /* Kept on one line: split across two, the red block reads as two unrelated
+     marks and the orphaned word looks like a mistake. */
+  .pt-hero h1 .hl{background:var(--brand);color:#fff;border-radius:8px;padding:0 12px;white-space:nowrap;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+  .pt-hero .lead{max-width:52ch;font-size:var(--fs-body-lg);line-height:1.6;color:var(--text-dim)}
+  .pt-actions{display:flex;flex-wrap:wrap;gap:var(--space-4);margin-top:var(--space-8)}
+
+  /* ---------- Why partner ---------- */
+  .pt-why{background:var(--bg-cream);padding:clamp(48px,6vw,80px) 0}
+  .pt-why .pt-lede{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:end}
+  .pt-why h2{font-size:clamp(26px,3.4vw,44px);font-weight:var(--fw-extrabold);letter-spacing:-.02em;line-height:1.08}
+  .pt-why p{color:var(--text-dim);line-height:1.6;font-size:var(--fs-body-lg);max-width:46ch}
+  .pt-stats{display:flex;flex-wrap:wrap;row-gap:var(--space-6);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);margin-top:var(--space-10);padding:var(--space-8) 0}
+
+  /* ---------- What we do ---------- */
+  .pt-what{background:var(--bg-white);padding:clamp(48px,6vw,80px) 0}
+  /* Same hairline grid the Booking section uses: one background, 1px gaps, white
+     children. Even at every junction, and no doubled borders. */
+  .pt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(26,25,25,.14);margin-top:var(--space-10)}
+  .pt-svc{background:var(--bg-white);padding:clamp(24px,2.6vw,36px) clamp(20px,2.2vw,32px)}
+  .pt-svc:first-child{padding-left:0}
+  .pt-svc:last-child{padding-right:0}
+  .pt-svc .num{font-family:var(--font-mono);font-size:var(--fs-caption);letter-spacing:.12em;color:var(--brand);font-weight:var(--fw-semibold)}
+  .pt-svc h3{font-size:clamp(19px,1.6vw,23px);font-weight:var(--fw-bold);letter-spacing:-.01em;margin:var(--space-4) 0 var(--space-3)}
+  .pt-svc p{color:var(--text-dim);line-height:1.6}
+
+  /* ---------- Case studies ---------- */
+  .pt-cases{background:var(--bg-cream);padding:clamp(48px,6vw,80px) 0 clamp(56px,7vw,96px);overflow:hidden}
+  .pt-rail-head{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--space-6);flex-wrap:wrap}
+  .pt-hint{font-family:var(--font-mono);font-size:var(--fs-caption);letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim)}
+  /* Scroll-snap rather than a scripted carousel: it keeps native momentum,
+     keyboard scrolling and the scrollbar, and needs no JS to work. The negative
+     margin lets the rail bleed past the container so a card can sit half off the
+     edge — that overhang is what says "there is more". */
+  .pt-rail{display:grid;grid-auto-flow:column;grid-auto-columns:clamp(260px,26vw,340px);gap:var(--space-5);
+    margin-top:var(--space-8);padding:0 var(--edge) var(--space-4);margin-inline:calc(var(--edge) * -1);
+    overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:thin}
+  .pt-case{scroll-snap-align:start;background:var(--bg-white);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+  .pt-case-art{aspect-ratio:4/3;background:rgb(242,240,238);box-shadow:inset 0 0 0 1px rgba(26,25,25,.1);
+    display:grid;place-items:center;font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;
+    text-transform:uppercase;color:rgb(150,146,140)}
+  .pt-case-body{padding:var(--space-6);display:flex;flex-direction:column;gap:var(--space-3);flex:1}
+  .pt-case-brand{font-family:var(--font-mono);font-size:var(--fs-caption);letter-spacing:.1em;text-transform:uppercase;color:var(--brand);font-weight:var(--fw-semibold)}
+  .pt-case h3{font-size:19px;font-weight:var(--fw-bold);letter-spacing:-.01em}
+  .pt-case p{color:var(--text-dim);line-height:1.6;font-size:var(--fs-body)}
+  .pt-case .result{margin-top:auto;padding-top:var(--space-4);border-top:1px solid var(--hair);font-weight:var(--fw-bold)}
+
+  /* ---------- Closing CTA ---------- */
+  .pt-close{background:var(--brand);color:#fff;padding:clamp(56px,7vw,96px) 0;text-align:center}
+  .pt-close h2{font-size:clamp(28px,4.4vw,56px);font-weight:var(--fw-extrabold);letter-spacing:-.02em;line-height:1.06;max-width:18ch;margin:0 auto}
+  .pt-close p{max-width:52ch;margin:var(--space-5) auto 0;line-height:1.6;font-size:var(--fs-body-lg);color:rgba(255,255,255,.85)}
+  .pt-close .pt-actions{justify-content:center}
+  .pt-close .btn.primary{background:#fff;color:var(--brand)}
+  .pt-close .btn.ghost{color:#fff;border-color:rgba(255,255,255,.55)}
+  .pt-close .btn.ghost:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+
+  /* ---------- FAQ ---------- */
+  .pt-faq{background:var(--bg-white);padding:clamp(48px,6vw,80px) 0 clamp(56px,7vw,96px)}
+  .pt-faq-list{margin-top:var(--space-8);border-top:1px solid var(--hair);max-width:0;max-width:none}
+  /* <details> carries the open/closed state, the disclosure semantics and
+     keyboard support on its own — an accordion here needs no script. */
+  .pt-q{border-bottom:1px solid var(--hair)}
+  .pt-q summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:var(--space-5);
+    padding:var(--space-6) 0;font-size:clamp(17px,1.5vw,20px);font-weight:var(--fw-semibold);letter-spacing:-.01em}
+  .pt-q summary::-webkit-details-marker{display:none}
+  .pt-q summary::after{content:'';flex-shrink:0;width:14px;height:14px;border-right:2px solid var(--text-dim);border-bottom:2px solid var(--text-dim);
+    transform:rotate(45deg) translate(-3px,-3px);transition:transform .2s}
+  .pt-q[open] summary::after{transform:rotate(225deg) translate(-3px,-3px)}
+  .pt-q p{color:var(--text-dim);line-height:1.65;max-width:70ch;padding:0 0 var(--space-6)}
+
+  /* ---------- Media kit dialog ---------- */
+  /* <dialog> brings the backdrop, Esc-to-close and the focus trap with it. */
+  .pt-dialog{border:0;padding:0;border-radius:var(--radius-xl);max-width:min(92vw,460px);width:100%;background:var(--bg-white);color:var(--text-default);box-shadow:0 30px 80px rgba(26,25,25,.3)}
+  .pt-dialog::backdrop{background:rgba(26,25,25,.55);backdrop-filter:blur(3px)}
+  .pt-dialog-in{padding:clamp(24px,3vw,36px)}
+  .pt-dialog h2{font-size:24px;font-weight:var(--fw-extrabold);letter-spacing:-.02em}
+  .pt-dialog .sub{color:var(--text-dim);line-height:1.6;margin-top:var(--space-3)}
+  .pt-field{display:flex;flex-direction:column;gap:6px;margin-top:var(--space-5)}
+  .pt-field label{font-size:var(--fs-small);font-weight:var(--fw-semibold)}
+  .pt-field input{font-family:var(--font-sans);font-size:var(--fs-body);padding:var(--space-3) var(--space-4);
+    border:1px solid var(--border-default);border-radius:var(--radius-md);background:var(--bg-white);color:inherit}
+  .pt-field input:focus-visible{outline:3px solid var(--brand);outline-offset:1px;border-color:transparent}
+  .pt-dialog-foot{display:flex;gap:var(--space-3);margin-top:var(--space-7)}
+  .pt-note{margin-top:var(--space-5);font-size:var(--fs-caption);color:var(--text-dim);line-height:1.55}
+
+  @media (max-width:900px){
+    .pt-why .pt-lede{grid-template-columns:1fr;align-items:start}
+    .pt-grid{grid-template-columns:1fr}
+    .pt-svc,.pt-svc:first-child,.pt-svc:last-child{padding-left:0;padding-right:0}
+    .pt-close h2,.pt-close p{max-width:none}
+  }
+</style>
+</head>
+<body>
+<nav class="nav on-light">
+  <div class="nav-in">
+    <a class="brand" href="index.html" aria-label="AYO"><img src="assets/logo.svg" alt="AYO"></a>
+    <div class="nav-links" id="navlinks">
+      <div class="nav-item"><a class="nav-top" href="index.html#booking">Booking</a></div>
+      <div class="nav-item has-sub">
+        <button class="nav-top" aria-expanded="false" aria-haspopup="true">Activities <span class="chev" aria-hidden="true"></span></button>
+        <div class="submenu">
+          <a href="https://ayo.co.id/main-bareng">Join activity</a>
+          <!-- TODO: gets its own single page once that design exists. Deliberately
+               parked on # — the wireframe it used to point at has been deleted. -->
+          <a href="#">Hosting activity</a>
+        </div>
+      </div>
+      <div class="nav-item"><a class="nav-top" href="index.html#booking">For Venue Owners</a></div>
+      <div class="nav-item"><a class="nav-top" href="#">Blog</a></div>
+    </div>
+    <div class="nav-actions">
+    <div class="lang" id="lang">
+      <button class="lang-btn" aria-haspopup="true" aria-expanded="false" aria-label="Select language">
+        <span class="flag cur-flag" aria-hidden="true">🇬🇧</span>
+        <span class="cur">EN</span>
+        <span class="chev" aria-hidden="true"></span>
+      </button>
+      <div class="lang-menu" role="menu">
+        <button role="menuitemradio" aria-selected="true" data-code="EN" data-flag="🇬🇧"><span class="flag" aria-hidden="true">🇬🇧</span><span class="lname">English</span><span class="code">EN</span></button>
+        <button role="menuitemradio" aria-selected="false" data-code="ID" data-flag="🇮🇩"><span class="flag" aria-hidden="true">🇮🇩</span><span class="lname">Bahasa Indonesia</span><span class="code">ID</span></button>
+        <!-- Only the two live locales are offered. MS and TH are parked here
+             rather than deleted so they can be restored verbatim when those
+             markets launch — the switcher JS reads whatever buttons exist, so
+             uncommenting is the only step needed.
+        <button role="menuitemradio" aria-selected="false" data-code="MS" data-flag="🇲🇾"><span class="flag" aria-hidden="true">🇲🇾</span><span class="lname">Malay</span><span class="code">MS</span></button>
+        <button role="menuitemradio" aria-selected="false" data-code="TH" data-flag="🇹🇭"><span class="flag" aria-hidden="true">🇹🇭</span><span class="lname">Thai</span><span class="code">TH</span></button>
+        -->
+      </div>
+    </div>
+    <a class="nav-icon" href="#" aria-label="Cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3h2.2l2.1 12.4a1.5 1.5 0 0 0 1.5 1.25h8.3a1.5 1.5 0 0 0 1.48-1.2L21 7H6"/></svg>
+    </a>
+    <a class="btn primary" href="#">Login</a>
+    <button class="burger" aria-label="Menu" onclick="document.getElementById('navlinks').classList.toggle('open')">☰</button>
+    </div>
+  </div>
+</nav>
+<!-- 1. HERO -->
+<header class="pt-hero">
+  <div class="wrap">
+    <p class="eyebrow-num reveal">For Brands &amp; Sponsors</p>
+    <h1 class="reveal">Put your brand where the <span class="hl">players are</span>.</h1>
+    <p class="lead reveal">90,000+ active players across 150+ cities book, play and come back every week. Reach them where the habit already lives — not in a feed they scroll past.</p>
+    <div class="pt-actions reveal">
+      <a class="btn primary" href="#talk">Talk to us <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
+      <button class="btn ghost" type="button" data-mediakit>Download media kit</button>
+    </div>
+  </div>
+</header>
+
+<!-- 2. PARTNER LOGOS -->
+<section class="marquee on-light" aria-label="Brands that have run campaigns with AYO">
+  <div class="mq-row is-sub" data-mq-row data-mq-speed="38" data-mq-dir="left">
+    <div class="mq-track" data-mq-track>
+      <div class="mq-group" data-mq-group>
+        <span class="mq-item">AYO × Adidas</span><span class="mq-dot" aria-hidden="true"></span>
+        <span class="mq-item">AYO × Nike</span><span class="mq-dot" aria-hidden="true"></span>
+        <span class="mq-item">AYO × McDonald's</span><span class="mq-dot" aria-hidden="true"></span>
+        <span class="mq-item">AYO × Pocari Sweat</span><span class="mq-dot" aria-hidden="true"></span>
+        <span class="mq-item">AYO × Asics</span><span class="mq-dot" aria-hidden="true"></span>
+        <span class="mq-item">AYO × Gatorade</span><span class="mq-dot" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. WHY PARTNER -->
+<section class="pt-why">
+  <div class="wrap">
+    <div class="pt-lede reveal">
+      <h2>Why brands partner with AYO</h2>
+      <p>An audience that is already active, already local, and already in the habit of showing up — so a campaign lands on intent rather than attention.</p>
+    </div>
+    <div class="pt-stats reveal">
+      <div class="stat"><span class="stat-num">90,000<sup>+</sup></span><span class="stat-txt"><span class="stat-lbl">Active players</span><span class="stat-sub">across Indonesia</span></span></div>
+      <div class="stat"><span class="stat-num">150<sup>+</sup></span><span class="stat-txt"><span class="stat-lbl">Cities</span><span class="stat-sub">covered</span></span></div>
+      <div class="stat"><span class="stat-num">12,000<sup>+</sup></span><span class="stat-txt"><span class="stat-lbl">Sessions</span><span class="stat-sub">every month</span></span></div>
+      <div class="stat"><span class="stat-num">1,500<sup>+</sup></span><span class="stat-txt"><span class="stat-lbl">Venues</span><span class="stat-sub">onboard</span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. WHAT WE DO -->
+<section class="pt-what">
+  <div class="wrap">
+    <p class="eyebrow-num reveal">What we do</p>
+    <h2 class="sec-title reveal">Formats that meet players <span class="hl">mid-game</span>.</h2>
+    <div class="pt-grid reveal">
+      <article class="pt-svc">
+        <p class="num">01</p>
+        <h3>In-app placement</h3>
+        <p>Banners and featured slots inside the flow players already use to book courts and join sessions.</p>
+      </article>
+      <article class="pt-svc">
+        <p class="num">02</p>
+        <h3>Sponsored Open Play</h3>
+        <p>Put your brand on the session itself — court fees covered, your name on the invite that fills it.</p>
+      </article>
+      <article class="pt-svc">
+        <p class="num">03</p>
+        <h3>Court takeovers</h3>
+        <p>Branded venues for a weekend or a season, with the activation running on site and in the app.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 5. CASE STUDIES -->
+<section class="pt-cases">
+  <div class="wrap">
+    <div class="pt-rail-head reveal">
+      <div>
+        <p class="eyebrow-num">Case studies</p>
+        <h2 class="sec-title">Campaigns we&rsquo;ve run.</h2>
+      </div>
+      <p class="pt-hint">Scroll for more →</p>
+    </div>
+    <div class="pt-rail reveal" tabindex="0" role="region" aria-label="Case studies, scrollable">
+      <article class="pt-case"><div class="pt-case-art">Campaign image</div><div class="pt-case-body"><p class="pt-case-brand">AYO × Adidas</p><h3>Court takeover</h3><p>Placeholder summary of the activation and how it ran.</p><p class="result">Placeholder result</p></div></article>
+      <article class="pt-case"><div class="pt-case-art">Campaign image</div><div class="pt-case-body"><p class="pt-case-brand">AYO × Nike</p><h3>Sponsored Open Play</h3><p>Placeholder summary of the activation and how it ran.</p><p class="result">Placeholder result</p></div></article>
+      <article class="pt-case"><div class="pt-case-art">Campaign image</div><div class="pt-case-body"><p class="pt-case-brand">AYO × McDonald&rsquo;s</p><h3>Post-match reward</h3><p>Placeholder summary of the activation and how it ran.</p><p class="result">Placeholder result</p></div></article>
+      <article class="pt-case"><div class="pt-case-art">Campaign image</div><div class="pt-case-body"><p class="pt-case-brand">AYO × Pocari Sweat</p><h3>Hydration partner</h3><p>Placeholder summary of the activation and how it ran.</p><p class="result">Placeholder result</p></div></article>
+      <article class="pt-case"><div class="pt-case-art">Campaign image</div><div class="pt-case-body"><p class="pt-case-brand">AYO × Asics</p><h3>Gear trial series</h3><p>Placeholder summary of the activation and how it ran.</p><p class="result">Placeholder result</p></div></article>
+      <article class="pt-case"><div class="pt-case-art">Campaign image</div><div class="pt-case-body"><p class="pt-case-brand">AYO × Gatorade</p><h3>Tournament series</h3><p>Placeholder summary of the activation and how it ran.</p><p class="result">Placeholder result</p></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- 6. CLOSING CTA -->
+<section class="pt-close" id="talk">
+  <div class="wrap">
+    <h2 class="reveal">Let&rsquo;s build a campaign together.</h2>
+    <p class="reveal">Tell us your objective and we&rsquo;ll come back with a proposal — formats, reach and timing.</p>
+    <div class="pt-actions reveal">
+      <a class="btn primary" href="mailto:partnership@ayo.co.id">Talk to us</a>
+      <button class="btn ghost" type="button" data-mediakit>Download media kit</button>
+    </div>
+  </div>
+</section>
+
+<!-- 7. FAQ -->
+<section class="pt-faq">
+  <div class="wrap">
+    <p class="eyebrow-num reveal">FAQ</p>
+    <h2 class="sec-title reveal">Frequently asked questions.</h2>
+    <div class="pt-faq-list reveal">
+      <details class="pt-q"><summary>What campaign formats do you offer?</summary><p>Placeholder answer: in-app banners, sponsored Open Play sessions, court takeovers and tournament series. Formats can be combined.</p></details>
+      <details class="pt-q"><summary>Can we target a specific city or sport?</summary><p>Placeholder answer: yes — campaigns can be scoped by city, by venue, or by sport.</p></details>
+      <details class="pt-q"><summary>How is reach measured?</summary><p>Placeholder answer: impressions, session sign-ups and venue footfall, reported after the campaign.</p></details>
+      <details class="pt-q"><summary>What is the minimum campaign length?</summary><p>Placeholder answer: to be confirmed with the marketing team.</p></details>
+      <details class="pt-q"><summary>How do we get started?</summary><p>Placeholder answer: send us your objective and we&rsquo;ll come back with a proposal.</p></details>
+    </div>
+  </div>
+</section>
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <img src="assets/logo.svg" alt="AYO">
+      </div>
+      <div class="foot-cta">
+        <span class="foot-cta-label">Own a sports venue?</span>
+        <a class="btn primary" href="index.html#partner">Become a Venue Partner <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
+      </div>
+    </div>
+    <div class="foot-cols">
+      <div class="col"><h4>Product</h4><a href="index.html#aktivitas">Activity</a><a href="index.html#booking">Booking</a><a href="index.html#cerita">Community</a><a href="index.html#rating">PadelLevels</a></div>
+      <div class="col"><h4>Company</h4><a href="#">About Us</a><a href="partner.html" aria-current="page">Partner with Us</a><a href="#">Blog</a><a href="#">Careers</a></div>
+      <div class="col"><h4>Support</h4><a href="#">Help Center</a><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Contact</a></div>
+      <div class="col">
+        <h4>Follow us</h4>
+        <div class="foot-social">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 5.8a4.6 4.6 0 0 1-1.1-3H12v13.1a2.6 2.6 0 1 1-2.6-2.6c.3 0 .5 0 .8.1V9.7a5.9 5.9 0 1 0 5.2 5.9V9a7.7 7.7 0 0 0 4.4 1.4V7a4.6 4.6 0 0 1-3.2-1.2z"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 8s-.2-1.6-.9-2.3c-.9-.9-1.9-.9-2.3-1C16.9 4.5 12 4.5 12 4.5s-4.9 0-7.8.2c-.4 0-1.4.1-2.3 1C1.2 6.4 1 8 1 8S.8 9.9.8 11.8v1.4C.8 15.1 1 17 1 17s.2 1.6.9 2.3c.9.9 2 .9 2.5 1 1.8.2 7.6.2 7.6.2s4.9 0 7.8-.2c.4 0 1.4-.1 2.3-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.8v-1.4C23.2 9.9 23 8 23 8zM9.8 15V9l5.2 3-5.2 3z"/></svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.8 22H1.7l8.1-9.3L1 2h7l4.8 6.3L18.9 2zm-2.4 18h1.9L7.6 4H5.6L16.5 20z"/></svg></a>
+        </div>
+        <h4>Available on</h4>
+        <div class="foot-app">
+          <a class="app-badge" href="#" aria-label="Download on the App Store"><svg viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg><span class="abt"><small>Download on the</small><b>App Store</b></span></a>
+          <a class="app-badge" href="#" aria-label="Get it on Google Play"><svg class="ico-play" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg><span class="abt"><small>Get it on</small><b>Google Play</b></span></a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 AYO</span>
+      <div class="legal"><a href="#">Terms of service</a><a href="#">Privacy policy</a><a href="#">Cookie policy</a><a href="#">Help</a></div>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V4.5"/><path d="M7.5 9.5 12 5 16.5 9.5"/></svg>
+</button>
+<!-- Media kit gate. Marketing asked for brand details before the download, so
+     the button opens this rather than linking straight to a file. -->
+<dialog class="pt-dialog" id="mediakit" aria-labelledby="mk-title">
+  <form method="dialog" class="pt-dialog-in" id="mediakit-form">
+    <h2 id="mk-title">Download the media kit</h2>
+    <p class="sub">Tell us who you are and we&rsquo;ll send the kit over.</p>
+
+    <div class="pt-field"><label for="mk-brand">Brand name</label><input id="mk-brand" name="brand" type="text" required autocomplete="organization"></div>
+    <div class="pt-field"><label for="mk-name">Your name</label><input id="mk-name" name="name" type="text" required autocomplete="name"></div>
+    <div class="pt-field"><label for="mk-email">Work email</label><input id="mk-email" name="email" type="email" required autocomplete="email"></div>
+    <div class="pt-field"><label for="mk-phone">Phone number</label><input id="mk-phone" name="phone" type="tel" required autocomplete="tel"></div>
+
+    <div class="pt-dialog-foot">
+      <button class="btn primary" value="send" type="submit">Send it to me</button>
+      <button class="btn ghost" value="cancel" type="button" data-close>Cancel</button>
+    </div>
+    <p class="pt-note"><!-- NOT WIRED: no endpoint yet. Submitting closes the
+      dialog and shows a confirmation; nothing is sent or stored. Point the form
+      at a handler before this page goes anywhere real. -->By sending this you agree to be contacted about your campaign.</p>
+  </form>
+</dialog>
+
+<script src="scripts/chrome.js"></script>
+<script src="components/marquee/marquee.js"></script>
+<script>
+(function(){
+  var dlg = document.getElementById('mediakit');
+  if(!dlg || !dlg.showModal) return;          /* no <dialog> support: buttons stay inert rather than half-working */
+  document.querySelectorAll('[data-mediakit]').forEach(function(b){
+    b.addEventListener('click', function(){ dlg.showModal(); });
+  });
+  dlg.querySelector('[data-close]').addEventListener('click', function(){ dlg.close('cancel'); });
+  /* The form has nowhere to POST yet. Rather than pretend, it acknowledges and
+     closes — swap this for a real submit once an endpoint exists. */
+  document.getElementById('mediakit-form').addEventListener('submit', function(){
+    var f = this;
+    setTimeout(function(){ f.reset(); }, 0);
+  });
+})();
+</script>
+</body>
+</html>
