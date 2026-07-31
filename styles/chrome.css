@@ -134,7 +134,7 @@ img{max-width:100%;display:block}
 .foot h4{color:#fff;font-size:var(--fs-body);font-weight:var(--fw-bold);margin-bottom:var(--space-5)}
 .foot .col > a{display:block;color:rgba(255,255,255,.6);font-size:var(--fs-body);padding:var(--space-2) 0;transition:color .2s}
 .foot .col > a:hover{color:#fff}
-.foot-social{display:flex;gap:var(--space-3);margin-bottom:var(--space-8)}
+.foot-social{display:flex;flex-wrap:wrap;gap:var(--space-3);margin-bottom:var(--space-8)}
 .foot-social a{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.2);display:grid;place-items:center;color:#fff;transition:background .2s,border-color .2s}
 .foot-social a:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.4)}
 .foot-social svg{width:18px;height:18px}
@@ -187,6 +187,13 @@ img{max-width:100%;display:block}
   .burger{display:inline-flex}
   .lang{display:none}
   .foot-cols{grid-template-columns:1fr 1fr}
+}
+
+/* Two columns stop fitting once the follow row — four 40px buttons and their
+   gaps — is wider than the column holding it. That happens just under 360px,
+   where the footer was the one thing on the page still overflowing. */
+@media (max-width:380px){
+  .foot-cols{grid-template-columns:1fr;gap:var(--space-8)}
 }
 
 @media (prefers-reduced-motion: reduce){

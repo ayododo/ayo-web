@@ -50,7 +50,9 @@
   .bkg__title{font-weight:var(--fw-extrabold);font-size:clamp(30px,3.75vw,54px);line-height:1.02;letter-spacing:-.03em}
   /* 8px radius and a 12px inset, not the .hl treatment used elsewhere — this
      heading's highlight is a wider, softer block. */
-  .bkg__hl{background:var(--brand);color:var(--bg-white);border-radius:8px;padding:0 12px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+  /* Held on one line. Split across two, the red block reads as two unrelated
+     marks; measured at 255px against 288px of room even on a 320px phone. */
+  .bkg__hl{background:var(--brand);color:var(--bg-white);border-radius:8px;padding:0 12px;white-space:nowrap;-webkit-box-decoration-break:clone;box-decoration-break:clone}
   .bkg__note{flex-shrink:0;text-align:right;font-family:var(--font-mono);font-weight:var(--fw-medium);font-size:14px;line-height:1.5;color:rgb(70,70,70)}
 
   /* Outer edge flush with the content column, inner edge held off the centre
@@ -116,7 +118,7 @@
   .st__head::after{content:'';position:absolute;left:calc(380 / 1438 * 100%);bottom:0;width:9px;height:9px;background:var(--brand);transform:translate(-50%,calc(50% + .5px))}
   .st__head .eyebrow-num{margin-bottom:0}
   .st__title{font-weight:var(--fw-extrabold);font-size:clamp(30px,3.75vw,54px);line-height:1.02;letter-spacing:-.03em;margin-top:10px}
-  .st__title .hl{background:var(--brand);color:var(--bg-white);border-radius:8px;padding:0 12px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+  .st__title .hl{background:var(--brand);color:var(--bg-white);border-radius:8px;padding:0 12px;white-space:nowrap;-webkit-box-decoration-break:clone;box-decoration-break:clone}
   .st__aside{display:flex;align-items:center;gap:22px;flex-shrink:0}
   .st__note{text-align:right;font-family:var(--font-mono);font-weight:var(--fw-medium);font-size:14px;line-height:1.5;color:rgb(70,70,70)}
   .st__pause{flex-shrink:0;width:46px;height:46px;border-radius:50%;border:1px solid var(--hair);background:var(--bg-white);color:var(--text-default);

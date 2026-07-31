@@ -102,7 +102,14 @@
 /* ---- Responsive ------------------------------------------------------------ */
 @media (max-width: 900px) {
   .adslot__inner { padding: var(--space-6) 0; gap: var(--space-4); }
+  /* A creative arrives at whatever ratio it was made at, and a wide one forced
+     into a fixed box loses most of its message to the crop — at 358px the
+     Endurance banner kept its middle third and dropped both the wordmark and
+     the logo. The image sets the height here and is shown whole; the fixed box
+     survives only for the empty state, where there is nothing to crop. */
   .adslot__slot { height: clamp(140px, 22vw, 160px); }
+  .adslot__slot:has(.adslot__creative) { height: auto; }
+  .adslot__slot:has(.adslot__creative) .adslot__creative { height: auto; }
   /* Not wide enough to hold the heading and the pill on one line — the pill
      drops under the heading rather than crushing it. */
   .adslot__rail { flex-wrap: wrap; align-items: flex-start; gap: var(--space-3); }
