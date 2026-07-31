@@ -87,9 +87,16 @@
   .pt-q summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:var(--space-5);
     padding:var(--space-6) 0;font-size:clamp(17px,1.5vw,20px);font-weight:var(--fw-semibold);letter-spacing:-.01em}
   .pt-q summary::-webkit-details-marker{display:none}
-  .pt-q summary::after{content:'';flex-shrink:0;width:14px;height:14px;border-right:2px solid var(--text-dim);border-bottom:2px solid var(--text-dim);
-    transform:rotate(45deg) translate(-3px,-3px);transition:transform .2s}
-  .pt-q[open] summary::after{transform:rotate(225deg) translate(-3px,-3px)}
+  /* Plus that becomes a minus: two bars, and only the upright one turns. A
+     chevron has to be drawn heavy enough to read as an arrow, which is what made
+     it loom next to this type; two hairlines carry the same meaning at a weight
+     that sits under the question rather than beside it. */
+  .pt-mark{position:relative;flex-shrink:0;width:14px;height:14px;color:var(--text-dim);transition:color .2s}
+  .pt-mark::before,.pt-mark::after{content:'';position:absolute;top:50%;left:0;right:0;height:1.5px;border-radius:1px;
+    background:currentColor;transform:translateY(-50%);transition:transform .28s cubic-bezier(.2,.7,.2,1)}
+  .pt-mark::after{transform:translateY(-50%) rotate(90deg)}
+  .pt-q[open] .pt-mark::after{transform:translateY(-50%) rotate(0deg)}
+  .pt-q summary:hover .pt-mark,.pt-q[open] .pt-mark{color:var(--text-default)}
   .pt-q p{color:var(--text-dim);line-height:1.65;max-width:70ch;padding:0 0 var(--space-6)}
 
   /* ---------- Media kit dialog ---------- */
@@ -269,11 +276,11 @@
     <p class="eyebrow-num reveal">FAQ</p>
     <h2 class="sec-title reveal">Frequently asked questions.</h2>
     <div class="pt-faq-list reveal">
-      <details class="pt-q"><summary>What campaign formats do you offer?</summary><p>Placeholder answer: in-app banners, sponsored Open Play sessions, court takeovers and tournament series. Formats can be combined.</p></details>
-      <details class="pt-q"><summary>Can we target a specific city or sport?</summary><p>Placeholder answer: yes — campaigns can be scoped by city, by venue, or by sport.</p></details>
-      <details class="pt-q"><summary>How is reach measured?</summary><p>Placeholder answer: impressions, session sign-ups and venue footfall, reported after the campaign.</p></details>
-      <details class="pt-q"><summary>What is the minimum campaign length?</summary><p>Placeholder answer: to be confirmed with the marketing team.</p></details>
-      <details class="pt-q"><summary>How do we get started?</summary><p>Placeholder answer: send us your objective and we&rsquo;ll come back with a proposal.</p></details>
+      <details class="pt-q"><summary>What campaign formats do you offer?<span class="pt-mark" aria-hidden="true"></span></summary><p>Placeholder answer: in-app banners, sponsored Open Play sessions, court takeovers and tournament series. Formats can be combined.</p></details>
+      <details class="pt-q"><summary>Can we target a specific city or sport?<span class="pt-mark" aria-hidden="true"></span></summary><p>Placeholder answer: yes — campaigns can be scoped by city, by venue, or by sport.</p></details>
+      <details class="pt-q"><summary>How is reach measured?<span class="pt-mark" aria-hidden="true"></span></summary><p>Placeholder answer: impressions, session sign-ups and venue footfall, reported after the campaign.</p></details>
+      <details class="pt-q"><summary>What is the minimum campaign length?<span class="pt-mark" aria-hidden="true"></span></summary><p>Placeholder answer: to be confirmed with the marketing team.</p></details>
+      <details class="pt-q"><summary>How do we get started?<span class="pt-mark" aria-hidden="true"></span></summary><p>Placeholder answer: send us your objective and we&rsquo;ll come back with a proposal.</p></details>
     </div>
   </div>
 </section>
