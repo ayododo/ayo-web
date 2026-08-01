@@ -29,6 +29,24 @@ img{max-width:100%;display:block}
 .btn.lg{padding:var(--space-4) var(--space-8);font-size:var(--fs-body-lg)}
 .btn.full{width:100%}
 
+
+/* ---- Breadcrumb ----
+   Sub-pages hang off the homepage with nothing on them saying so. Two levels,
+   because two is all there is; the audience rides along as a chip rather than
+   a third crumb that would only link back to where you already are.
+   Lives here because more than one page carries it. */
+.crumb{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-bottom:28px;
+    font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-dim)}
+.crumb ol{display:flex;flex-wrap:wrap;align-items:center;gap:8px;list-style:none;margin:0;padding:0}
+.crumb li{display:flex;align-items:center;gap:8px}
+.crumb li+li::before{content:'';width:5px;height:5px;border-right:1.2px solid currentColor;border-top:1.2px solid currentColor;transform:rotate(45deg);opacity:.55}
+.crumb a{color:inherit;transition:color .15s}
+.crumb a:hover{color:var(--text-default)}
+.crumb [aria-current]{color:var(--text-default);font-weight:var(--fw-semibold)}
+.crumb .who{display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border-radius:var(--radius-pill);
+    background:rgba(236,36,53,.08);color:var(--brand);font-weight:var(--fw-semibold);letter-spacing:.08em}
+.crumb .who::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor}
+
 /* ---- Section scaffolding ---- */
 .sec{padding:clamp(36px,5vw,72px) 0}
 .sec-title{font-size:clamp(28px,4vw,52px);font-weight:var(--fw-extrabold);letter-spacing:-.02em;line-height:1.06}

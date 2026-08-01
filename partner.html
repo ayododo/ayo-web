@@ -18,7 +18,7 @@
 <style>
   /* ---------- Hero ---------- */
   .pt-hero{padding:clamp(120px,13vw,180px) 0 clamp(48px,6vw,80px);background:var(--bg-white)}
-  .pt-hero h1{font-size:clamp(34px,5.4vw,72px);font-weight:var(--fw-extrabold);letter-spacing:-.03em;line-height:1.02;margin:var(--space-4) 0 var(--space-5);max-width:20ch;text-wrap:balance}
+  .pt-hero h1{font-size:clamp(34px,5.4vw,72px);font-weight:var(--fw-extrabold);letter-spacing:-.03em;line-height:1.02;margin:0 0 var(--space-5);max-width:20ch;text-wrap:balance}
   /* Kept on one line: split across two, the red block reads as two unrelated
      marks and the orphaned word looks like a mistake. */
   .pt-hero h1 .hl{background:var(--brand);color:#fff;border-radius:8px;padding:0 12px;white-space:nowrap;-webkit-box-decoration-break:clone;box-decoration-break:clone}
@@ -173,7 +173,13 @@
 <!-- 1. HERO -->
 <header class="pt-hero">
   <div class="wrap">
-    <p class="eyebrow-num reveal">For Brands &amp; Sponsors</p>
+    <nav class="crumb reveal" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="index.html">AYO</a></li>
+        <li><span aria-current="page">Partner with AYO</span></li>
+      </ol>
+      <span class="who">For brands &amp; sponsors</span>
+    </nav>
     <h1 class="reveal">Put your brand where the <span class="hl">players are</span>.</h1>
     <p class="lead reveal">90,000+ active players across 150+ cities book, play and come back every week. Reach them where the habit already lives — not in a feed they scroll past.</p>
     <div class="pt-actions reveal">

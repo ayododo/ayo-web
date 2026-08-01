@@ -38,20 +38,6 @@
      the right, the hero reads as two poles and the title gets its air. */
   .avm-hero .wrap{display:grid;grid-template-columns:minmax(0,620px) 320px;justify-content:space-between;
     column-gap:clamp(40px,6vw,88px);align-items:start}
-  /* Two levels, because two is all there is: this page hangs directly off the
-     homepage. The audience is said in words rather than faked as a third crumb
-     that would link back to where you already are. */
-  .avm-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-bottom:28px;
-    font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-dim)}
-  .avm-crumb ol{display:flex;flex-wrap:wrap;align-items:center;gap:8px;list-style:none;margin:0;padding:0}
-  .avm-crumb li{display:flex;align-items:center;gap:8px}
-  .avm-crumb li+li::before{content:'';width:5px;height:5px;border-right:1.2px solid currentColor;border-top:1.2px solid currentColor;transform:rotate(45deg);opacity:.55}
-  .avm-crumb a{color:inherit;transition:color .15s}
-  .avm-crumb a:hover{color:var(--text-default)}
-  .avm-crumb [aria-current]{color:var(--text-default);font-weight:var(--fw-semibold)}
-  .avm-crumb .who{display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border-radius:var(--radius-pill);
-    background:rgba(236,36,53,.08);color:var(--brand);font-weight:var(--fw-semibold);letter-spacing:.08em}
-  .avm-crumb .who::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor}
 
   .avm-hero h1{margin-top:0;font-weight:var(--fw-extrabold);font-size:clamp(38px,4.6vw,66px);line-height:1.015;letter-spacing:-.035em;text-wrap:balance}
   .avm-hero h1 .hl{background:var(--brand);color:var(--bg-white);border-radius:10px;padding:0 14px;white-space:nowrap;-webkit-box-decoration-break:clone;box-decoration-break:clone}
@@ -241,7 +227,7 @@
 <header class="avm-hero">
   <div class="wrap">
     <div>
-      <nav class="avm-crumb reveal" aria-label="Breadcrumb">
+      <nav class="crumb reveal" aria-label="Breadcrumb">
         <ol>
           <li><a href="index.html">AYO</a></li>
           <li><span aria-current="page">AYO Venue Management</span></li>
