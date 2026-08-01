@@ -114,10 +114,13 @@
   .avm-feat .note{font-size:16px;line-height:1.6;color:var(--text-dim)}
   /* Category labels, not controls. There is one set of features behind them for
      now, so they are marked up as text rather than tabs that lead nowhere. */
-  .avm-cats{display:flex;flex-wrap:wrap;gap:8px;margin-top:32px;padding-bottom:4px;list-style:none}
-  .avm-cats li{padding:12px 22px;border-radius:var(--radius-pill);font-weight:var(--fw-semibold);font-size:14px;
-    color:var(--text-dim);box-shadow:inset 0 0 0 1px var(--hair)}
-  .avm-cats li.is-current{background:var(--text-default);color:var(--bg-white);box-shadow:none}
+  .avm-cats{display:flex;flex-wrap:wrap;gap:8px;margin-top:32px;padding-bottom:4px}
+  .avm-cat{padding:12px 22px;border:0;border-radius:var(--radius-pill);cursor:pointer;
+    font-family:var(--font-sans);font-weight:var(--fw-semibold);font-size:14px;
+    background:none;color:var(--text-dim);box-shadow:inset 0 0 0 1px var(--hair);
+    transition:background .18s,color .18s,box-shadow .18s}
+  .avm-cat:hover{color:var(--text-default);box-shadow:inset 0 0 0 1px var(--text-default)}
+  .avm-cat[aria-selected="true"]{background:var(--text-default);color:var(--bg-white);box-shadow:none}
 
   /* Full-bleed rows: copy on white at the left, a tinted plate for the capture
      on the right, hairline between rows. */
@@ -125,6 +128,7 @@
      against the viewport edge while the heading above it started at 36px, so the
      section did not line up with anything on the page. */
   .avm-rows{margin-top:44px;border-top:1px solid var(--hair)}
+  .avm-rows[hidden]{display:none}
   .avm-row{display:grid;grid-template-columns:820fr 620fr;border-bottom:1px solid var(--hair)}
   .avm-row-body{background:var(--bg-white);padding:clamp(32px,4vw,56px) clamp(24px,4vw,56px) clamp(32px,4vw,56px) 0;
     display:flex;flex-direction:column;justify-content:center}
@@ -320,46 +324,198 @@
       <h2 id="avm-feat-t">Everything you need to run your venue.</h2>
       <p class="note">Built for owners and staff who move fast on the ground.</p>
     </div>
-    <ul class="avm-cats reveal"><li class="is-current">Dashboard</li><li>Schedule</li><li>Courts</li><li>Promosi</li><li>Registration</li><li>Others</li></ul>
-
-    <div class="avm-rows">
-    <article class="avm-row reveal">
-      <div class="avm-row-body">
-        <span class="avm-row-n">01</span>
-        <h3>Real-time bookings</h3>
-        <p>Every booking lands on your phone the moment it comes in &mdash; customer details and payment status included.</p>
-        <p class="tag">Push in &lt; 2 seconds</p>
-      </div>
-      <div class="avm-row-art"><span>App screen</span></div>
-    </article>
-    <article class="avm-row reveal">
-      <div class="avm-row-body">
-        <span class="avm-row-n">02</span>
-        <h3>Today at a glance</h3>
-        <p>Occupancy, revenue, and pending payments for the day in one screen you can read in ten seconds.</p>
-        <p class="tag">One screen, whole day</p>
-      </div>
-      <div class="avm-row-art"><span>App screen</span></div>
-    </article>
-    <article class="avm-row reveal">
-      <div class="avm-row-body">
-        <span class="avm-row-n">03</span>
-        <h3>Revenue reports</h3>
-        <p>Daily, weekly, and monthly earnings summarised automatically &mdash; no manual bookkeeping.</p>
-        <p class="tag">Auto-reconciled</p>
-      </div>
-      <div class="avm-row-art"><span>App screen</span></div>
-    </article>
-    <article class="avm-row reveal">
-      <div class="avm-row-body">
-        <span class="avm-row-n">04</span>
-        <h3>Instant notifications</h3>
-        <p>Get pinged whenever a new booking, cancellation, or payment comes through.</p>
-        <p class="tag">Never miss a slot</p>
-      </div>
-      <div class="avm-row-art"><span>App screen</span></div>
-    </article>
+    <div class="avm-cats reveal" role="tablist" aria-label="Feature categories">
+      <button class="avm-cat" type="button" role="tab" id="cat-dashboard" aria-controls="pan-dashboard" aria-selected="true" tabindex="0">Dashboard</button>
+      <button class="avm-cat" type="button" role="tab" id="cat-schedule" aria-controls="pan-schedule" aria-selected="false" tabindex="-1">Schedule</button>
+      <button class="avm-cat" type="button" role="tab" id="cat-courts" aria-controls="pan-courts" aria-selected="false" tabindex="-1">Courts</button>
+      <button class="avm-cat" type="button" role="tab" id="cat-promosi" aria-controls="pan-promosi" aria-selected="false" tabindex="-1">Promosi</button>
+      <button class="avm-cat" type="button" role="tab" id="cat-registration" aria-controls="pan-registration" aria-selected="false" tabindex="-1">Registration</button>
+      <button class="avm-cat" type="button" role="tab" id="cat-others" aria-controls="pan-others" aria-selected="false" tabindex="-1">Others</button>
     </div>
+
+      <div class="avm-rows" role="tabpanel" id="pan-dashboard" aria-labelledby="cat-dashboard">
+        <article class="avm-row">
+          <div class="avm-row-body">
+            <span class="avm-row-n">01</span>
+            <h3>Real-time bookings</h3>
+            <p>Every booking lands on your phone the moment it comes in &mdash; customer details and payment status included.</p>
+            <p class="tag">Push in &lt; 2 seconds</p>
+          </div>
+          <div class="avm-row-art"><span>App screen</span></div>
+        </article>
+        <article class="avm-row">
+          <div class="avm-row-body">
+            <span class="avm-row-n">02</span>
+            <h3>Today at a glance</h3>
+            <p>Occupancy, revenue, and pending payments for the day in one screen you can read in ten seconds.</p>
+            <p class="tag">One screen, whole day</p>
+          </div>
+          <div class="avm-row-art"><span>App screen</span></div>
+        </article>
+        <article class="avm-row">
+          <div class="avm-row-body">
+            <span class="avm-row-n">03</span>
+            <h3>Revenue reports</h3>
+            <p>Daily, weekly, and monthly earnings summarised automatically &mdash; no manual bookkeeping.</p>
+            <p class="tag">Auto-reconciled</p>
+          </div>
+          <div class="avm-row-art"><span>App screen</span></div>
+        </article>
+        <article class="avm-row">
+          <div class="avm-row-body">
+            <span class="avm-row-n">04</span>
+            <h3>Instant notifications</h3>
+            <p>Get pinged whenever a new booking, cancellation, or payment comes through.</p>
+            <p class="tag">Never miss a slot</p>
+          </div>
+          <div class="avm-row-art"><span>App screen</span></div>
+        </article>
+      </div>
+      <div class="avm-rows" role="tabpanel" id="pan-schedule" aria-labelledby="cat-schedule" hidden>
+        <article class="avm-row">
+          <div class="avm-row-body">
+            <span class="avm-row-n">01</span>
+            <h3>Court calendar</h3>
+            <p>Placeholder: every court on one timeline, with drag-to-move and conflict warnings.</p>
+            <p class="tag">Placeholder tag</p>
+          </div>
+          <div class="avm-row-art"><span>App screen</span></div>
+        </article>
+        <article class="avm-row">
+          <div class="avm-row-body">
+            <span class="avm-row-n">02</span>
+            <h3>Recurring slots</h3>
+            <p>Placeholder: set a weekly pattern once and let it repeat until you change it.</p>
+            <p class="tag">Placeholder tag</p>
+          </div>
+          <div class="avm-row-art"><span>App screen</span></div>
+        </article>
+        <article class="avm-row">
+          <div class="avm-row-body">
+            <span class="avm-row-n">03</span>
+            <h3>Blackout dates</h3>
+            <p>Placeholder: close courts for maintenance or private events without deleting bookings.</p>
+            <p class="tag">Placeholder tag</p>
+          </div>
+          <div class="avm-row-art"><span>App screen</span></div>
+        </article>
+      </div>
+      <div class="avm-rows" role="tabpanel" id="pan-courts" aria-labelledby="cat-courts" hidden>
+        <article class="avm-row">
+          <div class="avm-row-body">
+            <span class="avm-row-n">01</span>
+            <h3>Court profiles</h3>
+            <p>Placeholder: surface, lighting, and photos per court, shown to players when they book.</p>
+            <p class="tag">Placeholder tag</p>
+          </div>
+          <div class="avm-row-art"><span>App screen</span></div>
+        </article>
+        <article class="avm-row">
+          <div class="avm-row-body">
+            <span class="avm-row-n">02</span>
+            <h3>Pricing rules</h3>
+            <p>Placeholder: peak and off-peak rates that apply themselves by day and hour.</p>
+            <p class="tag">Placeholder tag</p>
+          </div>
+          <div class="avm-row-art"><span>App screen</span></div>
+        </article>
+        <article class="avm-row">
+          <div class="avm-row-body">
+            <span class="avm-row-n">03</span>
+            <h3>Capacity limits</h3>
+            <p>Placeholder: cap how many players a slot takes before it closes itself.</p>
+            <p class="tag">Placeholder tag</p>
+          </div>
+          <div class="avm-row-art"><span>App screen</span></div>
+        </article>
+      </div>
+      <div class="avm-rows" role="tabpanel" id="pan-promosi" aria-labelledby="cat-promosi" hidden>
+        <article class="avm-row">
+          <div class="avm-row-body">
+            <span class="avm-row-n">01</span>
+            <h3>Discount codes</h3>
+            <p>Placeholder: time-boxed codes with a usage cap and a report when they run out.</p>
+            <p class="tag">Placeholder tag</p>
+          </div>
+          <div class="avm-row-art"><span>App screen</span></div>
+        </article>
+        <article class="avm-row">
+          <div class="avm-row-body">
+            <span class="avm-row-n">02</span>
+            <h3>Featured listing</h3>
+            <p>Placeholder: push your venue up the list players see in your city.</p>
+            <p class="tag">Placeholder tag</p>
+          </div>
+          <div class="avm-row-art"><span>App screen</span></div>
+        </article>
+        <article class="avm-row">
+          <div class="avm-row-body">
+            <span class="avm-row-n">03</span>
+            <h3>Push campaigns</h3>
+            <p>Placeholder: message players who have booked with you before.</p>
+            <p class="tag">Placeholder tag</p>
+          </div>
+          <div class="avm-row-art"><span>App screen</span></div>
+        </article>
+      </div>
+      <div class="avm-rows" role="tabpanel" id="pan-registration" aria-labelledby="cat-registration" hidden>
+        <article class="avm-row">
+          <div class="avm-row-body">
+            <span class="avm-row-n">01</span>
+            <h3>Venue onboarding</h3>
+            <p>Placeholder: submit your venue details and track the review in the app.</p>
+            <p class="tag">Placeholder tag</p>
+          </div>
+          <div class="avm-row-art"><span>App screen</span></div>
+        </article>
+        <article class="avm-row">
+          <div class="avm-row-body">
+            <span class="avm-row-n">02</span>
+            <h3>Staff accounts</h3>
+            <p>Placeholder: invite staff with their own logins and limited permissions.</p>
+            <p class="tag">Placeholder tag</p>
+          </div>
+          <div class="avm-row-art"><span>App screen</span></div>
+        </article>
+        <article class="avm-row">
+          <div class="avm-row-body">
+            <span class="avm-row-n">03</span>
+            <h3>Document verification</h3>
+            <p>Placeholder: upload ownership and permit documents once.</p>
+            <p class="tag">Placeholder tag</p>
+          </div>
+          <div class="avm-row-art"><span>App screen</span></div>
+        </article>
+      </div>
+      <div class="avm-rows" role="tabpanel" id="pan-others" aria-labelledby="cat-others" hidden>
+        <article class="avm-row">
+          <div class="avm-row-body">
+            <span class="avm-row-n">01</span>
+            <h3>Multi-branch</h3>
+            <p>Placeholder: several venues under one owner account, each with its own schedule.</p>
+            <p class="tag">Placeholder tag</p>
+          </div>
+          <div class="avm-row-art"><span>App screen</span></div>
+        </article>
+        <article class="avm-row">
+          <div class="avm-row-body">
+            <span class="avm-row-n">02</span>
+            <h3>Data export</h3>
+            <p>Placeholder: pull bookings and revenue out as a spreadsheet whenever you need it.</p>
+            <p class="tag">Placeholder tag</p>
+          </div>
+          <div class="avm-row-art"><span>App screen</span></div>
+        </article>
+        <article class="avm-row">
+          <div class="avm-row-body">
+            <span class="avm-row-n">03</span>
+            <h3>Support</h3>
+            <p>Placeholder: reach the venue team from inside the app.</p>
+            <p class="tag">Placeholder tag</p>
+          </div>
+          <div class="avm-row-art"><span>App screen</span></div>
+        </article>
+      </div>
   </div>
 </section>
 
@@ -434,6 +590,42 @@
 <button class="to-top" id="toTop" aria-label="Back to top">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V4.5"/><path d="M7.5 9.5 12 5 16.5 9.5"/></svg>
 </button>
+<script>
+/* Feature categories — real tabs: click, arrow keys, Home/End, and the roving
+   tabindex a tablist is supposed to have, so only the selected tab is a tab
+   stop and the arrows move between them. */
+(function(){
+  var list = document.querySelector('.avm-cats[role="tablist"]');
+  if(!list) return;
+  var tabs = [].slice.call(list.querySelectorAll('[role="tab"]'));
+  if(tabs.length < 2) return;
+
+  function show(i, moveFocus){
+    tabs.forEach(function(t, j){
+      var on = i === j;
+      t.setAttribute('aria-selected', on);
+      t.tabIndex = on ? 0 : -1;
+      var panel = document.getElementById(t.getAttribute('aria-controls'));
+      if(panel) panel.hidden = !on;
+    });
+    if(moveFocus) tabs[i].focus();
+  }
+
+  tabs.forEach(function(t, i){
+    t.addEventListener('click', function(){ show(i); });
+    t.addEventListener('keydown', function(e){
+      var n = null;
+      if(e.key === 'ArrowRight') n = (i + 1) % tabs.length;
+      else if(e.key === 'ArrowLeft') n = (i - 1 + tabs.length) % tabs.length;
+      else if(e.key === 'Home') n = 0;
+      else if(e.key === 'End') n = tabs.length - 1;
+      if(n === null) return;
+      e.preventDefault();
+      show(n, true);
+    });
+  });
+})();
+</script>
 <script src="scripts/chrome.js"></script>
 <script src="components/marquee/marquee.js"></script>
 </body>
