@@ -50,9 +50,6 @@
   .bkg__title{font-weight:var(--fw-extrabold);font-size:clamp(30px,3.75vw,54px);line-height:1.02;letter-spacing:-.03em}
   /* 8px radius and a 12px inset, not the .hl treatment used elsewhere — this
      heading's highlight is a wider, softer block. */
-  /* Held on one line. Split across two, the red block reads as two unrelated
-     marks; measured at 255px against 288px of room even on a 320px phone. */
-  .bkg__hl{background:var(--brand);color:var(--bg-white);border-radius:8px;padding:0 12px;white-space:nowrap;-webkit-box-decoration-break:clone;box-decoration-break:clone}
   .bkg__note{flex-shrink:0;text-align:right;font-family:var(--font-mono);font-weight:var(--fw-medium);font-size:14px;line-height:1.5;color:rgb(70,70,70)}
 
   /* Outer edge flush with the content column, inner edge held off the centre
@@ -96,7 +93,6 @@
   /* ---------- 7. Marketing B2B (editorial + reach stats) ---------- */
   .b2b-head{max-width:62ch}
   .b2b-head h2{font-size:clamp(28px,4vw,52px);font-weight:var(--fw-extrabold);letter-spacing:-.02em;line-height:1.08;margin:var(--space-3) 0 var(--space-4)}
-  .b2b-head h2 .hl{background:var(--brand);color:#fff;border-radius:var(--radius-sm);padding:0 .14em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
   .b2b-head .sec-sub{max-width:56ch}
   .b2b-reach{display:flex;flex-wrap:wrap;row-gap:var(--space-6);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);margin:var(--space-10) 0 var(--space-8);padding:var(--space-8) 0}
   .btn-row{display:flex;gap:var(--space-4);flex-wrap:wrap}
@@ -118,7 +114,6 @@
   .st__head::after{content:'';position:absolute;left:calc(380 / 1438 * 100%);bottom:0;width:9px;height:9px;background:var(--brand);transform:translate(-50%,calc(50% + .5px))}
   .st__head .eyebrow-num{margin-bottom:0}
   .st__title{font-weight:var(--fw-extrabold);font-size:clamp(30px,3.75vw,54px);line-height:1.02;letter-spacing:-.03em;margin-top:10px}
-  .st__title .hl{background:var(--brand);color:var(--bg-white);border-radius:8px;padding:0 12px;white-space:nowrap;-webkit-box-decoration-break:clone;box-decoration-break:clone}
   .st__aside{display:flex;align-items:center;gap:22px;flex-shrink:0}
   .st__note{text-align:right;font-family:var(--font-mono);font-weight:var(--fw-medium);font-size:14px;line-height:1.5;color:rgb(70,70,70)}
   .st__pause{flex-shrink:0;width:46px;height:46px;border-radius:50%;border:1px solid var(--hair);background:var(--bg-white);color:var(--text-default);
@@ -383,7 +378,7 @@
         <div class="actb__header">
           <div>
             <p class="actb__eyebrow">Activity</p>
-            <h2 class="actb__title" id="actb-title">Join activities, <span class="actb__hl">hassle-free</span>.</h2>
+            <h2 class="actb__title" id="actb-title">Join activities, hassle-free.</h2>
           </div>
           <p class="actb__caption">Two ways to play on AYO — host your own or challenge a rival.</p>
         </div>
@@ -446,7 +441,7 @@
     <div class="bkg__head">
       <div class="bkg__head-main">
         <p class="bkg__eyebrow">Booking</p>
-        <h2 class="bkg__title" id="bkg-title">Book courts, <span class="bkg__hl">done in 2 minutes</span>.</h2>
+        <h2 class="bkg__title" id="bkg-title">Book courts, done in 2 minutes.</h2>
       </div>
       <p class="bkg__note">Players find their game. Owners<br>fill their courts.</p>
     </div>
@@ -510,7 +505,7 @@
       <div class="b2b-content">
         <div class="b2b-head reveal">
           <p class="eyebrow-num">For Brands &amp; Sponsors</p>
-          <h2>Reach <span class="hl">tens of thousands</span> of active players.</h2>
+          <h2>Reach tens of thousands of active players.</h2>
           <p class="sec-sub">Connect your brand with Indonesia’s most active sports community through campaigns, sponsorships, and in-platform activations.</p>
         </div>
         <div class="b2b-reach reveal">
@@ -564,7 +559,7 @@
       <div class="st__head">
         <div>
           <p class="eyebrow-num">Stories</p>
-          <h2 class="st__title" id="st-title">From the people who <span class="hl">play every week</span>.</h2>
+          <h2 class="st__title" id="st-title">From the people who play every week.</h2>
         </div>
         <div class="st__aside">
           <p class="st__note">Four topics. Four players.<br>Pick one &mdash; the story follows.</p>

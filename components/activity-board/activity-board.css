@@ -88,11 +88,6 @@
   font-weight: var(--fw-extrabold);
   font-size: clamp(30px, 3.8vw, 54px); line-height: 1.06; letter-spacing: -.03em;
 }
-.actb__hl {
-  display: inline-block;
-  background: var(--actb-red); color: var(--text-inverse);
-  border-radius: 8px; padding: 0 12px;
-}
 .actb__caption {
   flex-shrink: 0; max-width: 260px; text-align: right;
   font-family: var(--font-mono); font-size: var(--fs-caption); line-height: 1.5;

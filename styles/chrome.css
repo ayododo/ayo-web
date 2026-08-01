@@ -32,7 +32,6 @@ img{max-width:100%;display:block}
 /* ---- Section scaffolding ---- */
 .sec{padding:clamp(36px,5vw,72px) 0}
 .sec-title{font-size:clamp(28px,4vw,52px);font-weight:var(--fw-extrabold);letter-spacing:-.02em;line-height:1.06}
-.sec-title .hl{background:var(--brand);color:#fff;border-radius:var(--radius-sm);padding:0 .14em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .sec-sub{color:var(--text-dim);margin-top:var(--space-2);font-size:var(--fs-body-lg);max-width:60ch}
 /* Eyebrow + stat row: started in one section, used across several, so they
      belong to the chrome rather than to whichever section had them first. */
