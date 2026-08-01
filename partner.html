@@ -191,7 +191,7 @@
 
 <!-- 2. PARTNER LOGOS -->
 <section class="marquee on-light" aria-label="Brands that have run campaigns with AYO">
-  <div class="mq-row is-sub" data-mq-row data-mq-speed="38" data-mq-dir="left">
+  <div class="mq-row is-sub" data-mq-row data-mq-speed="38" data-mq-dir="right">
     <div class="mq-track" data-mq-track>
       <div class="mq-group" data-mq-group>
         <span class="mq-item">AYO × Adidas</span><span class="mq-dot" aria-hidden="true"></span>
@@ -372,6 +372,12 @@
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var SPEED = 26;                 /* px per second — slow enough to read past */
+  /* Same vocabulary as the marquee's data-mq-dir: -1 sends the cards rightwards.
+     Growing scrollLeft moves the viewport right, which drags the cards left — so
+     travelling right means stepping scrollLeft down. The wrap below already runs
+     in both directions, and the rail parks a whole set in from the left, so there
+     is room to travel backwards without hitting the browser's clamp at zero. */
+  var DIR = -1;
   var originals = [].slice.call(rail.children);
   if(originals.length < 2) return;
 
@@ -450,7 +456,7 @@
          rather than thrown away — otherwise a slow speed never moves at all. */
       carry += SPEED * dt;
       var step = Math.floor(carry);
-      if(step){ carry -= step; rail.scrollLeft += step; }
+      if(step){ carry -= step; rail.scrollLeft += DIR * step; }
     }
     requestAnimationFrame(tick);
   });
