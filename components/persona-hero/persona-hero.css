@@ -69,16 +69,17 @@
   color: rgba(255,255,255,.8); margin-bottom: var(--space-5);
 }
 
+/* Shared with the other pages' opening lines via tokens — see --fs-hero. */
 .ph-title {
   font-family: var(--font-sans); font-weight: var(--fw-extrabold);
-  font-size: clamp(38px, 6.4vw, var(--fs-display));
-  line-height: 1.12; letter-spacing: -.02em;
+  font-size: var(--fs-hero);
+  line-height: var(--lh-hero); letter-spacing: var(--ls-hero);
 }
 /* Highlight word: white text on top, brand block wiping in from the left. */
-.ph-hl { position: relative; isolation: isolate; display: inline-block; padding: 0 .14em; }
+.ph-hl { position: relative; isolation: isolate; display: inline-block; padding: 0 var(--hl-pad); }
 .ph-hl::before {
   content: ''; position: absolute; inset: 0; z-index: -1;
-  background: var(--brand); border-radius: var(--radius-sm);
+  background: var(--brand); border-radius: var(--hl-radius);
   animation: ph-wipe .55s cubic-bezier(.2,.7,.2,1) .4s both;
 }
 

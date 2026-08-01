@@ -28,6 +28,22 @@
      Headers carry desktop-specific sizes. Mobile overrides come in a later
      phase (media queries). Sizes in px to mirror Figma 1:1. */
   --fs-display: 64px;   --lh-display: 1.1;   /* hero headline */
+
+  /* ---- Hero headline · one scale for every page -----------------------------
+     The three pages that open on a headline had drifted to 64 / 66 / 72px, with
+     three radii and three line-heights on the red highlight. They are one thing
+     seen on three pages, so they read as inconsistent side by side.
+     Capped at --fs-display, the size the scale already calls a hero headline —
+     the 72px partner variant was the outlier, not the target.
+     --lh-hero matters more than it looks: the highlight's red box is an inline
+     background, so its height comes from the font (~1.2em), NOT from
+     line-height. At 1.02 the box stood 13px taller than its own line and bled
+     into the lines above and below it. 1.12 leaves it inside its own row. */
+  --fs-hero: clamp(38px, 5vw, var(--fs-display));
+  --lh-hero: 1.12;
+  --ls-hero: -0.02em;
+  --hl-radius: var(--radius-md);   /* same corner as the buttons beside it */
+  --hl-pad: 0.14em;                /* relative, so it tracks the font size */
   --fs-h1: 44px;        --lh-h1: 1.15;       /* page title */
   --fs-h2: 28px;        --lh-h2: 1.25;       /* section heading */
   --fs-h3: 20px;        --lh-h3: 1.35;       /* card / sub heading */
