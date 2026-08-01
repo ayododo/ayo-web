@@ -124,8 +124,13 @@
   .avm-row .tag{margin-top:20px;font-family:var(--font-mono);font-size:12px;font-weight:var(--fw-semibold);letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
   .avm-row-art{background:rgb(248,247,246);padding:36px;display:grid}
   .avm-row-art span{border-radius:12px;background:var(--bg-white);box-shadow:inset 0 0 0 1px var(--hair);
-    display:grid;place-items:center;min-height:200px;
+    display:grid;place-items:center;gap:10px;min-height:200px;
     font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:rgb(150,146,140)}
+  /* The art is not built yet, so the box says so twice: a loading animation and
+     the label under it. Injected by JS, never in the markup — with the script
+     off the box stays exactly the labelled placeholder it is today. */
+  .avm-lottie{width:clamp(96px,11vw,128px);aspect-ratio:1;pointer-events:none}
+  .avm-lottie svg{display:block;width:100%;height:100%}
 
   /* ---------- FAQ ---------- */
   .avm-faq{background:var(--bg-white);padding:clamp(56px,6.5vw,88px) 0 clamp(56px,6.5vw,89px)}
@@ -612,5 +617,63 @@
 </script>
 <script src="scripts/chrome.js"></script>
 <script src="components/marquee/marquee.js"></script>
+<!-- Vendored, not a CDN: the site has no build step and fetches nothing at
+     runtime from anywhere it does not own. lottie_light drops expression
+     support, which this file does not use — checked, zero expressions — and
+     that is ~100KB cheaper than the full build. -->
+<script defer src="vendor/lottie_light.min.js"></script>
+<script>
+/* ==========================================================================
+   Feature art — loading animation in the placeholder boxes.
+   Nineteen boxes across six tab panels, one panel shown at a time. Mounting
+   all nineteen would run nineteen 60fps SVG renderers for art nobody can see,
+   so each one waits until it is actually on screen and pauses when it leaves.
+   Hidden panels are display:none, so the observer never reports them at all.
+   ========================================================================== */
+/* Deferred scripts run after parsing but before DOMContentLoaded, and this one
+   is inline — so it must wait, or `lottie` is still undefined when it runs. */
+document.addEventListener('DOMContentLoaded', function(){
+  var slots = [].slice.call(document.querySelectorAll('.avm-row-art > span'));
+  if(!slots.length || typeof lottie === 'undefined' || !('IntersectionObserver' in window)) return;
+
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var raw = null, waiting = [];
+
+  /* One fetch feeds every box. Each instance gets its own parse rather than a
+     shared object — lottie-web writes into the data it is handed. */
+  function withData(cb){
+    if(raw) return cb(JSON.parse(raw));
+    waiting.push(cb);
+    if(waiting.length > 1) return;
+    fetch('assets/avm-loading.json')
+      .then(function(r){ if(!r.ok) throw 0; return r.text(); })
+      .then(function(t){ raw = t; waiting.splice(0).forEach(function(f){ f(JSON.parse(raw)); }); })
+      .catch(function(){ waiting.length = 0; });   /* box tetap jadi placeholder berlabel */
+  }
+
+  var anims = new WeakMap();
+  function mount(slot){
+    if(slot.dataset.lottie) { var a = anims.get(slot); if(a && !reduce) a.play(); return; }
+    slot.dataset.lottie = '1';
+    var box = document.createElement('div');
+    box.className = 'avm-lottie';
+    box.setAttribute('aria-hidden', 'true');   /* dekorasi; labelnya yang bicara */
+    slot.insertBefore(box, slot.firstChild);
+    withData(function(data){
+      anims.set(slot, lottie.loadAnimation({
+        container: box, renderer: 'svg', loop: true, autoplay: !reduce, animationData: data
+      }));
+    });
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting) mount(e.target);
+      else { var a = anims.get(e.target); if(a) a.pause(); }
+    });
+  }, { rootMargin: '200px 0px' });
+  slots.forEach(function(s){ io.observe(s); });
+});
+</script>
 </body>
 </html>
