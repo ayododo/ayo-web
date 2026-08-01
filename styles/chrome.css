@@ -76,7 +76,18 @@ img{max-width:100%;display:block}
 .nav-item.has-sub:hover .submenu,.nav-item.has-sub:focus-within .submenu,.nav-item.has-sub.open .submenu{opacity:1;visibility:visible;transform:none}
 .submenu a{display:block;color:var(--text-subtle);font-size:var(--fs-body-lg);font-weight:var(--fw-medium);padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);white-space:nowrap;transition:background .15s,color .15s}
 .submenu a:hover{background:var(--bg-cream);color:var(--brand)}
-.burger{display:none;background:none;border:1.5px solid currentColor;border-radius:var(--radius-sm);padding:var(--space-2) var(--space-3);font-size:18px;line-height:1;cursor:pointer;color:inherit}
+/* Sized and shaped like .nav-icon beside it. It used to be a bordered box
+   around a ☰ glyph, which put a second button shape next to Login and left
+   the bars at whatever weight the font felt like. Same 40px target, same
+   hover, and the bars are drawn at the cart icon's stroke weight. */
+.burger{display:none;align-items:center;justify-content:center;width:40px;height:40px;flex-shrink:0;
+  background:none;border:0;border-radius:var(--radius-md);cursor:pointer;color:inherit;transition:background .15s}
+.burger:hover{background:rgba(255,255,255,.14)}
+.nav.floating .burger:hover,.nav.on-light .burger:hover{background:var(--bg-subtle)}
+.burger svg{width:22px;height:22px;display:block}
+.burger .ico-close{display:none}
+.burger[aria-expanded="true"] .ico-close{display:block}
+.burger[aria-expanded="true"] .ico-open{display:none}
 /* The nav is white by default because the homepage opens on a dark hero. A page
    that opens on a light one has to say so, or the links sit white on white. Only
    the colours move — position and shape stay with .floating. */

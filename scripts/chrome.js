@@ -17,9 +17,22 @@
     toTop.addEventListener('click',function(){ scrollTo({top:0,behavior:rm?'auto':'smooth'}); });
   }
 
-  /* burger */
+  /* burger — the open state lives on the button, not only in a class, so the
+     control reports what it does and the icon can follow from it. */
   var links=document.getElementById('navlinks');
-  if(links)links.addEventListener('click',function(e){ if(e.target.tagName==='A')links.classList.remove('open'); });
+  var burger=document.querySelector('.burger');
+  function setMenu(open){
+    if(!links) return;
+    links.classList.toggle('open', open);
+    if(burger){
+      burger.setAttribute('aria-expanded', open);
+      burger.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
+    }
+  }
+  if(burger) burger.addEventListener('click', function(){ setMenu(!links.classList.contains('open')); });
+  if(links) links.addEventListener('click', function(e){ if(e.target.tagName==='A') setMenu(false); });
+  /* Escape already closes the dropdowns below; the menu should go with them. */
+  addEventListener('keydown', function(e){ if(e.key==='Escape') setMenu(false); });
 
   /* nav float + hide going down, show coming back up (rAF-throttled) */
   var nav=document.querySelector('.nav'), tick=false, lastY=Math.max(0,scrollY);
