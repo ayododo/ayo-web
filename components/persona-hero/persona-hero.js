@@ -29,7 +29,7 @@
       eyebrow: 'Venue Management · Scheduling · Revenue',
       pre: 'Manage your venue, fill every ', hl: 'time slot', post: '.',
       sub: 'Set schedules, pricing, and payments from a single dashboard. Raise court occupancy through a network of 90,000+ active players.',
-      ctas: [ { label: 'Explore AYO Venue Management', kind: 'ghost' } ]
+      ctas: [ { label: 'Explore AYO Venue Management', kind: 'ghost', href: 'venue.html' } ]
     },
     {
       key: 'business', label: 'Business Partner',

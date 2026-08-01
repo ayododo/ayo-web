@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AYO Venue Management — Run your venue from your pocket</title>
+<meta name="description" content="Bookings, court schedules and daily revenue in one mobile app. Trusted by 1,500+ venues across Indonesia.">
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#ec2435">
+
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="styles/chrome.css">
+
+<style>
+  /* Shared across this page's sections. */
+  .avm-eyebrow{display:flex;align-items:center;gap:16px;font-family:var(--font-mono);font-size:12px;font-weight:var(--fw-semibold);letter-spacing:1.68px;text-transform:uppercase}
+  .avm-eyebrow .n{color:var(--brand)}
+  .avm-eyebrow .t{color:var(--text-dim)}
+  .avm-pill{display:inline-flex;align-items:center;gap:10px;border-radius:var(--radius-pill);
+    font-weight:var(--fw-bold);font-size:15px;padding:16px 30px;white-space:nowrap;
+    transition:box-shadow .2s,background .2s,filter .2s}
+  .avm-pill.dark{background:var(--text-default);color:var(--bg-white)}
+  .avm-pill.dark:hover{filter:brightness(1.25)}
+  .avm-pill.red{background:var(--brand);color:var(--bg-white)}
+  .avm-pill.red:hover{filter:brightness(.93)}
+  .avm-pill.plain{background:var(--bg-white);color:var(--text-default);box-shadow:inset 0 0 0 1px rgba(26,25,25,.22)}
+  .avm-pill.plain:hover{box-shadow:inset 0 0 0 1px var(--text-default);background:var(--bg-subtle)}
+  .avm-pill svg{width:16px;height:16px;color:var(--brand);flex-shrink:0}
+
+  /* ---------- Hero ---------- */
+  .avm-hero{background:var(--bg-white);padding:clamp(104px,11vw,156px) 0 clamp(48px,5vw,65px)}
+  .avm-hero .wrap{display:grid;grid-template-columns:minmax(0,620px) 320px;gap:clamp(40px,6vw,88px);align-items:start}
+  .avm-hero .eyebrow{font-family:var(--font-mono);font-size:13px;font-weight:var(--fw-semibold);letter-spacing:2.34px;text-transform:uppercase;color:var(--brand)}
+  .avm-hero h1{margin-top:28px;font-weight:var(--fw-extrabold);font-size:clamp(38px,4.6vw,66px);line-height:1.015;letter-spacing:-.035em;text-wrap:balance}
+  .avm-hero h1 .hl{background:var(--brand);color:var(--bg-white);border-radius:10px;padding:0 14px;white-space:nowrap;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+  .avm-hero .lead{margin-top:27px;max-width:490px;font-size:18px;line-height:1.6;color:rgb(151,151,151)}
+  .avm-stores{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+  .avm-stores .avm-pill{padding:15px 26px}
+  .avm-figures{display:flex;align-items:center;gap:28px;margin-top:28px;padding-top:23px}
+  .avm-figures .fig{display:flex;flex-direction:column;gap:2px}
+  .avm-figures .num{font-family:var(--font-num);font-weight:var(--fw-bold);font-size:34px;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .avm-figures .lbl{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim)}
+  .avm-figures .rule{width:1px;align-self:stretch;background:var(--hair)}
+  /* Phone shell: a dark frame with a lighter screen, the screen left empty for
+     the app capture that has not been exported yet. */
+  .avm-phone{width:320px;justify-self:end;border-radius:44px;background:var(--text-default);padding:10px;box-shadow:0 30px 70px rgba(26,25,25,.22)}
+  .avm-phone-screen{position:relative;aspect-ratio:300/614;border-radius:36px;background:rgb(232,230,227);display:grid;place-items:center;
+    font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:rgb(150,146,140)}
+  .avm-phone-notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:104px;height:26px;border-radius:var(--radius-pill);background:var(--text-default)}
+
+  /* ---------- Logo strip ---------- */
+  .avm-logos{background:var(--bg-white);padding:36px 0 41px;text-align:center}
+  .avm-logos .cap{font-family:var(--font-mono);font-size:12px;font-weight:var(--fw-semibold);letter-spacing:1.68px;text-transform:uppercase;color:var(--text-dim)}
+  .avm-logo-row{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-top:22px}
+  .avm-logo-row span{flex:1 1 160px;max-width:190px;height:74px;display:grid;place-items:center;border-radius:12px;
+    box-shadow:inset 0 0 0 1px var(--hair);font-family:var(--font-mono);font-weight:var(--fw-medium);font-size:12px;letter-spacing:1.2px;color:rgb(160,160,160)}
+
+  /* ---------- About ---------- */
+  .avm-about{background:rgb(248,247,246);padding:clamp(56px,6.5vw,88px) 0 clamp(56px,6.5vw,89px)}
+  .avm-about-grid{display:grid;grid-template-columns:minmax(0,804px) minmax(0,460px);gap:clamp(32px,4.5vw,64px);margin-top:44px}
+  .avm-about h2{font-weight:var(--fw-extrabold);font-size:clamp(30px,3.2vw,46px);line-height:1.065;letter-spacing:-.03em;max-width:560px}
+  .avm-about .lead{margin-top:22px;max-width:560px;font-size:17px;line-height:1.65;color:rgb(151,151,151)}
+  .avm-checks{list-style:none;margin:32px 0 0;padding:0}
+  .avm-checks li{display:flex;align-items:center;gap:14px;padding:17px 0 16px;border-top:1px solid var(--hair);font-weight:var(--fw-semibold);font-size:15px}
+  .avm-tick{flex-shrink:0;width:20px;height:20px;border-radius:5px;background:var(--brand);color:var(--bg-white);display:grid;place-items:center}
+  .avm-tick svg{width:12px;height:12px;display:block}
+  .avm-cards{display:flex;flex-direction:column;gap:18px}
+  .avm-card{background:var(--bg-white);border-radius:16px;padding:31px 32px 32px;box-shadow:0 1px 2px rgba(26,25,25,.06),0 8px 24px rgba(26,25,25,.05)}
+  .avm-card .num{font-family:var(--font-num);font-weight:var(--fw-bold);font-size:44px;line-height:1.2;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+  .avm-card .lbl{margin-top:6px;font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim)}
+  .avm-card blockquote{font-size:17px;line-height:1.7;font-weight:var(--fw-medium)}
+  .avm-who{display:flex;align-items:center;gap:12px;margin-top:22px;padding-top:19px;border-top:1px solid var(--hair)}
+  .avm-who .av{width:40px;height:40px;border-radius:50%;background:rgb(232,230,227);flex-shrink:0}
+  .avm-who .nm{font-weight:var(--fw-bold);font-size:15px}
+  .avm-who .rl{font-family:var(--font-mono);font-size:12px;color:var(--text-dim)}
+</style>
+<style>
+  /* ---------- Key features ---------- */
+  .avm-feat{background:var(--bg-white);padding:clamp(56px,6.5vw,88px) 0 0}
+  .avm-feat-head{display:grid;grid-template-columns:minmax(0,620px) minmax(0,260px);gap:clamp(32px,5vw,88px);
+    align-items:end;justify-content:space-between;margin-top:32px}
+  .avm-feat h2{font-weight:var(--fw-extrabold);font-size:clamp(30px,3.2vw,46px);line-height:1.065;letter-spacing:-.03em}
+  .avm-feat .note{font-size:16px;line-height:1.6;color:var(--text-dim)}
+  /* Category labels, not controls. There is one set of features behind them for
+     now, so they are marked up as text rather than tabs that lead nowhere. */
+  .avm-cats{display:flex;flex-wrap:wrap;gap:8px;margin-top:32px;padding-bottom:4px;list-style:none}
+  .avm-cats li{padding:12px 22px;border-radius:var(--radius-pill);font-weight:var(--fw-semibold);font-size:14px;
+    color:var(--text-dim);box-shadow:inset 0 0 0 1px var(--hair)}
+  .avm-cats li.is-current{background:var(--text-default);color:var(--bg-white);box-shadow:none}
+
+  /* Full-bleed rows: copy on white at the left, a tinted plate for the capture
+     on the right, hairline between rows. */
+  .avm-rows{margin-top:44px;border-top:1px solid var(--hair)}
+  .avm-row{display:grid;grid-template-columns:820fr 620fr;border-bottom:1px solid var(--hair)}
+  .avm-row-body{background:var(--bg-white);padding:clamp(32px,4vw,56px) clamp(24px,4vw,56px) clamp(32px,4vw,56px) 0;
+    display:flex;flex-direction:column;justify-content:center}
+  .avm-row-n{width:34px;height:34px;border-radius:50%;background:var(--text-default);color:var(--bg-white);
+    display:grid;place-items:center;font-family:var(--font-mono);font-size:12px;font-weight:var(--fw-semibold)}
+  .avm-row h3{margin-top:22px;font-weight:var(--fw-extrabold);font-size:clamp(22px,2.1vw,30px);letter-spacing:-.02em}
+  .avm-row p{margin-top:12px;max-width:46ch;font-size:16px;line-height:1.65;color:var(--text-dim)}
+  .avm-row .tag{margin-top:20px;font-family:var(--font-mono);font-size:12px;font-weight:var(--fw-semibold);letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
+  .avm-row-art{background:rgb(248,247,246);padding:36px 56px 36px 37px;display:grid}
+  .avm-row-art span{border-radius:12px;background:var(--bg-white);box-shadow:inset 0 0 0 1px var(--hair);
+    display:grid;place-items:center;min-height:200px;
+    font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:rgb(150,146,140)}
+
+  /* ---------- FAQ ---------- */
+  .avm-faq{background:var(--bg-white);padding:clamp(56px,6.5vw,88px) 0 clamp(56px,6.5vw,89px)}
+  .avm-faq .wrap{display:grid;grid-template-columns:minmax(0,380px) minmax(0,884px);gap:clamp(32px,4.5vw,64px)}
+  .avm-faq h2{margin-top:17px;font-weight:var(--fw-extrabold);font-size:clamp(28px,2.9vw,42px);line-height:1.07;letter-spacing:-.03em}
+  .avm-faq .lead{margin-top:17px;font-size:16px;line-height:1.62;color:var(--text-dim)}
+  .avm-faq .avm-pill{margin-top:17px;padding:14px 24px;font-size:14px}
+  .avm-qs{border-top:1px solid var(--hair)}
+  .avm-q{border-bottom:1px solid var(--hair)}
+  .avm-q summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:24px;
+    padding:26px 0;font-size:clamp(17px,1.5vw,19px);font-weight:var(--fw-semibold);letter-spacing:-.01em}
+  .avm-q summary::-webkit-details-marker{display:none}
+  /* Same plus-that-becomes-a-minus as the partner FAQ, in the round token this
+     design uses: only the upright bar turns. */
+  .avm-mark{position:relative;flex-shrink:0;width:34px;height:34px;border-radius:50%;
+    box-shadow:inset 0 0 0 1px var(--hair);color:var(--text-dim);transition:background .2s,color .2s,box-shadow .2s}
+  .avm-mark::before,.avm-mark::after{content:'';position:absolute;top:50%;left:11px;right:11px;height:1.5px;border-radius:1px;
+    background:currentColor;transform:translateY(-50%);transition:transform .28s cubic-bezier(.2,.7,.2,1)}
+  .avm-mark::after{transform:translateY(-50%) rotate(90deg)}
+  .avm-q[open] .avm-mark{background:var(--brand);color:var(--bg-white);box-shadow:none}
+  .avm-q[open] .avm-mark::after{transform:translateY(-50%) rotate(0deg)}
+  .avm-q p{padding:0 60px 29px 0;max-width:74ch;font-size:16px;line-height:1.62;color:var(--text-dim)}
+
+  /* ---------- Closing ---------- */
+  .avm-close{background:rgb(248,247,246);padding:clamp(64px,7.6vw,110px) 0;text-align:center}
+  .avm-close .avm-eyebrow{justify-content:center}
+  .avm-close h2{margin-top:22px;font-weight:var(--fw-extrabold);font-size:clamp(32px,3.9vw,56px);line-height:1.04;letter-spacing:-.03em;max-width:14ch;margin-inline:auto;text-wrap:balance}
+  .avm-close .lead{margin-top:24px;max-width:52ch;margin-inline:auto;font-size:18px;line-height:1.6;color:var(--text-dim)}
+  .avm-close .acts{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:32px}
+
+  /* The highlight is held on one line so the red block reads as one mark, but
+     "from your pocket" at the 38px floor needs 328px and a 320px phone has 288.
+     Below that it wraps rather than pushing the page sideways. */
+  @media (max-width:380px){
+    .avm-hero h1 .hl{white-space:normal}
+  }
+
+  @media (max-width:900px){
+    .avm-hero .wrap{grid-template-columns:1fr}
+    .avm-phone{justify-self:start;width:min(300px,100%)}
+    .avm-about-grid,.avm-faq .wrap{grid-template-columns:1fr}
+    .avm-feat-head{grid-template-columns:1fr;align-items:start}
+    .avm-row{grid-template-columns:1fr}
+    .avm-row-body{padding:clamp(28px,6vw,40px) 0}
+    .avm-row-art{padding:0 0 clamp(28px,6vw,40px)}
+    .avm-close h2,.avm-close .lead{max-width:none}
+  }
+</style>
+</head>
+<body>
+<nav class="nav on-light">
+  <div class="nav-in">
+    <a class="brand" href="index.html" aria-label="AYO"><img src="assets/logo.svg" alt="AYO"></a>
+    <div class="nav-links" id="navlinks">
+      <div class="nav-item"><a class="nav-top" href="index.html#booking">Booking</a></div>
+      <div class="nav-item has-sub">
+        <button class="nav-top" aria-expanded="false" aria-haspopup="true">Activities <span class="chev" aria-hidden="true"></span></button>
+        <div class="submenu">
+          <a href="https://ayo.co.id/main-bareng">Join activity</a>
+          <!-- TODO: gets its own single page once that design exists. Deliberately
+               parked on # — the wireframe it used to point at has been deleted. -->
+          <a href="#">Hosting activity</a>
+        </div>
+      </div>
+      <div class="nav-item"><a class="nav-top" href="index.html#booking" aria-current="page">For Venue Owners</a></div>
+      <div class="nav-item"><a class="nav-top" href="#">Blog</a></div>
+    </div>
+    <div class="nav-actions">
+    <div class="lang" id="lang">
+      <button class="lang-btn" aria-haspopup="true" aria-expanded="false" aria-label="Select language">
+        <span class="flag cur-flag" aria-hidden="true">🇬🇧</span>
+        <span class="cur">EN</span>
+        <span class="chev" aria-hidden="true"></span>
+      </button>
+      <div class="lang-menu" role="menu">
+        <button role="menuitemradio" aria-selected="true" data-code="EN" data-flag="🇬🇧"><span class="flag" aria-hidden="true">🇬🇧</span><span class="lname">English</span><span class="code">EN</span></button>
+        <button role="menuitemradio" aria-selected="false" data-code="ID" data-flag="🇮🇩"><span class="flag" aria-hidden="true">🇮🇩</span><span class="lname">Bahasa Indonesia</span><span class="code">ID</span></button>
+        <!-- Only the two live locales are offered. MS and TH are parked here
+             rather than deleted so they can be restored verbatim when those
+             markets launch — the switcher JS reads whatever buttons exist, so
+             uncommenting is the only step needed.
+        <button role="menuitemradio" aria-selected="false" data-code="MS" data-flag="🇲🇾"><span class="flag" aria-hidden="true">🇲🇾</span><span class="lname">Malay</span><span class="code">MS</span></button>
+        <button role="menuitemradio" aria-selected="false" data-code="TH" data-flag="🇹🇭"><span class="flag" aria-hidden="true">🇹🇭</span><span class="lname">Thai</span><span class="code">TH</span></button>
+        -->
+      </div>
+    </div>
+    <a class="nav-icon" href="#" aria-label="Cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3h2.2l2.1 12.4a1.5 1.5 0 0 0 1.5 1.25h8.3a1.5 1.5 0 0 0 1.48-1.2L21 7H6"/></svg>
+    </a>
+    <a class="btn primary" href="#">Login</a>
+    <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navlinks">
+      <svg class="ico-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
+      <svg class="ico-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>
+    </button>
+    </div>
+  </div>
+</nav>
+<!-- 1. HERO -->
+<header class="avm-hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow reveal">Venue management &middot; Scheduling &middot; Revenue</p>
+      <h1 class="reveal">Manage your venue <span class="hl">from your pocket</span>.</h1>
+      <p class="lead reveal">Incoming bookings, court schedules, and daily revenue &mdash; all in one app. No laptop required.</p>
+      <div class="avm-stores reveal">
+        <a class="avm-pill dark" href="#">App Store</a>
+        <a class="avm-pill plain" href="#">Google Play</a>
+      </div>
+      <div class="avm-figures reveal">
+        <div class="fig"><span class="num">1,500+</span><span class="lbl">Venues onboard</span></div>
+        <span class="rule" aria-hidden="true"></span>
+        <div class="fig"><span class="num">4.8</span><span class="lbl">Owner app rating</span></div>
+      </div>
+    </div>
+    <div class="avm-phone reveal" aria-hidden="true">
+      <div class="avm-phone-screen"><span class="avm-phone-notch"></span>App screen</div>
+    </div>
+  </div>
+</header>
+
+<!-- 2. LOGO STRIP -->
+<section class="avm-logos" aria-label="Venues using AYO Venue Management">
+  <div class="wrap">
+    <p class="cap reveal">Trusted by venues across Indonesia</p>
+    <div class="avm-logo-row reveal"><span>Arena Bogor</span><span>GOR Senayan</span><span>Padel Haus</span><span>Citra Sport</span><span>Smash Arena</span><span>Kota Futsal</span></div>
+  </div>
+</section>
+
+<!-- 3. ABOUT -->
+<section class="avm-about" aria-labelledby="avm-about-t">
+  <div class="wrap">
+    <p class="avm-eyebrow reveal"><span class="n">01</span><span class="t">About AVM</span></p>
+    <div class="avm-about-grid reveal">
+      <div>
+        <h2 id="avm-about-t">One app to run the whole venue.</h2>
+        <p class="lead">Bookings, court schedules, and daily revenue land in a single mobile app &mdash; owners and staff manage everything without being tied to a desk.</p>
+        <ul class="avm-checks"><li><span class="avm-tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>Works on the phone already in your pocket</li><li><span class="avm-tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>Owner and staff accounts, one shared schedule</li><li><span class="avm-tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>Scales from a single court to a multi-branch operation</li></ul>
+      </div>
+      <div class="avm-cards">
+        <div class="avm-card">
+          <p class="num">1,500+</p>
+          <p class="lbl">Venues already managed with AYO</p>
+        </div>
+        <div class="avm-card">
+          <blockquote>&ldquo;Checking today&rsquo;s revenue used to take an hour of paperwork. Now it&rsquo;s the first thing I see when I open my phone.&rdquo;</blockquote>
+          <div class="avm-who">
+            <span class="av" aria-hidden="true"></span>
+            <span><span class="nm">Hendra W.</span><br><span class="rl">Venue Owner &middot; Jakarta</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. KEY FEATURES -->
+<section class="avm-feat" aria-labelledby="avm-feat-t">
+  <div class="wrap">
+    <p class="avm-eyebrow reveal"><span class="n">02</span><span class="t">Key features</span></p>
+    <div class="avm-feat-head reveal">
+      <h2 id="avm-feat-t">Everything you need to run your venue.</h2>
+      <p class="note">Built for owners and staff who move fast on the ground.</p>
+    </div>
+    <ul class="avm-cats reveal"><li class="is-current">Dashboard</li><li>Schedule</li><li>Courts</li><li>Promosi</li><li>Registration</li><li>Others</li></ul>
+  </div>
+  <div class="avm-rows">
+    <article class="avm-row reveal">
+      <div class="avm-row-body">
+        <span class="avm-row-n">01</span>
+        <h3>Real-time bookings</h3>
+        <p>Every booking lands on your phone the moment it comes in &mdash; customer details and payment status included.</p>
+        <p class="tag">Push in &lt; 2 seconds</p>
+      </div>
+      <div class="avm-row-art"><span>App screen</span></div>
+    </article>
+    <article class="avm-row reveal">
+      <div class="avm-row-body">
+        <span class="avm-row-n">02</span>
+        <h3>Today at a glance</h3>
+        <p>Occupancy, revenue, and pending payments for the day in one screen you can read in ten seconds.</p>
+        <p class="tag">One screen, whole day</p>
+      </div>
+      <div class="avm-row-art"><span>App screen</span></div>
+    </article>
+    <article class="avm-row reveal">
+      <div class="avm-row-body">
+        <span class="avm-row-n">03</span>
+        <h3>Revenue reports</h3>
+        <p>Daily, weekly, and monthly earnings summarised automatically &mdash; no manual bookkeeping.</p>
+        <p class="tag">Auto-reconciled</p>
+      </div>
+      <div class="avm-row-art"><span>App screen</span></div>
+    </article>
+    <article class="avm-row reveal">
+      <div class="avm-row-body">
+        <span class="avm-row-n">04</span>
+        <h3>Instant notifications</h3>
+        <p>Get pinged whenever a new booking, cancellation, or payment comes through.</p>
+        <p class="tag">Never miss a slot</p>
+      </div>
+      <div class="avm-row-art"><span>App screen</span></div>
+    </article>
+  </div>
+</section>
+
+<!-- 5. FAQ -->
+<section class="avm-faq" aria-labelledby="avm-faq-t">
+  <div class="wrap">
+    <div>
+      <p class="avm-eyebrow reveal"><span class="n">03</span><span class="t">FAQ</span></p>
+      <h2 id="avm-faq-t" class="reveal">Questions, answered.</h2>
+      <p class="lead reveal">Still stuck? Our venue team replies within one working day.</p>
+      <a class="avm-pill plain reveal" href="#avm-start">Talk to us <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
+    </div>
+    <div class="avm-qs reveal">
+      <details class="avm-q" open><summary>Is the app free to use?<span class="avm-mark" aria-hidden="true"></span></summary><p>AYO Venue Management is free to download and use. You are only charged a commission on each booking completed through the AYO platform.</p></details>
+      <details class="avm-q"><summary>Can I manage more than one venue?<span class="avm-mark" aria-hidden="true"></span></summary><p>Placeholder answer: yes &mdash; multiple venues sit under one owner account, each with its own schedule.</p></details>
+      <details class="avm-q"><summary>How do I register my venue?<span class="avm-mark" aria-hidden="true"></span></summary><p>Placeholder answer: send us your venue details and our team completes the onboarding with you.</p></details>
+      <details class="avm-q"><summary>Is my booking and revenue data secure?<span class="avm-mark" aria-hidden="true"></span></summary><p>Placeholder answer: to be confirmed with the venue team.</p></details>
+      <details class="avm-q"><summary>Is it available on both iOS and Android?<span class="avm-mark" aria-hidden="true"></span></summary><p>Placeholder answer: yes, on both.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- 6. CLOSING CTA -->
+<section class="avm-close" id="avm-start" aria-labelledby="avm-close-t">
+  <div class="wrap">
+    <p class="avm-eyebrow reveal"><span class="n">04</span><span class="t">Get started</span></p>
+    <h2 id="avm-close-t" class="reveal">Ready to list your venue on AYO?</h2>
+    <p class="lead reveal">Join 1,500+ venues growing with AYO Venue Management. Tell us about your venue and our team helps you set up.</p>
+    <div class="acts reveal">
+      <a class="avm-pill red" href="mailto:venue@ayo.co.id">Contact us to register</a>
+      <a class="avm-pill plain" href="#">Download the app</a>
+    </div>
+  </div>
+</section>
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <img src="assets/logo.svg" alt="AYO">
+      </div>
+      <div class="foot-cta">
+        <span class="foot-cta-label">Own a sports venue?</span>
+        <a class="btn primary" href="venue.html" aria-current="page">Become a Venue Partner <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
+      </div>
+    </div>
+    <div class="foot-cols">
+      <div class="col"><h4>Product</h4><a href="index.html#aktivitas">Activity</a><a href="index.html#booking">Booking</a><a href="index.html#cerita">Community</a><a href="index.html#rating">PadelLevels</a></div>
+      <div class="col"><h4>Company</h4><a href="#">About Us</a><a href="index.html#partner">Partner with Us</a><a href="#">Blog</a><a href="#">Careers</a></div>
+      <div class="col"><h4>Support</h4><a href="#">Help Center</a><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Contact</a></div>
+      <div class="col">
+        <h4>Follow us</h4>
+        <div class="foot-social">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 5.8a4.6 4.6 0 0 1-1.1-3H12v13.1a2.6 2.6 0 1 1-2.6-2.6c.3 0 .5 0 .8.1V9.7a5.9 5.9 0 1 0 5.2 5.9V9a7.7 7.7 0 0 0 4.4 1.4V7a4.6 4.6 0 0 1-3.2-1.2z"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 8s-.2-1.6-.9-2.3c-.9-.9-1.9-.9-2.3-1C16.9 4.5 12 4.5 12 4.5s-4.9 0-7.8.2c-.4 0-1.4.1-2.3 1C1.2 6.4 1 8 1 8S.8 9.9.8 11.8v1.4C.8 15.1 1 17 1 17s.2 1.6.9 2.3c.9.9 2 .9 2.5 1 1.8.2 7.6.2 7.6.2s4.9 0 7.8-.2c.4 0 1.4-.1 2.3-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.8v-1.4C23.2 9.9 23 8 23 8zM9.8 15V9l5.2 3-5.2 3z"/></svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.8 22H1.7l8.1-9.3L1 2h7l4.8 6.3L18.9 2zm-2.4 18h1.9L7.6 4H5.6L16.5 20z"/></svg></a>
+        </div>
+        <h4>Available on</h4>
+        <div class="foot-app">
+          <a class="app-badge" href="#" aria-label="Download on the App Store"><svg viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg><span class="abt"><small>Download on the</small><b>App Store</b></span></a>
+          <a class="app-badge" href="#" aria-label="Get it on Google Play"><svg class="ico-play" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg><span class="abt"><small>Get it on</small><b>Google Play</b></span></a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 AYO</span>
+      <div class="legal"><a href="#">Terms of service</a><a href="#">Privacy policy</a><a href="#">Cookie policy</a><a href="#">Help</a></div>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V4.5"/><path d="M7.5 9.5 12 5 16.5 9.5"/></svg>
+</button>
+<script src="scripts/chrome.js"></script>
+</body>
+</html>
