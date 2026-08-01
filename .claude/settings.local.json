@@ -344,7 +344,9 @@
       "Bash(sips -Z 600 /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/faqz.png -o /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/faqzv.png)",
       "Bash(pkill -f \"http.server 8935\")",
       "Bash('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' --headless --hide-scrollbars --force-device-scale-factor=2 --window-size=1440,620 --screenshot=/private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/ph.png --virtual-time-budget=9000 http://localhost:8947/partner.html)",
-      "Bash(sips -Z 1050 /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/ph.png -o /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/phv.png)"
+      "Bash(sips -Z 1050 /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/ph.png -o /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/phv.png)",
+      "Bash(sed -i '' 's/\\\\.nav\\\\.floating/.nav.scrolled/g' styles/chrome.css)",
+      "Bash(sed -i '' \"s/nav.classList.toggle\\('floating', y>60\\)/nav.classList.toggle\\('scrolled', y>60\\)/\" scripts/chrome.js)"
     ]
   }
 }

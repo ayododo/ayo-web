@@ -38,7 +38,7 @@
   var nav=document.querySelector('.nav'), tick=false, lastY=Math.max(0,scrollY);
   function navCheck(){
     var y=Math.max(0,scrollY), dy=y-lastY;
-    nav.classList.toggle('floating', y>60);
+    nav.classList.toggle('scrolled', y>60);
     /* An open menu or focus inside the nav means someone is using it — sliding
        it out from under them would be hostile. Near the top there is nothing to
        reclaim, so it stays put there too. */
