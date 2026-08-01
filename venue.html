@@ -13,6 +13,7 @@
 
 <link rel="stylesheet" href="styles/tokens.css">
 <link rel="stylesheet" href="styles/chrome.css">
+<link rel="stylesheet" href="components/marquee/marquee.css">
 
 <style>
   /* Shared across this page's sections. */
@@ -32,7 +33,26 @@
 
   /* ---------- Hero ---------- */
   .avm-hero{background:var(--bg-white);padding:clamp(104px,11vw,156px) 0 clamp(48px,5vw,65px)}
-  .avm-hero .wrap{display:grid;grid-template-columns:minmax(0,620px) 320px;gap:clamp(40px,6vw,88px);align-items:start}
+  /* space-between, not a fixed gap: at a fixed one the phone stopped 342px
+     short of the content edge and hung in the middle of nowhere. Anchored to
+     the right, the hero reads as two poles and the title gets its air. */
+  .avm-hero .wrap{display:grid;grid-template-columns:minmax(0,620px) 320px;justify-content:space-between;
+    column-gap:clamp(40px,6vw,88px);align-items:start}
+  /* Two levels, because two is all there is: this page hangs directly off the
+     homepage. The audience is said in words rather than faked as a third crumb
+     that would link back to where you already are. */
+  .avm-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-bottom:28px;
+    font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-dim)}
+  .avm-crumb ol{display:flex;flex-wrap:wrap;align-items:center;gap:8px;list-style:none;margin:0;padding:0}
+  .avm-crumb li{display:flex;align-items:center;gap:8px}
+  .avm-crumb li+li::before{content:'';width:5px;height:5px;border-right:1.2px solid currentColor;border-top:1.2px solid currentColor;transform:rotate(45deg);opacity:.55}
+  .avm-crumb a{color:inherit;transition:color .15s}
+  .avm-crumb a:hover{color:var(--text-default)}
+  .avm-crumb [aria-current]{color:var(--text-default);font-weight:var(--fw-semibold)}
+  .avm-crumb .who{display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border-radius:var(--radius-pill);
+    background:rgba(236,36,53,.08);color:var(--brand);font-weight:var(--fw-semibold);letter-spacing:.08em}
+  .avm-crumb .who::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor}
+
   .avm-hero .eyebrow{font-family:var(--font-mono);font-size:13px;font-weight:var(--fw-semibold);letter-spacing:2.34px;text-transform:uppercase;color:var(--brand)}
   .avm-hero h1{margin-top:28px;font-weight:var(--fw-extrabold);font-size:clamp(38px,4.6vw,66px);line-height:1.015;letter-spacing:-.035em;text-wrap:balance}
   .avm-hero h1 .hl{background:var(--brand);color:var(--bg-white);border-radius:10px;padding:0 14px;white-space:nowrap;-webkit-box-decoration-break:clone;box-decoration-break:clone}
@@ -54,9 +74,17 @@
   /* ---------- Logo strip ---------- */
   .avm-logos{background:var(--bg-white);padding:36px 0 41px;text-align:center}
   .avm-logos .cap{font-family:var(--font-mono);font-size:12px;font-weight:var(--fw-semibold);letter-spacing:1.68px;text-transform:uppercase;color:var(--text-dim)}
-  .avm-logo-row{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-top:22px}
-  .avm-logo-row span{flex:1 1 160px;max-width:190px;height:74px;display:grid;place-items:center;border-radius:12px;
-    box-shadow:inset 0 0 0 1px var(--hair);font-family:var(--font-mono);font-weight:var(--fw-medium);font-size:12px;letter-spacing:1.2px;color:rgb(160,160,160)}
+  /* The row rolls, so the strip reads as a list that keeps going rather than
+     exactly six names. Same component the homepage marquee uses — its script
+     drives any [data-mq-row] — with the items restyled from display type into
+     the bordered chips this design wants. */
+  .avm-logos .marquee{background:none;border:0;padding:22px 0 0;margin-inline:calc(var(--edge) * -1)}
+  .avm-logos .mq-row{margin:0}
+  .avm-logos .mq-group{gap:16px;padding-right:16px;align-items:center}
+  .avm-logos .mq-item{flex-shrink:0;width:190px;height:74px;display:grid;place-items:center;border-radius:12px;
+    box-shadow:inset 0 0 0 1px var(--hair);font-family:var(--font-mono);font-weight:var(--fw-medium);
+    font-size:12px;line-height:1;letter-spacing:1.2px;text-transform:uppercase;color:rgb(160,160,160);
+    -webkit-text-stroke:0;text-stroke:0}
 
   /* ---------- About ---------- */
   .avm-about{background:rgb(248,247,246);padding:clamp(56px,6.5vw,88px) 0 clamp(56px,6.5vw,89px)}
@@ -93,6 +121,9 @@
 
   /* Full-bleed rows: copy on white at the left, a tinted plate for the capture
      on the right, hairline between rows. */
+  /* Inside the container like every other section. Full-bleed put the copy hard
+     against the viewport edge while the heading above it started at 36px, so the
+     section did not line up with anything on the page. */
   .avm-rows{margin-top:44px;border-top:1px solid var(--hair)}
   .avm-row{display:grid;grid-template-columns:820fr 620fr;border-bottom:1px solid var(--hair)}
   .avm-row-body{background:var(--bg-white);padding:clamp(32px,4vw,56px) clamp(24px,4vw,56px) clamp(32px,4vw,56px) 0;
@@ -102,7 +133,7 @@
   .avm-row h3{margin-top:22px;font-weight:var(--fw-extrabold);font-size:clamp(22px,2.1vw,30px);letter-spacing:-.02em}
   .avm-row p{margin-top:12px;max-width:46ch;font-size:16px;line-height:1.65;color:var(--text-dim)}
   .avm-row .tag{margin-top:20px;font-family:var(--font-mono);font-size:12px;font-weight:var(--fw-semibold);letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
-  .avm-row-art{background:rgb(248,247,246);padding:36px 56px 36px 37px;display:grid}
+  .avm-row-art{background:rgb(248,247,246);padding:36px;display:grid}
   .avm-row-art span{border-radius:12px;background:var(--bg-white);box-shadow:inset 0 0 0 1px var(--hair);
     display:grid;place-items:center;min-height:200px;
     font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:rgb(150,146,140)}
@@ -207,6 +238,13 @@
 <header class="avm-hero">
   <div class="wrap">
     <div>
+      <nav class="avm-crumb reveal" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="index.html">AYO</a></li>
+          <li><span aria-current="page">AYO Venue Management</span></li>
+        </ol>
+        <span class="who">The app for venue owners</span>
+      </nav>
       <p class="eyebrow reveal">Venue management &middot; Scheduling &middot; Revenue</p>
       <h1 class="reveal">Manage your venue <span class="hl">from your pocket</span>.</h1>
       <p class="lead reveal">Incoming bookings, court schedules, and daily revenue &mdash; all in one app. No laptop required.</p>
@@ -230,7 +268,20 @@
 <section class="avm-logos" aria-label="Venues using AYO Venue Management">
   <div class="wrap">
     <p class="cap reveal">Trusted by venues across Indonesia</p>
-    <div class="avm-logo-row reveal"><span>Arena Bogor</span><span>GOR Senayan</span><span>Padel Haus</span><span>Citra Sport</span><span>Smash Arena</span><span>Kota Futsal</span></div>
+    <div class="marquee on-light reveal">
+      <div class="mq-row" data-mq-row data-mq-speed="34" data-mq-dir="left">
+        <div class="mq-track" data-mq-track>
+          <div class="mq-group" data-mq-group>
+          <span class="mq-item">Arena Bogor</span>
+          <span class="mq-item">GOR Senayan</span>
+          <span class="mq-item">Padel Haus</span>
+          <span class="mq-item">Citra Sport</span>
+          <span class="mq-item">Smash Arena</span>
+          <span class="mq-item">Kota Futsal</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -270,8 +321,8 @@
       <p class="note">Built for owners and staff who move fast on the ground.</p>
     </div>
     <ul class="avm-cats reveal"><li class="is-current">Dashboard</li><li>Schedule</li><li>Courts</li><li>Promosi</li><li>Registration</li><li>Others</li></ul>
-  </div>
-  <div class="avm-rows">
+
+    <div class="avm-rows">
     <article class="avm-row reveal">
       <div class="avm-row-body">
         <span class="avm-row-n">01</span>
@@ -308,6 +359,7 @@
       </div>
       <div class="avm-row-art"><span>App screen</span></div>
     </article>
+    </div>
   </div>
 </section>
 
@@ -383,5 +435,6 @@
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V4.5"/><path d="M7.5 9.5 12 5 16.5 9.5"/></svg>
 </button>
 <script src="scripts/chrome.js"></script>
+<script src="components/marquee/marquee.js"></script>
 </body>
 </html>
