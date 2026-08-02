@@ -116,13 +116,24 @@
   .st__title{font-weight:var(--fw-extrabold);font-size:clamp(30px,3.75vw,54px);line-height:1.02;letter-spacing:-.03em;margin-top:10px}
   .st__aside{display:flex;align-items:center;gap:22px;flex-shrink:0}
   .st__note{text-align:right;font-family:var(--font-mono);font-weight:var(--fw-medium);font-size:14px;line-height:1.5;color:rgb(70,70,70)}
-  .st__pause{flex-shrink:0;width:46px;height:46px;border-radius:50%;border:1px solid var(--hair);background:var(--bg-white);color:var(--text-default);
-    display:grid;place-items:center;cursor:pointer;transition:background .2s,border-color .2s}
-  .st__pause:hover{border-color:var(--text-default);background:var(--bg-subtle)}
-  .st__pause svg{width:14px;height:14px}
-  .st__pause .ico-play{display:none}
-  .st__grid.is-paused .st__pause .ico-play{display:block}
-  .st__grid.is-paused .st__pause .ico-pause{display:none}
+  /* Progress row: the bar and the control that governs it, side by side. The
+     control used to sit in the section header, a long way from the thing it
+     paused and visible even while nothing was running. On the bar it is next to
+     the animation it stops, and it only exists where that animation does. */
+  .st__progress{display:flex;align-items:center;gap:10px;max-width:294px;margin-top:12px}
+  .st__toggle{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1px solid var(--hair);
+    background:var(--bg-white);color:var(--text-default);display:grid;place-items:center;cursor:pointer;
+    padding:0;transition:border-color .18s,background .18s}
+  .st__toggle:hover{border-color:var(--text-default);background:var(--bg-subtle)}
+  .st__toggle svg{width:9px;height:9px;display:block}
+  .st__toggle .ico-play{display:none}
+  .st__grid.is-paused .st__toggle .ico-play{display:block}
+  .st__grid.is-paused .st__toggle .ico-pause{display:none}
+  /* Collapsed tabs keep their markup but must not keep their tab stop.
+     visibility:hidden takes the button out of the focus order; display:none on
+     the parent body would too, but the body animates its height and needs to
+     stay laid out. */
+  .st__tab[aria-selected="false"] .st__toggle{visibility:hidden}
 
   /* ---- Left rail ---- */
   .st__rail{background:var(--bg-white);padding:40px 0;display:flex;flex-direction:column}
@@ -147,7 +158,7 @@
   .st__body > div{overflow:hidden;min-height:0}
   .st__body .st__desc{display:block;margin-top:12px}
   .st__desc{font-size:14px;line-height:1.55;color:var(--text-dim);max-width:294px}
-  .st__bar{display:block;height:3px;border-radius:2px;background:rgba(26,25,25,.12);margin-top:12px;max-width:294px;overflow:hidden}
+  .st__bar{flex:1;height:3px;border-radius:2px;background:rgba(26,25,25,.12);overflow:hidden}
   .st__bar i{display:block;height:100%;width:0;background:var(--brand);border-radius:2px}
   .st__tab[aria-selected="true"]{background:rgba(236,36,53,.04)}
   .st__tab[aria-selected="true"] .st__num{color:var(--brand)}
@@ -564,46 +575,42 @@
         </div>
         <div class="st__aside">
           <p class="st__note">Four topics. Four players.<br>Pick one &mdash; the story follows.</p>
-          <button class="st__pause" type="button" aria-pressed="false" aria-label="Pause story rotation">
-            <svg class="ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-            <svg class="ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
-          </button>
         </div>
       </div>
 
       <div class="st__rail" role="tablist" aria-orientation="vertical" aria-label="Story topics">
-        <button class="st__tab" role="tab" id="st-tab-0" aria-controls="st-story-0"
-                aria-selected="true" style="--stdur:10s">
+        <div class="st__tab" role="tab" id="st-tab-0" aria-controls="st-story-0"
+                aria-selected="true" tabindex="0" style="--stdur:10s">
           <span class="st__tab-head"><span class="st__num">01</span><span class="st__topic">Finding opponents</span></span>
           <span class="st__body"><div>
             <span class="st__desc">Match-ups yang sepadan tanpa harus nyari di grup chat.</span>
-            <span class="st__bar"><i></i></span>
+            <span class="st__progress"><span class="st__bar"><i></i></span><button class="st__toggle" type="button" aria-pressed="false" tabindex="-1" aria-label="Pause story rotation"><svg class="ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg><svg class="ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button></span>
           </div></span>
-        </button>
-        <button class="st__tab" role="tab" id="st-tab-1" aria-controls="st-story-1"
-                aria-selected="false" style="--stdur:9s">
+        </div>
+        <div class="st__tab" role="tab" id="st-tab-1" aria-controls="st-story-1"
+                aria-selected="false" tabindex="0" style="--stdur:9s">
           <span class="st__tab-head"><span class="st__num">02</span><span class="st__topic">Booking courts</span></span>
           <span class="st__body"><div>
             <span class="st__desc">Lapangan kosong ketemu dalam dua menit, bayar langsung.</span>
-            <span class="st__bar"><i></i></span>
+            <span class="st__progress"><span class="st__bar"><i></i></span><button class="st__toggle" type="button" aria-pressed="false" tabindex="-1" aria-label="Pause story rotation"><svg class="ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg><svg class="ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button></span>
           </div></span>
-        </button>
-        <button class="st__tab" role="tab" id="st-tab-2" aria-controls="st-story-2"
-                aria-selected="false" style="--stdur:8.5s">
+        </div>
+        <div class="st__tab" role="tab" id="st-tab-2" aria-controls="st-story-2"
+                aria-selected="false" tabindex="0" style="--stdur:8.5s">
           <span class="st__tab-head"><span class="st__num">03</span><span class="st__topic">Community</span></span>
           <span class="st__body"><div>
             <span class="st__desc">Lingkaran main yang tetap jalan tiap minggu.</span>
-            <span class="st__bar"><i></i></span>
+            <span class="st__progress"><span class="st__bar"><i></i></span><button class="st__toggle" type="button" aria-pressed="false" tabindex="-1" aria-label="Pause story rotation"><svg class="ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg><svg class="ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button></span>
           </div></span>
-        </button>
-        <button class="st__tab" role="tab" id="st-tab-3" aria-controls="st-story-3"
-                aria-selected="false" style="--stdur:8.5s">
+        </div>
+        <div class="st__tab" role="tab" id="st-tab-3" aria-controls="st-story-3"
+                aria-selected="false" tabindex="0" style="--stdur:8.5s">
           <span class="st__tab-head"><span class="st__num">04</span><span class="st__topic">Levels &amp; rating</span></span>
           <span class="st__body"><div>
             <span class="st__desc">Rating yang ikut kamu ke mana pun kamu main.</span>
-            <span class="st__bar"><i></i></span>
+            <span class="st__progress"><span class="st__bar"><i></i></span><button class="st__toggle" type="button" aria-pressed="false" tabindex="-1" aria-label="Pause story rotation"><svg class="ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg><svg class="ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button></span>
           </div></span>
-        </button>
+        </div>
         <div class="st__count">
           <p class="st__count-num">1,240</p>
           <p class="st__count-lbl">Player stories collected</p>
@@ -735,7 +742,6 @@
   var stTabs = [].slice.call(document.querySelectorAll('.st__tab'));
   var stStories = [].slice.call(document.querySelectorAll('.st__story'));
   var stGrid = document.querySelector('.st__grid');
-  var stPause = document.querySelector('.st__pause');
   var stCur = 0;
   /* Under reduced motion the global rule collapses every animation to ~0ms, so
      an auto-advance would strobe. Those users get plain click-to-switch tabs. */
@@ -743,7 +749,13 @@
 
   function stShow(i){
     stCur = i;
-    stTabs.forEach(function(t,j){ t.setAttribute('aria-selected', i===j); t.classList.remove('ticking'); });
+    stTabs.forEach(function(t,j){
+      t.setAttribute('aria-selected', i===j); t.classList.remove('ticking');
+      /* Collapsed tabs are hidden but still in the document — their control has
+         to leave the focus order with them, or Tab lands on nothing visible. */
+      var tg = t.querySelector('.st__toggle');
+      if(tg) tg.tabIndex = i===j ? 0 : -1;
+    });
     stStories.forEach(function(p,j){ p.classList.toggle('is-active', i===j); });
     if(stAuto){ void stTabs[i].offsetWidth; stTabs[i].classList.add('ticking'); }  /* reflow restarts the bar */
   }
@@ -752,10 +764,17 @@
     /* Picking a topic moves the rotation there rather than ending it. It used to
        end it, back when hovering off the section was the only way to stop —
        the pause control is the way to stop now, and it says so. */
-    b.addEventListener('click', function(){ stShow(i); });
+    b.addEventListener('click', function(e){
+      if(e.target.closest('.st__toggle')) return;   /* the control governs the bar, not the choice */
+      stShow(i);
+    });
     b.addEventListener('keydown', function(e){
       if(e.key==='ArrowDown'||e.key==='ArrowUp'){ e.preventDefault();
         var n=(i+(e.key==='ArrowDown'?1:stTabs.length-1))%stTabs.length; stTabs[n].focus(); stTabs[n].click(); }
+      /* A div carries role=tab but not a button's built-in activation, so Enter
+         and Space have to be wired by hand. It is a div because the control
+         inside it is a real button, and a button cannot nest in one. */
+      else if((e.key==='Enter'||e.key===' ') && e.target===b){ e.preventDefault(); stShow(i); }
     });
     if(stAuto) b.addEventListener('animationend', function(e){
       if(e.animationName==='sttick' && b.classList.contains('ticking')) stShow((stCur+1)%stTabs.length);
@@ -765,11 +784,19 @@
   /* Pause is a real toggle, not a hover accident: it holds until pressed again.
      It is the only thing that stops the rotation, which is why picking a topic
      no longer does. */
-  if(stPause && stGrid){
-    stPause.addEventListener('click', function(){
-      var held = stGrid.classList.toggle('is-paused');
-      stPause.setAttribute('aria-pressed', held);
-      stPause.setAttribute('aria-label', held ? 'Resume story rotation' : 'Pause story rotation');
+  /* Every bar carries one, but only the open tab's is reachable. They all drive
+     the same state, so whichever is on screen is the one that answers. */
+  var stToggles = [].slice.call(document.querySelectorAll('.st__toggle'));
+  if(stGrid && stToggles.length){
+    stToggles.forEach(function(tg){
+      tg.addEventListener('click', function(e){
+        e.stopPropagation();                        /* do not also re-pick the tab */
+        var held = stGrid.classList.toggle('is-paused');
+        stToggles.forEach(function(x){
+          x.setAttribute('aria-pressed', held);
+          x.setAttribute('aria-label', held ? 'Resume story rotation' : 'Pause story rotation');
+        });
+      });
     });
   }
 
