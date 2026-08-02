@@ -87,14 +87,20 @@ img{max-width:100%;display:block}
 .nav-links{display:flex;gap:var(--space-8);align-items:center;font-weight:var(--fw-medium);font-size:var(--fs-body-lg)}
 .nav-item{position:relative}
 .nav-top{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-sans);font-weight:var(--fw-medium);font-size:var(--fs-body-lg);color:rgba(255,255,255,.85);background:none;border:0;cursor:pointer;padding:var(--space-2) 2px;white-space:nowrap;position:relative}
-/* Drawn, not typed. The old ▾ glyph was whatever shape the font shipped —
-   off-centre and differently proportioned per platform. Clipped from a box
-   (not a border triangle) so rotate(180deg) turns about the real centre.
-   5.2 = 6 × √3/2, the height of an equilateral triangle on a 6px base.
-   currentColor, never a literal white: the nav inverts to dark text once it
-   lands on the scrolled bar, and a hardcoded white would vanish there. */
-.chev{width:6px;height:5.2px;flex-shrink:0;background:currentColor;
-  clip-path:polygon(50% 100%,0 0,100% 0);transition:transform .25s}
+/* Drawn, not typed — the old ▾ glyph was whatever shape the font shipped,
+   off-centre and differently proportioned per platform.
+   A stroked chevron, not a filled wedge: solid, the triangle carried more ink
+   than the word it belongs to and pulled the eye off the label.
+   Masked rather than an inline <svg> in the markup, for two reasons. The
+   background stays currentColor, which is what lets it invert with the nav when
+   it lands on the scrolled bar — a hardcoded white would vanish there. And the
+   box itself is never rotated, so the rotate(180deg) below still turns about
+   the real centre instead of an offset one. */
+.chev{--chev-src:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1 5 5 9 1' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  width:10px;height:6px;flex-shrink:0;background:currentColor;
+  -webkit-mask:var(--chev-src) center/contain no-repeat;
+  mask:var(--chev-src) center/contain no-repeat;
+  transition:transform .25s}
 .nav-item.has-sub:hover .chev,.nav-item.has-sub.open .chev{transform:rotate(180deg)}
 .nav-top::after{content:'';position:absolute;left:2px;bottom:-2px;height:2px;width:0;border-radius:2px;background:var(--brand);transition:width .3s cubic-bezier(.2,.7,.2,1)}
 .nav-item:hover>.nav-top::after,.nav-top:focus-visible::after{width:calc(100% - 4px)}
@@ -141,7 +147,9 @@ img{max-width:100%;display:block}
 .lang-btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-sans);font-weight:var(--fw-semibold);font-size:var(--fs-small);color:rgba(255,255,255,.9);background:none;border:1.5px solid rgba(255,255,255,.4);border-radius:var(--radius-md);padding:var(--space-2) var(--space-3);cursor:pointer;white-space:nowrap;transition:border-color .2s,color .2s}
 .lang-btn:hover{border-color:#fff}
 .lang-btn .flag{font-size:16px;line-height:1}
-.lang-btn .chev{opacity:.8}
+/* Scaled to its own label: this button sits at --fs-small against the nav's
+   --fs-body-lg, so the nav's chevron reads heavy next to it. 8/10 ≈ 13/16. */
+.lang-btn .chev{width:8px;height:4.8px;opacity:.8}
 .lang.open .lang-btn .chev{transform:rotate(180deg)}
 .nav.scrolled .lang-btn,.nav.on-light .lang-btn{color:var(--text-subtle);border-color:transparent}
 .nav.scrolled .lang-btn:hover,.nav.on-light .lang-btn:hover{border-color:transparent;background:var(--bg-subtle)}
