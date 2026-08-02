@@ -35,8 +35,20 @@ img{max-width:100%;display:block}
    because two is all there is; the audience rides along as a chip rather than
    a third crumb that would only link back to where you already are.
    Lives here because more than one page carries it. */
-.crumb{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-bottom:28px;
+.crumb{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-bottom:26px;
     font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-dim)}
+/* Rule under the trail, so the crumb reads as a label on the page rather than
+   as the headline's first line. The square is the marquee's separator at the
+   same 6px — a mark this site already uses, not a new one invented here.
+   Drawn as two backgrounds on one 6px-tall box rather than a 1px line plus a
+   positioned dot: the hairline needs vertical room to sit in the middle of the
+   square, and a 1px element has none to give.
+   .crumb is a wrap-enabled flex row, so width:100% pushes this onto its own
+   line and the 10px row-gap already carries part of the space above it. */
+.crumb::after{content:'';width:100%;height:6px;margin-top:8px;
+    background:
+      linear-gradient(var(--brand),var(--brand)) 0 0 / 6px 6px no-repeat,
+      linear-gradient(var(--hair),var(--hair)) 14px 50% / calc(100% - 14px) 1px no-repeat}
 .crumb ol{display:flex;flex-wrap:wrap;align-items:center;gap:8px;list-style:none;margin:0;padding:0}
 .crumb li{display:flex;align-items:center;gap:8px}
 .crumb li+li::before{content:'';width:5px;height:5px;border-right:1.2px solid currentColor;border-top:1.2px solid currentColor;transform:rotate(45deg);opacity:.55}
