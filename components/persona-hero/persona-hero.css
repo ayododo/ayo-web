@@ -80,7 +80,7 @@
 .ph-hl::before {
   content: ''; position: absolute; inset: 0; z-index: -1;
   background: var(--brand); border-radius: var(--hl-radius);
-  animation: ph-wipe .55s cubic-bezier(.2,.7,.2,1) .4s both;
+  animation: ph-wipe var(--hl-wipe-dur) var(--hl-wipe-ease) var(--hl-wipe-delay) both;
 }
 
 .ph-sub {

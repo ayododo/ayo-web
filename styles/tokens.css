@@ -44,6 +44,13 @@
   --ls-hero: -0.02em;
   --hl-radius: var(--radius-md);   /* same corner as the buttons beside it */
   --hl-pad: 0.14em;                /* relative, so it tracks the font size */
+  /* The red block wipes in rather than appearing. Homepage clips an absolute
+     ::before, the sub-pages animate a background — two mechanisms, because the
+     sub-pages' highlight is an inline span that cannot carry a positioned box.
+     The timing lives here so the two cannot drift apart. */
+  --hl-wipe-dur: .55s;
+  --hl-wipe-ease: cubic-bezier(.2,.7,.2,1);
+  --hl-wipe-delay: .4s;
   --fs-h1: 44px;        --lh-h1: 1.15;       /* page title */
   --fs-h2: 28px;        --lh-h2: 1.25;       /* section heading */
   --fs-h3: 20px;        --lh-h3: 1.35;       /* card / sub heading */

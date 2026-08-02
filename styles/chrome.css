@@ -214,6 +214,18 @@ img{max-width:100%;display:block}
 /* ---------- Motion ---------- */
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .55s ease-out,transform .6s cubic-bezier(.2,.7,.2,1)}
 .reveal.in{opacity:1;transform:none}
+/* Highlight wipe for the sub-page headlines.
+   background-size, not clip-path: the highlight there is an inline span with
+   box-decoration-break:clone, so clipping it would take the text with it and a
+   positioned ::before cannot follow a fragment that wraps. Animating the
+   background layer leaves the glyphs alone and lets each line fragment sweep
+   from its own left edge.
+   The full-width background stays in the base rule and the animation supplies
+   the empty start via fill-mode. That order matters: if the rule started at 0%
+   and the .in class never landed, the block would never arrive and the white
+   text would sit invisible on a white hero. */
+@keyframes hl-wipe{ from{ background-size:0% 100% } to{ background-size:100% 100% } }
+.reveal.in .hl{ animation:hl-wipe var(--hl-wipe-dur) var(--hl-wipe-ease) var(--hl-wipe-delay) both }
 
 /* The enlarged nav type + gap is a desktop refinement: it needs ~890px, but
    the burger doesn't take over until 820px. Between those the links would
@@ -250,5 +262,9 @@ img{max-width:100%;display:block}
 @media (prefers-reduced-motion: reduce){
   *{transition-duration:.01ms!important;animation-duration:.01ms!important}
   .reveal{opacity:1;transform:none}
+  /* Off, not merely fast: the rule above shortens duration but not delay, and
+     for .4s of that delay the block would be absent and the white headline
+     unreadable against the white hero. */
+  .reveal.in .hl{animation:none}
   html{scroll-behavior:auto}
 }
