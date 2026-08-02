@@ -357,7 +357,23 @@
       "Bash(sips -Z 900 /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/pcrumbv.png -o /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/pcrumbv2.png)",
       "Bash(sips -p 340 1000 --padColor 231F1E /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/f-home.png -o /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/f-homev.png)",
       "Bash(sips -p 101 1440 --padColor FFFFFF /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/fig-chev.png -o /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/fig-chevv.png)",
-      "Bash(sips -p 81 1440 --padColor 2A2422 /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/fig-chev2.png -o /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/fig-chev2v.png)"
+      "Bash(sips -p 81 1440 --padColor 2A2422 /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/fig-chev2.png -o /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/fig-chev2v.png)",
+      "Bash(gh --version)",
+      "Bash(security find-internet-password *)",
+      "Bash(security dump-keychain *)",
+      "Bash(chmod 600 ~/.ssh/config)",
+      "Bash(ssh-keygen -c -C \"rizki.wibowo@ayo.co.id \\(ayododo\\)\" -f ~/.ssh/id_ayododo)",
+      "Bash(echo \"repo  : $\\(git config --local --get user.email || echo '\\(tidak diset — pakai global\\)'\\)\")",
+      "Bash(echo \"global: $\\(git config --global --get user.email\\)\")",
+      "Bash(echo \"nama  : $\\(cd /Users/rizkywibowo/Projects/ayo-revamp-web && git config --get user.name\\)\")",
+      "Bash(echo \"repo ini  : $\\(git config --local --get user.email\\)\")",
+      "Bash(echo \"global    : $\\(git config --global --get user.email\\)   <- tidak diubah\")",
+      "Bash(echo \"sebelum : $\\(git remote get-url origin\\)\")",
+      "Bash(echo \"sesudah : $\\(git remote get-url origin\\)\")",
+      "Bash(echo \"remote        : $\\(git remote get-url origin\\)\")",
+      "Bash(echo \"remote origin : $\\(git remote get-url origin\\)\")",
+      "Bash(ssh -o ConnectTimeout=15 -T git@gh-ayododo)",
+      "Bash(awk '/^Host gh-ayododo/{f=1} f&&/IdentityFile/{print \"  \" $2; exit}' ~/.ssh/config)"
     ]
   }
 }

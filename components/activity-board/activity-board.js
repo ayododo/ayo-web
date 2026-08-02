@@ -36,7 +36,11 @@
           desc: 'Create a session, set player limits, and follow the game as it runs. Manage participants and payments from one place.',
           giant: '12,000+',
           giantLabel: 'Sessions / month',
-          cta: 'See what you can do as a host'
+          cta: 'What you can do as a Host',
+          /* The two roles used to share the activity's href, which meant the
+             host CTA and the participant CTA led to the same place. Host has a
+             page of its own now, so it carries its own destination. */
+          href: 'open-play-host.html'
         },
         participant: {
           desc: 'Find open sessions near you, join in one tap, and split the court fee automatically — no group-chat math.',
@@ -63,11 +67,11 @@
       hasRole: false,
       image: 'activity-open-match.jpg',
       imageAlt: 'Two players in a competitive match',
-      href: '#',
+      href: 'open-match.html',
       desc: 'Challenge other players, choose your match format, and find balanced opponents through ratings — every match stays close and fun.',
       giant: '5,400+',
       giantLabel: 'Matches / month',
-      cta: 'See Open Match',
+      cta: 'Learn about Open Match',
       micros: [
         { value: '4.8', label: 'Match rating', star: true }
       ]
@@ -103,7 +107,9 @@
     var r = a.roles[role];
     return {
       id: a.id, num: a.num, title: a.title, tag: a.tag, hasRole: true,
-      image: a.image, imageAlt: a.imageAlt, href: a.href, micros: a.micros,
+      /* A role may point somewhere of its own — host has its own page, while
+         participant still falls back to the activity's. */
+      image: a.image, imageAlt: a.imageAlt, href: r.href || a.href, micros: a.micros,
       desc: r.desc, giant: r.giant, giantLabel: r.giantLabel, cta: r.cta,
       avatars: r.avatars, avatarsNote: r.avatarsNote
     };

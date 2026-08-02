@@ -1,0 +1,78 @@
+/* ==========================================================================
+   AYO — Activity detail page
+   The layout behind Open Match and Open Play · Host: breadcrumb, title, a row
+   of category tabs, then numbered feature rows with a motion slot beside each.
+
+   Shared from the start rather than copied. Two pages went in together with the
+   same structure, and a second copy is how the nav ended up diverging before it
+   was pulled into chrome.css. A third activity page should need markup only.
+
+   Depends on: styles/tokens.css, styles/chrome.css (.wrap, .crumb, nav, footer).
+   Behaviour: scripts/activity-tabs.js
+   ========================================================================== */
+
+/* ---- Hero ---------------------------------------------------------------- */
+/* The nav is fixed and transparent over this, so the top padding has to clear
+   it — the page opens on white, with nothing else to sit the title against. */
+.act-hero{background:var(--bg-white);padding:clamp(112px,11vw,156px) 0 0}
+.act-hero h1{margin-top:0;font-weight:var(--fw-extrabold);font-size:var(--fs-hero);
+  line-height:var(--lh-hero);letter-spacing:var(--ls-hero);text-wrap:balance}
+.act-hero .lead{margin-top:var(--space-5);max-width:56ch;
+  font-size:var(--fs-body-lg);line-height:1.6;color:var(--text-dim)}
+
+/* ---- Category tabs ------------------------------------------------------- */
+/* Real tabs, not labels: each one owns a panel below and the set answers to
+   arrow keys. They sit in the hero because that is where the wireframe puts
+   them — aria-controls does the binding, so the distance costs nothing. */
+.act-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:clamp(28px,3.4vw,44px);padding-bottom:4px}
+.act-tab{padding:12px 22px;border:0;border-radius:var(--radius-pill);cursor:pointer;
+  font-family:var(--font-sans);font-weight:var(--fw-semibold);font-size:14px;
+  background:none;color:var(--text-dim);box-shadow:inset 0 0 0 1px var(--hair);
+  transition:background .18s,color .18s,box-shadow .18s}
+.act-tab:hover{color:var(--text-default);box-shadow:inset 0 0 0 1px var(--text-default)}
+.act-tab[aria-selected="true"]{background:var(--text-default);color:var(--bg-white);box-shadow:none}
+
+/* ---- Key features -------------------------------------------------------- */
+.act-feat{background:var(--bg-white);padding:clamp(40px,5vw,64px) 0 0}
+.act-feat h2{font-weight:var(--fw-extrabold);font-size:clamp(26px,2.8vw,38px);
+  line-height:1.08;letter-spacing:-.02em}
+.act-feat .note{margin-top:var(--space-3);max-width:60ch;
+  font-size:var(--fs-body-lg);line-height:1.6;color:var(--text-dim)}
+
+.act-rows{margin-top:clamp(28px,3.4vw,44px);border-top:1px solid var(--hair)}
+.act-rows[hidden]{display:none}
+.act-row{display:grid;grid-template-columns:820fr 620fr;border-bottom:1px solid var(--hair)}
+.act-row-body{padding:clamp(32px,4vw,56px) clamp(24px,4vw,56px) clamp(32px,4vw,56px) 0;
+  display:flex;flex-direction:column;justify-content:center}
+.act-row-n{width:34px;height:34px;border-radius:50%;background:var(--text-default);color:var(--bg-white);
+  display:grid;place-items:center;font-family:var(--font-mono);font-size:12px;font-weight:var(--fw-semibold)}
+.act-row h3{margin-top:22px;font-weight:var(--fw-extrabold);font-size:clamp(22px,2.1vw,30px);letter-spacing:-.02em}
+.act-row p{margin-top:12px;max-width:46ch;font-size:16px;line-height:1.65;color:var(--text-dim)}
+
+/* Motion slot. Dashed, because the border is a promise rather than a frame —
+   nothing has been produced for these yet, and a solid box would read as a
+   finished empty panel instead of a reservation. */
+.act-row-art{padding:clamp(20px,2.6vw,36px) 0 clamp(20px,2.6vw,36px) clamp(20px,2.6vw,36px);display:grid}
+.act-row-art span{border-radius:12px;background:rgb(248,247,246);
+  border:1.5px dashed rgba(26,25,25,.18);
+  display:grid;place-items:center;min-height:clamp(180px,17vw,240px);
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;
+  text-transform:uppercase;color:rgb(150,146,140)}
+
+/* ---- Closing ------------------------------------------------------------- */
+.act-close{background:var(--bg-cream);padding:clamp(56px,7vw,96px) 0;text-align:center}
+.act-close h2{margin:0 auto;max-width:20ch;font-weight:var(--fw-extrabold);
+  font-size:clamp(26px,3.4vw,44px);line-height:1.08;letter-spacing:-.02em}
+.act-close p{max-width:52ch;margin:var(--space-5) auto 0;
+  font-size:var(--fs-body-lg);line-height:1.6;color:var(--text-dim)}
+.act-actions{display:flex;flex-wrap:wrap;gap:var(--space-4);justify-content:center;margin-top:var(--space-8)}
+
+/* ---- Responsive ---------------------------------------------------------- */
+/* Two columns stop earning their keep once the copy column is narrower than
+   the line length it is set for; below this the motion slot goes underneath. */
+@media (max-width:900px){
+  .act-row{grid-template-columns:1fr}
+  .act-row-body{padding:clamp(28px,5vw,40px) 0 var(--space-5)}
+  .act-row p{max-width:none}
+  .act-row-art{padding:0 0 clamp(28px,6vw,40px)}
+}
