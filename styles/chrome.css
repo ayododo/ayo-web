@@ -35,23 +35,32 @@ img{max-width:100%;display:block}
    because two is all there is; the audience rides along as a chip rather than
    a third crumb that would only link back to where you already are.
    Lives here because more than one page carries it. */
-.crumb{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-bottom:26px;
+/* fit-content, so the box is as wide as the trail rather than as wide as the
+   column. That is what lets the rule below measure itself against the text
+   instead of against a number picked by hand — every page has a different
+   trail, so a fixed length was always going to be wrong on three of them. */
+.crumb{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-bottom:26px;width:fit-content;padding-right:28px;
     font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-dim)}
 /* Mark under the trail, so the crumb reads as a label on the page rather than
    as the headline's first line. The square is the marquee's separator at the
    same 6px — a mark this site already uses, not a new one invented here.
-   Short on purpose. Run to the column edge it stopped being a mark and became a
-   divider, which is more weight than a line of breadcrumb needs and put a rule
-   across the page every time a sub-page opened.
+   Sized off the trail, not off the column: it runs the width of the breadcrumb
+   plus a short overhang, so it reads as underlining those words rather than as
+   a divider ruled across the page. A fixed length cannot do this — the trail is
+   a different width on every page.
+   The overhang is padding on the crumb, not extra width on the rule. Hung off
+   the outside it escaped the box, and once the trail wrapped — partner and
+   venue below 400px — fit-content became the full column and the rule ran 28px
+   past it, clipped rather than fixed by the body's overflow-x:hidden. As
+   padding it is inside the box fit-content measures, so the rule spans exactly
+   the border box and can never overhang anything.
    Drawn as two backgrounds on one 6px-tall box rather than a 1px line plus a
    positioned dot: the hairline needs vertical room to sit level with the middle
-   of the square, and a 1px element has none to give. The box still spans 100%
-   so it claims its own line in the wrap-enabled flex row — only the ink is
-   short. */
-.crumb::after{content:'';width:100%;height:6px;margin-top:8px;
+   of the square, and a 1px element has none to give. */
+.crumb::after{content:'';width:calc(100% + 28px);height:6px;margin-top:8px;
     background:
       linear-gradient(var(--brand),var(--brand)) 0 0 / 6px 6px no-repeat,
-      linear-gradient(var(--hair),var(--hair)) 14px 50% / 72px 1px no-repeat}
+      linear-gradient(var(--hair),var(--hair)) 14px 50% / calc(100% - 14px) 1px no-repeat}
 .crumb ol{display:flex;flex-wrap:wrap;align-items:center;gap:8px;list-style:none;margin:0;padding:0}
 .crumb li{display:flex;align-items:center;gap:8px}
 .crumb li+li::before{content:'';width:5px;height:5px;border-right:1.2px solid currentColor;border-top:1.2px solid currentColor;transform:rotate(45deg);opacity:.55}
