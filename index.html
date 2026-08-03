@@ -169,7 +169,22 @@
      screen can never drift from what the script thinks is running. */
   .st__tab[aria-selected="true"].ticking .st__bar i{animation:sttick var(--stdur,9s) linear forwards}
   @keyframes sttick{from{width:0}to{width:100%}}
-  .st__grid.is-paused .st__bar i,.st__grid.is-offscreen .st__bar i,.st__grid:focus-within .st__bar i{animation-play-state:paused}
+  /* These have to out-specify the rule above, not merely follow it. That rule
+     sets the `animation` shorthand, which writes animation-play-state back to
+     running as a side effect, and it was the more specific selector — so both
+     holds below were silently inert: pausing did nothing, and neither did
+     scrolling the section off screen.
+     There used to be a third, :focus-within. It has to go: the control lives
+     inside the grid now, so focus-within latched the moment it was clicked and
+     the bar could never be resumed — pressing play removed is-paused while
+     focus alone kept holding it. Rewriting it as :focus-visible on a tab would
+     hold for keyboard users and not for mouse ones, which is the right idea,
+     but it turns on a focus-visible heuristic that cannot be verified here —
+     and if it fired on a mouse click, picking a topic would stop the rotation,
+     which is exactly what this section is built not to do. The control beside
+     the bar is the mechanism now, and it says so. */
+  .st__grid.is-paused .st__tab.ticking .st__bar i,
+  .st__grid.is-offscreen .st__tab.ticking .st__bar i{animation-play-state:paused}
   .st__count{margin-top:auto;padding:24px 40px 0 0;border-top:1px solid var(--hair)}
   .st__count-num{font-family:var(--font-num);font-weight:var(--fw-bold);font-size:44px;line-height:.9;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
   .st__count-lbl{margin-top:6px;font-family:var(--font-mono);font-weight:var(--fw-medium);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim)}
