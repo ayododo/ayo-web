@@ -86,6 +86,59 @@
   document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ closeSubs(null); closeLang(); } });
 
 
+  /* login dialog — built here, not in five pages
+     ------------------------------------------------------------------------
+     The nav is still per-page markup, so writing this form into every page
+     would be five copies of one thing. <dialog> supplies the backdrop, the
+     focus trap and Esc; nothing is lost by injecting it, because with the
+     script off it could not be opened either way.
+
+     NOT WIRED: there is no auth endpoint. The field is never read, nothing is
+     sent and nothing is stored — Continue closes the dialog and that is all.
+     Point both buttons at the real login before this ships anywhere real. */
+  var loginBtns = [].slice.call(document.querySelectorAll('[data-login]'));
+  if(loginBtns.length && window.HTMLDialogElement){
+    var dlg = document.createElement('dialog');
+    dlg.className = 'auth';
+    dlg.setAttribute('aria-labelledby', 'auth-title');
+    dlg.innerHTML =
+      '<div class="auth-in">' +
+        '<button class="auth-x" type="button" data-auth-close aria-label="Tutup">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>' +
+        '</button>' +
+        '<h2 id="auth-title">Masuk</h2>' +
+        '<p class="sub">Belum punya akun AYO? <a href="#">Daftar</a></p>' +
+        '<input type="text" name="login" autocomplete="username" aria-label="Nomor ponsel atau email" placeholder="Nomor Ponsel atau Email">' +
+        '<button class="btn primary auth-next" type="button" disabled>Selanjutnya</button>' +
+        '<p class="auth-or">atau</p>' +
+        '<button class="btn ghost auth-google" type="button">' +
+          '<svg viewBox="0 0 48 48" aria-hidden="true">' +
+            '<path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>' +
+            '<path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>' +
+            '<path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>' +
+            '<path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>' +
+          '</svg>Masuk dengan Google</button>' +
+      '</div>';
+    document.body.appendChild(dlg);
+
+    var authInput = dlg.querySelector('input');
+    var authNext  = dlg.querySelector('.auth-next');
+
+    loginBtns.forEach(function(b){
+      b.addEventListener('click', function(e){
+        e.preventDefault();
+        dlg.showModal();
+        authInput.focus();            /* the field is the point of the dialog */
+      });
+    });
+    dlg.querySelector('[data-auth-close]').addEventListener('click', function(){ dlg.close(); });
+    /* Clicking the backdrop lands on the dialog itself, never on its contents. */
+    dlg.addEventListener('click', function(e){ if(e.target === dlg) dlg.close(); });
+    /* Nothing to submit until something is typed, and the button says so. */
+    authInput.addEventListener('input', function(){ authNext.disabled = !authInput.value.trim(); });
+    dlg.addEventListener('close', function(){ authInput.value = ''; authNext.disabled = true; });
+  }
+
   /* reveal on scroll */
   var reveals=[].slice.call(document.querySelectorAll('.reveal'));
   if(rm || !('IntersectionObserver' in window)){ reveals.forEach(function(el){ el.classList.add('in'); }); }

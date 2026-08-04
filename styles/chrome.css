@@ -71,6 +71,54 @@ img{max-width:100%;display:block}
     background:rgba(236,36,53,.08);color:var(--brand);font-weight:var(--fw-semibold);letter-spacing:.08em}
 .crumb .who::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor}
 
+/* ---- Login dialog ----
+   <dialog> brings the backdrop, Esc-to-close and the focus trap with it, the
+   same reason the media-kit gate on the partner page uses one.
+   The markup is injected by chrome.js rather than written into five pages: the
+   nav is still per-page, and five copies of a form is five chances to drift.
+   Nothing is lost with the script off — the dialog cannot open either way.
+
+   NOT WIRED. There is no auth endpoint behind this. The field is never read,
+   nothing is sent, nothing is stored, and Continue only closes. Point it at the
+   real login before this goes anywhere real. */
+/* margin:auto is what centres a modal dialog, and the browser sets it — but the
+     reset at the top of this file zeroes margin on everything, so it has to be
+     put back by hand or the dialog opens in the top-left corner. */
+.auth{border:0;padding:0;margin:auto;border-radius:var(--radius-xl);max-width:min(92vw,420px);width:100%;
+    background:var(--bg-white);color:var(--text-default);box-shadow:0 30px 80px rgba(26,25,25,.3)}
+.auth::backdrop{background:rgba(26,25,25,.55);backdrop-filter:blur(3px)}
+.auth-in{padding:clamp(24px,3vw,32px)}
+/* Close sits above the title, on its own row, so the heading keeps the full
+     measure instead of being shortened to dodge a corner button. */
+.auth-x{display:flex;width:40px;height:40px;margin:0 0 var(--space-4) auto;align-items:center;justify-content:center;
+    background:none;border:0;border-radius:var(--radius-md);cursor:pointer;color:var(--text-default);transition:background .15s}
+.auth-x:hover{background:var(--bg-subtle)}
+.auth-x svg{width:22px;height:22px;display:block}
+.auth h2{font-size:26px;font-weight:var(--fw-extrabold);letter-spacing:-.02em;line-height:1.15}
+.auth .sub{margin-top:var(--space-2);color:var(--text-dim);font-size:var(--fs-body-lg);line-height:1.5}
+.auth .sub a{color:var(--brand);font-weight:var(--fw-bold)}
+.auth .sub a:hover{text-decoration:underline}
+.auth input{width:100%;margin-top:var(--space-6);font-family:var(--font-sans);font-size:var(--fs-body-lg);
+    padding:var(--space-4);border:1px solid var(--border-default);border-radius:var(--radius-md);
+    background:var(--bg-white);color:inherit}
+.auth input::placeholder{color:var(--text-dim)}
+.auth input:focus-visible{outline:3px solid var(--brand);outline-offset:1px;border-color:transparent}
+/* Disabled until there is something to submit — the screenshot shows the same
+     grey resting state, and it says "nothing to send yet" rather than inviting
+     a press that does nothing. */
+.auth-next{width:100%;margin-top:var(--space-4);justify-content:center;
+    font-size:var(--fs-body-lg);padding:var(--space-4)}
+.auth-next:disabled{background:var(--bg-subtle-bold);color:var(--text-dim);cursor:not-allowed;
+    filter:none;transform:none}
+/* Rule with the word sitting in it, not a word with two rules drawn beside it —
+     one flex row, so the halves always meet the label evenly. */
+.auth-or{display:flex;align-items:center;gap:var(--space-4);margin-top:var(--space-6);
+    color:var(--text-dim);font-size:var(--fs-body)}
+.auth-or::before,.auth-or::after{content:'';flex:1;height:1px;background:var(--hair)}
+.auth-google{width:100%;margin-top:var(--space-6);gap:var(--space-3);justify-content:center;
+    font-size:var(--fs-body-lg);padding:var(--space-4);font-weight:var(--fw-bold)}
+.auth-google svg{width:20px;height:20px;flex-shrink:0}
+
 /* ---- Section scaffolding ---- */
 .sec{padding:clamp(36px,5vw,72px) 0}
 .sec-title{font-size:clamp(28px,4vw,52px);font-weight:var(--fw-extrabold);letter-spacing:-.02em;line-height:1.06}
