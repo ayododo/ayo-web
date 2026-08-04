@@ -374,7 +374,8 @@
       "Bash(echo \"remote origin : $\\(git remote get-url origin\\)\")",
       "Bash(ssh -o ConnectTimeout=15 -T git@gh-ayododo)",
       "Bash(awk '/^Host gh-ayododo/{f=1} f&&/IdentityFile/{print \"  \" $2; exit}' ~/.ssh/config)",
-      "Bash(sips -Z 1400 /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/f-om.png -o /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/f-omv.png)"
+      "Bash(sips -Z 1400 /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/f-om.png -o /private/tmp/claude-501/-Users-rizkywibowo-Projects-ayo-revamp-web/0cce4802-94d6-4238-9a0c-2a2d1df717b5/scratchpad/f-omv.png)",
+      "Bash(node -e \"new Function\\(require\\('fs'\\).readFileSync\\('scripts/chrome.js','utf8'\\)\\)\")"
     ]
   }
 }
