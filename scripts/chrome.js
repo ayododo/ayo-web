@@ -138,8 +138,8 @@
   subTops.forEach(function(b){ b.addEventListener('click', function(){ closePopups(); }); });
   if(burger) burger.addEventListener('click', function(){ closePopups(); closeSubs(null); });
 
-  /* Country and language are separate preferences. Country selection updates
-     the frontend selector only; it does not route to a regional backend. */
+  /* Indonesia offers EN/ID. Other countries use EN without a language control.
+     These frontend preferences do not route to a regional backend. */
   var COUNTRIES = [
     {code:'ID', name:'Indonesia', flag:'🇮🇩'},
     {code:'MY', name:'Malaysia', flag:'🇲🇾'},
@@ -150,6 +150,26 @@
   var countryCode = readPreference(countryKey) || 'ID';
   var countryRoot, countryButton, countryPopup;
   var lang = document.getElementById('lang');
+  var indonesiaLanguageKey = 'ayo-indonesia-language-v1';
+  var indonesiaLanguage = readPreference(indonesiaLanguageKey) === 'ID' ? 'ID' : 'EN';
+  function syncCountryLanguage(){
+    if(!lang || !languagePopup) return;
+    var isIndonesia = countryCode === 'ID';
+    var code = isIndonesia ? indonesiaLanguage : 'EN';
+    if(!isIndonesia){
+      if(lang.contains(document.activeElement)) countryButton.focus();
+      languagePopup.close();
+    }
+    lang.hidden = !isIndonesia;
+    langMenu.querySelectorAll('button').forEach(function(b){
+      b.setAttribute('aria-checked', String(b.dataset.code === code));
+      if(b.dataset.code === code){
+        lang.querySelector('.cur').textContent = code;
+        var flag = lang.querySelector('.cur-flag'); if(flag) flag.textContent = b.dataset.flag;
+      }
+    });
+    document.documentElement.dataset.language = code;
+  }
   if(lang){
     countryRoot = document.createElement('div');
     countryRoot.className = 'country';
@@ -173,6 +193,7 @@
       countryButton.title = selected.name;
       countryRoot.querySelectorAll('[data-country]').forEach(function(b){ b.setAttribute('aria-checked', String(b.dataset.country === selected.code)); });
       document.documentElement.dataset.country = selected.code;
+      syncCountryLanguage();
     }
     renderCountry();
     countryRoot.querySelectorAll('[data-country]').forEach(function(b){
@@ -192,11 +213,13 @@
       b.removeAttribute('aria-selected');
     });
     var languagePopup = setupPopup(lang, langButton, langMenu);
+    syncCountryLanguage();
     langMenu.querySelectorAll('button').forEach(function(b){
       b.addEventListener('click', function(){
-        langMenu.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-checked', String(x === b)); });
-        lang.querySelector('.cur').textContent = b.dataset.code;
-        var flag = lang.querySelector('.cur-flag'); if(flag) flag.textContent = b.dataset.flag;
+        if(countryCode !== 'ID') return;
+        indonesiaLanguage = b.dataset.code;
+        savePreference(indonesiaLanguageKey, indonesiaLanguage);
+        syncCountryLanguage();
         languagePopup.close(true);
       });
     });
@@ -248,6 +271,9 @@
   }
   renderSession();
   addEventListener('storage', function(e){
+    if(e.key === indonesiaLanguageKey || e.key === null){
+      indonesiaLanguage = readPreference(indonesiaLanguageKey) === 'ID' ? 'ID' : 'EN'; syncCountryLanguage();
+    }
     if(e.key === sessionKey || e.key === null){
       session = readPreference(sessionKey); if(!validSession(session)) session = null; renderSession();
     }
