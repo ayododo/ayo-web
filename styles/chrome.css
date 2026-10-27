@@ -206,12 +206,11 @@ img{max-width:100%;display:block}
 
 /* Language switcher */
 .lang{position:relative}
-.lang-btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-sans);font-weight:var(--fw-semibold);font-size:var(--fs-small);color:rgba(255,255,255,.9);background:none;border:1.5px solid rgba(255,255,255,.4);border-radius:var(--radius-md);padding:var(--space-2) var(--space-3);cursor:pointer;white-space:nowrap;transition:border-color .2s,color .2s}
-.lang-btn:hover{border-color:#fff}
+.lang-btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-sans);font-weight:var(--fw-semibold);font-size:var(--fs-small);color:inherit;background:none;border:0;min-height:36px;border-radius:var(--radius-md);padding:var(--space-2) var(--space-3);cursor:pointer;white-space:nowrap;transition:background .15s,color .2s}
+.lang-btn:hover{background:rgba(255,255,255,.14)}
 .lang-btn .flag{font-size:16px;line-height:1}
 /* Scaled to its own label: this button sits at --fs-small against the nav's
    --fs-body-lg, so the nav's chevron reads heavy next to it. 8/10 ≈ 13/16. */
-.lang-btn .chev{width:8px;height:4.8px;opacity:.8}
 .lang.open .lang-btn .chev{transform:rotate(180deg)}
 .nav.scrolled .lang-btn,.nav.on-light .lang-btn{color:var(--text-subtle);border-color:transparent}
 .nav.scrolled .lang-btn:hover,.nav.on-light .lang-btn:hover{border-color:transparent;background:var(--bg-subtle)}
@@ -233,8 +232,9 @@ img{max-width:100%;display:block}
     color:inherit;background:none;border:1.5px solid transparent;border-radius:var(--radius-md);cursor:pointer;transition:background .15s}
 .country-btn:hover{background:rgba(255,255,255,.14)}
 .nav.scrolled .country-btn:hover,.nav.on-light .country-btn:hover{background:var(--bg-subtle)}
+.country-btn{border:0}
 .country-btn svg{width:17px;height:17px;flex-shrink:0}
-.country-btn .chev{width:8px;height:5px}
+.country-btn .chev,.lang-btn .chev{width:8px;height:5px}
 .country.open .chev{transform:rotate(180deg)}
 .nav-popover{position:absolute;top:calc(100% + 12px);right:0;width:232px;max-width:calc(100vw - 32px);padding:var(--space-2);
     background:var(--bg-white);color:var(--text-default);border:1px solid var(--hair);border-radius:var(--radius-lg);

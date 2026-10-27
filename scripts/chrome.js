@@ -175,7 +175,7 @@
     countryRoot.className = 'country';
     countryRoot.innerHTML =
       '<button class="country-btn" type="button" aria-expanded="false">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg>' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>' +
         '<span data-country-code></span><span class="chev" aria-hidden="true"></span>' +
       '</button>' +
       '<div class="nav-popover country-menu" id="country-menu" role="menu" aria-labelledby="country-menu-title">' +
