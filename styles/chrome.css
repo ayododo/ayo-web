@@ -30,6 +30,17 @@ img{max-width:100%;display:block}
 .btn.full{width:100%}
 
 
+/* IBM Carbon Icons (Apache-2.0), vendored SVG masks. */
+.carbon-icon{display:inline-block;flex-shrink:0;width:20px;height:20px;background:currentColor;
+  -webkit-mask:var(--carbon-icon) center/contain no-repeat;mask:var(--carbon-icon) center/contain no-repeat}
+.carbon-location{--carbon-icon:url('../assets/icons/carbon/location.svg')}
+.carbon-cart{--carbon-icon:url('../assets/icons/carbon/shopping--cart.svg')}
+.carbon-profile{--carbon-icon:url('../assets/icons/carbon/user--profile.svg')}
+.carbon-dashboard{--carbon-icon:url('../assets/icons/carbon/dashboard.svg')}
+.carbon-menu{--carbon-icon:url('../assets/icons/carbon/menu.svg')}
+.carbon-close{--carbon-icon:url('../assets/icons/carbon/close.svg')}
+.carbon-checkmark{--carbon-icon:url('../assets/icons/carbon/checkmark.svg')}
+
 /* ---- Breadcrumb ----
    Sub-pages hang off the homepage with nothing on them saying so. Two levels,
    because two is all there is; the audience rides along as a chip rather than
@@ -149,19 +160,10 @@ img{max-width:100%;display:block}
 .nav-links{display:flex;gap:var(--space-8);align-items:center;font-weight:var(--fw-medium);font-size:var(--fs-body-lg)}
 .nav-item{position:relative}
 .nav-top{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-sans);font-weight:var(--fw-medium);font-size:var(--fs-body-lg);color:rgba(255,255,255,.85);background:none;border:0;cursor:pointer;padding:var(--space-2) 2px;white-space:nowrap;position:relative}
-/* Drawn, not typed — the old ▾ glyph was whatever shape the font shipped,
-   off-centre and differently proportioned per platform.
-   A stroked chevron, not a filled wedge: solid, the triangle carried more ink
-   than the word it belongs to and pulled the eye off the label.
-   Masked rather than an inline <svg> in the markup, for two reasons. The
-   background stays currentColor, which is what lets it invert with the nav when
-   it lands on the scrolled bar — a hardcoded white would vanish there. And the
-   box itself is never rotated, so the rotate(180deg) below still turns about
-   the real centre instead of an offset one. */
-.chev{--chev-src:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1 5 5 9 1' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  width:10px;height:6px;flex-shrink:0;background:currentColor;
-  -webkit-mask:var(--chev-src) center/contain no-repeat;
-  mask:var(--chev-src) center/contain no-repeat;
+/* Carbon chevrons inherit the navigation color through a CSS mask. */
+.chev{width:16px;height:16px;flex-shrink:0;background:currentColor;
+  -webkit-mask:url('../assets/icons/carbon/chevron--down.svg') center/contain no-repeat;
+  mask:url('../assets/icons/carbon/chevron--down.svg') center/contain no-repeat;
   transition:transform .25s}
 .nav-item.has-sub:hover .chev,.nav-item.has-sub.open .chev{transform:rotate(180deg)}
 .nav-top::after{content:'';position:absolute;left:2px;bottom:-2px;height:2px;width:0;border-radius:2px;background:var(--brand);transition:width .3s cubic-bezier(.2,.7,.2,1)}
@@ -233,8 +235,8 @@ img{max-width:100%;display:block}
 .country-btn:hover{background:rgba(255,255,255,.14)}
 .nav.scrolled .country-btn:hover,.nav.on-light .country-btn:hover{background:var(--bg-subtle)}
 .country-btn{border:0}
-.country-btn svg{width:17px;height:17px;flex-shrink:0}
-.country-btn .chev,.lang-btn .chev{width:8px;height:5px}
+.country-btn > .carbon-icon{width:20px;height:20px}
+.country-btn .chev,.lang-btn .chev{width:16px;height:16px}
 .country.open .chev{transform:rotate(180deg)}
 .nav-popover{position:absolute;top:calc(100% + 12px);right:0;width:232px;max-width:calc(100vw - 32px);padding:var(--space-2);
     background:var(--bg-white);color:var(--text-default);border:1px solid var(--hair);border-radius:var(--radius-lg);
@@ -245,7 +247,7 @@ img{max-width:100%;display:block}
 .nav-popover [role^="menuitem"]:hover{background:var(--bg-subtle)}
 .nav-popover [aria-checked="true"]{background:var(--bg-cream);font-weight:var(--fw-semibold)}
 .nav-popover .flag{font-size:18px;line-height:1}
-.menu-check{width:18px;height:18px;margin-left:auto;color:var(--brand);visibility:hidden}
+.menu-check{width:16px;height:16px;margin-left:auto;color:var(--brand);visibility:hidden}
 [aria-checked="true"] .menu-check{visibility:visible}
 .account-btn{width:44px;height:44px;padding:4px;border:0;border-radius:50%;background:none}
 .account-avatar{display:grid;place-items:center;position:relative;isolation:isolate;flex-shrink:0;width:36px;height:36px;overflow:hidden;border-radius:50%;background:var(--brand);color:#fff;font-size:12px;box-shadow:0 0 0 2px transparent;transition:box-shadow .15s}
@@ -360,7 +362,7 @@ img{max-width:100%;display:block}
   .nav-actions{gap:2px}
   .nav .brand img{height:22px}
   .nav-icon,.burger{width:32px;height:36px}
-  .country-btn svg{display:none}
+  .country-btn > .carbon-icon{display:none}
   .nav-actions > .btn{padding-inline:12px}
   .foot-cols{grid-template-columns:1fr;gap:var(--space-8)}
 }

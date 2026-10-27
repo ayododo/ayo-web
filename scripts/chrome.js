@@ -53,6 +53,13 @@
   addEventListener('scroll',function(){ if(!tick){ tick=true; requestAnimationFrame(navCheck); } },{passive:true});
   if(nav) navCheck();
 
+  /* IBM Carbon Icons, Apache-2.0. SVG sources and license: assets/icons/carbon/. */
+  if(nav){
+    var cart = nav.querySelector('.nav-icon[aria-label="Cart"]');
+    if(cart) cart.innerHTML = '<span class="carbon-icon carbon-cart" aria-hidden="true"></span>';
+    if(burger) burger.innerHTML = '<span class="carbon-icon carbon-menu ico-open" aria-hidden="true"></span><span class="carbon-icon carbon-close ico-close" aria-hidden="true"></span>';
+  }
+
   /* nav dropdowns — hover (desktop, via CSS) + click/tap (mobile & keyboard) */
   var subTops=[].slice.call(document.querySelectorAll('.nav-item.has-sub > .nav-top'));
   function closeSubs(except){
@@ -175,12 +182,12 @@
     countryRoot.className = 'country';
     countryRoot.innerHTML =
       '<button class="country-btn" type="button" aria-expanded="false">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>' +
+        '<span class="carbon-icon carbon-location" aria-hidden="true"></span>' +
         '<span data-country-code></span><span class="chev" aria-hidden="true"></span>' +
       '</button>' +
       '<div class="nav-popover country-menu" id="country-menu" role="menu" aria-labelledby="country-menu-title">' +
         '<p class="nav-menu-title" id="country-menu-title">Country / region</p>' +
-        COUNTRIES.map(function(c){ return '<button type="button" role="menuitemradio" aria-checked="false" data-country="'+c.code+'"><span class="flag" aria-hidden="true">'+c.flag+'</span><span>'+c.name+'</span><svg class="menu-check" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m4 10 4 4 8-8"/></svg></button>'; }).join('') +
+        COUNTRIES.map(function(c){ return '<button type="button" role="menuitemradio" aria-checked="false" data-country="'+c.code+'"><span class="flag" aria-hidden="true">'+c.flag+'</span><span>'+c.name+'</span><span class="carbon-icon carbon-checkmark menu-check" aria-hidden="true"></span></button>'; }).join('') +
       '</div>';
     lang.parentNode.insertBefore(countryRoot, lang);
     countryButton = countryRoot.querySelector('.country-btn');
@@ -245,8 +252,8 @@
         '<span class="account-avatar"><span aria-hidden="true" data-account-initials>AP</span><img src="assets/avatar-1.jpg" alt="" width="36" height="36"></span>' +
       '</button>' +
       '<div class="nav-popover account-menu" id="account-menu" role="menu" aria-label="Account">' +
-        '<button type="button" role="menuitem" data-account-profile><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4H6a3 3 0 0 0-3 3v11a3 3 0 0 0 3 3h11a3 3 0 0 0 3-3v-6"/><path d="m9 15 1-4L18 3a2.1 2.1 0 0 1 3 3l-8 8-4 1ZM16 5l3 3"/></svg>Profil</button>' +
-        '<button type="button" role="menuitem" data-account-dashboard><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="4"/><path d="M9 8h2M9 12h6M9 16h6"/></svg>Dasbor</button>' +
+        '<button type="button" role="menuitem" data-account-profile><span class="carbon-icon carbon-profile" aria-hidden="true"></span>Profil</button>' +
+        '<button type="button" role="menuitem" data-account-dashboard><span class="carbon-icon carbon-dashboard" aria-hidden="true"></span>Dasbor</button>' +
         '<button type="button" role="menuitem" data-logout>Keluar</button>' +
       '</div>';
     navLogin.insertAdjacentElement('afterend', accountRoot);
