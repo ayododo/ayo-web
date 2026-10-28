@@ -1,5 +1,20 @@
-# macOS Finder metadata — never belongs in the repo
+# Operating system files
 .DS_Store
+Thumbs.db
 
-# Vercel CLI link (machine-specific project id)
-.vercel
+# Local deployment and assistant settings; keep shared design skills tracked
+.vercel/
+.claude/settings.local.json
+.claude/projects/
+
+# Local environment and dependency files
+.env
+.env.*
+!.env.example
+node_modules/
+*.log
+
+# Generated checks and local previews
+playwright-report/
+test-results/
+__pycache__/

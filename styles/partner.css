@@ -1,0 +1,104 @@
+/* ---------- Hero ---------- */
+.pt-hero{padding:clamp(120px,13vw,180px) 0 clamp(48px,6vw,80px);background:var(--bg-white)}
+.pt-hero h1{font-size:var(--fs-hero);font-weight:var(--fw-extrabold);letter-spacing:var(--ls-hero);line-height:var(--lh-hero);margin:0 0 var(--space-5);max-width:20ch;text-wrap:balance}
+/* Kept on one line: split across two, the red block reads as two unrelated
+   marks and the orphaned word looks like a mistake. */
+.pt-hero h1 .hl{background:linear-gradient(var(--brand),var(--brand)) no-repeat;color:#fff;border-radius:var(--hl-radius);padding:0 var(--hl-pad);white-space:nowrap;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.pt-hero .lead{max-width:52ch;font-size:var(--fs-body-lg);line-height:1.6;color:var(--text-dim)}
+.pt-actions{display:flex;flex-wrap:wrap;gap:var(--space-4);margin-top:var(--space-8)}
+
+/* ---------- Why partner ---------- */
+.pt-why{background:var(--bg-cream);padding:clamp(48px,6vw,80px) 0}
+.pt-why .pt-lede{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:end}
+.pt-why h2{font-size:clamp(26px,3.4vw,44px);font-weight:var(--fw-extrabold);letter-spacing:-.02em;line-height:1.08}
+.pt-why p{color:var(--text-dim);line-height:1.6;font-size:var(--fs-body-lg);max-width:46ch}
+.pt-stats{display:flex;flex-wrap:wrap;row-gap:var(--space-6);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);margin-top:var(--space-10);padding:var(--space-8) 0}
+
+/* ---------- What we do ---------- */
+.pt-what{background:var(--bg-white);padding:clamp(48px,6vw,80px) 0}
+/* Same hairline grid the Booking section uses: one background, 1px gaps, white
+   children. Even at every junction, and no doubled borders. */
+.pt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(26,25,25,.14);margin-top:var(--space-10)}
+.pt-svc{background:var(--bg-white);padding:clamp(24px,2.6vw,36px) clamp(20px,2.2vw,32px)}
+.pt-svc:first-child{padding-left:0}
+.pt-svc:last-child{padding-right:0}
+.pt-svc .num{font-family:var(--font-mono);font-size:var(--fs-caption);letter-spacing:.12em;color:var(--brand);font-weight:var(--fw-semibold)}
+.pt-svc h3{font-size:clamp(19px,1.6vw,23px);font-weight:var(--fw-bold);letter-spacing:-.01em;margin:var(--space-4) 0 var(--space-3)}
+.pt-svc p{color:var(--text-dim);line-height:1.6}
+
+/* ---------- Case studies ---------- */
+.pt-cases{background:var(--bg-cream);padding:clamp(48px,6vw,80px) 0 clamp(56px,7vw,96px);overflow:hidden}
+.pt-rail-head{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--space-6);flex-wrap:wrap}
+.pt-hint{font-family:var(--font-mono);font-size:var(--fs-caption);letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim)}
+/* Scroll-snap rather than a scripted carousel: it keeps native momentum,
+   keyboard scrolling and the scrollbar, and needs no JS to work. The negative
+   margin lets the rail bleed past the container so a card can sit half off the
+   edge — that overhang is what says "there is more". */
+.pt-rail{display:grid;grid-auto-flow:column;grid-auto-columns:clamp(260px,26vw,340px);gap:var(--space-5);
+  margin-top:var(--space-8);padding:0 var(--edge) var(--space-4);margin-inline:calc(var(--edge) * -1);
+  overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin}
+/* No scroll-snap: it exists to land on discrete slides, and it fights a
+   scrollLeft that moves every frame — the rail would keep being tugged back to
+   the nearest card. The loop makes snapping unnecessary anyway, since there is
+   no start or end to land on. */
+.pt-case{background:var(--bg-white);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.pt-case-art{aspect-ratio:4/3;background:rgb(242,240,238);box-shadow:inset 0 0 0 1px rgba(26,25,25,.1);
+  display:grid;place-items:center;font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;
+  text-transform:uppercase;color:rgb(150,146,140)}
+.pt-case-body{padding:var(--space-6);display:flex;flex-direction:column;gap:var(--space-3);flex:1}
+.pt-case-brand{font-family:var(--font-mono);font-size:var(--fs-caption);letter-spacing:.1em;text-transform:uppercase;color:var(--brand);font-weight:var(--fw-semibold)}
+.pt-case h3{font-size:19px;font-weight:var(--fw-bold);letter-spacing:-.01em}
+.pt-case p{color:var(--text-dim);line-height:1.6;font-size:var(--fs-body)}
+.pt-case .result{margin-top:auto;padding-top:var(--space-4);border-top:1px solid var(--hair);font-weight:var(--fw-bold)}
+
+/* ---------- Closing CTA ---------- */
+.pt-close{background:var(--brand);color:#fff;padding:clamp(56px,7vw,96px) 0;text-align:center}
+.pt-close h2{font-size:clamp(28px,4.4vw,56px);font-weight:var(--fw-extrabold);letter-spacing:-.02em;line-height:1.06;max-width:18ch;margin:0 auto}
+.pt-close p{max-width:52ch;margin:var(--space-5) auto 0;line-height:1.6;font-size:var(--fs-body-lg);color:rgba(255,255,255,.85)}
+.pt-close .pt-actions{justify-content:center}
+.pt-close .btn.primary{background:#fff;color:var(--brand)}
+.pt-close .btn.ghost{color:#fff;border-color:rgba(255,255,255,.55)}
+.pt-close .btn.ghost:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+
+/* ---------- FAQ ---------- */
+.pt-faq{background:var(--bg-white);padding:clamp(48px,6vw,80px) 0 clamp(56px,7vw,96px)}
+.pt-faq-list{margin-top:var(--space-8);border-top:1px solid var(--hair);max-width:0;max-width:none}
+/* <details> carries the open/closed state, the disclosure semantics and
+   keyboard support on its own — an accordion here needs no script. */
+.pt-q{border-bottom:1px solid var(--hair)}
+.pt-q summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:var(--space-5);
+  padding:var(--space-6) 0;font-size:clamp(17px,1.5vw,20px);font-weight:var(--fw-semibold);letter-spacing:-.01em}
+.pt-q summary::-webkit-details-marker{display:none}
+/* Plus that becomes a minus: two bars, and only the upright one turns. A
+   chevron has to be drawn heavy enough to read as an arrow, which is what made
+   it loom next to this type; two hairlines carry the same meaning at a weight
+   that sits under the question rather than beside it. */
+.pt-mark{position:relative;flex-shrink:0;width:14px;height:14px;color:var(--text-dim);transition:color .2s}
+.pt-mark::before,.pt-mark::after{content:'';position:absolute;top:50%;left:0;right:0;height:1.5px;border-radius:1px;
+  background:currentColor;transform:translateY(-50%);transition:transform .28s cubic-bezier(.2,.7,.2,1)}
+.pt-mark::after{transform:translateY(-50%) rotate(90deg)}
+.pt-q[open] .pt-mark::after{transform:translateY(-50%) rotate(0deg)}
+.pt-q summary:hover .pt-mark,.pt-q[open] .pt-mark{color:var(--text-default)}
+.pt-q p{color:var(--text-dim);line-height:1.65;max-width:70ch;padding:0 0 var(--space-6)}
+
+/* ---------- Media kit dialog ---------- */
+/* <dialog> brings the backdrop, Esc-to-close and the focus trap with it. */
+.pt-dialog{border:0;padding:0;margin:auto;border-radius:var(--radius-xl);max-width:min(92vw,460px);width:100%;max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);overflow:auto;background:var(--bg-white);color:var(--text-default);box-shadow:0 30px 80px rgba(26,25,25,.3)}
+.pt-dialog::backdrop{background:rgba(26,25,25,.55);backdrop-filter:blur(3px)}
+.pt-dialog-in{padding:clamp(24px,3vw,36px)}
+.pt-dialog h2{font-size:24px;font-weight:var(--fw-extrabold);letter-spacing:-.02em}
+.pt-dialog .sub{color:var(--text-dim);line-height:1.6;margin-top:var(--space-3)}
+.pt-field{display:flex;flex-direction:column;gap:6px;margin-top:var(--space-5)}
+.pt-field label{font-size:var(--fs-small);font-weight:var(--fw-semibold)}
+.pt-field input{font-family:var(--font-sans);font-size:var(--fs-body);padding:var(--space-3) var(--space-4);
+  border:1px solid var(--border-default);border-radius:var(--radius-md);background:var(--bg-white);color:inherit}
+.pt-field input:focus-visible{outline:3px solid var(--brand);outline-offset:1px;border-color:transparent}
+.pt-dialog-foot{display:flex;gap:var(--space-3);margin-top:var(--space-4)}
+.pt-note{margin-top:var(--space-5);font-size:var(--fs-caption);color:var(--text-dim);line-height:1.55}
+
+@media (max-width:900px){
+  .pt-why .pt-lede{grid-template-columns:1fr;align-items:start}
+  .pt-grid{grid-template-columns:1fr}
+  .pt-svc,.pt-svc:first-child,.pt-svc:last-child{padding-left:0;padding-right:0}
+  .pt-close h2,.pt-close p{max-width:none}
+}
