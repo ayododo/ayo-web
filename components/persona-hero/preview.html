@@ -5,7 +5,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AYO — Persona Hero</title>
+<link rel="stylesheet" href="../../vendor/bootstrap-4.3.1/bootstrap.min.css">
 <link rel="stylesheet" href="../../styles/tokens.css">
+<link rel="stylesheet" href="../../styles/bootstrap-compat.css">
 <link rel="stylesheet" href="persona-hero.css">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -14,7 +16,7 @@
   :focus-visible { outline: 3px solid var(--text-inverse); outline-offset: 3px; }
 </style>
 </head>
-<body>
+<body class="ayo-web">
 
 <!-- Background layers: use --ph-image for a photo, and/or <video class="ph-video">.
      Photo only, for example:  style="--ph-image: url('../../assets/hero-poster.jpg')" -->
@@ -71,6 +73,8 @@
   </div>
 </section>
 
+<script src="../../vendor/jquery-3.5.1/jquery.min.js"></script>
+<script src="../../vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
 <script src="persona-hero.js"></script>
 </body>
 </html>

@@ -6,10 +6,16 @@ Website design reference and frontend handoff for AYO.
 
 ## Current implementation
 
-Static HTML, CSS, and vanilla JavaScript. There is no build step or npm dependency.
-The frontend team's integration target is **Bootstrap 4**; the current pages do
-not load Bootstrap yet. Match the team's exact Bootstrap version and stylesheet
-before adapting these pages to their application.
+Static HTML with **Bootstrap 4.3.1**, **jQuery 3.5.1**, and custom AYO CSS and
+JavaScript. There is no build step or npm dependency. The Bootstrap JavaScript
+bundle includes Popper. All dependencies are served locally from `vendor/`.
+
+The public `ayo.co.id` homepage was inspected on 28 October 2026. It loaded
+Bootstrap 4.3.1 CSS alongside Bootstrap 5.1.3 CSS and JavaScript, plus multiple
+jQuery versions. This reference project uses one consistent Bootstrap 4.3.1
+CSS/JavaScript pair and one jQuery 3.5.1 instance, matching the requested
+Bootstrap 4 integration target. Confirm the production asset pipeline with the
+frontend team before merging into their application.
 
 ## Run locally
 
@@ -40,11 +46,11 @@ framework preset, no build command, and serve the repository root.
 
 | Directory | Contents |
 | --- | --- |
-| `styles/` | Shared design tokens, shared page chrome, and page styles |
+| `styles/` | Design tokens, Bootstrap compatibility defaults, shared chrome, and page styles |
 | `scripts/` | Shared navigation/account demo, activity tabs, and page scripts |
 | `components/` | Reusable visual components, snippets, and isolated previews |
 | `assets/` | Images, videos, animation data, brand assets, and icons in use |
-| `vendor/` | Local Lottie runtime used by `venue.html` |
+| `vendor/` | Pinned Bootstrap, jQuery, Lottie, and dependency license notices |
 | `.claude/skills/sport-ui/` | Shared design guidance for continuing work with Claude |
 
 `styles/tokens.css` defines Figtree, the numeric fonts, colors, spacing, radii,
@@ -56,7 +62,22 @@ Page-specific code lives in `styles/home.css` / `scripts/home.js`,
 `scripts/venue-tabs.js` / `scripts/venue-loading.js`. The two activity detail
 pages share `styles/activity-page.css` and `scripts/activity-tabs.js`.
 
-Keep stylesheet and script order consistent with the HTML entry points.
+Keep stylesheet and script order consistent with the HTML entry points:
+
+1. `vendor/bootstrap-4.3.1/bootstrap.min.css`
+2. `styles/tokens.css`
+3. `styles/bootstrap-compat.css`
+4. Shared chrome, component styles, and page styles
+5. `vendor/jquery-3.5.1/jquery.min.js`
+6. `vendor/bootstrap-4.3.1/bootstrap.bundle.min.js`
+7. Shared, component, and page scripts in their existing order
+
+All full pages and component previews load Bootstrap. The two HTML component
+snippets rely on their host page to load these dependencies. Production content
+wrappers use Bootstrap's `container-fluid` with AYO's existing maximum width
+and padding. Detailed layouts and custom interactions remain in their component
+files so the reference design stays consistent.
+
 `venue.html` loads Lottie with `defer`; its animation initialization waits for
 `DOMContentLoaded`.
 
@@ -76,14 +97,18 @@ shared button rules in `styles/chrome.css`. Reconcile these when integrating.
 
 ## Bootstrap 4 handoff
 
-1. Confirm the existing application's exact Bootstrap 4 version, templates,
-   asset pipeline, and supported browsers. Reuse its dependencies.
+1. Reuse the application's Bootstrap 4 and jQuery dependencies when integrating;
+   do not include the copies in `vendor/` a second time. Reconcile the mixed
+   production versions with the frontend team rather than reproducing them.
 2. Start with the homepage in the real application. Compare desktop and mobile
    layout before adapting the remaining pages.
-3. Resolve custom `.btn`, `.nav`, `.lead`, and other class names that overlap
-   Bootstrap. Use `ayo-` names for custom components and update markup, CSS, and
-   JavaScript selectors together.
-4. Scope custom styles to the new page/components. `styles/chrome.css` includes
+3. AYO buttons, navigation, leads, and footer columns now use `.ayo-btn`,
+   `.ayo-nav`, `.ayo-nav-item`, `.ayo-lead`, and `.ayo-foot-col` to avoid overlap
+   with Bootstrap. Preview-only rows and badges also use AYO class names. Keep
+   markup, CSS, and JavaScript selectors in sync when changing components.
+4. Keep the `ayo-web` class on the page body (or an equivalent content wrapper)
+   for the compatibility defaults. Scope custom styles when transplanting
+   individual components. `styles/chrome.css` includes
    global resets and element selectors; do not load it across an existing
    application without reviewing their effect. Scope design tokens as needed.
 5. Preserve the intended layout widths. The design uses a 1440px maximum content
@@ -97,8 +122,17 @@ shared button rules in `styles/chrome.css`. Reconcile these when integrating.
 8. Check the integrated pages at mobile, tablet, and desktop widths, including
    keyboard navigation, focus states, reduced motion, menus, tabs, and dialogs.
 
-References: [Bootstrap 4 theming](https://getbootstrap.com/docs/4.6/getting-started/theming/)
-and [JavaScript dependencies](https://getbootstrap.com/docs/4.6/getting-started/introduction/#js).
+The existing CSS already targets modern browsers (CSS Grid, custom properties,
+and `clamp()`). Compatibility defaults also use `:where()`, `:is()`, and `revert`;
+Bootstrap 4 support alone does not imply legacy-browser support for this design.
+
+Validation for this installation compared 27 page/viewport combinations before
+and after adding Bootstrap, covering the five main pages, foundations, and five
+component previews. Review the real application again with its own styles and
+data; public asset inspection does not expose backend templates or build setup.
+
+References: [Bootstrap 4.3 theming](https://getbootstrap.com/docs/4.3/getting-started/theming/)
+and [JavaScript dependencies](https://getbootstrap.com/docs/4.3/getting-started/introduction/#js).
 
 ## Demo behavior and unfinished connections
 
@@ -112,6 +146,7 @@ and [JavaScript dependencies](https://getbootstrap.com/docs/4.6/getting-started/
 - Fonts load from Google Fonts. Review font hosting with the frontend team.
 - Keep `assets/icons/carbon/LICENSE` and `NOTICE.md` with the Carbon icons, and
   `vendor/lottie.LICENSE.md` with the Lottie runtime (lottie-web 5.12.2).
+  Bootstrap, jQuery, and Popper notices are in `vendor/THIRD_PARTY_NOTICES.md`.
 
 ## Keeping the repository tidy
 

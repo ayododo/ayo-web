@@ -4,7 +4,7 @@
 /* Kept on one line: split across two, the red block reads as two unrelated
    marks and the orphaned word looks like a mistake. */
 .pt-hero h1 .hl{background:linear-gradient(var(--brand),var(--brand)) no-repeat;color:#fff;border-radius:var(--hl-radius);padding:0 var(--hl-pad);white-space:nowrap;-webkit-box-decoration-break:clone;box-decoration-break:clone}
-.pt-hero .lead{max-width:52ch;font-size:var(--fs-body-lg);line-height:1.6;color:var(--text-dim)}
+.pt-hero .ayo-lead{max-width:52ch;font-size:var(--fs-body-lg);line-height:1.6;color:var(--text-dim)}
 .pt-actions{display:flex;flex-wrap:wrap;gap:var(--space-4);margin-top:var(--space-8)}
 
 /* ---------- Why partner ---------- */
@@ -56,9 +56,9 @@
 .pt-close h2{font-size:clamp(28px,4.4vw,56px);font-weight:var(--fw-extrabold);letter-spacing:-.02em;line-height:1.06;max-width:18ch;margin:0 auto}
 .pt-close p{max-width:52ch;margin:var(--space-5) auto 0;line-height:1.6;font-size:var(--fs-body-lg);color:rgba(255,255,255,.85)}
 .pt-close .pt-actions{justify-content:center}
-.pt-close .btn.primary{background:#fff;color:var(--brand)}
-.pt-close .btn.ghost{color:#fff;border-color:rgba(255,255,255,.55)}
-.pt-close .btn.ghost:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+.pt-close .ayo-btn.primary{background:#fff;color:var(--brand)}
+.pt-close .ayo-btn.ghost{color:#fff;border-color:rgba(255,255,255,.55)}
+.pt-close .ayo-btn.ghost:hover{border-color:#fff;background:rgba(255,255,255,.1)}
 
 /* ---------- FAQ ---------- */
 .pt-faq{background:var(--bg-white);padding:clamp(48px,6vw,80px) 0 clamp(56px,7vw,96px)}

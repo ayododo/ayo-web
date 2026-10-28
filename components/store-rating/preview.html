@@ -5,14 +5,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AYO — Store Rating</title>
+<link rel="stylesheet" href="../../vendor/bootstrap-4.3.1/bootstrap.min.css">
 <link rel="stylesheet" href="../../styles/tokens.css">
+<link rel="stylesheet" href="../../styles/bootstrap-compat.css">
 <link rel="stylesheet" href="store-rating.css">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: var(--font-sans); background: var(--bg-dark); color: var(--text-inverse); padding: 48px 32px; }
   .wrap { max-width: 880px; margin: 0 auto; }
   h1 { font-size: 26px; font-weight: var(--fw-extrabold); letter-spacing: -.02em; }
-  .lead { color: rgba(255,255,255,.6); margin-top: 6px; font-size: var(--fs-body-lg); }
+  .ayo-lead { color: rgba(255,255,255,.6); margin-top: 6px; font-size: var(--fs-body-lg); }
   h2 { font-size: var(--fs-small); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: .08em;
        color: rgba(255,255,255,.45); margin: 40px 0 16px; }
   .stage { padding: 26px 28px; border-radius: var(--radius-lg); background: rgba(255,255,255,.04);
@@ -22,11 +24,11 @@
          background: rgba(255,255,255,.12); border-radius: var(--radius-xs); padding: 1px 6px; }
 </style>
 </head>
-<body>
+<body class="ayo-web">
 <div class="wrap">
 
   <h1>Store Rating</h1>
-  <p class="lead">Social proof from app-store ratings. White text, store icons keep their own brand colours.</p>
+  <p class="ayo-lead">Social proof from app-store ratings. White text, store icons keep their own brand colours.</p>
 
   <h2>Default</h2>
   <div class="stage">
@@ -62,5 +64,7 @@
   </div>
 
 </div>
+<script src="../../vendor/jquery-3.5.1/jquery.min.js"></script>
+<script src="../../vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -4,24 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AYO — Design Foundation</title>
+<link rel="stylesheet" href="vendor/bootstrap-4.3.1/bootstrap.min.css">
 <link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="styles/bootstrap-compat.css">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: var(--font-sans); color: var(--text-default); background: var(--bg-cream); padding: 48px 32px 80px; }
   .wrap { max-width: 1040px; margin: 0 auto; }
   h1 { font-weight: var(--fw-extrabold); font-size: 34px; letter-spacing: -0.02em; }
-  .lead { color: var(--text-dim); margin-top: 8px; font-size: 15px; }
+  .ayo-lead { color: var(--text-dim); margin-top: 8px; font-size: 15px; }
   h2 { font-weight: var(--fw-bold); font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin: 48px 0 16px; }
 
   /* type specimen */
   .weights { display: grid; }
-  .weights .row { display: grid; grid-template-columns: 40px 1fr auto; align-items: baseline; column-gap: 24px; padding: 12px 0; border-bottom: 1px solid var(--bg-subtle-bold); }
-  .weights .row:last-child { border-bottom: none; }
+  .weights .ayo-demo-row { display: grid; grid-template-columns: 40px 1fr auto; align-items: baseline; column-gap: 24px; padding: 12px 0; border-bottom: 1px solid var(--bg-subtle-bold); }
+  .weights .ayo-demo-row:last-child { border-bottom: none; }
   .weights .num { font-size: 12px; font-weight: 600; color: var(--text-dim); font-variant-numeric: tabular-nums; }
   .weights .specimen { font-size: 24px; line-height: 1.25; }
   .weights .meta { display: flex; align-items: center; gap: 10px; justify-self: end; }
   .weights .name { color: var(--text-dim); font-size: 13px; }
-  .weights .badge { font-size: 11px; font-weight: 600; color: var(--brand); border: 1px solid var(--brand); border-radius: var(--radius-pill); padding: 1px 9px; letter-spacing: 0.01em; white-space: nowrap; }
+  .weights .ayo-badge { font-size: 11px; font-weight: 600; color: var(--brand); border: 1px solid var(--brand); border-radius: var(--radius-pill); padding: 1px 9px; letter-spacing: 0.01em; white-space: nowrap; }
   .w300 { font-weight: 300; } .w400 { font-weight: 400; } .w500 { font-weight: 500; }
   .w600 { font-weight: 600; } .w700 { font-weight: 700; } .w800 { font-weight: 800; } .w900 { font-weight: 900; }
 
@@ -36,12 +38,12 @@
 
   /* type scale rows */
   .scale { display: grid; gap: 18px; }
-  .scale .row { display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap; }
+  .scale .ayo-demo-row { display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap; }
   .scale .spec { color: var(--text-dim); font-size: 12px; font-weight: 400; font-variant-numeric: tabular-nums; }
 
   /* spacing rows */
   .space { display: grid; gap: 12px; }
-  .space .row { display: grid; grid-template-columns: 70px 56px 1fr; align-items: center; gap: 16px; }
+  .space .ayo-demo-row { display: grid; grid-template-columns: 70px 56px 1fr; align-items: center; gap: 16px; }
   .space .token { font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
   .space .val { color: var(--text-dim); font-size: 12px; font-variant-numeric: tabular-nums; text-align: right; }
   .space .bar { height: 16px; background: var(--brand); border-radius: var(--radius-xs); }
@@ -65,48 +67,48 @@
   .logos .lbl { margin-top: 12px; font-size: 12px; color: var(--text-dim); }
 </style>
 </head>
-<body>
+<body class="ayo-web">
 <div class="wrap">
   <h1>AYO — Design Foundation</h1>
-  <p class="lead">Phase 1: color &amp; type from Kickoff Design System 2.0. Font: Figtree.</p>
+  <p class="ayo-lead">Phase 1: color &amp; type from Kickoff Design System 2.0. Font: Figtree.</p>
 
   <h2>Typography · Figtree</h2>
   <div class="weights">
-    <div class="row"><span class="num">300</span><span class="specimen w300">Sport together, made easy</span><span class="meta"><span class="name">Light</span></span></div>
-    <div class="row"><span class="num">400</span><span class="specimen w400">Sport together, made easy</span><span class="meta"><span class="name">Regular</span><span class="badge">in scale</span></span></div>
-    <div class="row"><span class="num">500</span><span class="specimen w500">Sport together, made easy</span><span class="meta"><span class="name">Medium</span></span></div>
-    <div class="row"><span class="num">600</span><span class="specimen w600">Sport together, made easy</span><span class="meta"><span class="name">SemiBold</span><span class="badge">in scale</span></span></div>
-    <div class="row"><span class="num">700</span><span class="specimen w700">Sport together, made easy</span><span class="meta"><span class="name">Bold</span><span class="badge">in scale</span></span></div>
-    <div class="row"><span class="num">800</span><span class="specimen w800">Sport together, made easy</span><span class="meta"><span class="name">ExtraBold</span><span class="badge">in scale</span></span></div>
-    <div class="row"><span class="num">900</span><span class="specimen w900">Sport together, made easy</span><span class="meta"><span class="name">Black</span></span></div>
+    <div class="ayo-demo-row"><span class="num">300</span><span class="specimen w300">Sport together, made easy</span><span class="meta"><span class="name">Light</span></span></div>
+    <div class="ayo-demo-row"><span class="num">400</span><span class="specimen w400">Sport together, made easy</span><span class="meta"><span class="name">Regular</span><span class="ayo-badge">in scale</span></span></div>
+    <div class="ayo-demo-row"><span class="num">500</span><span class="specimen w500">Sport together, made easy</span><span class="meta"><span class="name">Medium</span></span></div>
+    <div class="ayo-demo-row"><span class="num">600</span><span class="specimen w600">Sport together, made easy</span><span class="meta"><span class="name">SemiBold</span><span class="ayo-badge">in scale</span></span></div>
+    <div class="ayo-demo-row"><span class="num">700</span><span class="specimen w700">Sport together, made easy</span><span class="meta"><span class="name">Bold</span><span class="ayo-badge">in scale</span></span></div>
+    <div class="ayo-demo-row"><span class="num">800</span><span class="specimen w800">Sport together, made easy</span><span class="meta"><span class="name">ExtraBold</span><span class="ayo-badge">in scale</span></span></div>
+    <div class="ayo-demo-row"><span class="num">900</span><span class="specimen w900">Sport together, made easy</span><span class="meta"><span class="name">Black</span></span></div>
   </div>
 
   <h2>Type Scale · Desktop (1440)</h2>
   <div class="scale">
-    <div class="row"><span class="type-display">Display</span><span class="spec">64 / ExtraBold · hero headline</span></div>
-    <div class="row"><span class="type-h1">Heading 1</span><span class="spec">44 / Bold · page title</span></div>
-    <div class="row"><span class="type-h2">Heading 2</span><span class="spec">28 / Bold · section</span></div>
-    <div class="row"><span class="type-h3">Heading 3</span><span class="spec">20 / SemiBold · card</span></div>
-    <div class="row"><span class="type-body-lg">Body large — the quick brown fox</span><span class="spec">16 / Regular</span></div>
-    <div class="row"><span class="type-body">Body — the quick brown fox</span><span class="spec">14 / Regular</span></div>
-    <div class="row"><span class="type-small">Small — the quick brown fox</span><span class="spec">13 / Regular</span></div>
-    <div class="row"><span class="type-caption">Caption — the quick brown fox</span><span class="spec">12 / Regular</span></div>
+    <div class="ayo-demo-row"><span class="type-display">Display</span><span class="spec">64 / ExtraBold · hero headline</span></div>
+    <div class="ayo-demo-row"><span class="type-h1">Heading 1</span><span class="spec">44 / Bold · page title</span></div>
+    <div class="ayo-demo-row"><span class="type-h2">Heading 2</span><span class="spec">28 / Bold · section</span></div>
+    <div class="ayo-demo-row"><span class="type-h3">Heading 3</span><span class="spec">20 / SemiBold · card</span></div>
+    <div class="ayo-demo-row"><span class="type-body-lg">Body large — the quick brown fox</span><span class="spec">16 / Regular</span></div>
+    <div class="ayo-demo-row"><span class="type-body">Body — the quick brown fox</span><span class="spec">14 / Regular</span></div>
+    <div class="ayo-demo-row"><span class="type-small">Small — the quick brown fox</span><span class="spec">13 / Regular</span></div>
+    <div class="ayo-demo-row"><span class="type-caption">Caption — the quick brown fox</span><span class="spec">12 / Regular</span></div>
   </div>
 
   <h2>Spacing · 4/8px grid</h2>
   <div class="space">
-    <div class="row"><span class="token">space-1</span><span class="val">4</span><span class="bar" style="width:var(--space-1)"></span></div>
-    <div class="row"><span class="token">space-2</span><span class="val">8</span><span class="bar" style="width:var(--space-2)"></span></div>
-    <div class="row"><span class="token">space-3</span><span class="val">12</span><span class="bar" style="width:var(--space-3)"></span></div>
-    <div class="row"><span class="token">space-4</span><span class="val">16</span><span class="bar" style="width:var(--space-4)"></span></div>
-    <div class="row"><span class="token">space-5</span><span class="val">20</span><span class="bar" style="width:var(--space-5)"></span></div>
-    <div class="row"><span class="token">space-6</span><span class="val">24</span><span class="bar" style="width:var(--space-6)"></span></div>
-    <div class="row"><span class="token">space-8</span><span class="val">32</span><span class="bar" style="width:var(--space-8)"></span></div>
-    <div class="row"><span class="token">space-10</span><span class="val">40</span><span class="bar" style="width:var(--space-10)"></span></div>
-    <div class="row"><span class="token">space-12</span><span class="val">48</span><span class="bar" style="width:var(--space-12)"></span></div>
-    <div class="row"><span class="token">space-16</span><span class="val">64</span><span class="bar" style="width:var(--space-16)"></span></div>
-    <div class="row"><span class="token">space-20</span><span class="val">80</span><span class="bar" style="width:var(--space-20)"></span></div>
-    <div class="row"><span class="token">space-24</span><span class="val">96</span><span class="bar" style="width:var(--space-24)"></span></div>
+    <div class="ayo-demo-row"><span class="token">space-1</span><span class="val">4</span><span class="bar" style="width:var(--space-1)"></span></div>
+    <div class="ayo-demo-row"><span class="token">space-2</span><span class="val">8</span><span class="bar" style="width:var(--space-2)"></span></div>
+    <div class="ayo-demo-row"><span class="token">space-3</span><span class="val">12</span><span class="bar" style="width:var(--space-3)"></span></div>
+    <div class="ayo-demo-row"><span class="token">space-4</span><span class="val">16</span><span class="bar" style="width:var(--space-4)"></span></div>
+    <div class="ayo-demo-row"><span class="token">space-5</span><span class="val">20</span><span class="bar" style="width:var(--space-5)"></span></div>
+    <div class="ayo-demo-row"><span class="token">space-6</span><span class="val">24</span><span class="bar" style="width:var(--space-6)"></span></div>
+    <div class="ayo-demo-row"><span class="token">space-8</span><span class="val">32</span><span class="bar" style="width:var(--space-8)"></span></div>
+    <div class="ayo-demo-row"><span class="token">space-10</span><span class="val">40</span><span class="bar" style="width:var(--space-10)"></span></div>
+    <div class="ayo-demo-row"><span class="token">space-12</span><span class="val">48</span><span class="bar" style="width:var(--space-12)"></span></div>
+    <div class="ayo-demo-row"><span class="token">space-16</span><span class="val">64</span><span class="bar" style="width:var(--space-16)"></span></div>
+    <div class="ayo-demo-row"><span class="token">space-20</span><span class="val">80</span><span class="bar" style="width:var(--space-20)"></span></div>
+    <div class="ayo-demo-row"><span class="token">space-24</span><span class="val">96</span><span class="bar" style="width:var(--space-24)"></span></div>
   </div>
 
   <h2>Radius</h2>
@@ -120,7 +122,7 @@
   </div>
 
   <h2>Logo</h2>
-  <p class="lead" style="margin:-8px 0 16px">Placeholder — swap <code>assets/logo.svg</code> with the real mark (same file name).</p>
+  <p class="ayo-lead" style="margin:-8px 0 16px">Placeholder — swap <code>assets/logo.svg</code> with the real mark (same file name).</p>
   <div class="logos">
     <div class="tile"><div class="plate white"><img src="assets/logo.svg" alt="AYO logo on white"></div><div class="lbl">on White</div></div>
     <div class="tile"><div class="plate cream"><img src="assets/logo.svg" alt="AYO logo on cream"></div><div class="lbl">on Cream-surface</div></div>
@@ -154,5 +156,7 @@
     <div class="sw"><div class="chip ring" style="background:var(--border-default)"></div><div class="meta"><div class="name">Outline / Border</div><div class="hex">#BFBFBF</div></div></div>
   </div>
 </div>
+<script src="vendor/jquery-3.5.1/jquery.min.js"></script>
+<script src="vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
 </body>
 </html>

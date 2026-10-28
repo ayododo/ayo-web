@@ -23,7 +23,7 @@
 
 .avm-hero h1{margin-top:0;font-weight:var(--fw-extrabold);font-size:var(--fs-hero);line-height:var(--lh-hero);letter-spacing:var(--ls-hero);text-wrap:balance}
 .avm-hero h1 .hl{background:linear-gradient(var(--brand),var(--brand)) no-repeat;color:var(--bg-white);border-radius:var(--hl-radius);padding:0 var(--hl-pad);white-space:nowrap;-webkit-box-decoration-break:clone;box-decoration-break:clone}
-.avm-hero .lead{margin-top:27px;max-width:490px;font-size:18px;line-height:1.6;color:rgb(151,151,151)}
+.avm-hero .ayo-lead{margin-top:27px;max-width:490px;font-size:18px;line-height:1.6;color:rgb(151,151,151)}
 .avm-stores{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
 .avm-stores .avm-pill{padding:15px 26px}
 .avm-figures{display:flex;align-items:center;gap:28px;margin-top:28px;padding-top:23px}
@@ -57,7 +57,7 @@
 .avm-about{background:rgb(248,247,246);padding:clamp(56px,6.5vw,88px) 0 clamp(56px,6.5vw,89px)}
 .avm-about-grid{display:grid;grid-template-columns:minmax(0,804px) minmax(0,460px);gap:clamp(32px,4.5vw,64px);margin-top:44px}
 .avm-about h2{font-weight:var(--fw-extrabold);font-size:clamp(30px,3.2vw,46px);line-height:1.065;letter-spacing:-.03em;max-width:560px}
-.avm-about .lead{margin-top:22px;max-width:560px;font-size:17px;line-height:1.65;color:rgb(151,151,151)}
+.avm-about .ayo-lead{margin-top:22px;max-width:560px;font-size:17px;line-height:1.65;color:rgb(151,151,151)}
 .avm-checks{list-style:none;margin:32px 0 0;padding:0}
 .avm-checks li{display:flex;align-items:center;gap:14px;padding:17px 0 16px;border-top:1px solid var(--hair);font-weight:var(--fw-semibold);font-size:15px}
 .avm-tick{flex-shrink:0;width:20px;height:20px;border-radius:5px;background:var(--brand);color:var(--bg-white);display:grid;place-items:center}
@@ -117,7 +117,7 @@
 .avm-faq{background:var(--bg-white);padding:clamp(56px,6.5vw,88px) 0 clamp(56px,6.5vw,89px)}
 .avm-faq .wrap{display:grid;grid-template-columns:minmax(0,380px) minmax(0,884px);gap:clamp(32px,4.5vw,64px)}
 .avm-faq h2{margin-top:17px;font-weight:var(--fw-extrabold);font-size:clamp(28px,2.9vw,42px);line-height:1.07;letter-spacing:-.03em}
-.avm-faq .lead{margin-top:17px;font-size:16px;line-height:1.62;color:var(--text-dim)}
+.avm-faq .ayo-lead{margin-top:17px;font-size:16px;line-height:1.62;color:var(--text-dim)}
 .avm-faq .avm-pill{margin-top:17px;padding:14px 24px;font-size:14px}
 .avm-qs{border-top:1px solid var(--hair)}
 .avm-q{border-bottom:1px solid var(--hair)}
@@ -139,7 +139,7 @@
 .avm-close{background:rgb(248,247,246);padding:clamp(64px,7.6vw,110px) 0;text-align:center}
 .avm-close .avm-eyebrow{justify-content:center}
 .avm-close h2{margin-top:22px;font-weight:var(--fw-extrabold);font-size:clamp(32px,3.9vw,56px);line-height:1.04;letter-spacing:-.03em;max-width:14ch;margin-inline:auto;text-wrap:balance}
-.avm-close .lead{margin-top:24px;max-width:52ch;margin-inline:auto;font-size:18px;line-height:1.6;color:var(--text-dim)}
+.avm-close .ayo-lead{margin-top:24px;max-width:52ch;margin-inline:auto;font-size:18px;line-height:1.6;color:var(--text-dim)}
 .avm-close .acts{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:32px}
 
 /* The highlight is held on one line so the red block reads as one mark, but
@@ -157,5 +157,5 @@
   .avm-row{grid-template-columns:1fr}
   .avm-row-body{padding:clamp(28px,6vw,40px) 0}
   .avm-row-art{padding:0 0 clamp(28px,6vw,40px)}
-  .avm-close h2,.avm-close .lead{max-width:none}
+  .avm-close h2,.avm-close .ayo-lead{max-width:none}
 }

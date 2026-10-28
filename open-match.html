@@ -11,27 +11,29 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta name="theme-color" content="#ec2435">
 
+<link rel="stylesheet" href="vendor/bootstrap-4.3.1/bootstrap.min.css">
 <link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="styles/bootstrap-compat.css">
 <link rel="stylesheet" href="styles/chrome.css">
 <!-- Layout shared with every other activity detail page. Page-local CSS would
      be a second copy of the same rules waiting to drift. -->
 <link rel="stylesheet" href="styles/activity-page.css">
 </head>
-<body>
-<nav class="nav on-light">
-  <div class="nav-in">
+<body class="ayo-web">
+<nav class="ayo-nav on-light">
+  <div class="nav-in container-fluid">
     <a class="brand" href="index.html" aria-label="AYO"><img src="assets/logo.svg" alt="AYO"></a>
     <div class="nav-links" id="navlinks">
-      <div class="nav-item"><a class="nav-top" href="https://ayo.co.id/venues">Booking</a></div>
-      <div class="nav-item has-sub">
+      <div class="ayo-nav-item"><a class="nav-top" href="https://ayo.co.id/venues">Booking</a></div>
+      <div class="ayo-nav-item has-sub">
         <button class="nav-top" aria-expanded="false" aria-haspopup="true">Activities <span class="chev" aria-hidden="true"></span></button>
         <div class="submenu">
           <a href="https://ayo.co.id/main-bareng">Join activity</a>
           <a href="open-play-host.html">Hosting activity</a>
         </div>
       </div>
-      <div class="nav-item"><a class="nav-top" href="venue.html">For Venue Owners</a></div>
-      <div class="nav-item"><a class="nav-top" href="#">Blog</a></div>
+      <div class="ayo-nav-item"><a class="nav-top" href="venue.html">For Venue Owners</a></div>
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Blog</a></div>
     </div>
     <div class="nav-actions">
     <div class="lang" id="lang">
@@ -55,7 +57,7 @@
     <a class="nav-icon" href="#" aria-label="Cart">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3h2.2l2.1 12.4a1.5 1.5 0 0 0 1.5 1.25h8.3a1.5 1.5 0 0 0 1.48-1.2L21 7H6"/></svg>
     </a>
-    <a class="btn primary" href="#" data-login>Login</a>
+    <a class="ayo-btn primary" href="#" data-login>Login</a>
     <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navlinks">
       <svg class="ico-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
       <svg class="ico-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>
@@ -65,7 +67,7 @@
 </nav>
 
 <header class="act-hero">
-  <div class="wrap">
+  <div class="wrap container-fluid">
     <nav class="crumb reveal" aria-label="Breadcrumb">
       <ol>
         <li><a href="index.html">Home</a></li>
@@ -74,7 +76,7 @@
       </ol>
     </nav>
     <h1 class="reveal">Open Match</h1>
-    <p class="lead reveal">Dummy description: penjelasan singkat tentang Open Match. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+    <p class="ayo-lead reveal">Dummy description: penjelasan singkat tentang Open Match. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
     <div class="act-tabs reveal" role="tablist" data-act-tabs aria-label="Sections">
       <button class="act-tab" type="button" role="tab" id="om-t0" aria-controls="om-p0" aria-selected="true" tabindex="0">Placeholder 1</button>
       <button class="act-tab" type="button" role="tab" id="om-t1" aria-controls="om-p1" aria-selected="false" tabindex="-1">Placeholder 2</button>
@@ -85,7 +87,7 @@
 </header>
 
 <section class="act-feat" aria-labelledby="om-feat">
-  <div class="wrap">
+  <div class="wrap container-fluid">
     <h2 id="om-feat" class="reveal">Key features</h2>
     <p class="note reveal">Placeholder subtitle &mdash; a short line about what this page offers.</p>
       <div class="act-rows" role="tabpanel" id="om-p0" aria-labelledby="om-t0">
@@ -153,31 +155,31 @@
 </section>
 
 <section class="act-close">
-  <div class="wrap">
+  <div class="wrap container-fluid">
     <h2 class="reveal">Placeholder closing line.</h2>
     <p class="reveal">Placeholder: the wireframe stops above this, so the copy here is a stand-in to give the page an ending.</p>
     <div class="act-actions reveal">
-      <a class="btn primary" href="https://ayo.co.id/main-bareng">Open the app</a>
-      <a class="btn ghost" href="index.html#aktivitas">Back to activities</a>
+      <a class="ayo-btn primary" href="https://ayo.co.id/main-bareng">Open the app</a>
+      <a class="ayo-btn ghost" href="index.html#aktivitas">Back to activities</a>
     </div>
   </div>
 </section>
 <footer class="foot">
-  <div class="wrap">
+  <div class="wrap container-fluid">
     <div class="foot-top">
       <div class="foot-brand">
         <img src="assets/logo.svg" alt="AYO">
       </div>
       <div class="foot-cta">
         <span class="foot-cta-label">Own a sports venue?</span>
-        <a class="btn primary" href="venue.html">Become a Venue Partner <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
+        <a class="ayo-btn primary" href="venue.html">Become a Venue Partner <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
       </div>
     </div>
     <div class="foot-cols">
-      <div class="col"><h4>Product</h4><a href="index.html#aktivitas">Activity</a><a href="index.html#booking">Booking</a><a href="index.html#cerita">Community</a><a href="index.html#rating">PadelLevels</a></div>
-      <div class="col"><h4>Company</h4><a href="#">About Us</a><a href="index.html#partner">Partner with Us</a><a href="#">Blog</a><a href="#">Careers</a></div>
-      <div class="col"><h4>Support</h4><a href="#">Help Center</a><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Contact</a></div>
-      <div class="col">
+      <div class="ayo-foot-col"><h4>Product</h4><a href="index.html#aktivitas">Activity</a><a href="index.html#booking">Booking</a><a href="index.html#cerita">Community</a><a href="index.html#rating">PadelLevels</a></div>
+      <div class="ayo-foot-col"><h4>Company</h4><a href="#">About Us</a><a href="index.html#partner">Partner with Us</a><a href="#">Blog</a><a href="#">Careers</a></div>
+      <div class="ayo-foot-col"><h4>Support</h4><a href="#">Help Center</a><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Contact</a></div>
+      <div class="ayo-foot-col">
         <h4>Follow us</h4>
         <div class="foot-social">
           <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg></a>
@@ -202,6 +204,8 @@
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V4.5"/><path d="M7.5 9.5 12 5 16.5 9.5"/></svg>
 </button>
 
+<script src="vendor/jquery-3.5.1/jquery.min.js"></script>
+<script src="vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
 <script src="scripts/chrome.js"></script>
 <script src="scripts/activity-tabs.js"></script>
 </body>

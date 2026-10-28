@@ -21,13 +21,13 @@ img{max-width:100%;display:block}
 .wrap{max-width:var(--container);margin:0 auto;padding:0 var(--edge)}
 
 /* ---------- Buttons — iOS radius, never pill ---------- */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);font-family:var(--font-sans);font-weight:var(--fw-semibold);font-size:var(--fs-body);line-height:1;padding:var(--space-3) var(--space-6);border-radius:var(--radius-md);border:1.5px solid transparent;cursor:pointer;white-space:nowrap;transition:filter .15s,background .15s,border-color .15s,transform .15s}
-.btn.primary{background:var(--brand);color:#fff}
-.btn.primary:hover{filter:brightness(.93);transform:translateY(-2px)}
-.btn.ghost{background:transparent;color:var(--text-default);border-color:var(--border-default)}
-.btn.ghost:hover{border-color:var(--text-default)}
-.btn.lg{padding:var(--space-4) var(--space-8);font-size:var(--fs-body-lg)}
-.btn.full{width:100%}
+.ayo-btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);font-family:var(--font-sans);font-weight:var(--fw-semibold);font-size:var(--fs-body);line-height:1;padding:var(--space-3) var(--space-6);border-radius:var(--radius-md);border:1.5px solid transparent;cursor:pointer;white-space:nowrap;transition:filter .15s,background .15s,border-color .15s,transform .15s}
+.ayo-btn.primary{background:var(--brand);color:#fff}
+.ayo-btn.primary:hover{filter:brightness(.93);transform:translateY(-2px)}
+.ayo-btn.ghost{background:transparent;color:var(--text-default);border-color:var(--border-default)}
+.ayo-btn.ghost:hover{border-color:var(--text-default)}
+.ayo-btn.lg{padding:var(--space-4) var(--space-8);font-size:var(--fs-body-lg)}
+.ayo-btn.full{width:100%}
 
 
 /* IBM Carbon Icons (Apache-2.0), vendored SVG masks. */
@@ -83,7 +83,7 @@ img{max-width:100%;display:block}
 .crumb .who::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor}
 
 /* ---- Frontend login demo ---- */
-.nav [hidden],.auth [hidden]{display:none!important}
+.ayo-nav [hidden],.auth [hidden]{display:none!important}
 .auth{border:0;padding:0;margin:auto;border-radius:var(--radius-xl);max-width:min(92vw,420px);width:100%;
     max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);overflow:auto;
     background:var(--bg-white);color:var(--text-default);box-shadow:0 30px 80px rgba(26,25,25,.3)}
@@ -144,7 +144,7 @@ img{max-width:100%;display:block}
    was a fixed 24px while the static state used the fluid --edge. Measured at
    1728/1440/1200/900 the logo jumped -15/+3/+9/+16px. A bar that stays put has
    nothing to misalign: only the surface, the colours and the height change. */
-.nav{position:fixed;top:0;left:0;right:0;z-index:50;background:transparent;color:var(--text-inverse);
+.ayo-nav{position:fixed;top:0;left:0;right:0;z-index:50;background:transparent;color:var(--text-inverse);
   /* Transparent from the start so the hairline fades in rather than adding a
      pixel of height mid-transition. */
   border-bottom:1px solid transparent;
@@ -152,26 +152,26 @@ img{max-width:100%;display:block}
 /* Reading downward, the nav is in the way; heading back up is usually the
    move that wants it. Flush at top:0 with a hairline and no shadow, -100% is
    exactly off-screen — there is nothing left over to peek. */
-.nav.nav--away{transform:translateY(-100%)}
-@media (prefers-reduced-motion: reduce){ .nav{transition:none} }
+.ayo-nav.nav--away{transform:translateY(-100%)}
+@media (prefers-reduced-motion: reduce){ .ayo-nav{transition:none} }
 .nav-in{display:flex;align-items:center;gap:var(--space-8);max-width:var(--container);margin:0 auto;padding:var(--space-5) var(--edge);transition:padding .35s;position:relative}
 .nav-actions{display:flex;align-items:center;gap:var(--space-4);margin-left:auto}
-.nav .brand img{height:30px;width:auto}
+.ayo-nav .brand img{height:30px;width:auto}
 .nav-links{display:flex;gap:var(--space-8);align-items:center;font-weight:var(--fw-medium);font-size:var(--fs-body-lg)}
-.nav-item{position:relative}
+.ayo-nav-item{position:relative}
 .nav-top{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-sans);font-weight:var(--fw-medium);font-size:var(--fs-body-lg);color:rgba(255,255,255,.85);background:none;border:0;cursor:pointer;padding:var(--space-2) 2px;white-space:nowrap;position:relative}
 /* Carbon chevrons inherit the navigation color through a CSS mask. */
 .chev{width:16px;height:16px;flex-shrink:0;background:currentColor;
   -webkit-mask:url('../assets/icons/carbon/chevron--down.svg') center/contain no-repeat;
   mask:url('../assets/icons/carbon/chevron--down.svg') center/contain no-repeat;
   transition:transform .25s}
-.nav-item.has-sub:hover .chev,.nav-item.has-sub.open .chev{transform:rotate(180deg)}
+.ayo-nav-item.has-sub:hover .chev,.ayo-nav-item.has-sub.open .chev{transform:rotate(180deg)}
 .nav-top::after{content:'';position:absolute;left:2px;bottom:-2px;height:2px;width:0;border-radius:2px;background:var(--brand);transition:width .3s cubic-bezier(.2,.7,.2,1)}
-.nav-item:hover>.nav-top::after,.nav-top:focus-visible::after{width:calc(100% - 4px)}
+.ayo-nav-item:hover>.nav-top::after,.nav-top:focus-visible::after{width:calc(100% - 4px)}
 .submenu{position:absolute;top:calc(100% + 12px);left:0;min-width:224px;background:rgba(255,255,255,.98);backdrop-filter:blur(24px) saturate(1.6);-webkit-backdrop-filter:blur(24px) saturate(1.6);border:1px solid rgba(255,255,255,.6);border-radius:var(--radius-lg);box-shadow:0 18px 44px rgba(26,25,25,.22),inset 0 1px 0 rgba(255,255,255,.85);padding:var(--space-2);z-index:60;
   opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .22s ease-out,transform .28s cubic-bezier(.2,.7,.2,1),visibility .22s}
 .submenu::before{content:'';position:absolute;top:-12px;left:0;right:0;height:12px}
-.nav-item.has-sub:hover .submenu,.nav-item.has-sub:focus-within .submenu,.nav-item.has-sub.open .submenu{opacity:1;visibility:visible;transform:none}
+.ayo-nav-item.has-sub:hover .submenu,.ayo-nav-item.has-sub:focus-within .submenu,.ayo-nav-item.has-sub.open .submenu{opacity:1;visibility:visible;transform:none}
 .submenu a{display:block;color:var(--text-subtle);font-size:var(--fs-body-lg);font-weight:var(--fw-medium);padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);white-space:nowrap;transition:background .15s,color .15s}
 .submenu a:hover{background:var(--bg-cream);color:var(--brand)}
 /* Sized and shaped like .nav-icon beside it. It used to be a bordered box
@@ -181,7 +181,7 @@ img{max-width:100%;display:block}
 .burger{display:none;align-items:center;justify-content:center;width:40px;height:40px;flex-shrink:0;
   background:none;border:0;border-radius:var(--radius-md);cursor:pointer;color:inherit;transition:background .15s}
 .burger:hover{background:rgba(255,255,255,.14)}
-.nav.scrolled .burger:hover,.nav.on-light .burger:hover{background:var(--bg-subtle)}
+.ayo-nav.scrolled .burger:hover,.ayo-nav.on-light .burger:hover{background:var(--bg-subtle)}
 .burger svg{width:22px;height:22px;display:block}
 .burger .ico-close{display:none}
 .burger[aria-expanded="true"] .ico-close{display:block}
@@ -189,22 +189,22 @@ img{max-width:100%;display:block}
 /* The nav is white by default because the homepage opens on a dark hero. A page
    that opens on a light one has to say so, or the links sit white on white. Only
    the colours move — the surface itself stays with .scrolled. */
-.nav.on-light{color:var(--text-default)}
+.ayo-nav.on-light{color:var(--text-default)}
 /* Full-bleed, no radius, no inset: the bar occupies the same box it did over
    the hero. More opaque than the old pill (.68) — spanning the full width it
    has to read as a surface the page slides under, not a pane floating on it. */
-.nav.scrolled{background:rgba(255,255,255,.82);backdrop-filter:blur(22px) saturate(1.5);-webkit-backdrop-filter:blur(22px) saturate(1.5);
+.ayo-nav.scrolled{background:rgba(255,255,255,.82);backdrop-filter:blur(22px) saturate(1.5);-webkit-backdrop-filter:blur(22px) saturate(1.5);
   border-bottom-color:var(--hair);color:var(--text-default)}
 /* Block only. The inline padding stays on --edge so the logo and the Login
    button hold the content column's line through the whole transition — that
    alignment is the point of the bar. */
-.nav.scrolled .nav-in{padding-block:var(--space-3)}
-.nav.scrolled .nav-top,.nav.on-light .nav-top{color:var(--text-subtle)}
+.ayo-nav.scrolled .nav-in{padding-block:var(--space-3)}
+.ayo-nav.scrolled .nav-top,.ayo-nav.on-light .nav-top{color:var(--text-subtle)}
 /* Login CTA: frosted white over the hero, brand red once the nav floats */
-.nav .btn.primary{border-radius:var(--radius-pill);background:rgba(255,255,255,.16);color:#fff;border-color:rgba(255,255,255,.42);backdrop-filter:blur(10px) saturate(1.4);-webkit-backdrop-filter:blur(10px) saturate(1.4)}
-.nav .btn.primary:hover{background:rgba(255,255,255,.28);border-color:rgba(255,255,255,.7);filter:none}
-.nav.scrolled .btn.primary,.nav.on-light .btn.primary{background:var(--brand);color:#fff;border-color:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
-.nav.scrolled .btn.primary:hover,.nav.on-light .btn.primary:hover{background:var(--brand);border-color:transparent;filter:brightness(.93)}
+.ayo-nav .ayo-btn.primary{border-radius:var(--radius-pill);background:rgba(255,255,255,.16);color:#fff;border-color:rgba(255,255,255,.42);backdrop-filter:blur(10px) saturate(1.4);-webkit-backdrop-filter:blur(10px) saturate(1.4)}
+.ayo-nav .ayo-btn.primary:hover{background:rgba(255,255,255,.28);border-color:rgba(255,255,255,.7);filter:none}
+.ayo-nav.scrolled .ayo-btn.primary,.ayo-nav.on-light .ayo-btn.primary{background:var(--brand);color:#fff;border-color:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
+.ayo-nav.scrolled .ayo-btn.primary:hover,.ayo-nav.on-light .ayo-btn.primary:hover{background:var(--brand);border-color:transparent;filter:brightness(.93)}
 
 /* Language switcher */
 .lang{position:relative}
@@ -214,8 +214,8 @@ img{max-width:100%;display:block}
 /* Scaled to its own label: this button sits at --fs-small against the nav's
    --fs-body-lg, so the nav's chevron reads heavy next to it. 8/10 ≈ 13/16. */
 .lang.open .lang-btn .chev{transform:rotate(180deg)}
-.nav.scrolled .lang-btn,.nav.on-light .lang-btn{color:var(--text-subtle);border-color:transparent}
-.nav.scrolled .lang-btn:hover,.nav.on-light .lang-btn:hover{border-color:transparent;background:var(--bg-subtle)}
+.ayo-nav.scrolled .lang-btn,.ayo-nav.on-light .lang-btn{color:var(--text-subtle);border-color:transparent}
+.ayo-nav.scrolled .lang-btn:hover,.ayo-nav.on-light .lang-btn:hover{border-color:transparent;background:var(--bg-subtle)}
 .lang-menu{position:absolute;top:calc(100% + 12px);right:0;min-width:256px;background:rgba(255,255,255,.98);backdrop-filter:blur(24px) saturate(1.6);-webkit-backdrop-filter:blur(24px) saturate(1.6);border:1px solid rgba(255,255,255,.6);border-radius:var(--radius-lg);box-shadow:0 18px 44px rgba(26,25,25,.22),inset 0 1px 0 rgba(255,255,255,.85);padding:var(--space-2);z-index:60;
   opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .22s ease-out,transform .28s cubic-bezier(.2,.7,.2,1),visibility .22s}
 .lang.open .lang-menu{opacity:1;visibility:visible;transform:none}
@@ -233,7 +233,7 @@ img{max-width:100%;display:block}
     padding:var(--space-2) var(--space-3);font:var(--fw-semibold) var(--fs-small) var(--font-sans);white-space:nowrap;
     color:inherit;background:none;border:1.5px solid transparent;border-radius:var(--radius-md);cursor:pointer;transition:background .15s}
 .country-btn:hover{background:rgba(255,255,255,.14)}
-.nav.scrolled .country-btn:hover,.nav.on-light .country-btn:hover{background:var(--bg-subtle)}
+.ayo-nav.scrolled .country-btn:hover,.ayo-nav.on-light .country-btn:hover{background:var(--bg-subtle)}
 .country-btn{border:0}
 .country-btn > .carbon-icon{width:20px;height:20px}
 .country-btn .chev,.lang-btn .chev{width:16px;height:16px}
@@ -262,7 +262,7 @@ img{max-width:100%;display:block}
 .nav-icon{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:var(--radius-md);color:inherit;transition:background .15s;flex-shrink:0}
 .nav-icon svg{width:22px;height:22px}
 .nav-icon:hover{background:rgba(255,255,255,.14)}
-.nav.scrolled .nav-icon:hover,.nav.on-light .nav-icon:hover{background:var(--bg-subtle)}
+.ayo-nav.scrolled .nav-icon:hover,.ayo-nav.on-light .nav-icon:hover{background:var(--bg-subtle)}
 
 
 
@@ -274,11 +274,11 @@ img{max-width:100%;display:block}
 .foot-brand .tl{color:rgba(255,255,255,.65);font-size:var(--fs-body);font-weight:var(--fw-medium)}
 .foot-cta{display:flex;align-items:center;gap:var(--space-5)}
 .foot-cta-label{color:rgba(255,255,255,.72);font-size:var(--fs-body-lg);font-weight:var(--fw-medium)}
-.foot-cta .btn svg{width:16px;height:16px}
+.foot-cta .ayo-btn svg{width:16px;height:16px}
 .foot-cols{display:grid;grid-template-columns:1fr 1fr 1fr 1.3fr;gap:var(--space-10);padding:clamp(40px,5vw,64px) 0}
 .foot h4{color:#fff;font-size:var(--fs-body);font-weight:var(--fw-bold);margin-bottom:var(--space-5)}
-.foot .col > a{display:block;color:rgba(255,255,255,.6);font-size:var(--fs-body);padding:var(--space-2) 0;transition:color .2s}
-.foot .col > a:hover{color:#fff}
+.foot .ayo-foot-col > a{display:block;color:rgba(255,255,255,.6);font-size:var(--fs-body);padding:var(--space-2) 0;transition:color .2s}
+.foot .ayo-foot-col > a:hover{color:#fff}
 .foot-social{display:flex;flex-wrap:wrap;gap:var(--space-3);margin-bottom:var(--space-8)}
 .foot-social a{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.2);display:grid;place-items:center;color:#fff;transition:background .2s,border-color .2s}
 .foot-social a:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.4)}
@@ -333,13 +333,13 @@ img{max-width:100%;display:block}
   .nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:var(--bg-white);
     border-radius:var(--radius-lg);margin:var(--space-2) var(--edge) 0;padding:var(--space-2) var(--space-4);box-shadow:0 12px 30px rgba(26,25,25,.16)}
   .nav-links.open{display:flex}
-  .nav-item{width:100%;border-bottom:1px solid var(--bg-subtle-bold)}
-  .nav-item:last-child{border-bottom:0}
-  .nav-top,.nav.scrolled .nav-top,.nav.on-light .nav-top{width:100%;justify-content:space-between;color:var(--text-subtle);padding:var(--space-3) 0}
+  .ayo-nav-item{width:100%;border-bottom:1px solid var(--bg-subtle-bold)}
+  .ayo-nav-item:last-child{border-bottom:0}
+  .nav-top,.ayo-nav.scrolled .nav-top,.ayo-nav.on-light .nav-top{width:100%;justify-content:space-between;color:var(--text-subtle);padding:var(--space-3) 0}
   .nav-top::after{display:none}
   .submenu{position:static;opacity:1;visibility:visible;transform:none;display:none;min-width:0;box-shadow:none;border:0;border-radius:0;padding:0 0 var(--space-2) var(--space-4)}
   .submenu::before{display:none}
-  .nav-item.open .submenu{display:block}
+  .ayo-nav-item.open .submenu{display:block}
   .submenu a{padding:var(--space-2) 0}
   .burger{display:inline-flex}
   .nav-in{gap:var(--space-3)}
@@ -347,8 +347,8 @@ img{max-width:100%;display:block}
   .lang{display:block}
   .country-btn,.lang-btn{min-height:36px;padding:6px;gap:4px}
   .lang-btn .cur-flag{display:none}
-  .nav .brand img{height:26px}
-  .nav-actions > .btn{padding:10px 14px}
+  .ayo-nav .brand img{height:26px}
+  .nav-actions > .ayo-btn{padding:10px 14px}
   .country-menu{left:0;right:auto}
   .lang-menu{min-width:216px;right:-44px}
   .foot-cols{grid-template-columns:1fr 1fr}
@@ -360,10 +360,10 @@ img{max-width:100%;display:block}
 @media (max-width:380px){
   .nav-in{gap:var(--space-2)}
   .nav-actions{gap:2px}
-  .nav .brand img{height:22px}
+  .ayo-nav .brand img{height:22px}
   .nav-icon,.burger{width:32px;height:36px}
   .country-btn > .carbon-icon{display:none}
-  .nav-actions > .btn{padding-inline:12px}
+  .nav-actions > .ayo-btn{padding-inline:12px}
   .foot-cols{grid-template-columns:1fr;gap:var(--space-8)}
 }
 

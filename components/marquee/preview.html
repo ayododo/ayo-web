@@ -5,14 +5,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AYO — Marquee</title>
+<link rel="stylesheet" href="../../vendor/bootstrap-4.3.1/bootstrap.min.css">
 <link rel="stylesheet" href="../../styles/tokens.css">
+<link rel="stylesheet" href="../../styles/bootstrap-compat.css">
 <link rel="stylesheet" href="marquee.css">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: var(--font-sans); background: var(--bg-dark); color: var(--text-inverse); padding: 48px 0 96px; }
   .doc { max-width: 880px; margin: 0 auto; padding: 0 32px; }
   h1 { font-size: 26px; font-weight: var(--fw-extrabold); letter-spacing: -.02em; }
-  .lead { color: rgba(255,255,255,.6); margin-top: 6px; font-size: var(--fs-body-lg); }
+  .ayo-lead { color: rgba(255,255,255,.6); margin-top: 6px; font-size: var(--fs-body-lg); }
   h2 { font-size: var(--fs-small); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: .08em;
        color: rgba(255,255,255,.45); margin: 40px 0 16px; }
   .note { color: rgba(255,255,255,.5); font-size: var(--fs-small); margin-top: 12px; line-height: 1.55; }
@@ -21,11 +23,11 @@
   .tall { height: 90vh; }
 </style>
 </head>
-<body>
+<body class="ayo-web">
 
 <div class="doc">
   <h1>Marquee</h1>
-  <p class="lead">Running-text band. Same dark surface and display type as the persona hero, so it reads as a continuation of the header.</p>
+  <p class="ayo-lead">Running-text band. Same dark surface and display type as the persona hero, so it reads as a continuation of the header.</p>
   <h2>Default — two rows, opposite directions</h2>
 </div>
 
@@ -103,6 +105,8 @@
   <p class="note">Empty space above exists so the scroll reaction is testable in this preview.</p>
 </div>
 
+<script src="../../vendor/jquery-3.5.1/jquery.min.js"></script>
+<script src="../../vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
 <script src="marquee.js"></script>
 </body>
 </html>

@@ -11,28 +11,30 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta name="theme-color" content="#ec2435">
 
+<link rel="stylesheet" href="vendor/bootstrap-4.3.1/bootstrap.min.css">
 <link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="styles/bootstrap-compat.css">
 <link rel="stylesheet" href="styles/chrome.css">
 <link rel="stylesheet" href="components/marquee/marquee.css">
 
 <link rel="stylesheet" href="styles/venue.css">
 
 </head>
-<body>
-<nav class="nav on-light">
-  <div class="nav-in">
+<body class="ayo-web">
+<nav class="ayo-nav on-light">
+  <div class="nav-in container-fluid">
     <a class="brand" href="index.html" aria-label="AYO"><img src="assets/logo.svg" alt="AYO"></a>
     <div class="nav-links" id="navlinks">
-      <div class="nav-item"><a class="nav-top" href="https://ayo.co.id/venues">Booking</a></div>
-      <div class="nav-item has-sub">
+      <div class="ayo-nav-item"><a class="nav-top" href="https://ayo.co.id/venues">Booking</a></div>
+      <div class="ayo-nav-item has-sub">
         <button class="nav-top" aria-expanded="false" aria-haspopup="true">Activities <span class="chev" aria-hidden="true"></span></button>
         <div class="submenu">
           <a href="https://ayo.co.id/main-bareng">Join activity</a>
           <a href="open-play-host.html">Hosting activity</a>
         </div>
       </div>
-      <div class="nav-item"><a class="nav-top" href="venue.html" aria-current="page">For Venue Owners</a></div>
-      <div class="nav-item"><a class="nav-top" href="#">Blog</a></div>
+      <div class="ayo-nav-item"><a class="nav-top" href="venue.html" aria-current="page">For Venue Owners</a></div>
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Blog</a></div>
     </div>
     <div class="nav-actions">
     <div class="lang" id="lang">
@@ -56,7 +58,7 @@
     <a class="nav-icon" href="#" aria-label="Cart">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3h2.2l2.1 12.4a1.5 1.5 0 0 0 1.5 1.25h8.3a1.5 1.5 0 0 0 1.48-1.2L21 7H6"/></svg>
     </a>
-    <a class="btn primary" href="#" data-login>Login</a>
+    <a class="ayo-btn primary" href="#" data-login>Login</a>
     <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navlinks">
       <svg class="ico-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
       <svg class="ico-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>
@@ -66,7 +68,7 @@
 </nav>
 <!-- 1. HERO -->
 <header class="avm-hero">
-  <div class="wrap">
+  <div class="wrap container-fluid">
     <div>
       <nav class="crumb reveal" aria-label="Breadcrumb">
         <ol>
@@ -76,7 +78,7 @@
         <span class="who">The app for venue owners</span>
       </nav>
       <h1 class="reveal">Manage your venue <span class="hl">from your pocket</span>.</h1>
-      <p class="lead reveal">Incoming bookings, court schedules, and daily revenue &mdash; all in one app. No laptop required.</p>
+      <p class="ayo-lead reveal">Incoming bookings, court schedules, and daily revenue &mdash; all in one app. No laptop required.</p>
       <div class="avm-stores reveal">
         <a class="avm-pill dark" href="#">App Store</a>
         <a class="avm-pill plain" href="#">Google Play</a>
@@ -95,7 +97,7 @@
 
 <!-- 2. LOGO STRIP -->
 <section class="avm-logos" aria-label="Venues using AYO Venue Management">
-  <div class="wrap">
+  <div class="wrap container-fluid">
     <p class="cap reveal">Trusted by venues across Indonesia</p>
     <div class="marquee on-light reveal">
       <div class="mq-row" data-mq-row data-mq-speed="34" data-mq-dir="right">
@@ -116,12 +118,12 @@
 
 <!-- 3. ABOUT -->
 <section class="avm-about" aria-labelledby="avm-about-t">
-  <div class="wrap">
+  <div class="wrap container-fluid">
     <p class="avm-eyebrow reveal"><span class="n">01</span><span class="t">About AVM</span></p>
     <div class="avm-about-grid reveal">
       <div>
         <h2 id="avm-about-t">One app to run the whole venue.</h2>
-        <p class="lead">Bookings, court schedules, and daily revenue land in a single mobile app &mdash; owners and staff manage everything without being tied to a desk.</p>
+        <p class="ayo-lead">Bookings, court schedules, and daily revenue land in a single mobile app &mdash; owners and staff manage everything without being tied to a desk.</p>
         <ul class="avm-checks"><li><span class="avm-tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>Works on the phone already in your pocket</li><li><span class="avm-tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>Owner and staff accounts, one shared schedule</li><li><span class="avm-tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>Scales from a single court to a multi-branch operation</li></ul>
       </div>
       <div class="avm-cards">
@@ -143,7 +145,7 @@
 
 <!-- 4. KEY FEATURES -->
 <section class="avm-feat" aria-labelledby="avm-feat-t">
-  <div class="wrap">
+  <div class="wrap container-fluid">
     <p class="avm-eyebrow reveal"><span class="n">02</span><span class="t">Key features</span></p>
     <div class="avm-feat-head reveal">
       <h2 id="avm-feat-t">Everything you need to run your venue.</h2>
@@ -346,11 +348,11 @@
 
 <!-- 5. FAQ -->
 <section class="avm-faq" aria-labelledby="avm-faq-t">
-  <div class="wrap">
+  <div class="wrap container-fluid">
     <div>
       <p class="avm-eyebrow reveal"><span class="n">03</span><span class="t">FAQ</span></p>
       <h2 id="avm-faq-t" class="reveal">Questions, answered.</h2>
-      <p class="lead reveal">Still stuck? Our venue team replies within one working day.</p>
+      <p class="ayo-lead reveal">Still stuck? Our venue team replies within one working day.</p>
       <a class="avm-pill plain reveal" href="#avm-start">Talk to us <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
     </div>
     <div class="avm-qs reveal">
@@ -365,10 +367,10 @@
 
 <!-- 6. CLOSING CTA -->
 <section class="avm-close" id="avm-start" aria-labelledby="avm-close-t">
-  <div class="wrap">
+  <div class="wrap container-fluid">
     <p class="avm-eyebrow reveal"><span class="n">04</span><span class="t">Get started</span></p>
     <h2 id="avm-close-t" class="reveal">Ready to list your venue on AYO?</h2>
-    <p class="lead reveal">Join 1,500+ venues growing with AYO Venue Management. Tell us about your venue and our team helps you set up.</p>
+    <p class="ayo-lead reveal">Join 1,500+ venues growing with AYO Venue Management. Tell us about your venue and our team helps you set up.</p>
     <div class="acts reveal">
       <a class="avm-pill red" href="mailto:venue@ayo.co.id">Contact us to register</a>
       <a class="avm-pill plain" href="#">Download the app</a>
@@ -376,21 +378,21 @@
   </div>
 </section>
 <footer class="foot">
-  <div class="wrap">
+  <div class="wrap container-fluid">
     <div class="foot-top">
       <div class="foot-brand">
         <img src="assets/logo.svg" alt="AYO">
       </div>
       <div class="foot-cta">
         <span class="foot-cta-label">Own a sports venue?</span>
-        <a class="btn primary" href="venue.html" aria-current="page">Become a Venue Partner <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
+        <a class="ayo-btn primary" href="venue.html" aria-current="page">Become a Venue Partner <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
       </div>
     </div>
     <div class="foot-cols">
-      <div class="col"><h4>Product</h4><a href="index.html#aktivitas">Activity</a><a href="index.html#booking">Booking</a><a href="index.html#cerita">Community</a><a href="index.html#rating">PadelLevels</a></div>
-      <div class="col"><h4>Company</h4><a href="#">About Us</a><a href="index.html#partner">Partner with Us</a><a href="#">Blog</a><a href="#">Careers</a></div>
-      <div class="col"><h4>Support</h4><a href="#">Help Center</a><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Contact</a></div>
-      <div class="col">
+      <div class="ayo-foot-col"><h4>Product</h4><a href="index.html#aktivitas">Activity</a><a href="index.html#booking">Booking</a><a href="index.html#cerita">Community</a><a href="index.html#rating">PadelLevels</a></div>
+      <div class="ayo-foot-col"><h4>Company</h4><a href="#">About Us</a><a href="index.html#partner">Partner with Us</a><a href="#">Blog</a><a href="#">Careers</a></div>
+      <div class="ayo-foot-col"><h4>Support</h4><a href="#">Help Center</a><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Contact</a></div>
+      <div class="ayo-foot-col">
         <h4>Follow us</h4>
         <div class="foot-social">
           <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg></a>
@@ -415,6 +417,8 @@
 <button class="to-top" id="toTop" aria-label="Back to top">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V4.5"/><path d="M7.5 9.5 12 5 16.5 9.5"/></svg>
 </button>
+<script src="vendor/jquery-3.5.1/jquery.min.js"></script>
+<script src="vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
 <script src="scripts/venue-tabs.js"></script>
 <script src="scripts/chrome.js"></script>
 <script src="components/marquee/marquee.js"></script>

@@ -11,27 +11,29 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta name="theme-color" content="#ec2435">
 
+<link rel="stylesheet" href="vendor/bootstrap-4.3.1/bootstrap.min.css">
 <link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="styles/bootstrap-compat.css">
 <link rel="stylesheet" href="styles/chrome.css">
 <link rel="stylesheet" href="components/marquee/marquee.css">
 
 <link rel="stylesheet" href="styles/partner.css">
 </head>
-<body>
-<nav class="nav on-light">
-  <div class="nav-in">
+<body class="ayo-web">
+<nav class="ayo-nav on-light">
+  <div class="nav-in container-fluid">
     <a class="brand" href="index.html" aria-label="AYO"><img src="assets/logo.svg" alt="AYO"></a>
     <div class="nav-links" id="navlinks">
-      <div class="nav-item"><a class="nav-top" href="https://ayo.co.id/venues">Booking</a></div>
-      <div class="nav-item has-sub">
+      <div class="ayo-nav-item"><a class="nav-top" href="https://ayo.co.id/venues">Booking</a></div>
+      <div class="ayo-nav-item has-sub">
         <button class="nav-top" aria-expanded="false" aria-haspopup="true">Activities <span class="chev" aria-hidden="true"></span></button>
         <div class="submenu">
           <a href="https://ayo.co.id/main-bareng">Join activity</a>
           <a href="open-play-host.html">Hosting activity</a>
         </div>
       </div>
-      <div class="nav-item"><a class="nav-top" href="venue.html">For Venue Owners</a></div>
-      <div class="nav-item"><a class="nav-top" href="#">Blog</a></div>
+      <div class="ayo-nav-item"><a class="nav-top" href="venue.html">For Venue Owners</a></div>
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Blog</a></div>
     </div>
     <div class="nav-actions">
     <div class="lang" id="lang">
@@ -55,7 +57,7 @@
     <a class="nav-icon" href="#" aria-label="Cart">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3h2.2l2.1 12.4a1.5 1.5 0 0 0 1.5 1.25h8.3a1.5 1.5 0 0 0 1.48-1.2L21 7H6"/></svg>
     </a>
-    <a class="btn primary" href="#" data-login>Login</a>
+    <a class="ayo-btn primary" href="#" data-login>Login</a>
     <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navlinks">
       <svg class="ico-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
       <svg class="ico-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>
@@ -65,7 +67,7 @@
 </nav>
 <!-- 1. HERO -->
 <header class="pt-hero">
-  <div class="wrap">
+  <div class="wrap container-fluid">
     <nav class="crumb reveal" aria-label="Breadcrumb">
       <ol>
         <li><a href="index.html">AYO</a></li>
@@ -74,10 +76,10 @@
       <span class="who">For brands &amp; sponsors</span>
     </nav>
     <h1 class="reveal">Put your brand where the <span class="hl">players are</span>.</h1>
-    <p class="lead reveal">90,000+ active players across 150+ cities book, play and come back every week. Reach them where the habit already lives — not in a feed they scroll past.</p>
+    <p class="ayo-lead reveal">90,000+ active players across 150+ cities book, play and come back every week. Reach them where the habit already lives — not in a feed they scroll past.</p>
     <div class="pt-actions reveal">
-      <a class="btn primary" href="#talk">Talk to us <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
-      <button class="btn ghost" type="button" data-mediakit>Download media kit</button>
+      <a class="ayo-btn primary" href="#talk">Talk to us <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
+      <button class="ayo-btn ghost" type="button" data-mediakit>Download media kit</button>
     </div>
   </div>
 </header>
@@ -100,7 +102,7 @@
 
 <!-- 3. WHY PARTNER -->
 <section class="pt-why">
-  <div class="wrap">
+  <div class="wrap container-fluid">
     <div class="pt-lede reveal">
       <h2>Why brands partner with AYO</h2>
       <p>An audience that is already active, already local, and already in the habit of showing up — so a campaign lands on intent rather than attention.</p>
@@ -116,7 +118,7 @@
 
 <!-- 4. WHAT WE DO -->
 <section class="pt-what">
-  <div class="wrap">
+  <div class="wrap container-fluid">
     <p class="eyebrow-num reveal">What we do</p>
     <h2 class="sec-title reveal">Formats that meet players mid-game.</h2>
     <div class="pt-grid reveal">
@@ -141,7 +143,7 @@
 
 <!-- 5. CASE STUDIES -->
 <section class="pt-cases">
-  <div class="wrap">
+  <div class="wrap container-fluid">
     <div class="pt-rail-head reveal">
       <div>
         <p class="eyebrow-num">Case studies</p>
@@ -162,19 +164,19 @@
 
 <!-- 6. CLOSING CTA -->
 <section class="pt-close" id="talk">
-  <div class="wrap">
+  <div class="wrap container-fluid">
     <h2 class="reveal">Let&rsquo;s build a campaign together.</h2>
     <p class="reveal">Tell us your objective and we&rsquo;ll come back with a proposal — formats, reach and timing.</p>
     <div class="pt-actions reveal">
-      <a class="btn primary" href="mailto:partnership@ayo.co.id">Talk to us</a>
-      <button class="btn ghost" type="button" data-mediakit>Download media kit</button>
+      <a class="ayo-btn primary" href="mailto:partnership@ayo.co.id">Talk to us</a>
+      <button class="ayo-btn ghost" type="button" data-mediakit>Download media kit</button>
     </div>
   </div>
 </section>
 
 <!-- 7. FAQ -->
 <section class="pt-faq">
-  <div class="wrap">
+  <div class="wrap container-fluid">
     <p class="eyebrow-num reveal">FAQ</p>
     <h2 class="sec-title reveal">Frequently asked questions.</h2>
     <div class="pt-faq-list reveal">
@@ -187,21 +189,21 @@
   </div>
 </section>
 <footer class="foot">
-  <div class="wrap">
+  <div class="wrap container-fluid">
     <div class="foot-top">
       <div class="foot-brand">
         <img src="assets/logo.svg" alt="AYO">
       </div>
       <div class="foot-cta">
         <span class="foot-cta-label">Own a sports venue?</span>
-        <a class="btn primary" href="venue.html">Become a Venue Partner <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
+        <a class="ayo-btn primary" href="venue.html">Become a Venue Partner <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
       </div>
     </div>
     <div class="foot-cols">
-      <div class="col"><h4>Product</h4><a href="index.html#aktivitas">Activity</a><a href="index.html#booking">Booking</a><a href="index.html#cerita">Community</a><a href="index.html#rating">PadelLevels</a></div>
-      <div class="col"><h4>Company</h4><a href="#">About Us</a><a href="partner.html" aria-current="page">Partner with Us</a><a href="#">Blog</a><a href="#">Careers</a></div>
-      <div class="col"><h4>Support</h4><a href="#">Help Center</a><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Contact</a></div>
-      <div class="col">
+      <div class="ayo-foot-col"><h4>Product</h4><a href="index.html#aktivitas">Activity</a><a href="index.html#booking">Booking</a><a href="index.html#cerita">Community</a><a href="index.html#rating">PadelLevels</a></div>
+      <div class="ayo-foot-col"><h4>Company</h4><a href="#">About Us</a><a href="partner.html" aria-current="page">Partner with Us</a><a href="#">Blog</a><a href="#">Careers</a></div>
+      <div class="ayo-foot-col"><h4>Support</h4><a href="#">Help Center</a><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Contact</a></div>
+      <div class="ayo-foot-col">
         <h4>Follow us</h4>
         <div class="foot-social">
           <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg></a>
@@ -239,8 +241,8 @@
     <div class="pt-field"><label for="mk-phone">Phone number</label><input id="mk-phone" name="phone" type="tel" required autocomplete="tel"></div>
 
     <div class="pt-dialog-foot">
-      <button class="btn primary" value="send" type="submit">Send it to me</button>
-      <button class="btn ghost" value="cancel" type="button" data-close>Cancel</button>
+      <button class="ayo-btn primary" value="send" type="submit">Send it to me</button>
+      <button class="ayo-btn ghost" value="cancel" type="button" data-close>Cancel</button>
     </div>
     <p class="pt-note"><!-- NOT WIRED: no endpoint yet. Submitting closes the
       dialog and shows a confirmation; nothing is sent or stored. Point the form
@@ -248,6 +250,8 @@
   </form>
 </dialog>
 
+<script src="vendor/jquery-3.5.1/jquery.min.js"></script>
+<script src="vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
 <script src="scripts/chrome.js"></script>
 <script src="components/marquee/marquee.js"></script>
 <script src="scripts/partner.js"></script>
