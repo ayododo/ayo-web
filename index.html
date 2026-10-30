@@ -247,67 +247,127 @@
   </div>
 </section>
 
-<!-- 6. BOOKING -->
-<section id="booking" aria-labelledby="bkg-title">
+<!-- 6. BOOKING — one booking, two sides: the player books in the AYO app,
+     the venue owner receives it in AVM. Figma: Venue Booking (26298:4819). -->
+<section class="sec" id="booking" aria-labelledby="bk-title">
   <div class="wrap container-fluid">
-  <div class="bkg__grid reveal">
 
-    <div class="bkg__head">
-      <div class="bkg__head-main">
-        <p class="bkg__eyebrow">Booking</p>
-        <h2 class="bkg__title" id="bkg-title">Book courts, done in 2 minutes.</h2>
+    <header class="bk-head reveal">
+      <div class="bk-head__intro">
+        <p class="bk-eyebrow">Booking</p>
+        <h2 class="bk-title" id="bk-title">One booking, two sides of the court.</h2>
+        <p class="bk-sub">Players book a court in the AYO app. Venue owners receive and manage it in AYO Venue Management.</p>
       </div>
+      <a class="bk-jump" href="#booking-owners">
+        <svg class="bk-jump__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 17.5h15M4.17 17.5v-10L10 3.33l5.83 4.17v10M7.5 17.5v-5h5v5"/></svg>
+        I own a venue
+        <svg class="bk-jump__arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3.33v9.34M12 8.67l-4 4-4-4"/></svg>
+      </a>
+    </header>
+
+    <!-- Players · AYO app -->
+    <article class="bk-block reveal" id="booking-players" aria-labelledby="bk-players-title">
+      <div class="bk-top">
+        <div class="bk-mock" data-booking-lottie="assets/booking-ayo-app.json"
+             role="img" aria-label="AYO app: a player picks Friday 30, the 19:00 slot on Court 2, and taps Book now."><img class="bk-mock__poster" src="assets/booking-ayo-app-poster.webp" width="420" height="420" alt="" loading="lazy"></div>
+        <div class="bk-copy">
+          <p class="bk-pill">For players · AYO app</p>
+          <h3 class="bk-h3" id="bk-players-title">Book courts, done in 2 minutes.</h3>
+          <p class="bk-desc">Find an open court and book it in minutes. No calls, no waiting.</p>
+          <a class="bk-cta" href="https://ayo.co.id/venues">Find a court
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.33 8h9.34M8.67 12l4-4-4-4"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <ul class="bk-features bk-features--3">
+        <li class="bk-feature">
+          <span class="bk-feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg></span>
+          <h4 class="bk-feature__title">Instant court booking</h4>
+          <p class="bk-feature__desc">See real-time availability and book without calling the venue.</p>
+        </li>
+        <li class="bk-feature">
+          <span class="bk-feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+          <h4 class="bk-feature__title">Find the right court</h4>
+          <p class="bk-feature__desc">Explore courts in one place and compare locations, prices, and facilities to find the best fit for your game</p>
+        </li>
+        <li class="bk-feature">
+          <span class="bk-feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10h18M16 15h2"/></svg></span>
+          <h4 class="bk-feature__title">Flexible payment options</h4>
+          <p class="bk-feature__desc">Pay in full, or secure your booking with a down payment where available.</p>
+        </li>
+      </ul>
+    </article>
+
+    <div class="bk-connector" aria-hidden="true"></div>
+
+    <div class="bk-jump-row">
+      <a class="bk-jump" href="#booking-players">
+        <svg class="bk-jump__icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="5.83" r="2.92"/><path d="M4.17 17.5c.58-3.5 3-5.83 5.83-5.83s5.25 2.33 5.83 5.83"/></svg>
+        I want to play
+        <svg class="bk-jump__arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 12.67V3.33M4 7.33l4-4 4 4"/></svg>
+      </a>
     </div>
 
-      <article class="bkg__card">
-        <div class="bkg__media">
-          <img src="assets/booking-players.jpg" alt="" loading="lazy">
-          <span class="bkg__badge">For players</span>
-          <p class="bkg__stat">
-            <span class="bkg__stat-num">90,000+</span>
-            <span class="bkg__stat-lbl">Active players</span>
-          </p>
+    <!-- Venue owners · AVM -->
+    <article class="bk-block reveal" id="booking-owners" aria-labelledby="bk-owners-title">
+      <div class="bk-top bk-top--owners">
+        <div class="bk-copy">
+          <p class="bk-pill bk-pill--dark">For venue owners · AYO Venue Management</p>
+          <h3 class="bk-h3" id="bk-owners-title">Reach more players. Manage your venue in one place.</h3>
+          <p class="bk-desc bk-desc--wide">Get discovered on AYO, manage bookings and court schedules, track payments and grow your business with AVM.</p>
+          <a class="bk-cta bk-cta--dark" href="venue.html">Register your venue
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.33 8h9.34M8.67 12l4-4-4-4"/></svg>
+          </a>
         </div>
+        <div class="bk-mock" data-booking-lottie="assets/booking-avm-dashboard.json"
+             role="img" aria-label="AVM dashboard: the 19:00 Court 2 booking from the AYO app arrives, and income and reservations go up."><img class="bk-mock__poster" src="assets/booking-avm-dashboard-poster.webp" width="420" height="420" alt="" loading="lazy"></div>
+      </div>
 
-        <div class="bkg__lead">
-          <h3 class="bkg__name">Find your game</h3>
-          <p class="bkg__desc">Book a court, join an open session, or challenge a rated opponent — all from one app.</p>
+      <ul class="bk-features bk-features--4">
+        <li class="bk-feature">
+          <span class="bk-feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 21h4M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9Z"/></svg></span>
+          <h4 class="bk-feature__title">Real-time bookings</h4>
+          <p class="bk-feature__desc">View incoming bookings, customer details, and payment statuses as soon as reservations are made.</p>
+        </li>
+        <li class="bk-feature">
+          <span class="bk-feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18M8 3v4M16 3v4M8 14h2M14 14h2M8 17h2"/></svg></span>
+          <h4 class="bk-feature__title">Schedules &amp; court availability</h4>
+          <p class="bk-feature__desc">Manage court schedules, pricing, and availability in one place to help prevent double bookings.</p>
+        </li>
+        <li class="bk-feature">
+          <span class="bk-feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16M7 20v-6M12 20V6M17 20V10"/></svg></span>
+          <h4 class="bk-feature__title">Payments &amp; revenue reports</h4>
+          <p class="bk-feature__desc">Track revenue across transaction types with daily, weekly and monthly summaries.</p>
+        </li>
+        <li class="bk-feature">
+          <span class="bk-feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 5v14M3 9V6a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v3a3 3 0 0 0 0 6v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-3a3 3 0 0 0 0-6Z"/></svg></span>
+          <h4 class="bk-feature__title">Promos &amp; staff access</h4>
+          <p class="bk-feature__desc">Create promotions and voucher codes, and give your staff access to help manage venue operations.</p>
+        </li>
+      </ul>
+
+      <div class="bk-more">
+        <div class="bk-flex">
+          <h4 class="bk-h4">Flexible for venues of every size</h4>
+          <ul class="bk-checks">
+            <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.17 10l4.16 4.17 7.5-8.34"/></svg>Manage anything from a single court to multiple venue locations.</li>
+            <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.17 10l4.16 4.17 7.5-8.34"/></svg>Keep owners and staff aligned with shared schedules.</li>
+            <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.17 10l4.16 4.17 7.5-8.34"/></svg>Manage your venue through your phone or desktop.</li>
+          </ul>
         </div>
-
-        <ul class="bkg__list">
-          <li><span class="bkg__tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>Instant court booking, no calls</li>
-          <li><span class="bkg__tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>Open sessions with fees split automatically</li>
-          <li><span class="bkg__tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>A verified rating that follows you</li>
-        </ul>
-
-        <a class="bkg__cta" href="#">Start playing <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
-      </article>
-
-      <article class="bkg__card bkg__card--owners">
-        <div class="bkg__media">
-          <img src="assets/booking-owners.jpg" alt="" loading="lazy">
-          <span class="bkg__badge">For owners</span>
-          <p class="bkg__stat">
-            <span class="bkg__stat-num">1,500+</span>
-            <span class="bkg__stat-lbl">Venues onboard</span>
-          </p>
+        <div class="bk-steps">
+          <h4 class="bk-h4">Join in 4 steps</h4>
+          <ol class="bk-steps__row">
+            <li class="bk-step is-current"><span class="bk-step__marker"><span class="bk-step__num">1</span></span><span class="bk-step__title">Register</span><span class="bk-step__desc">Submit your venue and business details.</span></li>
+            <li class="bk-step"><span class="bk-step__marker"><span class="bk-step__num">2</span></span><span class="bk-step__title">Get verified</span><span class="bk-step__desc">The AYO team reviews your information.</span></li>
+            <li class="bk-step"><span class="bk-step__marker"><span class="bk-step__num">3</span></span><span class="bk-step__title">Set up your venue</span><span class="bk-step__desc">Complete your venue details, courts, schedules, and pricing.</span></li>
+            <li class="bk-step"><span class="bk-step__marker"><span class="bk-step__num">4</span></span><span class="bk-step__title">Go live</span><span class="bk-step__desc">Start managing your venue and receiving booking through AYO.</span></li>
+          </ol>
         </div>
+      </div>
+    </article>
 
-        <div class="bkg__lead">
-          <h3 class="bkg__name">Fill your courts</h3>
-          <p class="bkg__desc">Put empty slots in front of players already looking — and run the whole operation from one dashboard.</p>
-        </div>
-
-        <ul class="bkg__list">
-          <li><span class="bkg__tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>Live schedule, no double bookings</li>
-          <li><span class="bkg__tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>Payments settled and reconciled for you</li>
-          <li><span class="bkg__tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>Occupancy insights per court, per hour</li>
-        </ul>
-
-        <a class="bkg__cta" href="venue.html">Become venue partner <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
-      </article>
-
-  </div>
   </div>
 </section>
 
@@ -539,5 +599,10 @@
 <script src="components/persona-hero/persona-hero.js"></script>
 <script src="components/marquee/marquee.js"></script>
 <script src="components/activity-board/activity-board.js" defer></script>
+<!-- Booking illustrations. Vendored lottie_light, same as venue.html: the
+     two files use no expressions. Deferred, so booking-motion.js waits for
+     DOMContentLoaded before it touches `lottie`. -->
+<script defer src="vendor/lottie_light.min.js"></script>
+<script src="scripts/booking-motion.js"></script>
 </body>
 </html>
