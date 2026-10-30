@@ -1,6 +1,61 @@
 /* ---------- Homepage sections ---------- */
 #aktivitas{background:var(--bg-white)}
 
+/* Highlight block on homepage headings (Activity, Stories) — same treatment as
+   the venue and partner heroes. */
+.ayo-web h2 .hl{background:linear-gradient(var(--brand),var(--brand)) no-repeat;color:var(--bg-white);border-radius:var(--hl-radius);padding:0 var(--hl-pad);white-space:nowrap;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+@media (max-width:560px){ .ayo-web h2 .hl{white-space:normal} }
+
+/* ---------- 3. One app, many sports ----------
+   Figma 26172:3663. Padel gets the tall blue tile (most courts), the rest sit
+   in two rows of white tiles, and the long tail is a quiet text row. */
+.spt{background:#f3f0ed;padding:56px 0}
+.spt .wrap{display:flex;flex-direction:column;gap:28px}
+.spt__head{display:flex;flex-direction:column;gap:12px}
+.spt__title{font-weight:var(--fw-extrabold);font-size:clamp(28px,2.5vw,36px);line-height:1.11;letter-spacing:-.02em;color:#1a1919}
+.spt__sub{font-size:16px;line-height:22px;color:#787373}
+
+.spt__bento{display:grid;grid-template-columns:217px minmax(0,1fr);gap:16px}
+.spt__hero{position:relative;background:#1d4e9e;border-radius:20px;padding:20px;min-height:236px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;color:#fff;overflow:hidden}
+.spt__badge{background:#fff;color:#1a1919;border-radius:var(--radius-pill);padding:6px 12px;font-weight:var(--fw-bold);font-size:14px;line-height:20px;white-space:nowrap}
+.spt__hero-text{display:flex;flex-direction:column}
+.spt__hero-num{font-weight:var(--fw-extrabold);font-size:44px;line-height:44px;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.spt__hero-unit{font-size:16px;line-height:22px;opacity:.85;margin-top:4px}
+.spt__hero-name{font-weight:var(--fw-bold);font-size:24px;line-height:28px;margin-top:12px}
+.spt__hero-icon{position:absolute;right:16px;bottom:12px;width:53px;height:53px}
+
+.spt__grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:110px;gap:16px}
+.spt__tile{position:relative;background:#fff;border-radius:20px;padding:20px;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;color:#2c2c2c;overflow:hidden}
+.spt__tile--r1{grid-column:span 4}
+.spt__tile--r2{grid-column:span 3}
+.spt__icon{position:absolute;top:20px;right:20px;width:42px;height:42px}
+.spt__name{font-weight:var(--fw-bold);font-size:20px;line-height:24px}
+.spt__tile--r1:first-child .spt__name{font-size:24px;line-height:28px}
+.spt__count{font-size:14px;line-height:20px}
+.spt__count b{font-weight:var(--fw-extrabold)}
+
+.spt__more{display:flex;align-items:center;gap:20px;padding-top:16px;border-top:1px solid #a0a4a8;flex-wrap:wrap}
+.spt__more-label{font-weight:var(--fw-semibold);font-size:14px;line-height:20px;color:#1a1919;white-space:nowrap}
+.spt__links{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 20px}
+.spt__links a{display:inline-block;padding:4px 0;font-size:14px;line-height:20px;color:#787373;text-decoration:none}
+.spt__links a:hover{color:#1a1919;text-decoration:underline;text-underline-offset:3px}
+.spt__links a:focus-visible{outline:3px solid var(--brand);outline-offset:2px;border-radius:4px}
+
+@media (max-width:1100px){
+  .spt__bento{grid-template-columns:1fr}
+  .spt__hero{min-height:180px}
+  .spt__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .spt__tile--r1,.spt__tile--r2{grid-column:span 1}
+  .spt__tile:last-child{grid-column:1/-1}
+}
+@media (max-width:560px){
+  .spt{padding:40px 0}
+  .spt__tile{padding:16px}
+  .spt__icon{top:16px;right:16px;width:36px;height:36px}
+  .spt__name,.spt__tile--r1:first-child .spt__name{font-size:18px;line-height:22px}
+  .spt__more{align-items:flex-start;flex-direction:column;gap:8px}
+}
+
 /* ---------- 6. Booking (one booking, two sides of the court) ----------
    Figma: Venue Booking (26298:4819). A player block and a venue-owner block,
    each a tinted panel with an animated phone mock (Lottie) beside its copy,
@@ -251,9 +306,10 @@
 .st__cta:hover{box-shadow:inset 0 0 0 1px var(--text-default);background:var(--bg-subtle)}
 .st__cta svg{width:16px;height:16px;color:var(--brand)}
 /* ---------- 9. CTA band ---------- */
-.ctaband{background:var(--brand);color:#fff;text-align:center;padding:clamp(48px,7vw,96px) 0}
-.ctaband h2{font-size:clamp(30px,4.8vw,60px);font-weight:var(--fw-extrabold);letter-spacing:-.02em;line-height:1.04;max-width:20ch;margin:0 auto}
-.ctaband p{margin:var(--space-4) auto var(--space-8);max-width:46ch;color:rgba(255,255,255,.85);font-size:var(--fs-body-lg)}
+.ctaband{background:var(--brand);color:#fff;text-align:center;padding:clamp(56px,6.7vw,96px) 0}
+.ctaband h2{font-size:clamp(30px,4.2vw,60px);font-weight:var(--fw-extrabold);letter-spacing:-.02em;line-height:1.04;max-width:760px;margin:0 auto;text-wrap:balance}
+.ctaband p{margin:16px auto 0;max-width:430px;color:rgba(255,255,255,.85);font-size:var(--fs-body-lg);line-height:1.6}
+.ctaband .ayo-btn{margin-top:48px;border-radius:12px;font-weight:var(--fw-semibold)}
 .ctaband .ayo-btn.primary{background:#fff;color:var(--brand)}
 .ctaband .ayo-btn.primary:hover{background:var(--bg-cream);filter:none;transform:translateY(-2px)}
 

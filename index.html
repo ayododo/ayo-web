@@ -19,7 +19,6 @@
 <link rel="stylesheet" href="styles/chrome.css">
 <link rel="stylesheet" href="components/persona-hero/persona-hero.css">
 <link rel="stylesheet" href="components/store-rating/store-rating.css">
-<link rel="stylesheet" href="components/marquee/marquee.css">
 <link rel="stylesheet" href="components/activity-board/activity-board.css">
 <link rel="stylesheet" href="components/padellevels-rating/padellevels-rating.css">
 <link rel="stylesheet" href="components/ad-slot/ad-slot.css">
@@ -74,15 +73,34 @@
   </div>
 </nav>
 
-<!-- 2. PERSONA HERO -->
-<section class="persona-hero" data-persona-hero aria-label="AYO persona hero"
-         data-video-default="assets/hero.mp4"
-         data-video-host="assets/hero-host.mp4"
-         data-video-venue="assets/hero-venue.mp4"
-         data-video-business="assets/hero-partner.mp4">
-  <div class="ph-media" aria-hidden="true"></div>
-  <video class="ph-video is-active" src="assets/hero.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+<!-- 2. PERSONA HERO — Figma: Header (26028:10491). One still photo for every
+     persona: the court in the background (blurred in CSS), the player cut out
+     on the right, and the Google Play "Best of 2026" badge. -->
+<section class="persona-hero" data-persona-hero aria-label="AYO persona hero">
+  <div class="ph-media" aria-hidden="true">
+    <img class="ph-bg" src="assets/hero/hero-bg.jpg" alt="" width="1916" height="821" fetchpriority="high">
+    <img class="ph-player" src="assets/hero/hero-player.webp" alt="" width="787" height="1206" fetchpriority="high">
+  </div>
   <div class="ph-scrim" aria-hidden="true"></div>
+  <img class="ph-badge" src="assets/hero/hero-badge.webp" alt="Google Play Best of 2026" width="168" height="168">
+
+  <div class="ph-wrap ph-top">
+    <div class="ph-switch-main">
+      <button class="ph-toggle" type="button" data-ph-toggle aria-label="Pause persona rotation">
+        <svg class="ph-ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+        <svg class="ph-ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+      </button>
+      <div>
+        <!-- Static tabs = no-JS fallback. JS rebuilds them from data. -->
+        <div class="ph-tabs" role="tablist" aria-label="Choose persona" data-ph-tabs>
+          <button class="ph-tab is-active" type="button" role="tab" aria-selected="true">Player</button>
+          <button class="ph-tab" type="button" role="tab" aria-selected="false">Host</button>
+          <button class="ph-tab" type="button" role="tab" aria-selected="false">Venue Owner</button>
+          <button class="ph-tab" type="button" role="tab" aria-selected="false">Business Partner</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="ph-main">
     <div class="ph-wrap">
@@ -98,25 +116,8 @@
     </div>
   </div>
 
-  <div class="ph-wrap">
-    <div class="ph-switcher">
-      <div class="ph-switch-main">
-        <button class="ph-toggle" type="button" data-ph-toggle aria-label="Pause persona rotation">
-        <svg class="ph-ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-        <svg class="ph-ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
-      </button>
-        <div>
-          <!-- Static tabs = no-JS fallback. JS rebuilds them from data. -->
-          <div class="ph-tabs" role="tablist" aria-label="Choose persona" data-ph-tabs>
-            <button class="ph-tab is-active" type="button" role="tab" aria-selected="true">Player</button>
-            <button class="ph-tab" type="button" role="tab" aria-selected="false">Host</button>
-            <button class="ph-tab" type="button" role="tab" aria-selected="false">Venue Owner</button>
-            <button class="ph-tab" type="button" role="tab" aria-selected="false">Business Partner</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="ph-proof">
+  <div class="ph-wrap ph-proof-row">
+    <div class="ph-proof">
         <div class="store-rating">
           <p class="sr-label">User rating</p>
           <div class="sr-items">
@@ -141,46 +142,98 @@
             </a>
           </div>
         </div>
-      </div>
     </div>
   </div>
 
   <div class="ph-stats">
     <div class="ph-wrap">
       <div class="ph-stats-in">
-        <div class="ph-stat"><span class="ph-stat-num" data-to="90000" data-suffix="+">90,000+</span><span class="ph-stat-lbl">Active players</span></div>
+        <div class="ph-stat"><span class="ph-stat-num" data-to="900000" data-suffix="+">900,000+</span><span class="ph-stat-lbl">Active players</span></div>
         <div class="ph-stat"><span class="ph-stat-num" data-to="150" data-suffix="+">150+</span><span class="ph-stat-lbl">Cities</span></div>
-        <div class="ph-stat"><span class="ph-stat-num" data-to="1500" data-suffix="+">1,500+</span><span class="ph-stat-lbl">Sports venues</span></div>
+        <div class="ph-stat"><span class="ph-stat-num" data-to="3000" data-suffix="+">3,000+</span><span class="ph-stat-lbl">Sports venues</span></div>
         <div class="ph-stat"><span class="ph-stat-num" data-to="3000" data-suffix="+">3,000+</span><span class="ph-stat-lbl">Courts</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 3.5 MARQUEE — running text, closes the dark hero block -->
-<!-- Courts only for now. The city row this used to carry is still documented in
-     components/marquee/preview.html if it comes back. -->
-<section class="marquee" aria-label="AYO court coverage">
+<!-- 3. ONE APP, MANY SPORTS — replaces the court-count marquee.
+     Figma: Section / One app, many sports — Desktop (26172:3663). -->
+<section class="spt" id="sports" aria-labelledby="spt-title">
+  <div class="wrap container-fluid">
+    <header class="spt__head">
+      <h2 class="spt__title" id="spt-title">One app, many sports</h2>
+      <p class="spt__sub">Find games, courts and community for the sport you play.</p>
+    </header>
 
-  <div class="mq-row is-sub" data-mq-row data-mq-speed="45" data-mq-dir="right">
-    <div class="mq-track" data-mq-track>
-      <div class="mq-group" data-mq-group>
-        <span class="mq-item">3,700+ Padel Courts</span>
-        <span class="mq-dot" aria-hidden="true"></span>
-        <span class="mq-item">1,400+ Badminton Courts</span>
-        <span class="mq-dot" aria-hidden="true"></span>
-        <span class="mq-item">400+ Tennis Courts</span>
-        <span class="mq-dot" aria-hidden="true"></span>
-        <span class="mq-item">200+ Mini Soccer Courts</span>
-        <span class="mq-dot" aria-hidden="true"></span>
-        <span class="mq-item">200+ Futsal Courts</span>
-        <span class="mq-dot" aria-hidden="true"></span>
-        <span class="mq-item">100+ Pickleball Courts</span>
-        <span class="mq-dot" aria-hidden="true"></span>
+    <div class="spt__bento">
+      <div class="spt__hero">
+        <p class="spt__badge">Most courts on AYO</p>
+        <div class="spt__hero-text">
+          <p class="spt__hero-num">4,990+</p>
+          <p class="spt__hero-unit">courts</p>
+          <p class="spt__hero-name">Padel</p>
+        </div>
+        <img class="spt__hero-icon" src="assets/sports/padel.png" width="53" height="53" alt="" loading="lazy">
       </div>
+      <ul class="spt__grid">
+        <li class="spt__tile spt__tile--r1">
+          <img class="spt__icon" src="assets/sports/badminton.png" width="42" height="42" alt="" loading="lazy">
+          <p class="spt__name">Badminton</p>
+          <p class="spt__count"><b>1,500+</b> courts</p>
+        </li>
+        <li class="spt__tile spt__tile--r1">
+          <img class="spt__icon" src="assets/sports/tennis.png" width="42" height="42" alt="" loading="lazy">
+          <p class="spt__name">Tennis</p>
+          <p class="spt__count"><b>570+</b> courts</p>
+        </li>
+        <li class="spt__tile spt__tile--r1">
+          <img class="spt__icon" src="assets/sports/mahjong.png" width="42" height="42" alt="" loading="lazy">
+          <p class="spt__name">Mahjong</p>
+          <p class="spt__count"><b>940+</b> tables</p>
+        </li>
+        <li class="spt__tile spt__tile--r2">
+          <img class="spt__icon" src="assets/sports/minisoccer.png" width="42" height="42" alt="" loading="lazy">
+          <p class="spt__name">Mini Soccer</p>
+          <p class="spt__count"><b>200+</b> courts</p>
+        </li>
+        <li class="spt__tile spt__tile--r2">
+          <img class="spt__icon" src="assets/sports/futsal.png" width="42" height="42" alt="" loading="lazy">
+          <p class="spt__name">Futsal</p>
+          <p class="spt__count"><b>200+</b> courts</p>
+        </li>
+        <li class="spt__tile spt__tile--r2">
+          <img class="spt__icon" src="assets/sports/pickleball.png" width="42" height="42" alt="" loading="lazy">
+          <p class="spt__name">Pickleball</p>
+          <p class="spt__count"><b>100+</b> courts</p>
+        </li>
+        <li class="spt__tile spt__tile--r2">
+          <img class="spt__icon" src="assets/sports/basketball.png" width="42" height="42" alt="" loading="lazy">
+          <p class="spt__name">Basketball</p>
+          <p class="spt__count"><b>100+</b> courts</p>
+        </li>
+      </ul>
     </div>
-  </div>
 
+    <nav class="spt__more" aria-label="Other sports on AYO">
+      <p class="spt__more-label">Also on AYO</p>
+      <ul class="spt__links">
+        <li><a href="#">Mahjong</a></li>
+        <li><a href="#">Billiard</a></li>
+        <li><a href="#">Tenis Meja</a></li>
+        <li><a href="#">Squash</a></li>
+        <li><a href="#">Volley</a></li>
+        <li><a href="#">Golf</a></li>
+        <li><a href="#">Running</a></li>
+        <li><a href="#">Yoga</a></li>
+        <li><a href="#">Pilates</a></li>
+        <li><a href="#">Bowling</a></li>
+        <li><a href="#">Fitness</a></li>
+        <li><a href="#">Esport</a></li>
+        <li><a href="#">+15 more</a></li>
+      </ul>
+    </nav>
+  </div>
 </section>
 
 <!-- 4. ACTIVITY (hairline editorial) -->
@@ -192,7 +245,7 @@
         <div class="actb__header">
           <div>
             <p class="actb__eyebrow">Activity</p>
-            <h2 class="actb__title" id="actb-title">Join activities, hassle-free.</h2>
+            <h2 class="actb__title" id="actb-title">Join activities, <span class="hl">hassle-free</span>.</h2>
           </div>
           <p class="actb__caption">Two ways to play on AYO — host your own or challenge a rival.</p>
         </div>
@@ -214,32 +267,54 @@
   <div class="plr__shell">
     <div class="plr__board reveal">
 
+      <header class="plr__head">
+        <p class="plr__eyebrow">AYO × PadelLevels</p>
+        <h2 class="plr__title" id="plr-title">Padel Player Ratings. Every match builds your level.</h2>
+      </header>
+
       <div class="plr__body">
-        <div class="plr__gutter">
-          <!-- The rating card is part of the artwork, exported from Figma as one
-               asset. Alt carries what the card says, since it is no longer text. -->
-          <img class="plr__photo" src="assets/padellevels-panel.jpg"
-               alt="PadelLevels Rating card: level 5.2 of 7.0, status calibrated, confidence 74%."
-               width="579" height="391" loading="lazy">
-        </div>
+        <!-- Example rating card, built in markup so the numbers can later come
+             from real data. Everything in it is sample content. -->
+        <figure class="plr__card" aria-label="Example PadelLevels rating card">
+          <div class="plr__card-top">
+            <p class="plr__card-kicker">International Rating by PadelLevels</p>
+            <svg class="plr__crown" viewBox="0 0 16 16" fill="#FDBE00" stroke="#FDBE00" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.33 13.67h9.34" fill="none"/><path d="M11.25 11.67h-6.5c-.68 0-1.03 0-1.29-.19-.26-.18-.37-.5-.6-1.15l-1.5-4.28a.67.67 0 0 1 1-.75l.82.54c.83.54 1.24.82 1.66.72.42-.1.67-.53 1.17-1.39l1.48-2.55a.58.58 0 0 1 1.01 0l1.48 2.55c.5.86.75 1.29 1.17 1.39.42.1.83-.18 1.66-.72l.82-.54a.67.67 0 0 1 1 .75l-1.5 4.28c-.23.65-.34.97-.6 1.15-.26.19-.6.19-1.29.19Z"/></svg>
+          </div>
+
+          <div class="plr__level">
+            <div class="plr__level-row">
+              <div class="plr__level-main">
+                <svg class="plr__logo" viewBox="0 0 24 20" fill="#D83232" aria-hidden="true"><path fill-rule="evenodd" d="M12.7 14.38 21.82 1.87l-.88-.6-8.24 11.28-4.08-6.82L0 18.32 8.57 7.5l4.13 6.88Z"/><path fill-rule="evenodd" d="m12.7 18.73 8.98-12.4-.88-.6-8.1 11.17-4.08-6.83-6.52 8.06 6.47-6.29 4.13 6.89Z"/></svg>
+                <span class="plr__level-val">3.1X</span>
+                <span class="plr__status">Calibrating</span>
+              </div>
+              <div class="plr__conf">
+                <span class="plr__muted">Confidence</span>
+                <b>52%</b>
+              </div>
+            </div>
+            <div class="plr__bar" role="img" aria-label="Confidence 52%"><i style="width:52%"></i></div>
+            <div class="plr__links">
+              <a class="plr__learn" href="#">Learn more</a>
+              <a class="plr__view" href="#">View on PadelLevels
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2h2c.94 0 1.41 0 1.7.29.3.3.3.77.3 1.71v2M13.33 2.67l-6 6"/><path d="M13.33 8.67c0 2.51 0 3.77-.78 4.55-.78.78-2.04.78-4.55.78h-.67c-2.51 0-3.77 0-4.55-.78C2 12.44 2 11.18 2 8.67V8c0-2.51 0-3.77.78-4.55.78-.78 2.04-.78 4.55-.78"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="plr__rank">
+            <p class="plr__muted">Ranking</p>
+            <ul class="plr__rank-row">
+              <li><b>10</b><span><span aria-hidden="true">🇮🇩</span> Indonesia</span></li>
+              <li><b>7</b><span>Jakarta Selatan</span></li>
+              <li><b>1</b><span>Kemang Timur</span></li>
+            </ul>
+          </div>
+        </figure>
 
         <div class="plr__explain">
-          <div class="plr__intro">
-            <p class="plr__eyebrow">PadelLevels × AYO</p>
-            <h2 class="plr__title" id="plr-title">Every player, one global rating.</h2>
-          </div>
-
-          <div class="plr__detail">
-            <p class="plr__label">How it’s calculated</p>
-            <p class="plr__copy">Your performance rating is calculated from match scores and the level of the opponents you face. Beating stronger players counts for more.</p>
-            <a class="plr__cta" href="#">
-              View your PadelLevels rating
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M8 16L16 8"/><path d="M9 8h7v7"/>
-              </svg>
-            </a>
-          </div>
+          <p class="plr__label">How it’s calculated</p>
+          <p class="plr__copy">Your rating is built from real matches you’ve actually played, no self-ratings. Find evenly matched games, get an accurate rating and watch your game evolve.</p>
         </div>
       </div>
 
@@ -432,7 +507,7 @@
       <div class="st__head">
         <div>
           <p class="eyebrow-num">Stories</p>
-          <h2 class="st__title" id="st-title">From the people who play every week.</h2>
+          <h2 class="st__title" id="st-title">From the people who <span class="hl">play every week</span>.</h2>
         </div>
         <div class="st__aside">
           <p class="st__note">Four topics. Four players.<br>Pick one &mdash; the story follows.</p>
@@ -545,7 +620,7 @@
 <section class="ctaband reveal">
   <div class="wrap container-fluid">
     <h2>Start playing together today.</h2>
-    <p>90,000+ players have already joined. Find a court, join an Open Play session, and meet opponents at your level — free, no sign-up fee.</p>
+    <p>900,000+ users have already joined. Find a court, join an Open Play session, and meet opponents at your level!</p>
     <a class="ayo-btn primary lg" href="#">Download the app</a>
   </div>
 </section>
@@ -563,9 +638,9 @@
       </div>
     </div>
     <div class="foot-cols">
-      <div class="ayo-foot-col"><h4>Product</h4><a href="#aktivitas">Activity</a><a href="#booking">Booking</a><a href="#cerita">Community</a><a href="#rating">PadelLevels</a></div>
-      <div class="ayo-foot-col"><h4>Company</h4><a href="#">About Us</a><a href="#partner">Partner with Us</a><a href="#">Blog</a><a href="#">Careers</a></div>
-      <div class="ayo-foot-col"><h4>Support</h4><a href="#">Help Center</a><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Contact</a></div>
+      <div class="ayo-foot-col"><h4>Company</h4><a href="#">About Us</a><a href="#">Policies &amp; Privacy</a><a href="#">Terms &amp; Conditions</a></div>
+      <div class="ayo-foot-col"><h4>Ecosystem</h4><a href="#aktivitas">Activity</a><a href="#rating">PadelLevels</a><a href="#booking">Booking</a><a href="venue.html">Venue Owner</a><a href="partner.html">Partnership</a></div>
+      <div class="ayo-foot-col"><h4>Support</h4><a href="#">Contact us</a></div>
       <div class="ayo-foot-col">
         <h4>Follow us</h4>
         <div class="foot-social">
@@ -582,8 +657,7 @@
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© 2026 AYO</span>
-      <div class="legal"><a href="#">Terms of service</a><a href="#">Privacy policy</a><a href="#">Cookie policy</a><a href="#">Help</a></div>
+      <span>© 2026 AYO. All Rights Reserved.</span>
     </div>
   </div>
 </footer>
@@ -597,7 +671,6 @@
 <script src="scripts/home.js"></script>
 <script src="scripts/chrome.js"></script>
 <script src="components/persona-hero/persona-hero.js"></script>
-<script src="components/marquee/marquee.js"></script>
 <script src="components/activity-board/activity-board.js" defer></script>
 <!-- Booking illustrations. Vendored lottie_light, same as venue.html: the
      two files use no expressions. Deferred, so booking-motion.js waits for

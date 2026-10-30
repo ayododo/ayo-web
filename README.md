@@ -49,7 +49,7 @@ framework preset, no build command, and serve the repository root.
 | `styles/` | Design tokens, Bootstrap compatibility defaults, shared chrome, and page styles |
 | `scripts/` | Shared navigation/account demo, activity tabs, and page scripts |
 | `components/` | Reusable visual components, snippets, and isolated previews |
-| `assets/` | Images, videos, animation data, brand assets, and icons in use |
+| `assets/` | Images, animation data, brand assets, and icons in use. `hero/` holds the homepage hero stills, `sports/` the sport icons |
 | `vendor/` | Pinned Bootstrap, jQuery, Lottie, and dependency license notices |
 | `.claude/skills/sport-ui/` | Shared design guidance for continuing work with Claude |
 
@@ -81,6 +81,11 @@ files so the reference design stays consistent.
 
 `venue.html` and `index.html` load Lottie with `defer`; their animation
 initialization waits for `DOMContentLoaded`.
+
+The homepage hero is a still image for every persona (court background blurred
+in CSS, the cut-out player, and the Google Play badge); only the copy rotates.
+The marquee component is no longer on the homepage but is still used by
+`venue.html` and `partner.html`.
 
 The homepage Booking section shows two animated phone mocks:
 `assets/booking-ayo-app.json` (player books a court in the AYO app) and
