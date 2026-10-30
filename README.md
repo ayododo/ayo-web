@@ -57,7 +57,8 @@ framework preset, no build command, and serve the repository root.
 and the type scale. `styles/chrome.css` and `scripts/chrome.js` provide shared
 navigation, buttons, footer styles, and account demo behavior.
 
-Page-specific code lives in `styles/home.css` / `scripts/home.js`,
+Page-specific code lives in `styles/home.css` / `scripts/home.js` /
+`scripts/booking-motion.js`,
 `styles/partner.css` / `scripts/partner.js`, and `styles/venue.css` /
 `scripts/venue-tabs.js` / `scripts/venue-loading.js`. The two activity detail
 pages share `styles/activity-page.css` and `scripts/activity-tabs.js`.
@@ -78,8 +79,16 @@ wrappers use Bootstrap's `container-fluid` with AYO's existing maximum width
 and padding. Detailed layouts and custom interactions remain in their component
 files so the reference design stays consistent.
 
-`venue.html` loads Lottie with `defer`; its animation initialization waits for
-`DOMContentLoaded`.
+`venue.html` and `index.html` load Lottie with `defer`; their animation
+initialization waits for `DOMContentLoaded`.
+
+The homepage Booking section shows two animated phone mocks:
+`assets/booking-ayo-app.json` (player books a court in the AYO app) and
+`assets/booking-avm-dashboard.json` (the booking arrives in AVM). Both are
+420×420, 30 fps, 9-second loops with text converted to outlines, so they need no
+fonts. Each starts from the beginning when it scrolls into view. The matching
+`-poster.webp` files show the finished state before Lottie loads, without
+JavaScript, and with reduced motion.
 
 ### Component references
 
