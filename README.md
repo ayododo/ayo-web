@@ -87,6 +87,17 @@ in CSS, the cut-out player, and the Google Play badge); only the copy rotates.
 The marquee component is no longer on the homepage but is still used by
 `venue.html` and `partner.html`.
 
+The Activities item in the navigation opens a mega menu on every page (Open
+Play with Join/Host activity, Open Match, GameTime, and a PadelLevels promo
+card). It opens on hover or focus on desktop and collapses into the burger
+menu below 1000px; markup lives in each page's nav, styles in `styles/chrome.css`.
+
+Images still waiting for Figma exports are grey rounded `.asset-ph`
+placeholders. Each carries `data-asset` with the file it expects (hero stills,
+sport icons, and the GameTime photo, which is flagged `imagePending` in
+`components/activity-board/activity-board.js`). Replace the placeholder with an
+`<img>` of the same class once the file is added.
+
 The homepage Booking section shows two animated phone mocks:
 `assets/booking-ayo-app.json` (player books a court in the AYO app) and
 `assets/booking-avm-dashboard.json` (the booking arrives in AVM). Both are

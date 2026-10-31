@@ -150,6 +150,7 @@
   box-shadow: inset 0 0 0 1px rgba(26, 25, 25, .1);
 }
 .actb__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.actb__media .actb__ph { width: 100%; height: 100%; border-radius: 0; background: #bdbdbd; }
 
 /* Mandatory, not decorative. These are bright shots — a badminton hall full of
    floodlights, a sunlit clay court — and white type laid straight onto them

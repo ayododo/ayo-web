@@ -113,6 +113,9 @@
       tag: 'GameTime',
       hasRole: false,
       image: 'activity-gametime.jpg',
+      /* Photo not exported yet: render the grey placeholder instead. Remove
+         this flag once assets/activity-gametime.jpg is in the repo. */
+      imagePending: true,
       imageAlt: 'A player hitting a forehand during a GameTime session',
       href: '#',
       giant: '5,400+',
@@ -302,7 +305,9 @@
 
     panel.innerHTML =
       '<div class="actb__media">' +
-        '<img src="' + esc(ASSETS + d.image) + '" alt="' + esc(d.imageAlt) + '">' +
+        (d.imagePending
+          ? '<span class="actb__ph asset-ph" data-asset="' + esc(ASSETS + d.image) + '" role="img" aria-label="' + esc(d.imageAlt) + '"></span>'
+          : '<img src="' + esc(ASSETS + d.image) + '" alt="' + esc(d.imageAlt) + '">') +
         '<span class="actb__scrim" aria-hidden="true"></span>' +
         '<span class="actb__chip">' + chip + '</span>' +
         overlay +

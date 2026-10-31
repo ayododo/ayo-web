@@ -21,12 +21,14 @@
 <!-- Background layers: use --ph-image for a photo, and/or <video class="ph-video">.
      Photo only, for example:  style="--ph-image: url('../../assets/hero-poster.jpg')" -->
 <section class="persona-hero" data-persona-hero aria-label="AYO persona hero">
+  <!-- Placeholders until the Figma exports arrive. Swap each span for an
+       <img> with the same class: hero-bg.jpg (.ph-bg), hero-player.webp
+       (.ph-player), hero-badge.webp (.ph-badge). -->
   <div class="ph-media" aria-hidden="true">
-    <img class="ph-bg" src="../../assets/hero/hero-bg.jpg" alt="" width="1916" height="821" fetchpriority="high">
-    <img class="ph-player" src="../../assets/hero/hero-player.webp" alt="" width="787" height="1206" fetchpriority="high">
+    <span class="ph-player asset-ph" data-asset="assets/hero/hero-player.webp"></span>
   </div>
   <div class="ph-scrim" aria-hidden="true"></div>
-  <img class="ph-badge" src="../../assets/hero/hero-badge.webp" alt="Google Play Best of 2026" width="168" height="168">
+  <span class="ph-badge asset-ph" data-asset="assets/hero/hero-badge.webp" role="img" aria-label="Google Play Best of 2026"></span>
 
   <div class="ph-wrap ph-top">
     <div class="ph-switch-main">
