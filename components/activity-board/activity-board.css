@@ -136,66 +136,15 @@
 .actb__tab[aria-selected="true"] .actb__tab-arrow { opacity: 1; }
 .actb__tab:hover:not([aria-selected="true"]) .actb__tab-title { color: var(--actb-ink-muted); }
 .actb__tab:focus-visible { outline: 3px solid var(--actb-red); outline-offset: -3px; }
+/* Bootstrap's reboot outlines every focused button, so a mouse click left a
+   dark box on the tab. Keyboard focus keeps the red ring above. */
+.actb__tab:focus:not(:focus-visible), .actb__role:focus:not(:focus-visible) { outline: none; }
 
 /* ---- Panel ----------------------------------------------------------------- */
 .actb__panel {
   grid-column: 3; grid-row: 3;
   display: flex; flex-direction: column; gap: var(--space-6);
   padding: 40px;
-}
-
-.actb__media {
-  position: relative; height: 300px; flex-shrink: 0;
-  border-radius: 16px; overflow: hidden;
-  box-shadow: inset 0 0 0 1px rgba(26, 25, 25, .1);
-}
-.actb__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-/* Mandatory, not decorative. These are bright shots — a badminton hall full of
-   floodlights, a sunlit clay court — and white type laid straight onto them
-   drops well under 4.5:1. The gradient only darkens the lower third, so the
-   photo itself stays legible. */
-.actb__scrim {
-  position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(to top,
-    rgba(26, 25, 25, .88) 0%,
-    rgba(26, 25, 25, .55) 22%,
-    rgba(26, 25, 25, 0) 52%);
-}
-
-/* Carries the figure and its label only — the faces stay down on the white
-   panel, where they read as people rather than as part of the photograph. */
-.actb__overlay {
-  position: absolute; left: 0; right: 0; bottom: 0;
-  display: flex; flex-direction: column; align-items: flex-start;
-  gap: var(--space-2); padding: 24px;
-}
-/* Frosted, not solid: the photo stays readable through it. The tint is DARK
-   rather than white — these court shots are bright, and white text over a light
-   frost drops under 4.5:1 the moment a floodlight sits behind the chip. */
-.actb__chip {
-  position: absolute; top: 18px; left: 18px;
-  display: inline-flex; align-items: center; gap: var(--space-2);
-  font-family: var(--font-mono); font-size: 11px; font-weight: var(--fw-semibold);
-  letter-spacing: .1em; text-transform: uppercase;
-  color: var(--text-inverse);
-  background: rgba(26, 25, 25, .34);
-  backdrop-filter: blur(14px) saturate(1.3);
-  -webkit-backdrop-filter: blur(14px) saturate(1.3);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .28);
-  padding: 7px 14px; border-radius: var(--radius-pill);
-}
-/* Without the blur the tint alone is too thin to carry white text, so the
-   fallback trades the see-through effect for legibility. */
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .actb__chip { background: rgba(26, 25, 25, .62); }
-}
-/* Square, matching the separator in the marquee band. White rather than brand
-   red: at 5px on a frosted tint the red went muddy, and it competed with the
-   red toggle underline sitting right below the image. */
-.actb__chip-sep {
-  width: 5px; height: 5px; flex-shrink: 0;
-  background: currentColor;
 }
 
 /* Copy on the left, faces on the right. Centred rather than top-aligned: the
@@ -207,8 +156,8 @@
 }
 .actb__lead-main { flex: 1; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
 .actb__desc {
-  font-size: var(--fs-body-lg); line-height: 1.6;
-  color: var(--actb-ink-muted); max-width: 62ch;
+  font-size: var(--fs-body-lg); line-height: 22px;
+  color: #787373; max-width: 62ch;
 }
 
 /* Role toggle (Open Play only) */
@@ -233,18 +182,6 @@
   top: 50%; transform: translateY(-50%); height: 44px;
 }
 .actb__role:focus-visible { outline: 3px solid var(--actb-red); outline-offset: 4px; }
-
-/* Lives inside the image now, so both colours are white-on-scrim rather than
-   ink-on-panel. */
-.actb__giant {
-  font-family: var(--font-num); font-weight: var(--fw-bold);
-  font-size: clamp(40px, 4.4vw, 64px); line-height: .85; letter-spacing: -.03em;
-  color: var(--text-inverse); font-variant-numeric: tabular-nums; white-space: nowrap;
-}
-.actb__giant-lbl {
-  font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em;
-  text-transform: uppercase; color: rgba(255, 255, 255, .8); white-space: nowrap;
-}
 
 /* ---- Avatar stack ----------------------------------------------------------
    The ring is a box-shadow, not a border: a border would sit inside the 44px
@@ -306,7 +243,7 @@
 /* ---- Footer ---------------------------------------------------------------- */
 .actb__foot {
   margin-top: auto;
-  display: flex; align-items: center; gap: var(--space-5);
+  display: flex; align-items: center; justify-content: flex-end; gap: var(--space-5);
   border-top: 1px solid var(--actb-hairline); padding-top: 20px;
 }
 .actb__micros { flex: 1; display: flex; align-items: stretch; gap: var(--space-8); }
@@ -338,6 +275,36 @@
 .actb__cta:hover { box-shadow: inset 0 0 0 1px var(--actb-ink); background: var(--bg-subtle); }
 .actb__cta svg { width: 16px; height: 16px; color: var(--actb-red); flex-shrink: 0; }
 .actb__cta:focus-visible { outline: 3px solid var(--actb-red); outline-offset: 3px; }
+/* GameTime: a quiet text link rather than an outlined pill (Figma). */
+.actb__cta--link { box-shadow: none; padding-inline: 12px; }
+.actb__cta--link:hover { box-shadow: none; background: none; text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---- Feature list (Figma "Activity / Feature item") ------------------------ */
+.actb__feats { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 20px; }
+.actb__feat { display: flex; gap: 16px; align-items: flex-start; }
+.actb__feat-icon {
+  flex-shrink: 0; width: 48px; height: 48px; border-radius: 14px;
+  background: #f3f0ed; color: #2c2c2c; display: grid; place-items: center;
+}
+.actb__feat-icon svg { width: 24px; height: 24px; display: block; }
+.actb__feat-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; padding-top: 2px; font-size: 16px; line-height: 22px; }
+.actb__feat-title { font-weight: var(--fw-bold); color: #2c2c2c; }
+.actb__feat-desc { color: #787373; }
+
+/* ---- Open Match: the matchup that opens the panel ------------------------- */
+.actb__versus { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.actb__vs { display: flex; align-items: center; gap: 8px; }
+.actb__pair { display: flex; padding: 3px; }
+.actb__pair .actb__avatar + .actb__avatar { margin-left: -16px; }
+.actb__vs-word {
+  font-family: var(--font-mono); font-weight: var(--fw-bold); font-size: 24px; line-height: 40px;
+  letter-spacing: -.04em; color: var(--actb-ink);
+}
+.actb__vs-title { font-weight: var(--fw-bold); font-size: 32px; line-height: 40px; color: var(--actb-ink); }
+.actb__vs-sub {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--actb-ink-faint);
+}
 
 /* ---- Panel entrance -------------------------------------------------------- */
 /* JS removes then re-adds the class (forcing a reflow between) so the animation
@@ -394,8 +361,6 @@
   .actb__tab { padding: var(--space-6) var(--space-8); }
   .actb__tab:last-child { border-bottom: 0; }
   .actb__panel { padding: var(--space-8); }
-  .actb__media { height: 240px; }
-  .actb__overlay { padding: var(--space-5); }
   .actb__desc { max-width: none; }
 }
 

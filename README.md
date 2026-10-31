@@ -49,7 +49,7 @@ framework preset, no build command, and serve the repository root.
 | `styles/` | Design tokens, Bootstrap compatibility defaults, shared chrome, and page styles |
 | `scripts/` | Shared navigation/account demo, activity tabs, and page scripts |
 | `components/` | Reusable visual components, snippets, and isolated previews |
-| `assets/` | Images, videos, animation data, brand assets, and icons in use |
+| `assets/` | Images, animation data, brand assets, and icons in use. `hero/` holds the homepage hero stills, `sports/` the sport icons |
 | `vendor/` | Pinned Bootstrap, jQuery, Lottie, and dependency license notices |
 | `.claude/skills/sport-ui/` | Shared design guidance for continuing work with Claude |
 
@@ -81,6 +81,23 @@ files so the reference design stays consistent.
 
 `venue.html` and `index.html` load Lottie with `defer`; their animation
 initialization waits for `DOMContentLoaded`.
+
+The homepage hero is a still image for every persona (court background blurred
+in CSS, the cut-out player, and the Google Play badge); only the copy rotates.
+The marquee component is no longer on the homepage but is still used by
+`venue.html` and `partner.html`.
+
+The Activities item in the navigation opens a mega menu on every page (Open
+Play with Join/Host activity, Open Match, GameTime, and a PadelLevels promo
+card). It opens on hover or focus on desktop and collapses into the burger
+menu below 1000px; markup lives in each page's nav, styles in `styles/chrome.css`.
+
+Images still waiting for Figma exports are grey rounded `.asset-ph`
+placeholders. Each carries `data-asset` with the file it expects (hero stills,
+and sport icons). Replace the placeholder with an `<img>` of the same class once
+the file is added. The Activity section has no photos; each tab opens on its
+role toggle, matchup or feature list, and its headline figure leads the stats
+row.
 
 The homepage Booking section shows two animated phone mocks:
 `assets/booking-ayo-app.json` (player books a court in the AYO app) and

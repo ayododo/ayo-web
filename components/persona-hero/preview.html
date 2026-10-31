@@ -21,9 +21,32 @@
 <!-- Background layers: use --ph-image for a photo, and/or <video class="ph-video">.
      Photo only, for example:  style="--ph-image: url('../../assets/hero-poster.jpg')" -->
 <section class="persona-hero" data-persona-hero aria-label="AYO persona hero">
-  <div class="ph-media" aria-hidden="true"></div>
-  <video class="ph-video is-active" src="../../assets/hero.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+  <!-- Placeholders until the Figma exports arrive. Swap each span for an
+       <img> with the same class: hero-bg.jpg (.ph-bg), hero-player.webp
+       (.ph-player), hero-badge.webp (.ph-badge). -->
+  <div class="ph-media" aria-hidden="true">
+    <span class="ph-player asset-ph" data-asset="assets/hero/hero-player.webp"></span>
+  </div>
   <div class="ph-scrim" aria-hidden="true"></div>
+  <span class="ph-badge asset-ph" data-asset="assets/hero/hero-badge.webp" role="img" aria-label="Google Play Best of 2026"></span>
+
+  <div class="ph-wrap ph-top">
+    <div class="ph-switch-main">
+      <button class="ph-toggle" type="button" data-ph-toggle aria-label="Pause persona rotation">
+        <svg class="ph-ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+        <svg class="ph-ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+      </button>
+      <div>
+        <!-- Static tabs = no-JS fallback. JS rebuilds them from data. -->
+        <div class="ph-tabs" role="tablist" aria-label="Choose persona" data-ph-tabs>
+          <button class="ph-tab is-active" type="button" role="tab" aria-selected="true">Player</button>
+          <button class="ph-tab" type="button" role="tab" aria-selected="false">Host</button>
+          <button class="ph-tab" type="button" role="tab" aria-selected="false">Venue Owner</button>
+          <button class="ph-tab" type="button" role="tab" aria-selected="false">Business Partner</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="ph-main">
     <div class="ph-wrap">
@@ -39,35 +62,42 @@
     </div>
   </div>
 
-  <div class="ph-wrap">
-    <div class="ph-switcher">
-      <div class="ph-switch-main">
-        <button class="ph-toggle" type="button" data-ph-toggle aria-label="Pause persona rotation">
-          <svg class="ph-ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-          <svg class="ph-ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
-        </button>
-        <div>
-          <!-- Static tabs = no-JS fallback. JS rebuilds them from data. -->
-          <div class="ph-tabs" role="tablist" aria-label="Choose persona" data-ph-tabs>
-            <button class="ph-tab is-active" type="button" role="tab" aria-selected="true">Player</button>
-            <button class="ph-tab" type="button" role="tab" aria-selected="false">Host</button>
-            <button class="ph-tab" type="button" role="tab" aria-selected="false">Venue Owner</button>
-            <button class="ph-tab" type="button" role="tab" aria-selected="false">Business Partner</button>
+  <div class="ph-wrap ph-proof-row">
+    <div class="ph-proof">
+        <div class="store-rating">
+          <p class="sr-label">User rating</p>
+          <div class="sr-items">
+            <a class="sr-item" href="#" aria-label="AYO rating on the App Store: 4.9 out of 5">
+              <img class="sr-ico" src="../../assets/appstore.svg" alt="" width="32" height="32">
+              <span class="sr-text">
+                <span class="sr-score">4.9
+                  <svg class="sr-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 14.47 8.6 21.51 8.91 15.99 13.3 17.88 20.09 12 16.2 6.12 20.09 8.01 13.3 2.49 8.91 9.53 8.6Z"/></svg>
+                </span>
+                <span class="sr-store">App Store</span>
+              </span>
+            </a>
+            <!-- TODO: 4.8 is still a placeholder — replace with the real Google Play rating. -->
+            <a class="sr-item" href="#" aria-label="AYO rating on Google Play: 4.8 out of 5">
+              <img class="sr-ico" src="../../assets/googleplay.svg" alt="" width="29" height="32">
+              <span class="sr-text">
+                <span class="sr-score">4.8
+                  <svg class="sr-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 14.47 8.6 21.51 8.91 15.99 13.3 17.88 20.09 12 16.2 6.12 20.09 8.01 13.3 2.49 8.91 9.53 8.6Z"/></svg>
+                </span>
+                <span class="sr-store">Google Play</span>
+              </span>
+            </a>
           </div>
         </div>
-      </div>
-      <!-- The .ph-proof slot goes here (see components/store-rating) — deliberately
-           not duplicated into this preview so the markup lives in one place only. -->
     </div>
   </div>
 
   <div class="ph-stats">
     <div class="ph-wrap">
       <div class="ph-stats-in">
-        <div class="ph-stat"><span class="ph-stat-num">90,000+</span><span class="ph-stat-lbl">Active players</span></div>
-        <div class="ph-stat"><span class="ph-stat-num">150+</span><span class="ph-stat-lbl">Cities</span></div>
-        <div class="ph-stat"><span class="ph-stat-num">1,500+</span><span class="ph-stat-lbl">Sports venues</span></div>
-        <div class="ph-stat"><span class="ph-stat-num">3,000+</span><span class="ph-stat-lbl">Courts</span></div>
+        <div class="ph-stat"><span class="ph-stat-num" data-to="900000" data-suffix="+">900,000+</span><span class="ph-stat-lbl">Active players</span></div>
+        <div class="ph-stat"><span class="ph-stat-num" data-to="150" data-suffix="+">150+</span><span class="ph-stat-lbl">Cities</span></div>
+        <div class="ph-stat"><span class="ph-stat-num" data-to="3000" data-suffix="+">3,000+</span><span class="ph-stat-lbl">Sports venues</span></div>
+        <div class="ph-stat"><span class="ph-stat-num" data-to="3000" data-suffix="+">3,000+</span><span class="ph-stat-lbl">Courts</span></div>
       </div>
     </div>
   </div>

@@ -21,6 +21,23 @@
 
   var ASSETS = root.dataset.actbAssets || 'assets/';
 
+  /* Feature icons, drawn from the Figma "Activity / Feature item" set. One
+     stroke style for all of them, so they live here as path data only. */
+  var ICONS = {
+      "calendar-plus": "<path d=\"M18.5 5h-13A2.5 2.5 0 0 0 3 7.5v11A2.5 2.5 0 0 0 5.5 21h13a2.5 2.5 0 0 0 2.5-2.5v-11A2.5 2.5 0 0 0 18.5 5Z\"/><path d=\"M3 10h18M8 3v4M16 3v4M12 13v5M9.5 15.5h5\"/>",
+      "sliders": "<path d=\"M4 7h10M18 7h2M4 17h4M12 17h8\"/><circle cx=\"16\" cy=\"7\" r=\"2\"/><circle cx=\"10\" cy=\"17\" r=\"2\"/>",
+      "clipboard-check": "<path d=\"M16.5 4h-9A2.5 2.5 0 0 0 5 6.5v12A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5v-12A2.5 2.5 0 0 0 16.5 4Z\"/><path d=\"m9 13 2 2 4-4M9 3h6v3H9V3Z\"/>",
+      "pin": "<path d=\"M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z\"/><circle cx=\"12\" cy=\"9.5\" r=\"2.5\"/>",
+      "user-plus": "<circle cx=\"9\" cy=\"8\" r=\"3.5\"/><path d=\"M2.5 20c.6-3.6 3.3-6 6.5-6s5.9 2.4 6.5 6M19 8v6M16 11h6\"/>",
+      "users": "<circle cx=\"9\" cy=\"8\" r=\"3.5\"/><path d=\"M2.5 20c.6-3.6 3.3-6 6.5-6s5.9 2.4 6.5 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5c2 .7 3.2 2.8 3.5 5.5\"/>",
+      "target": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><circle cx=\"12\" cy=\"12\" r=\"5\"/><circle cx=\"12\" cy=\"12\" r=\"1.2\"/>",
+      "scale": "<path d=\"M12 3v18M7 21h10M5 7h14M5 7l-3 6.5a3.4 3.4 0 0 0 6 0L5 7Zm14 0-3 6.5a3.4 3.4 0 0 0 6 0L19 7Z\"/>",
+      "trophy": "<path d=\"M12 13a4 4 0 0 0 4-4V4H8v5a4 4 0 0 0 4 4Zm0 0v4M8 6H5a2.9 2.9 0 0 0 3 4M16 6h3a2.9 2.9 0 0 1-3 4M8 21h8M9.5 17h5v4h-5v-4Z\"/>",
+      "shuffle": "<path d=\"M3 7h3.5c2 0 3.2 1 4.3 2.8l2.4 4.4C14.3 16 15.5 17 17.5 17H21M18 20l3-3-3-3M3 17h3.5c1.5 0 2.5-.6 3.4-1.7M14.1 8.7C15 7.6 16 7 17.5 7H21M18 10l3-3-3-3\"/>",
+      "layers": "<path d=\"m2.5 12.5 9.5 5 9.5-5M2.5 16.5l9.5 5 9.5-5M12 3 2.5 8l9.5 5 9.5-5L12 3Z\"/>",
+      "bars": "<path d=\"M4 20h16M7 20v-6M12 20V6M17 20V10\"/>"
+  };
+
   var ACTIVITIES = [
     {
       id: 'open-play',
@@ -28,28 +45,32 @@
       title: 'Open Play',
       tag: 'Open Play',
       hasRole: true,
-      image: 'activity-open-play.jpg',
-      imageAlt: 'Players in an open play session',
       href: 'open-play.html',
       roles: {
         host: {
-          desc: 'Create a session, set player limits, and follow the game as it runs. Manage participants and payments from one place.',
+          lead: 'Host Games, Without the Hassle.',
+          features: [
+            { icon: 'calendar-plus', title: 'Create Sessions in Minutes', desc: 'Set up your Open Play session quickly and easily.' },
+            { icon: 'sliders', title: 'Control Your Session', desc: 'Set player limits and skill levels to suit your game.' },
+            { icon: 'clipboard-check', title: 'Manage Everything in One Place', desc: 'Keep track of participants and payments with less manual work.' }
+          ],
           giant: '12,000+',
           giantLabel: 'Sessions / month',
-          cta: 'What you can do as a Host',
-          /* The two roles used to share the activity's href, which meant the
-             host CTA and the participant CTA led to the same place. Host has a
-             page of its own now, so it carries its own destination. */
+          cta: 'Learn How to Host',
           href: 'open-play-host.html'
         },
         participant: {
-          desc: 'Find open sessions near you, join in one tap, and split the court fee automatically — no group-chat math.',
+          lead: 'Find Your Game. Meet New People.',
+          features: [
+            { icon: 'pin', title: 'Discover Nearby Sessions', desc: 'Find Open Play games happening near you.' },
+            { icon: 'user-plus', title: 'Join with Ease', desc: 'Join a session without the hassle of finding enough players yourself.' },
+            { icon: 'users', title: 'Play with Your Community', desc: 'Meet new people and connect with fellow players who share your passion.' }
+          ],
           giant: '90,000+',
           giantLabel: 'Active players',
           cta: 'Find sessions near you',
           /* Faces only on this side of the toggle: 90,000+ counts people, so
-             showing a few makes the figure concrete. The host figure counts
-             sessions, where a row of portraits would say nothing. */
+             showing a few makes the figure concrete. */
           avatars: ['avatar-1.jpg', 'avatar-2.jpg', 'avatar-3.jpg', 'avatar-4.jpg', 'avatar-5.jpg'],
           avatarsNote: '100+ joined this week'
         }
@@ -65,16 +86,38 @@
       title: 'Open Match',
       tag: 'Open Match',
       hasRole: false,
-      image: 'activity-open-match.jpg',
-      imageAlt: 'Two players in a competitive match',
       href: 'open-match.html',
-      desc: 'Challenge other players, choose your match format, and find balanced opponents through ratings — every match stays close and fun.',
+      /* No big number here: the panel opens on the matchup itself — two pairs
+         facing off — with the headline under it. */
+      versus: {
+        left: ['avatar-1.jpg', 'avatar-3.jpg'],
+        right: ['avatar-2.jpg', 'avatar-5.jpg'],
+        title: 'Find Your Opponents',
+        sub: 'Challenge players in 4-player matches against opponents at your skill level.'
+      },
+      features: [
+        { icon: 'target', title: 'Challenge Other Players', desc: 'Set up a match and choose your preferred match format.' },
+        { icon: 'scale', title: 'Find Balanced Matchups', desc: 'Use player ratings to find opponents at a similar skill level.' },
+        { icon: 'trophy', title: 'Enjoy Focused Competition', desc: 'Play a dedicated 4-player match where every point counts.' }
+      ],
+      cta: 'Learn How to Host'
+    },
+    {
+      id: 'gametime',
+      num: '03',
+      title: 'GameTime',
+      tag: 'GameTime',
+      hasRole: false,
+      href: '#',
       giant: '5,400+',
       giantLabel: 'Matches / month',
-      cta: 'Learn about Open Match',
-      micros: [
-        { value: '4.8', label: 'Match rating', star: true }
-      ]
+      features: [
+        { icon: 'shuffle', title: 'Automatically Generate Matchups', desc: 'Generate match pairings and rounds for your session without organizing them manually.' },
+        { icon: 'layers', title: 'Multiple Competitive Formats', desc: 'Play your way with Americano, Mexicano, or a custom format tailored to your session.' },
+        { icon: 'bars', title: 'Live Scores & Standings', desc: 'Record match results and track standings to keep everyone engaged throughout the session.' }
+      ],
+      cta: 'Explore GameTime',
+      ctaStyle: 'link'
     }
   ];
 
@@ -109,8 +152,8 @@
       id: a.id, num: a.num, title: a.title, tag: a.tag, hasRole: true,
       /* A role may point somewhere of its own — host has its own page, while
          participant still falls back to the activity's. */
-      image: a.image, imageAlt: a.imageAlt, href: r.href || a.href, micros: a.micros,
-      desc: r.desc, giant: r.giant, giantLabel: r.giantLabel, cta: r.cta,
+      href: r.href || a.href, micros: a.micros,
+      lead: r.lead, features: r.features, giant: r.giant, giantLabel: r.giantLabel, cta: r.cta,
       avatars: r.avatars, avatarsNote: r.avatarsNote
     };
   }
@@ -195,40 +238,56 @@
       '</div>';
   }
 
+  function featuresHTML(list) {
+    if (!list || !list.length) return '';
+    return '<ul class="actb__feats">' + list.map(function (f) {
+      return '<li class="actb__feat">' +
+        '<span class="actb__feat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+          'stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + (ICONS[f.icon] || '') + '</svg></span>' +
+        '<span class="actb__feat-text"><span class="actb__feat-title">' + esc(f.title) + '</span>' +
+        '<span class="actb__feat-desc">' + esc(f.desc) + '</span></span>' +
+      '</li>';
+    }).join('') + '</ul>';
+  }
+
+  /* Open Match: two pairs facing off, then the headline. The faces are
+     decoration; the headline is what a screen reader needs. */
+  function versusHTML(v) {
+    function pair(list) {
+      return '<span class="actb__pair">' + list.map(function (f) {
+        return '<img class="actb__avatar" src="' + esc(ASSETS + f) + '" alt="">';
+      }).join('') + '</span>';
+    }
+    return '<div class="actb__versus">' +
+      '<div class="actb__vs" aria-hidden="true">' + pair(v.left) + '<span class="actb__vs-word">vs</span>' + pair(v.right) + '</div>' +
+      '<p class="actb__vs-title">' + esc(v.title) + '</p>' +
+      '<p class="actb__vs-sub">' + esc(v.sub) + '</p>' +
+    '</div>';
+  }
+
   function renderPanel() {
     var d = currentData();
 
-    /* On Open Play the chip carries the role too — "OPEN PLAY · HOST" — so the
-       point of view is stated on the image, not only on the toggle below it.
-       Open Match has no role, so it stays a single label. */
-    var chip = esc(d.tag) + (d.hasRole
-      ? '<i class="actb__chip-sep" aria-hidden="true"></i>' + esc(role)
-      : '');
+    /* No photo: the panel opens on the role toggle (Open Play), the matchup
+       (Open Match) or straight on the features (GameTime). The headline figure
+       that used to sit on the photo now leads the stats row at the bottom. */
+    var lead = d.hasRole
+      ? '<div class="actb__lead">' +
+          '<div class="actb__lead-main">' + rolesHTML() +
+            '<p class="actb__desc">' + esc(d.lead) + '</p>' +
+          '</div>' +
+          proofHTML(d.avatars, d.avatarsNote) +
+        '</div>'
+      : (d.versus ? versusHTML(d.versus) : '');
+
+    var micros = (d.giant ? [{ value: d.giant, label: d.giantLabel, star: false }] : []).concat(d.micros || []);
+    var foot = (micros.length ? '<div class="actb__micros">' + microsHTML(micros) + '</div>' : '') +
+      '<a class="actb__cta' + (d.ctaStyle === 'link' ? ' actb__cta--link' : '') + '" href="' + esc(d.href) + '">' + esc(d.cta) + ARROW + '</a>';
 
     panel.innerHTML =
-      '<div class="actb__media">' +
-        '<img src="' + esc(ASSETS + d.image) + '" alt="' + esc(d.imageAlt) + '">' +
-        '<span class="actb__scrim" aria-hidden="true"></span>' +
-        '<span class="actb__chip">' + chip + '</span>' +
-        '<div class="actb__overlay">' +
-          '<span class="actb__giant">' + esc(d.giant) + '</span>' +
-          '<span class="actb__giant-lbl">' + esc(d.giantLabel) + '</span>' +
-        '</div>' +
-      '</div>' +
-      '<div class="actb__lead">' +
-        '<div class="actb__lead-main">' +
-          /* No heading here on purpose: the active tab and the chip on the
-             image both already say the activity name. The panel is still
-             named for assistive tech via aria-labelledby on the tab. */
-          (d.hasRole ? rolesHTML() : '') +
-          '<p class="actb__desc">' + esc(d.desc) + '</p>' +
-        '</div>' +
-        proofHTML(d.avatars, d.avatarsNote) +
-      '</div>' +
-      '<div class="actb__foot">' +
-        '<div class="actb__micros">' + microsHTML(d.micros) + '</div>' +
-        '<a class="actb__cta" href="' + esc(d.href) + '">' + esc(d.cta) + ARROW + '</a>' +
-      '</div>';
+      lead +
+      featuresHTML(d.features) +
+      '<div class="actb__foot">' + foot + '</div>';
 
     panel.setAttribute('aria-labelledby', 'actb-tab-' + d.id);
 
