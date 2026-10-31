@@ -21,6 +21,27 @@
 
   var ASSETS = root.dataset.actbAssets || 'assets/';
 
+  /* Feature-list icons live in assets/icons (Figma exports). Each entry is
+     { icon, w, h } — the glyph's own size, centred in a 48px tile, so it must
+     not be stretched to the tile.
+
+     Imagery: the panel photo and the avatar faces are being supplied
+     separately. Until then `image` is empty and `avatars` holds empty strings —
+     render() draws the same slots without a picture in them. Put the file names
+     back here when the assets land. */
+  var ICON = {
+    pin:      { icon: 'map-pin.svg',     w: 15.8,  h: 20.3 },
+    userPlus: { icon: 'user-plus.svg',   w: 21.3,  h: 17.3 },
+    users:    { icon: 'users.svg',       w: 20.8,  h: 17.3 },
+    calendar: { icon: 'calendar.svg',    w: 19.8,  h: 19.8 },
+    card:     { icon: 'credit-card.svg', w: 19.8,  h: 14.8 },
+    search:   { icon: 'search-zoom.svg', w: 17.8,  h: 17.8 },
+    zap:      { icon: 'zap.svg',         w: 16.8,  h: 21.8 },
+    chart:    { icon: 'bar-chart.svg',   w: 17.8,  h: 15.8 },
+    bell:     { icon: 'bell.svg',        w: 19.8,  h: 20.8 }
+  };
+  function feat(ic, title, desc) { return { icon: ICON[ic], title: title, desc: desc }; }
+
   var ACTIVITIES = [
     {
       id: 'open-play',
@@ -28,12 +49,19 @@
       title: 'Open Play',
       tag: 'Open Play',
       hasRole: true,
-      image: 'activity-open-play.jpg',
+      image: '',            /* was activity-open-play.jpg */
       imageAlt: 'Players in an open play session',
       href: 'open-play.html',
       roles: {
         host: {
-          desc: 'Create a session, set player limits, and follow the game as it runs. Manage participants and payments from one place.',
+          /* Figma only specifies the participant view. Host copy below is
+             adapted from the previous description — review with design. */
+          tagline: 'Host Your Game. Fill Every Spot.',
+          features: [
+            feat('calendar', 'Create a Session', 'Set the court, time, and player limit in a few taps.'),
+            feat('users', 'Manage Participants', 'See who has joined and keep the roster full until game day.'),
+            feat('card', 'Payments Tracked', 'Collect participant payments and follow them from one place.')
+          ],
           giant: '12,000+',
           giantLabel: 'Sessions / month',
           cta: 'What you can do as a Host',
@@ -43,14 +71,20 @@
           href: 'open-play-host.html'
         },
         participant: {
-          desc: 'Find open sessions near you, join in one tap, and split the court fee automatically — no group-chat math.',
+          tagline: 'Find Your Game. Meet New People.',
+          features: [
+            feat('pin', 'Discover Nearby Sessions', 'Find Open Play games happening near you.'),
+            feat('userPlus', 'Join with Ease', 'Explore available sessions and join whenever you find one that suits you.'),
+            feat('users', 'Play with Your Community', 'Meet new people and connect with fellow players who share your passion.')
+          ],
           giant: '90,000+',
           giantLabel: 'Active players',
           cta: 'Find sessions near you',
           /* Faces only on this side of the toggle: 90,000+ counts people, so
              showing a few makes the figure concrete. The host figure counts
-             sessions, where a row of portraits would say nothing. */
-          avatars: ['avatar-1.jpg', 'avatar-2.jpg', 'avatar-3.jpg', 'avatar-4.jpg', 'avatar-5.jpg'],
+             sessions, where a row of portraits would say nothing.
+             Empty for now (was avatar-1…5.jpg) — see the note above. */
+          avatars: ['', '', '', '', ''],
           avatarsNote: '100+ joined this week'
         }
       },
@@ -65,16 +99,46 @@
       title: 'Open Match',
       tag: 'Open Match',
       hasRole: false,
-      image: 'activity-open-match.jpg',
+      image: '',            /* was activity-open-match.jpg */
       imageAlt: 'Two players in a competitive match',
       href: 'open-match.html',
-      desc: 'Challenge other players, choose your match format, and find balanced opponents through ratings — every match stays close and fun.',
+      /* Not in the Figma update — copy adapted from the previous description. */
+      tagline: 'Challenge Players. Prove Your Level.',
+      features: [
+        feat('search', 'Find Balanced Opponents', 'Get matched with players at your level through ratings.'),
+        feat('zap', 'Choose Your Format', 'Pick the match format that suits you and set it up in minutes.'),
+        feat('chart', 'Every Match Counts', 'Results feed your rating, so every match stays close and fun.')
+      ],
       giant: '5,400+',
       giantLabel: 'Matches / month',
       cta: 'Learn about Open Match',
       micros: [
         { value: '4.8', label: 'Match rating', star: true }
       ]
+    },
+    {
+      /* New in the 2026-10 design. Figma names the tab only — the panel copy
+         below is PLACEHOLDER until product supplies GameTime's content, and it
+         deliberately carries no figure or micro-stats so nothing made-up is
+         shown as data. */
+      id: 'gametime',
+      num: '03',
+      title: 'GameTime',
+      tag: 'GameTime',
+      hasRole: false,
+      image: '',
+      imageAlt: '',
+      href: '#',
+      tagline: 'Your Regular Game, Sorted.',
+      features: [
+        feat('calendar', 'Keep a Regular Slot', 'Lock in the same time each week with the same group.'),
+        feat('userPlus', 'Invite Your Squad', 'Bring your regular players in with one tap.'),
+        feat('bell', 'Never Miss a Game', 'Everyone gets a reminder before the game starts.')
+      ],
+      giant: '',
+      giantLabel: '',
+      cta: 'Learn about GameTime',
+      micros: []
     }
   ];
 
@@ -110,7 +174,8 @@
       /* A role may point somewhere of its own — host has its own page, while
          participant still falls back to the activity's. */
       image: a.image, imageAlt: a.imageAlt, href: r.href || a.href, micros: a.micros,
-      desc: r.desc, giant: r.giant, giantLabel: r.giantLabel, cta: r.cta,
+      tagline: r.tagline, features: r.features,
+      giant: r.giant, giantLabel: r.giantLabel, cta: r.cta,
       avatars: r.avatars, avatarsNote: r.avatarsNote
     };
   }
@@ -177,7 +242,9 @@
     return '<div class="actb__proof">' +
       '<div class="actb__avatars" aria-hidden="true">' +
         list.map(function (f) {
-          return '<img class="actb__avatar" src="' + esc(ASSETS + f) + '" alt="">';
+          return f
+            ? '<img class="actb__avatar" src="' + esc(ASSETS + f) + '" alt="">'
+            : '<span class="actb__avatar actb__avatar--empty"></span>';
         }).join('') +
       '</div>' +
       (note ? '<p class="actb__proof-note">' + esc(note) + '</p>' : '') +
@@ -195,6 +262,21 @@
       '</div>';
   }
 
+  /* Icon tile + title + one line of description (Figma: Activity / Feature item). */
+  function featuresHTML(list) {
+    if (!list || !list.length) return '';
+    return '<ul class="actb__features">' + list.map(function (f) {
+      return '<li class="actb__feature">' +
+        '<span class="actb__ficon" aria-hidden="true">' +
+          '<img src="' + esc(ASSETS + 'icons/' + f.icon.icon) + '" alt="" ' +
+          'width="' + f.icon.w + '" height="' + f.icon.h + '">' +
+        '</span>' +
+        '<span class="actb__ftext"><span class="actb__ftitle">' + esc(f.title) + '</span>' +
+        '<span class="actb__fdesc">' + esc(f.desc) + '</span></span>' +
+      '</li>';
+    }).join('') + '</ul>';
+  }
+
   function renderPanel() {
     var d = currentData();
 
@@ -206,14 +288,16 @@
       : '');
 
     panel.innerHTML =
-      '<div class="actb__media">' +
-        '<img src="' + esc(ASSETS + d.image) + '" alt="' + esc(d.imageAlt) + '">' +
+      '<div class="actb__media' + (d.image ? '' : ' actb__media--empty') + '">' +
+        (d.image ? '<img src="' + esc(ASSETS + d.image) + '" alt="' + esc(d.imageAlt) + '">' : '') +
         '<span class="actb__scrim" aria-hidden="true"></span>' +
         '<span class="actb__chip">' + chip + '</span>' +
-        '<div class="actb__overlay">' +
-          '<span class="actb__giant">' + esc(d.giant) + '</span>' +
-          '<span class="actb__giant-lbl">' + esc(d.giantLabel) + '</span>' +
-        '</div>' +
+        (d.giant
+          ? '<div class="actb__overlay">' +
+              '<span class="actb__giant">' + esc(d.giant) + '</span>' +
+              '<span class="actb__giant-lbl">' + esc(d.giantLabel) + '</span>' +
+            '</div>'
+          : '') +
       '</div>' +
       '<div class="actb__lead">' +
         '<div class="actb__lead-main">' +
@@ -221,12 +305,13 @@
              image both already say the activity name. The panel is still
              named for assistive tech via aria-labelledby on the tab. */
           (d.hasRole ? rolesHTML() : '') +
-          '<p class="actb__desc">' + esc(d.desc) + '</p>' +
+          '<p class="actb__desc">' + esc(d.tagline) + '</p>' +
         '</div>' +
         proofHTML(d.avatars, d.avatarsNote) +
       '</div>' +
+      featuresHTML(d.features) +
       '<div class="actb__foot">' +
-        '<div class="actb__micros">' + microsHTML(d.micros) + '</div>' +
+        (d.micros.length ? '<div class="actb__micros">' + microsHTML(d.micros) + '</div>' : '<span></span>') +
         '<a class="actb__cta" href="' + esc(d.href) + '">' + esc(d.cta) + ARROW + '</a>' +
       '</div>';
 

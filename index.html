@@ -19,7 +19,6 @@
 <link rel="stylesheet" href="styles/chrome.css">
 <link rel="stylesheet" href="components/persona-hero/persona-hero.css">
 <link rel="stylesheet" href="components/store-rating/store-rating.css">
-<link rel="stylesheet" href="components/marquee/marquee.css">
 <link rel="stylesheet" href="components/activity-board/activity-board.css">
 <link rel="stylesheet" href="components/padellevels-rating/padellevels-rating.css">
 <link rel="stylesheet" href="components/ad-slot/ad-slot.css">
@@ -75,14 +74,34 @@
 </nav>
 
 <!-- 2. PERSONA HERO -->
-<section class="persona-hero" data-persona-hero aria-label="AYO persona hero"
-         data-video-default="assets/hero.mp4"
-         data-video-host="assets/hero-host.mp4"
-         data-video-venue="assets/hero-venue.mp4"
-         data-video-business="assets/hero-partner.mp4">
+<!-- Background imagery (photo, video, award badge) is intentionally absent for
+     now — the new assets are being supplied separately. The component already
+     runs without a video: persona-hero.js skips the cross-fade when there is no
+     .ph-video, and the dark --bg-dark field plus the scrim carry the type.
+     To restore: add data-video-* attributes and a .ph-video element back. -->
+<section class="persona-hero ph--switch-top" data-persona-hero aria-label="AYO persona hero">
   <div class="ph-media" aria-hidden="true"></div>
-  <video class="ph-video is-active" src="assets/hero.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
   <div class="ph-scrim" aria-hidden="true"></div>
+
+  <div class="ph-wrap">
+    <div class="ph-switcher ph-switcher--top">
+      <div class="ph-switch-main">
+        <button class="ph-toggle" type="button" data-ph-toggle aria-label="Pause persona rotation">
+          <svg class="ph-ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+          <svg class="ph-ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+        </button>
+        <div>
+          <!-- Static tabs = no-JS fallback. JS rebuilds them from data. -->
+          <div class="ph-tabs" role="tablist" aria-label="Choose persona" data-ph-tabs>
+            <button class="ph-tab is-active" type="button" role="tab" aria-selected="true">Player</button>
+            <button class="ph-tab" type="button" role="tab" aria-selected="false">Host</button>
+            <button class="ph-tab" type="button" role="tab" aria-selected="false">Venue Owner</button>
+            <button class="ph-tab" type="button" role="tab" aria-selected="false">Business Partner</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="ph-main">
     <div class="ph-wrap">
@@ -99,23 +118,7 @@
   </div>
 
   <div class="ph-wrap">
-    <div class="ph-switcher">
-      <div class="ph-switch-main">
-        <button class="ph-toggle" type="button" data-ph-toggle aria-label="Pause persona rotation">
-        <svg class="ph-ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-        <svg class="ph-ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
-      </button>
-        <div>
-          <!-- Static tabs = no-JS fallback. JS rebuilds them from data. -->
-          <div class="ph-tabs" role="tablist" aria-label="Choose persona" data-ph-tabs>
-            <button class="ph-tab is-active" type="button" role="tab" aria-selected="true">Player</button>
-            <button class="ph-tab" type="button" role="tab" aria-selected="false">Host</button>
-            <button class="ph-tab" type="button" role="tab" aria-selected="false">Venue Owner</button>
-            <button class="ph-tab" type="button" role="tab" aria-selected="false">Business Partner</button>
-          </div>
-        </div>
-      </div>
-
+    <div class="ph-proof-row">
       <div class="ph-proof">
         <div class="store-rating">
           <p class="sr-label">User rating</p>
@@ -148,39 +151,57 @@
   <div class="ph-stats">
     <div class="ph-wrap">
       <div class="ph-stats-in">
-        <div class="ph-stat"><span class="ph-stat-num" data-to="90000" data-suffix="+">90,000+</span><span class="ph-stat-lbl">Active players</span></div>
+        <div class="ph-stat"><span class="ph-stat-num" data-to="900000" data-suffix="+">900,000+</span><span class="ph-stat-lbl">Active players</span></div>
         <div class="ph-stat"><span class="ph-stat-num" data-to="150" data-suffix="+">150+</span><span class="ph-stat-lbl">Cities</span></div>
-        <div class="ph-stat"><span class="ph-stat-num" data-to="1500" data-suffix="+">1,500+</span><span class="ph-stat-lbl">Sports venues</span></div>
+        <div class="ph-stat"><span class="ph-stat-num" data-to="3000" data-suffix="+">3,000+</span><span class="ph-stat-lbl">Sports venues</span></div>
         <div class="ph-stat"><span class="ph-stat-num" data-to="3000" data-suffix="+">3,000+</span><span class="ph-stat-lbl">Courts</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 3.5 MARQUEE — running text, closes the dark hero block -->
-<!-- Courts only for now. The city row this used to carry is still documented in
-     components/marquee/preview.html if it comes back. -->
-<section class="marquee" aria-label="AYO court coverage">
+<!-- 3. SPORTS — bento of the biggest sports, then a text row for the rest.
+     Each tile has a slot (.spt__art) for its sport illustration; the artwork is
+     being supplied separately, so the slots are empty for now. -->
+<section class="spt" id="sports" aria-labelledby="spt-title">
+  <div class="wrap container-fluid">
+    <div class="spt__head">
+      <h2 class="spt__title" id="spt-title">One app, many sports</h2>
+      <p class="spt__sub">Find games, courts and community for the sport you play.</p>
+    </div>
 
-  <div class="mq-row is-sub" data-mq-row data-mq-speed="45" data-mq-dir="right">
-    <div class="mq-track" data-mq-track>
-      <div class="mq-group" data-mq-group>
-        <span class="mq-item">3,700+ Padel Courts</span>
-        <span class="mq-dot" aria-hidden="true"></span>
-        <span class="mq-item">1,400+ Badminton Courts</span>
-        <span class="mq-dot" aria-hidden="true"></span>
-        <span class="mq-item">400+ Tennis Courts</span>
-        <span class="mq-dot" aria-hidden="true"></span>
-        <span class="mq-item">200+ Mini Soccer Courts</span>
-        <span class="mq-dot" aria-hidden="true"></span>
-        <span class="mq-item">200+ Futsal Courts</span>
-        <span class="mq-dot" aria-hidden="true"></span>
-        <span class="mq-item">100+ Pickleball Courts</span>
-        <span class="mq-dot" aria-hidden="true"></span>
+    <div class="spt__bento">
+      <a class="spt__tile spt__tile--feature" href="#">
+        <span class="spt__badge">Most courts on AYO</span>
+        <span class="spt__feature-body">
+          <span class="spt__count-big"><b>4,990+</b><span>courts</span></span>
+          <span class="spt__name spt__name--lg">Padel</span>
+        </span>
+        <span class="spt__art spt__art--feature" aria-hidden="true"></span>
+      </a>
+
+      <div class="spt__rest">
+        <div class="spt__row">
+          <!-- Badminton's name is set at 24px in Figma while every other tile uses
+               20px. Kept as designed; flagged for design review. -->
+          <a class="spt__tile" href="#"><span class="spt__name spt__name--lg">Badminton</span><span class="spt__count"><b>1,500+</b> courts</span><span class="spt__art" aria-hidden="true"></span></a>
+          <a class="spt__tile" href="#"><span class="spt__name">Tennis</span><span class="spt__count"><b>570+</b> courts</span><span class="spt__art" aria-hidden="true"></span></a>
+          <a class="spt__tile" href="#"><span class="spt__name">Mahjong</span><span class="spt__count"><b>940+</b> tables</span><span class="spt__art" aria-hidden="true"></span></a>
+        </div>
+        <div class="spt__row">
+          <a class="spt__tile" href="#"><span class="spt__name">Mini Soccer</span><span class="spt__count"><b>200+</b> courts</span><span class="spt__art" aria-hidden="true"></span></a>
+          <a class="spt__tile" href="#"><span class="spt__name">Futsal</span><span class="spt__count"><b>200+</b> courts</span><span class="spt__art" aria-hidden="true"></span></a>
+          <a class="spt__tile" href="#"><span class="spt__name">Pickleball</span><span class="spt__count"><b>100+</b> courts</span><span class="spt__art" aria-hidden="true"></span></a>
+          <a class="spt__tile" href="#"><span class="spt__name">Basketball</span><span class="spt__count"><b>100+</b> courts</span><span class="spt__art" aria-hidden="true"></span></a>
+        </div>
       </div>
     </div>
-  </div>
 
+    <nav class="spt__more" aria-label="Other sports on AYO">
+      <span class="spt__more-lbl">Also on AYO</span>
+      <a href="#">Mahjong</a><a href="#">Billiard</a><a href="#">Tenis Meja</a><a href="#">Squash</a><a href="#">Volley</a><a href="#">Golf</a><a href="#">Running</a><a href="#">Yoga</a><a href="#">Pilates</a><a href="#">Bowling</a><a href="#">Fitness</a><a href="#">Esport</a><a href="#">+15 more</a>
+    </nav>
+  </div>
 </section>
 
 <!-- 4. ACTIVITY (hairline editorial) -->
@@ -192,7 +213,7 @@
         <div class="actb__header">
           <div>
             <p class="actb__eyebrow">Activity</p>
-            <h2 class="actb__title" id="actb-title">Join activities, hassle-free.</h2>
+            <h2 class="actb__title" id="actb-title">Join activities, <span class="hl-block">hassle-free</span>.</h2>
           </div>
           <p class="actb__caption">Two ways to play on AYO — host your own or challenge a rival.</p>
         </div>
@@ -212,34 +233,52 @@
 <!-- 5. PADEL LEVELS -->
 <section class="plr" id="rating" aria-labelledby="plr-title">
   <div class="plr__shell">
-    <div class="plr__board reveal">
+    <div class="plr__inner reveal">
+
+      <div class="plr__header">
+        <p class="plr__eyebrow">AYO × PadelLevels</p>
+        <h2 class="plr__title" id="plr-title">Padel Player Ratings. Every match builds your level.</h2>
+      </div>
 
       <div class="plr__body">
-        <div class="plr__gutter">
-          <!-- The rating card is part of the artwork, exported from Figma as one
-               asset. Alt carries what the card says, since it is no longer text. -->
-          <img class="plr__photo" src="assets/padellevels-panel.jpg"
-               alt="PadelLevels Rating card: level 5.2 of 7.0, status calibrated, confidence 74%."
-               width="579" height="391" loading="lazy">
-        </div>
+        <!-- Example rating card, as shown in the AYO app. Built in markup so the
+             figures are live text. -->
+        <figure class="plr-card" aria-label="Example PadelLevels rating card">
+          <div class="plr-card__top">
+            <p>International Rating by PadelLevels</p>
+            <img src="assets/icons/crown.svg" alt="" width="16" height="16">
+          </div>
+          <div class="plr-card__progress">
+            <div class="plr-card__label">
+              <div class="plr-card__score">
+                <span class="plr-logo" aria-hidden="true">
+                  <img class="plr-logo__a" src="assets/icons/padellevels-mask.svg" alt="" width="21.8182" height="17.049">
+                  <img class="plr-logo__b" src="assets/icons/padellevels-vector.svg" alt="" width="19.5776" height="12.999">
+                </span>
+                <b>3.1X</b>
+                <span class="plr-card__status">Calibrating</span>
+              </div>
+              <div class="plr-card__conf"><small>Confidence</small><b>52%</b></div>
+            </div>
+            <div class="plr-card__bar" aria-hidden="true"><i></i></div>
+            <div class="plr-card__caption">
+              <a class="plr-card__learn" href="#">Learn more</a>
+              <a class="plr-card__view" href="#">View on PadelLevels <img src="assets/icons/external-link.svg" alt="" width="16" height="16"></a>
+            </div>
+          </div>
+          <div class="plr-card__rank">
+            <small>Ranking</small>
+            <div class="plr-card__ranks">
+              <span><b>10</b><em>🇮🇩 Indonesia</em></span>
+              <span><b>7</b><em>Jakarta Selatan</em></span>
+              <span><b>1</b><em>Kemang Timur</em></span>
+            </div>
+          </div>
+        </figure>
 
         <div class="plr__explain">
-          <div class="plr__intro">
-            <p class="plr__eyebrow">PadelLevels × AYO</p>
-            <h2 class="plr__title" id="plr-title">Every player, one global rating.</h2>
-          </div>
-
-          <div class="plr__detail">
-            <p class="plr__label">How it’s calculated</p>
-            <p class="plr__copy">Your performance rating is calculated from match scores and the level of the opponents you face. Beating stronger players counts for more.</p>
-            <a class="plr__cta" href="#">
-              View your PadelLevels rating
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M8 16L16 8"/><path d="M9 8h7v7"/>
-              </svg>
-            </a>
-          </div>
+          <p class="plr__label">How it’s calculated</p>
+          <p class="plr__copy">Your rating is built from real matches you've actually played, no self-ratings. Find evenly match games, accurate rating and watch your game evolve.</p>
         </div>
       </div>
 
@@ -249,65 +288,128 @@
 
 <!-- 6. BOOKING -->
 <section id="booking" aria-labelledby="bkg-title">
-  <div class="wrap container-fluid">
-  <div class="bkg__grid reveal">
+  <div class="wrap container-fluid bkg">
 
-    <div class="bkg__head">
-      <div class="bkg__head-main">
+    <div class="bkg__head reveal">
+      <div class="bkg__intro">
         <p class="bkg__eyebrow">Booking</p>
-        <h2 class="bkg__title" id="bkg-title">Book courts, done in 2 minutes.</h2>
+        <h2 class="bkg__title" id="bkg-title">One booking, two sides of the court.</h2>
+        <p class="bkg__lede">Players book a court in the AYO app. Venue owners receive and manage it in AYO Venue Management.</p>
       </div>
+      <a class="bkg__jump" href="#bkg-owners">
+        <span class="bkg__jump-ico"><img src="assets/icons/building.svg" alt="" width="16.5" height="15.6667"></span>
+        I own a venue
+        <span class="bkg__jump-arrow"><img src="assets/icons/arrow-down.svg" alt="" width="9.2" height="10.5333"></span>
+      </a>
     </div>
 
-      <article class="bkg__card">
-        <div class="bkg__media">
-          <img src="assets/booking-players.jpg" alt="" loading="lazy">
-          <span class="bkg__badge">For players</span>
-          <p class="bkg__stat">
-            <span class="bkg__stat-num">90,000+</span>
-            <span class="bkg__stat-lbl">Active players</span>
-          </p>
+    <!-- Players — AYO app -->
+    <article class="bkg__panel reveal" id="bkg-players" aria-labelledby="bkg-players-title">
+      <div class="bkg__top">
+        <div class="bkg__mock" aria-hidden="true">
+          <div class="bkg__phone">
+            <div class="bkg__screen">
+              <div><p class="m-sub">Padel · 2.1 km</p><p class="m-venue">AYO Arena Venue</p></div>
+              <div class="m-dates">
+                <span class="m-date">Thu<b>29</b></span>
+                <span class="m-date is-on">Fri<b>30</b></span>
+                <span class="m-date">Sat<b>31</b></span>
+                <span class="m-date">Sun<b>1</b></span>
+              </div>
+              <p class="m-label">Court 2 · pick a time</p>
+              <div class="m-slots"><span class="m-slot is-off">16:00</span><span class="m-slot">17:00</span><span class="m-slot">18:00</span></div>
+              <div class="m-slots"><span class="m-slot is-on">19:00</span><span class="m-slot">20:00</span><span class="m-slot is-off">21:00</span></div>
+              <div class="m-summary"><span>Fri · 19:00–20:00<b>Court 2</b></span><span class="m-book">Book now</span></div>
+            </div>
+          </div>
         </div>
-
-        <div class="bkg__lead">
-          <h3 class="bkg__name">Find your game</h3>
-          <p class="bkg__desc">Book a court, join an open session, or challenge a rated opponent — all from one app.</p>
+        <div class="bkg__copy">
+          <span class="bkg__pill">For players · AYO app</span>
+          <h3 class="bkg__h3" id="bkg-players-title">Book courts, done in 2 minutes.</h3>
+          <p class="bkg__p">Find an open court and book it in minutes. No calls, no waiting.</p>
+          <a class="bkg__btn" href="https://ayo.co.id/venues">Find a court <span class="bkg__btn-ico"><img src="assets/icons/arrow-right.svg" alt="" width="10.5333" height="9.2"></span></a>
         </div>
+      </div>
+      <ul class="bkg__feats">
+        <li class="bkg__feat"><span class="bkg__ficon"><img src="assets/icons/zap.svg" alt="" width="16.8" height="21.8001"></span><h4>Instant court booking</h4><p>See real-time availability and book without calling the venue.</p></li>
+        <li class="bkg__feat"><span class="bkg__ficon"><img src="assets/icons/search-zoom.svg" alt="" width="17.8" height="17.8"></span><h4>Find the right court</h4><p>Explore courts in one place and compare locations, prices, and facilities to find the best fit for your game</p></li>
+        <li class="bkg__feat"><span class="bkg__ficon"><img src="assets/icons/credit-card.svg" alt="" width="19.8" height="14.8"></span><h4>Flexible payment options</h4><p>Pay in full, or secure your booking with a down payment where available.</p></li>
+      </ul>
+    </article>
 
-        <ul class="bkg__list">
-          <li><span class="bkg__tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>Instant court booking, no calls</li>
-          <li><span class="bkg__tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>Open sessions with fees split automatically</li>
-          <li><span class="bkg__tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>A verified rating that follows you</li>
-        </ul>
+    <img class="bkg__connector" src="assets/icons/booking-connector.svg" alt="" width="1368" height="42">
 
-        <a class="bkg__cta" href="#">Start playing <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
-      </article>
+    <div class="bkg__jump-row">
+      <a class="bkg__jump bkg__jump--up" href="#bkg-players">
+        <span class="bkg__jump-ico"><img src="assets/icons/user.svg" alt="" width="13.1669" height="16.0835"></span>
+        I want to play
+        <span class="bkg__jump-arrow"><img src="assets/icons/arrow-down.svg" alt="" width="9.2" height="10.5333"></span>
+      </a>
+    </div>
 
-      <article class="bkg__card bkg__card--owners">
-        <div class="bkg__media">
-          <img src="assets/booking-owners.jpg" alt="" loading="lazy">
-          <span class="bkg__badge">For owners</span>
-          <p class="bkg__stat">
-            <span class="bkg__stat-num">1,500+</span>
-            <span class="bkg__stat-lbl">Venues onboard</span>
-          </p>
+    <!-- Venue owners — AVM -->
+    <article class="bkg__panel bkg__panel--owners reveal" id="bkg-owners" aria-labelledby="bkg-owners-title">
+      <div class="bkg__top">
+        <div class="bkg__copy">
+          <span class="bkg__pill bkg__pill--dark">For venue owners · AYO Venue Management</span>
+          <h3 class="bkg__h3" id="bkg-owners-title">Reach more players. Manage your venue in one place.</h3>
+          <p class="bkg__p">Get discovered on AYO, manage bookings and court schedules, track payments and grow your business with AVM.</p>
+          <a class="bkg__btn bkg__btn--dark" href="venue.html">Register your venue <span class="bkg__btn-ico"><img src="assets/icons/arrow-right.svg" alt="" width="10.5333" height="9.2"></span></a>
         </div>
-
-        <div class="bkg__lead">
-          <h3 class="bkg__name">Fill your courts</h3>
-          <p class="bkg__desc">Put empty slots in front of players already looking — and run the whole operation from one dashboard.</p>
+        <div class="bkg__mock" aria-hidden="true">
+          <div class="bkg__phone">
+            <div class="bkg__screen bkg__screen--avm">
+              <div class="m-head">
+                <span class="m-head-venue">Your Venue <img src="assets/icons/chevron-down-sm.svg" alt="" width="12" height="12"></span>
+                <span class="m-open">Open</span>
+              </div>
+              <div class="m-stats">
+                <span class="m-stat m-stat--hl"><small>Income</small><b>Rp106.785.000</b></span>
+                <span class="m-stat"><small>Reservation</small><b>256 <span class="m-up"><img src="assets/icons/arrow-up-green.svg" alt="" width="8" height="6.66667"></span></b></span>
+              </div>
+              <div class="m-chart">
+                <div class="m-chart-title"><b>Revenue overview</b><small>This year</small></div>
+                <div class="m-plot">
+                  <img src="assets/icons/revenue-line.svg" alt="" width="192" height="104">
+                  <span class="m-tip">May 2026<b>Rp10.000.000</b></span>
+                </div>
+                <div class="m-axis"><span>Jan</span><span>Mar</span><span>May</span><span>Jul</span><span>Sep</span><span>Nov</span></div>
+              </div>
+              <div class="m-upcoming">
+                <p class="m-label">Upcoming</p>
+                <div class="m-booking"><span><b>19:00 · Court 2</b><small>Booked via AYO app</small></span><span class="m-new">New</span></div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+      <ul class="bkg__feats bkg__feats--4">
+        <li class="bkg__feat"><span class="bkg__ficon"><img src="assets/icons/bell.svg" alt="" width="19.8001" height="20.8"></span><h4>Real-time bookings</h4><p>View incoming bookings, customer details, and payment statuses as soon as reservations are made.</p></li>
+        <li class="bkg__feat"><span class="bkg__ficon"><img src="assets/icons/calendar.svg" alt="" width="19.8" height="19.8"></span><h4>Schedules &amp; court availability</h4><p>Manage court schedules, pricing, and availability in one place to help prevent double bookings.</p></li>
+        <li class="bkg__feat"><span class="bkg__ficon"><img src="assets/icons/bar-chart.svg" alt="" width="17.8" height="15.8"></span><h4>Payments &amp; revenue reports</h4><p>Track revenue across transaction types with daily, weekly and monthly summaries.</p></li>
+        <li class="bkg__feat"><span class="bkg__ficon"><img src="assets/icons/ticket.svg" alt="" width="19.8" height="15.8"></span><h4>Promos &amp; staff access</h4><p>Create promotions and voucher codes, and give your staff access to help manage venue operations.</p></li>
+      </ul>
+      <div class="bkg__extra">
+        <div class="bkg__flex">
+          <h4>Flexible for venues of every size</h4>
+          <ul class="bkg__checks">
+            <li><span class="bkg__check"><img src="assets/icons/check.svg" alt="" width="13.1667" height="9.83334"></span>Manage anything from a single court to multiple venue locations.</li>
+            <li><span class="bkg__check"><img src="assets/icons/check.svg" alt="" width="13.1667" height="9.83334"></span>Keep owners and staff aligned with shared schedules.</li>
+            <li><span class="bkg__check"><img src="assets/icons/check.svg" alt="" width="13.1667" height="9.83334"></span>Manage your venue through your phone or desktop.</li>
+          </ul>
+        </div>
+        <div class="bkg__steps">
+          <h4>Join in 4 steps</h4>
+          <ol>
+            <li class="bkg__step is-current"><span class="bkg__marker"><span class="bkg__num">1</span><span class="bkg__line"></span></span><b>Register</b><span>Submit your venue and business details.</span></li>
+            <li class="bkg__step"><span class="bkg__marker"><span class="bkg__num">2</span><span class="bkg__line"></span></span><b>Get verified</b><span>The AYO team reviews your information.</span></li>
+            <li class="bkg__step"><span class="bkg__marker"><span class="bkg__num">3</span><span class="bkg__line"></span></span><b>Set up your venue</b><span>Complete your venue details, courts, schedules, and pricing.</span></li>
+            <li class="bkg__step"><span class="bkg__marker"><span class="bkg__num">4</span><span class="bkg__line"></span></span><b>Go live</b><span>Start managing your venue and receiving booking through AYO.</span></li>
+          </ol>
+        </div>
+      </div>
+    </article>
 
-        <ul class="bkg__list">
-          <li><span class="bkg__tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>Live schedule, no double bookings</li>
-          <li><span class="bkg__tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>Payments settled and reconciled for you</li>
-          <li><span class="bkg__tick" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.2 5 8.2 9.2 4"/></svg></span>Occupancy insights per court, per hour</li>
-        </ul>
-
-        <a class="bkg__cta" href="venue.html">Become venue partner <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
-      </article>
-
-  </div>
   </div>
 </section>
 
@@ -331,9 +433,8 @@
           <a class="ayo-btn primary" href="partner.html">Read more <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
         </div>
       </div>
-      <div class="b2b-visual reveal">
-        <img src="assets/b2b-community.jpg" alt="" loading="lazy">
-      </div>
+      <!-- Photo slot — the image is being supplied separately. -->
+      <div class="b2b-visual reveal" aria-hidden="true"></div>
     </div>
   </div>
 </section>
@@ -372,7 +473,7 @@
       <div class="st__head">
         <div>
           <p class="eyebrow-num">Stories</p>
-          <h2 class="st__title" id="st-title">From the people who play every week.</h2>
+          <h2 class="st__title" id="st-title">From the people who <span class="hl-block">play every week</span>.</h2>
         </div>
         <div class="st__aside">
           <p class="st__note">Four topics. Four players.<br>Pick one &mdash; the story follows.</p>
@@ -485,7 +586,7 @@
 <section class="ctaband reveal">
   <div class="wrap container-fluid">
     <h2>Start playing together today.</h2>
-    <p>90,000+ players have already joined. Find a court, join an Open Play session, and meet opponents at your level — free, no sign-up fee.</p>
+    <p>900,000+ users have already joined. Find a court, join an Open Play session, and meet opponents at your level!</p>
     <a class="ayo-btn primary lg" href="#">Download the app</a>
   </div>
 </section>
@@ -503,9 +604,9 @@
       </div>
     </div>
     <div class="foot-cols">
-      <div class="ayo-foot-col"><h4>Product</h4><a href="#aktivitas">Activity</a><a href="#booking">Booking</a><a href="#cerita">Community</a><a href="#rating">PadelLevels</a></div>
-      <div class="ayo-foot-col"><h4>Company</h4><a href="#">About Us</a><a href="#partner">Partner with Us</a><a href="#">Blog</a><a href="#">Careers</a></div>
-      <div class="ayo-foot-col"><h4>Support</h4><a href="#">Help Center</a><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Contact</a></div>
+      <div class="ayo-foot-col"><h4>Company</h4><a href="#">About Us</a><a href="#">Policies &amp; Privacy</a><a href="#">Terms &amp; Conditions</a></div>
+      <div class="ayo-foot-col"><h4>Ecosystem</h4><a href="#aktivitas">Activity</a><a href="#rating">PadelLevels</a><a href="#booking">Booking</a><a href="venue.html">Venue Owner</a><a href="partner.html">Partnership</a></div>
+      <div class="ayo-foot-col"><h4>Support</h4><a href="#">Contact us</a></div>
       <div class="ayo-foot-col">
         <h4>Follow us</h4>
         <div class="foot-social">
@@ -522,8 +623,7 @@
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© 2026 AYO</span>
-      <div class="legal"><a href="#">Terms of service</a><a href="#">Privacy policy</a><a href="#">Cookie policy</a><a href="#">Help</a></div>
+      <span>© 2026 AYO All Right Reserved</span>
     </div>
   </div>
 </footer>
@@ -537,7 +637,6 @@
 <script src="scripts/home.js"></script>
 <script src="scripts/chrome.js"></script>
 <script src="components/persona-hero/persona-hero.js"></script>
-<script src="components/marquee/marquee.js"></script>
 <script src="components/activity-board/activity-board.js" defer></script>
 </body>
 </html>

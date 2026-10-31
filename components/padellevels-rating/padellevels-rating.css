@@ -1,60 +1,42 @@
 /* ==========================================================================
    AYO — PadelLevels Rating
-   Calm two-panel band: a white rating card on the left, explainer copy on the
-   right. Full-bleed off-white field, no frame and no rules — the field and
-   the white card carry the structure on their own. Supporting section, not a
-   hero — quiet on purpose.
+   Full-bleed off-white band: heading on top, then the PadelLevels skill card
+   beside a short explainer. The card is built in markup (not an exported
+   image) so its numbers stay live text and render crisply at any DPR.
    Depends on: styles/tokens.css (tokens only). No JS.
 
-   Anatomy:  .plr                      section
+   Anatomy:  .plr                      section (field colour)
                .plr__shell             site container (aligns with nav/hero)
-                 .plr__board           reveal wrapper (colour is on .plr)
-                   .plr__body          two columns
-                     .plr__gutter      left cell — the illustration
-                     .plr__explain     right cell, centred on the illustration
-                       .plr__intro     eyebrow + section heading
-                       .plr__detail    label + copy + the section's one CTA
+                 .plr__inner           1032px content column, reveal target
+                   .plr__header        eyebrow + heading
+                   .plr__body          card | explainer
+                     .plr-card         PadelLevels skill card
+                     .plr__explain     label + copy
    ========================================================================== */
 
 .plr {
-  /* Component-local names on the left, design-system tokens on the right.
-     Values with no token equivalent are written literally and marked. */
   --plr-red: var(--brand);
   --plr-ink: var(--text-default);
   --plr-ink-muted: rgb(97, 97, 97);          /* no token */
   --plr-ink-faint: rgb(140, 140, 140);       /* no token */
-  --plr-slash: rgb(150, 150, 150);           /* no token */
-  /* oklch(0.98 0 0) — neutral, no chroma. Declared twice on purpose: engines
-     without oklch keep the hex, newer ones take the second and get the exact
-     value the picker produced instead of a rounded 8-bit approximation.
-     Full-bleed, so this is the section's own colour, not a panel on the page. */
   --plr-field: #f8f8f8;
   --plr-field: oklch(0.98 0 0);
-  --plr-card: var(--bg-white);
-  --plr-track: rgba(26, 25, 25, .1);
-  --plr-btn-border: rgba(26, 25, 25, .22);
 
-  padding: clamp(48px, 8.6vw, 124px) 0;
+  padding: clamp(40px, 3.9vw, 56px) 0;
   background: var(--plr-field);
   color: var(--plr-ink);
   font-family: var(--font-sans);
 }
 
-/* Fallbacks apply when the component stands alone (preview); inside a page the
-   host page's own --container/--edge win. */
 .plr__shell {
   width: 100%; max-width: var(--container, 1440px);
   margin: 0 auto; padding: 0 var(--edge, clamp(16px, 2.5vw, 40px));
 }
-/* The colour lives on .plr and runs edge to edge, so this is a plain wrapper —
-   it exists only to carry the reveal-on-scroll class. No radius: rounded corners
-   on a full-bleed band would leave page-white slivers at each corner, which is
-   the exact gap this change removes. */
+/* Figma insets this band to a 1032px column (204px each side at 1440). */
+.plr__inner { max-width: 1032px; margin: 0 auto; display: flex; flex-direction: column; gap: 60px; }
+
 /* ---- Header ---------------------------------------------------------------- */
-/* Horizontal padding removed with the frame: the board used to be an inset
-   panel, so 44px of its own made sense. Full-bleed, that same padding pushes
-   the title 44px further in than the nav and the hero. The shell sets the edge
-   now — everything below aligns to it. */
+.plr__header { display: flex; flex-direction: column; gap: 12px; }
 .plr__eyebrow {
   font-family: var(--font-mono); font-size: 13px; font-weight: var(--fw-semibold);
   text-transform: uppercase; letter-spacing: .14em;
@@ -62,154 +44,75 @@
 }
 .plr__title {
   font-weight: var(--fw-extrabold);
-  font-size: clamp(28px, 3vw, 40px); line-height: 1.04; letter-spacing: -.02em;
+  font-size: clamp(28px, 2.8vw, 40px); line-height: 1.04; letter-spacing: -.02em;
 }
 
 /* ---- Body ------------------------------------------------------------------ */
-/* Card first, explainer second — the figure is the point of the section and
-   the copy annotates it. The card column is the NARROWER of the two: its job is
-   to hold one row of numbers, and past that width the stats drift apart and the
-   card starts reading as an empty panel. */
-.plr__body {
-  display: grid; grid-template-columns: 579fr 747fr;
-  gap: clamp(24px, 3vw, 42px);
-}
-
-/* Both columns are centred on the same axis, which is what holds the section
-   together now that the heading sits beside the artwork instead of above it. */
-.plr__explain {
-  display: flex; flex-direction: column; justify-content: center; gap: 60px;
-}
-/* Two groups, tight inside and far apart: the heading reads as one unit, the
-   explainer as another, and the space between them is what separates them. */
-.plr__intro  { display: flex; flex-direction: column; gap: 12px; }
-.plr__detail { display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
+.plr__body { display: flex; align-items: center; gap: 42px; }
+.plr__explain { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
 .plr__label {
   font-family: var(--font-mono); font-size: 13px; font-weight: var(--fw-semibold);
   text-transform: uppercase; letter-spacing: .12em;
   color: var(--plr-ink-faint);
 }
-.plr__copy {
-  max-width: 420px;
-  font-size: 20px; line-height: 1.6; color: var(--plr-ink-muted);
-}
+.plr__copy { max-width: 420px; font-size: 20px; line-height: 1.6; color: var(--plr-ink-muted); }
 
-/* ---- Illustration ----------------------------------------------------------
-   One flat image. The rating card used to be built here in markup, over a photo;
-   it is now baked into the artwork and exported from Figma as a single asset, so
-   this cell is a frame and nothing else.
-   A contained panel again, not a bleed — the heading sits beside it now, so it
-   reads as a figure rather than the section's own edge. Radius matches the card
-   baked into the artwork. The ratio is the asset's own (579×391), so object-fit
-   never has anything to crop. */
-.plr__gutter {
-  aspect-ratio: 579 / 391;
-  border-radius: 24px;
-  overflow: hidden;
+/* ---- Skill card (Figma: _Skill Card) ---------------------------------------
+   Colours are PadelLevels' own (navy field, muted greys), not AYO tokens — the
+   card represents their product. */
+.plr-card {
+  flex-shrink: 0; width: 328px; margin: 0;
+  display: flex; flex-direction: column; gap: 14px;
+  padding: 12px 16px 16px;
+  border-radius: 12px; color: #fff;
+  background: linear-gradient(14.36deg, rgb(18, 26, 49) 38.1%, rgb(34, 49, 93) 172.76%);
+  box-shadow: 0 6px 12px rgba(16, 4, 40, .2);
+  font-size: 12px; line-height: 16px;
 }
-.plr__photo {
-  width: 100%; height: 100%;
-  object-fit: cover; display: block;
-}
-.plr__card {
-  /* Above the photo. The photo is absolute, so the card needs a position of its
-     own to paint over it. */
-  position: relative;
+.plr-card small { font-size: inherit; font-weight: var(--fw-medium); color: #787373; }
+.plr-card__top { display: flex; align-items: center; gap: 4px; }
+.plr-card__top p { flex: 1; min-width: 0; font-weight: var(--fw-medium); }
+.plr-card__top img { display: block; flex-shrink: 0; }
 
-  /* Confidence drives BOTH the percentage text and the bar. Set it here and the
-     bar follows; the text below is written out, so the two must be kept in step
-     until something injects real data. */
-  --plr-confidence: 74%;
+.plr-card__progress { display: flex; flex-direction: column; gap: 8px; }
+.plr-card__label { display: flex; align-items: flex-end; gap: 16px; }
+.plr-card__score { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; }
+.plr-card__score b { font-weight: var(--fw-bold); font-size: 32px; line-height: 40px; }
+.plr-card__status { padding: 2px 8px; border-radius: var(--radius-pill); background: rgba(255, 255, 255, .2); line-height: 18px; white-space: nowrap; }
+.plr-card__conf { display: flex; flex-direction: column; align-items: flex-end; }
+.plr-card__conf b { font-weight: var(--fw-bold); line-height: 18px; }
+/* PadelLevels mark: two layers placed as in the Figma group (24×20 frame). */
+.plr-logo { position: relative; flex-shrink: 0; width: 24px; height: 20px; overflow: hidden; }
+.plr-logo img { position: absolute; display: block; }
+.plr-logo .plr-logo__a { left: 0; top: 1.27px; }
+.plr-logo .plr-logo__b { left: 2.1px; top: 5.73px; }
+/* 160 of the track's 296px — the "Calibrating" fill in Figma. */
+.plr-card__bar { height: 6px; border-radius: 100px; background: rgba(255, 255, 255, .1); }
+.plr-card__bar i { display: block; width: 54%; height: 100%; border-radius: inherit; background: var(--brand); }
+.plr-card__caption { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
+.plr-card__caption a { font-weight: var(--fw-medium); }
+.plr-card__learn { color: #1679c1; }
+.plr-card__view { display: inline-flex; align-items: center; gap: 8px; color: #fff; text-decoration: underline; text-underline-offset: 2px; }
+.plr-card__view img { display: block; }
+.plr-card__caption a:hover { opacity: .8; }
 
-  flex: 1; min-width: 0;
-  background: var(--plr-card);
-  border-radius: 16px;
-  padding: 26px;
-  display: flex; flex-direction: column; gap: 18px;
+.plr-card__rank { display: flex; flex-direction: column; gap: 4px; }
+.plr-card__ranks { display: flex; gap: 4px; }
+.plr-card__ranks > span {
+  flex: 1; min-width: 0; padding: 8px 16px; border-radius: 8px;
+  background: rgba(255, 255, 255, .06);
+  display: flex; flex-direction: column; align-items: center; gap: 2px; text-align: center;
 }
-.plr__card-head {
-  display: flex; align-items: center; gap: 9px;
-  font-weight: var(--fw-semibold); font-size: 14px; color: var(--plr-ink);
-}
-.plr__card-head .plr__mark { flex-shrink: 0; display: block; }
-/* Only the card carries the mark now. Belt and braces: if only one of the
-   width/height attributes is ever edited, this keeps it from stretching. */
-.plr__mark { aspect-ratio: 108 / 90; height: auto; }
+.plr-card__ranks b { font-weight: var(--fw-bold); line-height: 18px; }
+.plr-card__ranks em { font-style: normal; font-size: 10px; line-height: 12px; color: #9b9797; white-space: nowrap; }
 
-/* Numbers and bar share one column so the bar sits tight under the figures
-   rather than floating in the card's 22px rhythm. */
-.plr__meter { display: flex; flex-direction: column; gap: 9px; }
-.plr__stats { display: flex; align-items: flex-end; gap: 28px; }
-.plr__stat-lbl {
-  display: block;
-  font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--plr-ink-faint);
+/* ---- Responsive ------------------------------------------------------------ */
+@media (max-width: 820px) {
+  .plr__inner { gap: 32px; }
+  .plr__body { flex-direction: column; align-items: flex-start; gap: 32px; }
+  .plr-card { width: 100%; max-width: 360px; }
+  .plr__copy { max-width: none; font-size: 18px; }
 }
-.plr__stat--status,
-.plr__stat--conf { padding-bottom: 6px; }
-/* Pushed to the far edge so the row reads level → status → confidence with the
-   percentage landing over the end of the bar it describes. */
-.plr__stat--conf { margin-left: auto; text-align: right; }
-.plr__stat-val { font-weight: var(--fw-bold); font-size: 18px; color: var(--plr-ink); }
-
-.plr__level-row { display: flex; align-items: flex-end; gap: 6px; }
-.plr__level {
-  font-family: var(--font-num); font-weight: var(--fw-bold);
-  font-size: clamp(44px, 4vw, 58px); line-height: .78; letter-spacing: -.03em;
-  color: var(--plr-ink); font-variant-numeric: tabular-nums;
-}
-.plr__scale {
-  font-family: var(--font-mono); font-size: 12px; color: var(--plr-slash);
-  padding-bottom: 6px;
-}
-
-.plr__track {
-  position: relative; height: 7px;
-  border-radius: var(--radius-pill); background: var(--plr-track);
-}
-.plr__fill {
-  position: absolute; left: 0; top: 0; bottom: 0;
-  width: var(--plr-confidence);
-  border-radius: var(--radius-pill); background: var(--plr-red);
-}
-
-.plr__desc {
-  max-width: 520px;
-  font-size: 14px; line-height: 1.6; color: var(--plr-ink-muted);
-}
-
-.plr__cta {
-  align-self: flex-start;
-  display: inline-flex; align-items: center; gap: 10px;
-  min-height: 44px; padding: 14px 24px;
-  font-weight: var(--fw-bold); font-size: 14px;
-  color: var(--plr-ink); text-decoration: none;
-  background: var(--plr-card);
-  border-radius: var(--radius-pill);
-  box-shadow: inset 0 0 0 1px var(--plr-btn-border);
-  transition: box-shadow .2s, background .2s;
-}
-.plr__cta:hover { box-shadow: inset 0 0 0 1px var(--plr-ink); background: var(--bg-subtle); }
-.plr__cta svg { width: 16px; height: 16px; color: var(--plr-red); flex-shrink: 0; }
-.plr__cta:focus-visible { outline: 3px solid var(--plr-red); outline-offset: 3px; }
-
-/* ---- Responsive ------------------------------------------------------------
-   Two columns need room for the illustration to stay legible beside the copy;
-   below this they stack. */
-@media (max-width: 900px) {
-  .plr__body { grid-template-columns: 1fr; row-gap: var(--space-8); }
-  .plr__copy { max-width: none; }
-  /* Side by side, the heading can sit level with the artwork. Stacked it cannot:
-     dropping it below the picture leaves the section opening on an image with
-     nothing to say what it is. display:contents lifts the two groups out of the
-     explainer and into the body's own grid, which is what makes them orderable
-     around the illustration. */
-  .plr__explain { display: contents; }
-  .plr__intro  { order: 1; }
-  .plr__gutter { order: 2; }
-  .plr__detail { order: 3; }
-}
-
-@media (max-width: 560px) {
-  .plr__cta { align-self: stretch; justify-content: center; }
+@media (max-width: 380px) {
+  .plr-card__ranks > span { padding: 8px; }
 }

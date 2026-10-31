@@ -1,69 +1,170 @@
 /* ---------- Homepage sections ---------- */
 #aktivitas{background:var(--bg-white)}
 
-/* ---------- 6. Booking (two panels in a hairline grid) ----------
-   Full-bleed on purpose: the hairline box sits at the frame edge in Figma, so
-   this band ignores the page's --edge and relies on its own 44/40px padding.
-   The hairlines are the grid showing through — one background colour, 1px of
-   padding and 1px gaps, with white children on top. Cheaper and more even than
-   borders per cell, which double up wherever two cells meet. */
-/* PadelLevels above runs its illustration flush into its own bottom edge, so
-   without this the first hairline starts the moment that photo stops. Same
-   value every other section uses, so the gap reads as the page's rhythm
-   rather than a one-off. Top only — the section still ends flush. */
-#booking{background:var(--bg-white);padding-top:clamp(24px,2.8vw,40px)}
-/* No padding, so no hairline around the outside at all. What is left is drawn
-   by the gap alone: the rule under the header and the divider between the two
-   cards. The background colour only ever shows through those 1px seams. */
-.bkg__grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(26,25,25,.16)}
-.bkg__head{position:relative;grid-column:1/-1;background:var(--bg-white);display:flex;align-items:flex-end;justify-content:space-between;gap:clamp(24px,4vw,64px);padding:44px 0}
-/* The 9px mark where the header rule meets the divider. Hung off the header's
-   bottom edge rather than measured from the top, since the header's height is
-   set by its own text. Positioned, so it paints over the cards' backgrounds. */
-.bkg__head::after{content:'';position:absolute;left:50%;bottom:0;width:9px;height:9px;background:var(--brand);transform:translate(-50%,calc(50% + .5px))}
-.bkg__head-main{display:flex;flex-direction:column;gap:10px;min-width:0}
-.bkg__eyebrow{font-family:var(--font-mono);font-size:13px;font-weight:var(--fw-semibold);letter-spacing:1.82px;color:var(--brand)}
-.bkg__title{font-weight:var(--fw-extrabold);font-size:clamp(30px,3.75vw,54px);line-height:1.02;letter-spacing:-.03em}
-/* 8px radius and a 12px inset, not the .hl treatment used elsewhere — this
-   heading's highlight is a wider, softer block. */
-.bkg__note{flex-shrink:0;text-align:right;font-family:var(--font-mono);font-weight:var(--fw-medium);font-size:14px;line-height:1.5;color:rgb(70,70,70)}
+/* Solid red block behind a phrase in a section heading (Activity, Stories).
+   Inline + clone so it still wraps cleanly on narrow screens. */
+.hl-block{background:var(--brand);color:#fff;padding:0 .22em;border-radius:var(--radius-md);
+  -webkit-box-decoration-break:clone;box-decoration-break:clone}
 
-/* Outer edge flush with the content column, inner edge held off the centre
-   divider — so the text lines up with every section above and below. */
-.bkg__card{background:var(--bg-white);padding:40px 40px 64px 0;display:flex;flex-direction:column;gap:26px}
-.bkg__card--owners{padding:40px 0 64px 40px}
-.bkg__media{position:relative;aspect-ratio:639/300;border-radius:16px;overflow:hidden;background:rgb(242,240,238);box-shadow:inset 0 0 0 1px rgba(26,25,25,.1)}
-.bkg__media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-/* Scrim over the lower 60% so the stat stays legible whatever the photo does. */
-.bkg__media::after{content:'';position:absolute;left:0;right:0;bottom:0;height:60%;background:linear-gradient(to bottom,rgba(10,10,10,0),rgba(10,10,10,.78));pointer-events:none}
-.bkg__badge{position:absolute;top:18px;left:18px;z-index:1;padding:7px 14px;border-radius:var(--radius-pill);font-family:var(--font-mono);font-size:11px;font-weight:var(--fw-semibold);letter-spacing:1.1px;text-transform:uppercase;background:var(--brand);color:var(--bg-white)}
-.bkg__card--owners .bkg__badge{background:var(--bg-white);color:var(--text-default)}
-.bkg__stat{position:absolute;left:22px;bottom:19px;z-index:1;display:flex;flex-direction:column;gap:2px}
-.bkg__stat-num{font-family:var(--font-num);font-weight:var(--fw-bold);font-size:clamp(40px,4.4vw,64px);line-height:.85;letter-spacing:-.03em;color:var(--bg-white);font-variant-numeric:tabular-nums}
-.bkg__stat-lbl{font-family:var(--font-mono);font-weight:var(--fw-medium);font-size:11px;letter-spacing:1.1px;text-transform:uppercase;color:rgba(255,255,255,.8)}
-
-.bkg__lead{display:flex;flex-direction:column;gap:11px}
-.bkg__name{font-weight:var(--fw-extrabold);font-size:clamp(24px,2.4vw,34px);line-height:1;letter-spacing:-.02em}
-.bkg__desc{max-width:440px;font-size:16px;line-height:1.6;color:var(--text-dim)}
-
-.bkg__list{list-style:none;margin:0;padding:0}
-.bkg__list li{display:flex;align-items:center;gap:14px;padding:17px 0 16px;border-top:1px solid rgba(26,25,25,.14);font-weight:var(--fw-semibold);font-size:15px}
-.bkg__list li:last-child{padding-bottom:17px}
-.bkg__tick{flex-shrink:0;width:20px;height:20px;border-radius:5px;background:var(--brand);color:var(--bg-white);display:grid;place-items:center}
-.bkg__tick svg{width:12px;height:12px;display:block}
-
-.bkg__cta{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;padding:14px 24px;font-weight:var(--fw-bold);font-size:14px;color:var(--text-default);text-decoration:none;background:var(--bg-white);border-radius:var(--radius-pill);box-shadow:inset 0 0 0 1px rgba(26,25,25,.22);transition:box-shadow .2s,background .2s}
-.bkg__cta:hover{box-shadow:inset 0 0 0 1px var(--text-default);background:var(--bg-subtle)}
-.bkg__cta svg{width:16px;height:16px;flex-shrink:0}
-.bkg__cta:focus-visible{outline:3px solid var(--brand);outline-offset:3px}
-
+/* ---------- 3. Sports bento ---------- */
+.spt{background:#f3f0ed;padding:56px 0}            /* Background/Neutral/Cream-subtle — no token yet */
+.spt .wrap{display:flex;flex-direction:column;gap:28px}
+.spt__head{display:flex;flex-direction:column;gap:12px}
+.spt__title{font-weight:var(--fw-extrabold);font-size:clamp(28px,2.5vw,36px);line-height:1.11;letter-spacing:-.02em;color:var(--bg-dark)}
+.spt__sub{font-size:16px;line-height:22px;color:#787373}
+.spt__bento{display:grid;grid-template-columns:217px minmax(0,1fr);gap:16px}
+.spt__rest{display:flex;flex-direction:column;gap:16px;min-width:0}
+.spt__row{display:flex;gap:16px}
+.spt__tile{position:relative;overflow:hidden;flex:1 1 0;min-width:0;height:110px;padding:20px;border-radius:20px;
+  background:var(--bg-white);color:var(--bg-dark-soft);display:flex;flex-direction:column;justify-content:flex-end;gap:4px;
+  transition:transform .2s cubic-bezier(.2,.7,.2,1),box-shadow .2s}
+.spt__tile:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(26,25,25,.08)}
+.spt__tile:focus-visible{outline:3px solid var(--brand);outline-offset:3px}
+.spt__tile--feature{height:236px;background:#1d4e9e;color:#fff;justify-content:space-between}
+.spt__badge{align-self:flex-start;padding:6px 12px;border-radius:var(--radius-pill);background:var(--bg-white);color:var(--bg-dark);font-weight:var(--fw-bold);font-size:14px;line-height:20px;white-space:nowrap}
+.spt__feature-body{display:flex;flex-direction:column;gap:12px}
+.spt__count-big{display:flex;flex-direction:column;gap:4px}
+.spt__count-big b{font-weight:var(--fw-extrabold);font-size:44px;line-height:44px;letter-spacing:-.03em}
+.spt__count-big span{font-size:16px;line-height:22px;opacity:.85}
+.spt__name{font-weight:var(--fw-bold);font-size:20px;line-height:24px;white-space:nowrap}
+.spt__name--lg{font-size:24px;line-height:28px}
+.spt__count{font-size:14px;line-height:20px;white-space:nowrap}
+.spt__count b{font-weight:var(--fw-extrabold)}
+/* Empty illustration slot — artwork supplied separately. Sized and placed as
+   in Figma (42px, 20px in from the top-right; the Padel tile's sits low). */
+.spt__art{position:absolute;top:20px;right:20px;width:42px;height:42px;pointer-events:none}
+.spt__art--feature{top:auto;bottom:12px;right:16px;width:53px;height:53px}
+.spt__more{display:flex;flex-wrap:wrap;align-items:center;gap:0 20px;padding-top:16px;border-top:1px solid #a0a4a8}
+.spt__more-lbl{font-weight:var(--fw-semibold);font-size:14px;line-height:20px;color:var(--bg-dark)}
+.spt__more a{padding:4px 0;font-size:14px;line-height:20px;color:#787373;transition:color .15s}
+.spt__more a:hover{color:var(--bg-dark);text-decoration:underline;text-underline-offset:3px}
 @media (max-width:900px){
-  .bkg__grid{grid-template-columns:1fr}
-  .bkg__head{flex-direction:column;align-items:flex-start;gap:var(--space-5);padding:clamp(22px,4vw,44px) 0}
-  /* One column, so there is no divider for the mark to sit on. */
-  .bkg__head::after{display:none}
-  .bkg__note{text-align:left}
-  .bkg__card,.bkg__card--owners{padding:clamp(22px,4vw,40px) 0 clamp(32px,5vw,64px)}
+  .spt__bento{grid-template-columns:1fr}
+  .spt__tile--feature{height:200px}
+  .spt__row{flex-wrap:wrap}
+  .spt__row .spt__tile{flex:1 1 calc(50% - 8px)}
+}
+
+/* ---------- 6. Booking — players panel, connector, owners panel ----------
+   Two tinted panels, one per side of a booking. The phone mock-ups are built
+   in markup rather than exported, so their copy stays live text. */
+#booking{background:var(--bg-white);padding:clamp(40px,5vw,72px) 0}
+.bkg{display:flex;flex-direction:column;gap:32px}
+.bkg__head{display:flex;align-items:flex-end;justify-content:space-between;gap:32px}
+.bkg__intro{display:flex;flex-direction:column;gap:12px;min-width:0}
+.bkg__eyebrow{font-family:var(--font-mono);font-weight:var(--fw-semibold);font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#d31223}
+.bkg__title{font-weight:var(--fw-extrabold);font-size:clamp(30px,3.06vw,44px);line-height:1.09;letter-spacing:-.02em;color:var(--bg-dark)}
+.bkg__lede{max-width:620px;font-size:18px;line-height:28px;color:#787373}
+.bkg__jump{flex-shrink:0;display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 20px;border:1px solid #a0a4a8;border-radius:var(--radius-pill);
+  background:var(--bg-white);font-weight:var(--fw-bold);font-size:16px;line-height:24px;color:var(--bg-dark);transition:border-color .15s,background .15s}
+.bkg__jump:hover{border-color:var(--bg-dark);background:var(--bg-subtle)}
+.bkg__jump-ico{width:20px;height:20px;display:grid;place-items:center;flex-shrink:0}
+.bkg__jump-arrow{width:16px;height:16px;display:grid;place-items:center;flex-shrink:0}
+.bkg__jump--up .bkg__jump-arrow img{transform:scaleY(-1)}
+.bkg__jump-row{display:flex;justify-content:flex-end}
+
+.bkg__panel{background:#f9f9f9;border-radius:28px;padding:48px;display:flex;flex-direction:column;gap:40px;scroll-margin-top:96px}
+.bkg__top{display:flex;align-items:center;gap:48px}
+.bkg__copy{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:20px}
+.bkg__pill{padding:8px 14px;border-radius:var(--radius-pill);background:var(--bg-white);box-shadow:inset 0 0 0 1px var(--bg-disabled);
+  font-family:var(--font-mono);font-weight:var(--fw-semibold);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--bg-dark)}
+.bkg__pill--dark{background:var(--bg-dark);box-shadow:none;color:#fff}
+.bkg__h3{font-weight:var(--fw-extrabold);font-size:clamp(28px,2.8vw,40px);line-height:1.1;letter-spacing:-.02em;color:var(--bg-dark)}
+.bkg__p{max-width:460px;font-size:18px;line-height:28px;color:#787373}
+.bkg__panel--owners .bkg__p{max-width:520px}
+.bkg__btn{margin-top:4px;display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 24px;border-radius:var(--radius-pill);
+  background:var(--brand);color:#fff;font-weight:var(--fw-bold);font-size:16px;line-height:24px;transition:filter .15s,transform .15s}
+.bkg__btn:hover{filter:brightness(.93);transform:translateY(-2px)}
+.bkg__btn--dark{background:var(--bg-dark)}
+.bkg__btn--dark:hover{filter:brightness(1.25)}
+.bkg__btn-ico{width:16px;height:16px;display:grid;place-items:center}
+
+.bkg__feats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;list-style:none;margin:0;padding:0}
+.bkg__feats--4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.bkg__feat{background:var(--bg-white);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:14px}
+.bkg__ficon{width:48px;height:48px;border-radius:14px;background:#f3f0ed;display:grid;place-items:center}
+.bkg__feat h4{font-weight:var(--fw-bold);font-size:18px;line-height:26px;color:var(--bg-dark)}
+.bkg__feat p{font-size:16px;line-height:22px;color:#787373}
+
+.bkg__connector{display:block;width:100%;height:42px}
+
+/* Phone mock-ups */
+.bkg__mock{flex-shrink:0;width:420px;height:420px;border-radius:24px;background:var(--bg-white);overflow:hidden;display:flex;justify-content:center;align-items:flex-end}
+.bkg__phone{width:260px;height:392px;padding:10px 10px 0;border-radius:34px 34px 0 0;background:#ebe7e0;display:flex}
+.bkg__screen{flex:1;min-width:0;display:flex;flex-direction:column;gap:12px;padding:18px 14px 0;border-radius:26px 26px 0 0;background:var(--bg-white);overflow:hidden;color:var(--bg-dark)}
+.bkg__screen--avm{gap:10px;padding:16px 12px 0;background:#f9f8f6}
+.m-sub{font-size:12px;line-height:16px;color:#787373}
+.m-venue{font-weight:var(--fw-extrabold);font-size:16px;line-height:20px}
+.m-dates,.m-slots,.m-stats{display:flex;gap:6px}
+.m-date{flex:1;display:flex;flex-direction:column;align-items:center;padding:6px 0;border:1px solid var(--bg-disabled);border-radius:10px;font-size:12px;line-height:16px}
+.m-date b{font-weight:var(--fw-bold)}
+.m-date.is-on{background:var(--bg-dark);border-color:var(--bg-dark);color:#fff}
+.m-label{font-weight:var(--fw-bold);font-size:12px;line-height:16px}
+.m-slot{flex:1;text-align:center;padding:8px 0;border:1px solid var(--bg-disabled);border-radius:8px;font-weight:var(--fw-semibold);font-size:12px;line-height:16px}
+.m-slot.is-off{background:#f3f0ed;border-color:#f3f0ed;color:#9b9797;text-decoration:line-through}
+.m-slot.is-on{background:var(--brand);border-color:var(--brand);color:#fff}
+.m-summary{margin:auto 0 12px;display:flex;align-items:center;justify-content:space-between;padding:12px;border-radius:14px;background:var(--bg-dark);font-size:12px;line-height:16px}
+.m-summary > span:first-child{display:flex;flex-direction:column;color:#9b9797}
+.m-summary b{color:#fff;font-weight:var(--fw-bold)}
+.m-book{padding:8px 12px;border-radius:var(--radius-pill);background:var(--brand);color:#fff;font-weight:var(--fw-bold)}
+.m-head{display:flex;align-items:center;justify-content:space-between;padding:0 2px}
+.m-head-venue{display:flex;align-items:center;gap:4px;font-weight:var(--fw-extrabold);font-size:14px;line-height:18px}
+.m-open{padding:2px 8px;border-radius:6px;background:#e6f6ee;color:#1b7a4b;font-weight:var(--fw-bold);font-size:10px;line-height:14px}
+.m-stat{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;padding:8px;border-radius:10px;background:var(--bg-white)}
+.m-stat--hl{border-top:2px solid var(--brand)}
+.m-stat small,.m-chart-title small,.m-booking small{font-size:10px;line-height:14px;color:#787373}
+.m-stat b{display:flex;align-items:center;gap:2px;font-weight:var(--fw-bold);font-size:14px;line-height:18px;white-space:nowrap}
+.m-up{width:16px;height:16px;display:grid;place-items:center}
+.m-chart{display:flex;flex-direction:column;gap:6px;padding:10px 10px 8px;border-radius:12px;background:var(--bg-white)}
+.m-chart-title{display:flex;align-items:baseline;justify-content:space-between}
+.m-chart-title b{font-weight:var(--fw-bold);font-size:12px;line-height:16px}
+.m-chart-title small{color:#9b9797}
+.m-plot{position:relative;width:192px;height:104px}
+.m-plot img{display:block}
+.m-tip{position:absolute;left:104px;top:70px;display:flex;flex-direction:column;padding:5px 7px;border-radius:6px;background:var(--bg-dark);font-size:10px;line-height:12px;color:#bebbbb;white-space:nowrap}
+.m-tip b{color:#fff;font-weight:var(--fw-bold)}
+.m-axis{display:flex;justify-content:space-between;font-size:10px;line-height:14px;color:#9b9797}
+.m-upcoming{display:flex;flex-direction:column;gap:6px}
+.m-booking{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1.5px solid #ec221f;border-radius:12px;background:var(--bg-white)}
+.m-booking > span:first-child{display:flex;flex-direction:column}
+.m-booking b{font-weight:var(--fw-bold);font-size:12px;line-height:16px}
+.m-new{padding:2px 8px;border-radius:var(--radius-pill);background:var(--brand);color:#fff;font-weight:var(--fw-bold);font-size:10px;line-height:14px}
+
+/* Owners: flexibility list + onboarding steps */
+.bkg__extra{display:flex;gap:48px;padding-top:32px;border-top:1px solid #ebe7e0}
+.bkg__extra h4{font-weight:var(--fw-extrabold);font-size:22px;line-height:28px;color:var(--bg-dark)}
+.bkg__flex{width:340px;flex-shrink:0;display:flex;flex-direction:column;gap:16px}
+.bkg__checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px}
+.bkg__checks li{display:flex;gap:10px;font-size:16px;line-height:24px;color:#787373}
+.bkg__check{flex-shrink:0;width:20px;height:20px;margin-top:2px;display:grid;place-items:center}
+.bkg__steps{flex:1;min-width:0;display:flex;flex-direction:column;gap:20px}
+.bkg__steps ol{list-style:none;margin:0;padding:0;display:flex;gap:16px}
+.bkg__step{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:10px}
+.bkg__marker{display:flex;align-items:center;gap:8px}
+.bkg__num{flex-shrink:0;width:32px;height:32px;border-radius:50%;border:1px solid var(--bg-dark);display:grid;place-items:center;
+  font-family:var(--font-mono);font-weight:var(--fw-semibold);font-size:14px;color:var(--bg-dark)}
+.bkg__step.is-current .bkg__num{background:var(--brand);border-color:var(--brand);color:#fff}
+.bkg__line{flex:1;height:1px;background:#9b9797}
+.bkg__step:last-child .bkg__line{display:none}
+.bkg__step b{font-weight:var(--fw-bold);font-size:16px;line-height:22px;color:var(--bg-dark)}
+.bkg__step span{font-size:14px;line-height:20px;color:#787373}
+
+@media (max-width:1100px){
+  .bkg__feats--4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .bkg__extra{flex-direction:column;gap:32px}
+  .bkg__flex{width:auto}
+}
+@media (max-width:900px){
+  .bkg__head{flex-direction:column;align-items:flex-start;gap:20px}
+  .bkg__panel{padding:24px;border-radius:20px;gap:28px}
+  .bkg__top{flex-direction:column;align-items:stretch;gap:28px}
+  .bkg__mock{width:100%;max-width:420px;height:auto;padding-top:24px;align-self:center}
+  .bkg__panel--owners .bkg__mock{order:-1}
+  .bkg__feats{grid-template-columns:1fr}
+  .bkg__feats--4{grid-template-columns:1fr}
+  .bkg__steps ol{flex-wrap:wrap;row-gap:24px}
+  .bkg__step{flex:1 1 calc(50% - 8px)}
+  .bkg__line{display:none}
 }
 
 /* ---------- 7. Marketing B2B (editorial + reach stats) ---------- */
@@ -191,8 +292,8 @@
 .st__cta svg{width:16px;height:16px;color:var(--brand)}
 /* ---------- 9. CTA band ---------- */
 .ctaband{background:var(--brand);color:#fff;text-align:center;padding:clamp(48px,7vw,96px) 0}
-.ctaband h2{font-size:clamp(30px,4.8vw,60px);font-weight:var(--fw-extrabold);letter-spacing:-.02em;line-height:1.04;max-width:20ch;margin:0 auto}
-.ctaband p{margin:var(--space-4) auto var(--space-8);max-width:46ch;color:rgba(255,255,255,.85);font-size:var(--fs-body-lg)}
+.ctaband h2{font-size:clamp(30px,4.8vw,60px);font-weight:var(--fw-extrabold);letter-spacing:-.02em;line-height:1.04;max-width:760px;margin:0 auto}
+.ctaband p{margin:var(--space-4) auto var(--space-8);max-width:430px;line-height:1.6;color:rgba(255,255,255,.85);font-size:var(--fs-body-lg)}
 .ctaband .ayo-btn.primary{background:#fff;color:var(--brand)}
 .ctaband .ayo-btn.primary:hover{background:var(--bg-cream);filter:none;transform:translateY(-2px)}
 

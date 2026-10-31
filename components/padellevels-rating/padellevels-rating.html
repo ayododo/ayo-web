@@ -11,32 +11,52 @@
      ========================================================================== -->
 <section class="plr" id="rating" aria-labelledby="plr-title">
   <div class="plr__shell">
-    <div class="plr__board reveal">
+    <div class="plr__inner reveal">
+
+      <div class="plr__header">
+        <p class="plr__eyebrow">AYO × PadelLevels</p>
+        <h2 class="plr__title" id="plr-title">Padel Player Ratings. Every match builds your level.</h2>
+      </div>
 
       <div class="plr__body">
-        <div class="plr__gutter">
-          <img class="plr__photo" src="../../assets/padellevels-panel.jpg"
-               alt="PadelLevels Rating card: level 5.2 of 7.0, status calibrated, confidence 74%."
-               width="579" height="391" loading="lazy">
-        </div>
+        <!-- Example rating card, as shown in the AYO app. Built in markup so the
+             figures are live text. -->
+        <figure class="plr-card" aria-label="Example PadelLevels rating card">
+          <div class="plr-card__top">
+            <p>International Rating by PadelLevels</p>
+            <img src="../../assets/icons/crown.svg" alt="" width="16" height="16">
+          </div>
+          <div class="plr-card__progress">
+            <div class="plr-card__label">
+              <div class="plr-card__score">
+                <span class="plr-logo" aria-hidden="true">
+                  <img class="plr-logo__a" src="../../assets/icons/padellevels-mask.svg" alt="" width="21.8182" height="17.049">
+                  <img class="plr-logo__b" src="../../assets/icons/padellevels-vector.svg" alt="" width="19.5776" height="12.999">
+                </span>
+                <b>3.1X</b>
+                <span class="plr-card__status">Calibrating</span>
+              </div>
+              <div class="plr-card__conf"><small>Confidence</small><b>52%</b></div>
+            </div>
+            <div class="plr-card__bar" aria-hidden="true"><i></i></div>
+            <div class="plr-card__caption">
+              <a class="plr-card__learn" href="#">Learn more</a>
+              <a class="plr-card__view" href="#">View on PadelLevels <img src="../../assets/icons/external-link.svg" alt="" width="16" height="16"></a>
+            </div>
+          </div>
+          <div class="plr-card__rank">
+            <small>Ranking</small>
+            <div class="plr-card__ranks">
+              <span><b>10</b><em>🇮🇩 Indonesia</em></span>
+              <span><b>7</b><em>Jakarta Selatan</em></span>
+              <span><b>1</b><em>Kemang Timur</em></span>
+            </div>
+          </div>
+        </figure>
 
         <div class="plr__explain">
-          <div class="plr__intro">
-            <p class="plr__eyebrow">PadelLevels × AYO</p>
-            <h2 class="plr__title" id="plr-title">Every player, one global rating.</h2>
-          </div>
-
-          <div class="plr__detail">
-            <p class="plr__label">How it’s calculated</p>
-            <p class="plr__copy">Your performance rating is calculated from match scores and the level of the opponents you face. Beating stronger players counts for more.</p>
-            <a class="plr__cta" href="#">
-              View your PadelLevels rating
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M8 16L16 8"/><path d="M9 8h7v7"/>
-              </svg>
-            </a>
-          </div>
+          <p class="plr__label">How it’s calculated</p>
+          <p class="plr__copy">Your rating is built from real matches you've actually played, no self-ratings. Find evenly match games, accurate rating and watch your game evolve.</p>
         </div>
       </div>
 

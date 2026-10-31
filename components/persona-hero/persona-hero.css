@@ -166,6 +166,24 @@
 .ph-tab.is-active::after { animation: ph-progress var(--ph-dwell) linear forwards; }
 .persona-hero.is-paused .ph-tab.is-active::after { animation-play-state: paused; }
 
+/* ---- Switcher-on-top layout (homepage, 2026-10 design) -----------------------
+   The persona tabs sit directly under the nav, the copy fills the middle, and
+   the social proof gets a row of its own, right-aligned above the stat band.
+   Opt-in via .ph--switch-top on the root so the original bottom-switcher
+   layout (see preview.html) keeps working unchanged. */
+.ph-switcher--top {
+  justify-content: flex-start;
+  padding-top: calc(72px + 84px);   /* nav height + the gap Figma leaves under it */
+  padding-bottom: var(--space-8);
+}
+.ph--switch-top .ph-main { padding: var(--space-8) 0; }
+.ph-proof-row {
+  position: relative; z-index: 2;
+  display: flex; justify-content: flex-end;
+  padding-bottom: var(--space-8);
+}
+.ph-proof-row .ph-proof { margin-left: 0; }
+
 /* ---- Stat band (general — does not change per persona) --------------------- */
 .ph-stats { position: relative; z-index: 2; border-top: 1px solid rgba(255,255,255,.14); }
 .ph-stats-in {
@@ -195,6 +213,8 @@
   .ph-switcher { gap: var(--space-6); }
   .ph-switch-main { gap: var(--space-4); }
   .ph-proof { margin-left: 0; width: 100%; }
+  .ph-switcher--top { padding-top: calc(72px + var(--space-8)); }
+  .ph-proof-row { justify-content: flex-start; }
   .ph-tabs { gap: var(--space-5); }
   .ph-stats-in { grid-template-columns: 1fr 1fr; gap: var(--space-6) var(--space-4); }
   .ph-stat + .ph-stat { border-left: 0; padding-left: 0; }
