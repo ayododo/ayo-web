@@ -172,8 +172,59 @@ img{max-width:100%;display:block}
   opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .22s ease-out,transform .28s cubic-bezier(.2,.7,.2,1),visibility .22s}
 .submenu::before{content:'';position:absolute;top:-12px;left:0;right:0;height:12px}
 .ayo-nav-item.has-sub:hover .submenu,.ayo-nav-item.has-sub:focus-within .submenu,.ayo-nav-item.has-sub.open .submenu{opacity:1;visibility:visible;transform:none}
-.submenu a{display:block;color:var(--text-subtle);font-size:var(--fs-body-lg);font-weight:var(--fw-medium);padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);white-space:nowrap;transition:background .15s,color .15s}
-.submenu a:hover{background:var(--bg-cream);color:var(--brand)}
+.submenu:not(.submenu--mega) > a{display:block;color:var(--text-subtle);font-size:var(--fs-body-lg);font-weight:var(--fw-medium);padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);white-space:nowrap;transition:background .15s,color .15s}
+.submenu:not(.submenu--mega) > a:hover{background:var(--bg-cream);color:var(--brand)}
+
+/* ---- Activities mega menu (Figma 26094:7914) --------------------------------
+   Built by chrome.js into .submenu[data-mega="activities"]; the plain links in
+   the markup stay as the no-JS fallback. The item goes position:static so the
+   panel hangs off .nav-in and spans the content column instead of the trigger. */
+.ayo-nav-item.has-mega{position:static}
+.submenu--mega{left:var(--edge);top:calc(100% - 9px);width:min(1232px,calc(100% - 2 * var(--edge)));min-width:0;
+  display:flex;align-items:stretch;padding:16px;border-radius:16px;background:#fff;border:0;
+  box-shadow:0 18px 44px rgba(26,25,25,.22),inset 0 1px 0 rgba(255,255,255,.85);color:var(--bg-dark-soft)}
+/* Hover bridge from the trigger down to the panel. */
+.submenu--mega::before{top:-28px;height:28px}
+.mega__col{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;padding:0 12px}
+.mega__col + .mega__col{border-left:1px solid var(--bg-disabled)}
+.mega__head{display:flex;flex-direction:column;gap:12px;padding:12px;border-radius:12px;color:inherit;text-decoration:none}
+a.mega__head{transition:background .15s}
+a.mega__head:hover{background:var(--bg-subtle)}
+a.mega__head:focus-visible,.mega__sub:focus-visible,.mega__promo:focus-visible{outline:3px solid var(--brand);outline-offset:-3px}
+.mega__ico{width:40px;height:40px;border-radius:10px;background:#fdecee;display:grid;place-items:center}
+.mega__ico img{display:block}
+.mega__txt{display:flex;flex-direction:column;gap:2px}
+.mega__title{font-weight:var(--fw-bold);font-size:16px;line-height:22px;color:var(--bg-dark-soft)}
+.mega__desc{font-size:14px;line-height:20px;color:#787373}
+.mega__desc--pending{color:#9b9797}
+.mega__cta{display:inline-flex;align-items:center;gap:4px;padding-top:6px;font-weight:var(--fw-bold);font-size:14px;line-height:20px;color:#d31223}
+.mega__cta img,.mega__sub img{display:block;flex-shrink:0}
+a.mega__head:hover .mega__cta img{transform:translateX(2px)}
+.mega__cta img{transition:transform .15s}
+/* Open Play is a group label, not a link — its two destinations sit beneath. */
+.mega__subs{padding:0 0 4px 31px}
+.mega__indent{display:flex;flex-direction:column;gap:2px;padding-left:8px;border-left:1.5px solid var(--bg-disabled)}
+.mega__sub{display:flex;align-items:center;gap:12px;min-height:56px;padding:8px 12px;border-radius:8px;color:inherit;text-decoration:none;transition:background .15s}
+.mega__sub span{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.mega__sub b{font-weight:var(--fw-regular);font-size:16px;line-height:22px;color:var(--bg-dark-soft)}
+.mega__sub small{font-size:12px;line-height:18px;color:#787373}
+.mega__sub img{opacity:0;transform:translateX(-4px);transition:opacity .15s,transform .15s}
+.mega__sub:hover,.mega__sub:focus-visible{background:var(--bg-subtle)}
+.mega__sub:hover img,.mega__sub:focus-visible img{opacity:1;transform:none}
+/* Promo slot */
+.mega__promo{flex-shrink:0;width:296px;padding-left:16px;display:flex;flex-direction:column;gap:8px;color:inherit;text-decoration:none}
+.mega__promo-card{height:210px;border-radius:12px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:42px;padding:0 31px;
+  background:linear-gradient(36.61deg,rgb(17,2,41) 61.66%,rgb(142,7,9) 183.85%);text-align:center;transition:transform .2s}
+.mega__promo:hover .mega__promo-card{transform:translateY(-2px)}
+.mega__soon{font-weight:var(--fw-semibold);font-size:20px;line-height:18.7px;letter-spacing:-.02em;color:#fff}
+.mega__promo-body{align-self:stretch;display:flex;flex-direction:column;gap:19px}
+.mega__lockup{display:flex;align-items:center;justify-content:center;gap:12.44px}
+.mega__lockup img{display:block}
+.mega__x{font-weight:var(--fw-bold);font-size:9.33px;line-height:14px;color:#fff}
+.mega__promo-caption{display:block;white-space:normal;font-size:12px;line-height:14px;color:#9b9797}
+/* PadelLevels wordmark: Figma vector parts placed inside its 118.4×24 frame. */
+.pl-mark{position:relative;width:118.4px;height:24px;overflow:hidden;flex-shrink:0}
+.pl-mark img{position:absolute}
 /* Sized and shaped like .nav-icon beside it. It used to be a bordered box
    around a ☰ glyph, which put a second button shape next to Login and left
    the bars at whatever weight the font felt like. Same 40px target, same
@@ -326,7 +377,7 @@ img{max-width:100%;display:block}
    collide with the actions, so step both back to their original values. */
 @media (max-width:1160px){
   .nav-links{gap:var(--space-5);font-size:var(--fs-body)}
-  .nav-top,.submenu a{font-size:var(--fs-body)}
+  .nav-top,.submenu:not(.submenu--mega) > a{font-size:var(--fs-body)}
 }
 
 @media (max-width:1000px){
@@ -340,7 +391,17 @@ img{max-width:100%;display:block}
   .submenu{position:static;opacity:1;visibility:visible;transform:none;display:none;min-width:0;box-shadow:none;border:0;border-radius:0;padding:0 0 var(--space-2) var(--space-4)}
   .submenu::before{display:none}
   .ayo-nav-item.open .submenu{display:block}
-  .submenu a{padding:var(--space-2) 0}
+  .submenu:not(.submenu--mega) > a{padding:var(--space-2) 0}
+  /* Mega menu in the drawer: one stacked list, no promo. */
+  .submenu--mega{width:auto;flex-direction:column;padding:0 0 var(--space-2);background:transparent;box-shadow:none}
+  .submenu--mega::before{display:none}
+  .ayo-nav-item.open .submenu--mega{display:flex}
+  .mega__col{padding:0}
+  .mega__col + .mega__col{border-left:0}
+  .mega__head{flex-direction:row;align-items:flex-start;padding:var(--space-2) 0}
+  .mega__ico{width:32px;height:32px;flex-shrink:0}
+  .mega__subs{padding-left:15px}
+  .mega__promo{display:none}
   .burger{display:inline-flex}
   .nav-in{gap:var(--space-3)}
   .nav-actions{gap:var(--space-1)}

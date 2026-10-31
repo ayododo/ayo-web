@@ -60,6 +60,58 @@
     if(burger) burger.innerHTML = '<span class="carbon-icon carbon-menu ico-open" aria-hidden="true"></span><span class="carbon-icon carbon-close ico-close" aria-hidden="true"></span>';
   }
 
+  /* Activities mega menu (Figma 26094:7914). Replaces the plain fallback links
+     inside .submenu[data-mega="activities"]. One copy here instead of one per
+     page — every page shares this nav. */
+  (function(){
+    var menu = document.querySelector('.submenu[data-mega="activities"]');
+    if(!menu) return;
+    var I = 'assets/icons/mega/';
+    var ARROW = '<img src="'+I+'arrow-brand.svg" alt="" width="16" height="16">';
+    function head(o){
+      var inner =
+        '<span class="mega__ico" aria-hidden="true"><img src="'+I+o.icon+'" alt="" width="20" height="20"></span>' +
+        '<span class="mega__txt"><span class="mega__title">'+o.title+'</span>' +
+        '<span class="mega__desc'+(o.pending?' mega__desc--pending':'')+'">'+o.desc+'</span>' +
+        (o.cta ? '<span class="mega__cta">'+o.cta+ARROW+'</span>' : '') + '</span>';
+      return o.href ? '<a class="mega__head" href="'+o.href+'">'+inner+'</a>' : '<div class="mega__head">'+inner+'</div>';
+    }
+    function sub(href, label, desc){
+      return '<a class="mega__sub" href="'+href+'"><span><b>'+label+'</b><small>'+desc+'</small></span>'+ARROW+'</a>';
+    }
+    /* [file, width, height, left, top] — placement taken from the Figma frame. */
+    var PL = [['pl-mask.svg',30.0001,23.4426,0,.43],['pl-6.svg',26.9192,17.8736,2.89,6.55],['pl-7.svg',41.7304,15.1488,31.9,5.17],
+              ['pl-1.svg',6.6496,13.7936,73.92,6.26],['pl-2.svg',29.1744,12.9536,76.12,5.23],['pl-4.svg',36.5408,15.2264,81.2,5.02],
+              ['pl-5.svg',9.2808,11.9168,90.91,9.45],['pl-3.svg',18.9328,15.0128,98.48,5.23]];
+    var plMark = '<span class="pl-mark" role="img" aria-label="PadelLevels">' + PL.map(function(p){
+      return '<img src="'+I+p[0]+'" alt="" width="'+p[1]+'" height="'+p[2]+'" style="left:'+p[3]+'px;top:'+p[4]+'px">';
+    }).join('') + '</span>';
+
+    menu.innerHTML =
+      '<div class="mega__col">' +
+        head({ icon:'tennis-ball.svg', title:'Open Play', desc:'Play with new people, no team needed' }) +
+        '<div class="mega__subs"><div class="mega__indent">' +
+          sub('https://ayo.co.id/main-bareng', 'Join activity', 'Find an open game near you') +
+          sub('open-play-host.html', 'Host activity', 'Learn how to be Host') +
+        '</div></div>' +
+      '</div>' +
+      '<div class="mega__col">' + head({ icon:'vs.svg', title:'Open Match', desc:'Bring your team and play another squad', cta:'Explore Open Match', href:'open-match.html' }) + '</div>' +
+      /* GameTime copy is still "Description pending" in Figma — shown as designed. */
+      '<div class="mega__col">' + head({ icon:'score.svg', title:'GameTime', desc:'Description pending', pending:true, cta:'Explore GameTime', href:'#' }) + '</div>' +
+      '<a class="mega__promo" href="index.html#rating">' +
+        '<span class="mega__promo-card">' +
+          '<span class="mega__soon">Coming soon</span>' +
+          '<span class="mega__promo-body">' +
+            '<span class="mega__lockup"><img src="'+I+'ayo-logotype.svg" alt="AYO" width="44" height="24"><span class="mega__x">X</span>'+plMark+'</span>' +
+            '<span class="mega__promo-caption">Go beyond your rating. See who you beat, how you’re trending, and where you rank.</span>' +
+          '</span>' +
+        '</span>' +
+        '<span class="mega__txt"><span class="mega__title">Padel rating coming up!</span><span class="mega__desc">Introduce AYO x Padellevels collaboration</span></span>' +
+      '</a>';
+    menu.classList.add('submenu--mega');
+    menu.parentElement.classList.add('has-mega');
+  })();
+
   /* nav dropdowns — hover (desktop, via CSS) + click/tap (mobile & keyboard) */
   var subTops=[].slice.call(document.querySelectorAll('.ayo-nav-item.has-sub > .nav-top'));
   function closeSubs(except){
