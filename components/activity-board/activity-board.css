@@ -136,6 +136,11 @@
 .actb__tab[aria-selected="true"] .actb__tab-arrow { opacity: 1; }
 .actb__tab:hover:not([aria-selected="true"]) .actb__tab-title { color: var(--actb-ink-muted); }
 .actb__tab:focus-visible { outline: 3px solid var(--actb-red); outline-offset: -3px; }
+/* Bootstrap reboot puts a blue ring on every focused button, mouse clicks
+   included. Drop it for pointer focus; keyboard keeps the red ring above. */
+.actb__tab:focus:not(:focus-visible),
+.actb__role:focus:not(:focus-visible),
+.actb__cta:focus:not(:focus-visible) { outline: none; }
 
 /* ---- Panel ----------------------------------------------------------------- */
 .actb__panel {
