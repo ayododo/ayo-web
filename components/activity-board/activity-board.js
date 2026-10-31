@@ -45,8 +45,6 @@
       title: 'Open Play',
       tag: 'Open Play',
       hasRole: true,
-      image: 'activity-open-play.jpg',
-      imageAlt: 'Players in an open play session',
       href: 'open-play.html',
       roles: {
         host: {
@@ -88,10 +86,8 @@
       title: 'Open Match',
       tag: 'Open Match',
       hasRole: false,
-      image: 'activity-open-match.jpg',
-      imageAlt: 'Two players in a competitive match',
       href: 'open-match.html',
-      /* No big number here: the image carries the matchup itself — two pairs
+      /* No big number here: the panel opens on the matchup itself — two pairs
          facing off — with the headline under it. */
       versus: {
         left: ['avatar-1.jpg', 'avatar-3.jpg'],
@@ -112,11 +108,6 @@
       title: 'GameTime',
       tag: 'GameTime',
       hasRole: false,
-      image: 'activity-gametime.jpg',
-      /* Photo not exported yet: render the grey placeholder instead. Remove
-         this flag once assets/activity-gametime.jpg is in the repo. */
-      imagePending: true,
-      imageAlt: 'A player hitting a forehand during a GameTime session',
       href: '#',
       giant: '5,400+',
       giantLabel: 'Matches / month',
@@ -161,7 +152,7 @@
       id: a.id, num: a.num, title: a.title, tag: a.tag, hasRole: true,
       /* A role may point somewhere of its own — host has its own page, while
          participant still falls back to the activity's. */
-      image: a.image, imageAlt: a.imageAlt, href: r.href || a.href, micros: a.micros,
+      href: r.href || a.href, micros: a.micros,
       lead: r.lead, features: r.features, giant: r.giant, giantLabel: r.giantLabel, cta: r.cta,
       avatars: r.avatars, avatarsNote: r.avatarsNote
     };
@@ -267,7 +258,7 @@
         return '<img class="actb__avatar" src="' + esc(ASSETS + f) + '" alt="">';
       }).join('') + '</span>';
     }
-    return '<div class="actb__overlay actb__overlay--versus">' +
+    return '<div class="actb__versus">' +
       '<div class="actb__vs" aria-hidden="true">' + pair(v.left) + '<span class="actb__vs-word">vs</span>' + pair(v.right) + '</div>' +
       '<p class="actb__vs-title">' + esc(v.title) + '</p>' +
       '<p class="actb__vs-sub">' + esc(v.sub) + '</p>' +
@@ -277,20 +268,9 @@
   function renderPanel() {
     var d = currentData();
 
-    /* On Open Play the chip carries the role too — "OPEN PLAY · HOST" — so the
-       point of view is stated on the image, not only on the toggle below it. */
-    var chip = esc(d.tag) + (d.hasRole
-      ? '<i class="actb__chip-sep" aria-hidden="true"></i>' + esc(role)
-      : '');
-
-    var overlay = d.versus ? versusHTML(d.versus) :
-      '<div class="actb__overlay">' +
-        '<span class="actb__giant">' + esc(d.giant) + '</span>' +
-        '<span class="actb__giant-lbl">' + esc(d.giantLabel) + '</span>' +
-      '</div>';
-
-    /* Only Open Play has a lead row: the role toggle, the one-line pitch for
-       that role, and the faces. The other activities go straight to features. */
+    /* No photo: the panel opens on the role toggle (Open Play), the matchup
+       (Open Match) or straight on the features (GameTime). The headline figure
+       that used to sit on the photo now leads the stats row at the bottom. */
     var lead = d.hasRole
       ? '<div class="actb__lead">' +
           '<div class="actb__lead-main">' + rolesHTML() +
@@ -298,20 +278,13 @@
           '</div>' +
           proofHTML(d.avatars, d.avatarsNote) +
         '</div>'
-      : '';
+      : (d.versus ? versusHTML(d.versus) : '');
 
-    var foot = (d.micros && d.micros.length ? '<div class="actb__micros">' + microsHTML(d.micros) + '</div>' : '') +
+    var micros = (d.giant ? [{ value: d.giant, label: d.giantLabel, star: false }] : []).concat(d.micros || []);
+    var foot = (micros.length ? '<div class="actb__micros">' + microsHTML(micros) + '</div>' : '') +
       '<a class="actb__cta' + (d.ctaStyle === 'link' ? ' actb__cta--link' : '') + '" href="' + esc(d.href) + '">' + esc(d.cta) + ARROW + '</a>';
 
     panel.innerHTML =
-      '<div class="actb__media">' +
-        (d.imagePending
-          ? '<span class="actb__ph asset-ph" data-asset="' + esc(ASSETS + d.image) + '" role="img" aria-label="' + esc(d.imageAlt) + '"></span>'
-          : '<img src="' + esc(ASSETS + d.image) + '" alt="' + esc(d.imageAlt) + '">') +
-        '<span class="actb__scrim" aria-hidden="true"></span>' +
-        '<span class="actb__chip">' + chip + '</span>' +
-        overlay +
-      '</div>' +
       lead +
       featuresHTML(d.features) +
       '<div class="actb__foot">' + foot + '</div>';

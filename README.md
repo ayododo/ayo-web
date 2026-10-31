@@ -94,9 +94,10 @@ menu below 1000px; markup lives in each page's nav, styles in `styles/chrome.css
 
 Images still waiting for Figma exports are grey rounded `.asset-ph`
 placeholders. Each carries `data-asset` with the file it expects (hero stills,
-sport icons, and the GameTime photo, which is flagged `imagePending` in
-`components/activity-board/activity-board.js`). Replace the placeholder with an
-`<img>` of the same class once the file is added.
+and sport icons). Replace the placeholder with an `<img>` of the same class once
+the file is added. The Activity section has no photos; each tab opens on its
+role toggle, matchup or feature list, and its headline figure leads the stats
+row.
 
 The homepage Booking section shows two animated phone mocks:
 `assets/booking-ayo-app.json` (player books a court in the AYO app) and
