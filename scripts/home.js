@@ -108,3 +108,40 @@
   }, { threshold: 0.35 });
   io.observe(band);
 })();
+
+/* Booking mock-ups — Lottie motion (assets/lottie/booking-*.json, 420×420).
+   The markup phone inside each .bkg__mock is the static fallback: it stays
+   for no-JS, reduced motion, or a failed fetch, and is only swapped out once
+   the animation has actually rendered its first frame. Each one mounts when it
+   nears the viewport and pauses when it leaves, so two SVG renderers are not
+   running for art nobody can see. */
+document.addEventListener('DOMContentLoaded', function(){
+  var mocks = [].slice.call(document.querySelectorAll('.bkg__mock[data-lottie]'));
+  if(!mocks.length || typeof lottie === 'undefined' || !('IntersectionObserver' in window)) return;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var anims = new WeakMap();
+  function mount(mock){
+    if(mock.dataset.lottieState) { var a = anims.get(mock); if(a) a.play(); return; }
+    mock.dataset.lottieState = 'loading';
+    fetch(mock.dataset.lottie)
+      .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+      .then(function(data){
+        var box = document.createElement('div');
+        box.className = 'bkg__lottie';
+        mock.appendChild(box);
+        var anim = lottie.loadAnimation({ container: box, renderer: 'svg', loop: true, autoplay: true, animationData: data });
+        anim.addEventListener('DOMLoaded', function(){ mock.classList.add('is-lottie'); mock.dataset.lottieState = 'ready'; });
+        anims.set(mock, anim);
+      })
+      .catch(function(){ mock.dataset.lottieState = 'failed'; });   /* markup mock stays */
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting) mount(e.target);
+      else { var a = anims.get(e.target); if(a) a.pause(); }
+    });
+  }, { rootMargin: '200px 0px' });
+  mocks.forEach(function(m){ io.observe(m); });
+});

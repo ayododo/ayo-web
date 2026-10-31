@@ -90,6 +90,12 @@
 
 /* Phone mock-ups */
 .bkg__mock{flex-shrink:0;width:420px;height:420px;border-radius:24px;background:var(--bg-white);overflow:hidden;display:flex;justify-content:center;align-items:flex-end}
+/* Lottie layer (see home.js). Fills the 420 card; the animation draws its own
+   card and phone, so the markup phone is hidden once it is ready. */
+.bkg__mock{position:relative}
+.bkg__lottie{position:absolute;inset:0}
+.bkg__lottie svg{display:block}
+.bkg__mock.is-lottie .bkg__phone{visibility:hidden}
 .bkg__phone{width:260px;height:392px;padding:10px 10px 0;border-radius:34px 34px 0 0;background:#ebe7e0;display:flex}
 .bkg__screen{flex:1;min-width:0;display:flex;flex-direction:column;gap:12px;padding:18px 14px 0;border-radius:26px 26px 0 0;background:var(--bg-white);overflow:hidden;color:var(--bg-dark)}
 .bkg__screen--avm{gap:10px;padding:16px 12px 0;background:#f9f8f6}
@@ -159,6 +165,8 @@
   .bkg__panel{padding:24px;border-radius:20px;gap:28px}
   .bkg__top{flex-direction:column;align-items:stretch;gap:28px}
   .bkg__mock{width:100%;max-width:420px;height:auto;padding-top:24px;align-self:center}
+  .bkg__mock.is-lottie{aspect-ratio:1;padding-top:0}
+  .bkg__mock.is-lottie .bkg__phone{display:none}
   .bkg__panel--owners .bkg__mock{order:-1}
   .bkg__feats{grid-template-columns:1fr}
   .bkg__feats--4{grid-template-columns:1fr}

@@ -306,7 +306,7 @@
     <!-- Players — AYO app -->
     <article class="bkg__panel reveal" id="bkg-players" aria-labelledby="bkg-players-title">
       <div class="bkg__top">
-        <div class="bkg__mock" aria-hidden="true">
+        <div class="bkg__mock" aria-hidden="true" data-lottie="assets/lottie/booking-ayo-app.json">
           <div class="bkg__phone">
             <div class="bkg__screen">
               <div><p class="m-sub">Padel · 2.1 km</p><p class="m-venue">AYO Arena Venue</p></div>
@@ -356,7 +356,7 @@
           <p class="bkg__p">Get discovered on AYO, manage bookings and court schedules, track payments and grow your business with AVM.</p>
           <a class="bkg__btn bkg__btn--dark" href="venue.html">Register your venue <span class="bkg__btn-ico"><img src="assets/icons/arrow-right.svg" alt="" width="10.5333" height="9.2"></span></a>
         </div>
-        <div class="bkg__mock" aria-hidden="true">
+        <div class="bkg__mock" aria-hidden="true" data-lottie="assets/lottie/booking-avm-dashboard.json">
           <div class="bkg__phone">
             <div class="bkg__screen bkg__screen--avm">
               <div class="m-head">
@@ -638,5 +638,8 @@
 <script src="scripts/chrome.js"></script>
 <script src="components/persona-hero/persona-hero.js"></script>
 <script src="components/activity-board/activity-board.js" defer></script>
+<!-- lottie_light: the booking animations use no expressions, so the light
+     build (no eval) is enough — same runtime the venue page already ships. -->
+<script defer src="vendor/lottie_light.min.js"></script>
 </body>
 </html>
