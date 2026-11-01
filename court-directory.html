@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Court Directory — AYO</title>
+<meta name="description" content="Sports courts on AYO by city and regency, sorted alphabetically.">
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#ec2435">
+
+<link rel="stylesheet" href="vendor/bootstrap-4.3.1/bootstrap.min.css">
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="styles/bootstrap-compat.css">
+<link rel="stylesheet" href="styles/chrome.css">
+<link rel="stylesheet" href="styles/court-directory.css">
+</head>
+<body class="ayo-web">
+<nav class="ayo-nav on-light">
+  <div class="nav-in container-fluid">
+    <a class="brand" href="index.html" aria-label="AYO"><img src="assets/logo.svg" alt="AYO"></a>
+    <div class="nav-links" id="navlinks">
+      <div class="ayo-nav-item"><a class="nav-top" href="https://ayo.co.id/venues">Booking</a></div>
+      <div class="ayo-nav-item has-sub">
+        <button class="nav-top" aria-expanded="false" aria-haspopup="true">Activities <span class="chev" aria-hidden="true"></span></button>
+        <div class="submenu" data-mega="activities">
+          <a href="https://ayo.co.id/main-bareng">Join activity</a>
+          <a href="open-play-host.html">Hosting activity</a>
+        </div>
+      </div>
+      <div class="ayo-nav-item"><a class="nav-top" href="venue.html">For Venue Owners</a></div>
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Blog</a></div>
+    </div>
+    <div class="nav-actions">
+    <div class="lang" id="lang">
+      <button class="lang-btn" aria-haspopup="true" aria-expanded="false" aria-label="Select language">
+        <span class="flag cur-flag" aria-hidden="true">🇬🇧</span>
+        <span class="cur">EN</span>
+        <span class="chev" aria-hidden="true"></span>
+      </button>
+      <div class="lang-menu" role="menu">
+        <button role="menuitemradio" aria-selected="true" data-code="EN" data-flag="🇬🇧"><span class="flag" aria-hidden="true">🇬🇧</span><span class="lname">English</span><span class="code">EN</span></button>
+        <button role="menuitemradio" aria-selected="false" data-code="ID" data-flag="🇮🇩"><span class="flag" aria-hidden="true">🇮🇩</span><span class="lname">Bahasa Indonesia</span><span class="code">ID</span></button>
+        <!-- Only the two live locales are offered. MS and TH are parked here
+             rather than deleted so they can be restored verbatim when those
+             markets launch — the switcher JS reads whatever buttons exist, so
+             uncommenting is the only step needed.
+        <button role="menuitemradio" aria-selected="false" data-code="MS" data-flag="🇲🇾"><span class="flag" aria-hidden="true">🇲🇾</span><span class="lname">Malay</span><span class="code">MS</span></button>
+        <button role="menuitemradio" aria-selected="false" data-code="TH" data-flag="🇹🇭"><span class="flag" aria-hidden="true">🇹🇭</span><span class="lname">Thai</span><span class="code">TH</span></button>
+        -->
+      </div>
+    </div>
+    <a class="nav-icon" href="#" aria-label="Cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3h2.2l2.1 12.4a1.5 1.5 0 0 0 1.5 1.25h8.3a1.5 1.5 0 0 0 1.48-1.2L21 7H6"/></svg>
+    </a>
+    <a class="ayo-btn primary" href="#" data-login>Login</a>
+    <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navlinks">
+      <svg class="ico-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
+      <svg class="ico-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>
+    </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Court Directory (Figma 26230:2699). The list and pagination are drawn by
+     scripts/court-directory.js from its REGIONS array; the markup below is the
+     shell plus a no-JS fallback note. -->
+<main class="cdir">
+  <div class="cdir__in">
+    <header class="cdir__head">
+      <nav class="crumb" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="index.html">Home</a></li>
+          <li><span aria-current="page">Venue Directory</span></li>
+        </ol>
+      </nav>
+      <h1 class="cdir__title">Court Directory</h1>
+      <p class="cdir__intro">Sports courts on AYO by city and regency, sorted alphabetically.</p>
+    </header>
+
+    <section class="cdir__list" aria-labelledby="cdir-list-title">
+      <div class="cdir__list-head">
+        <h2 class="cdir__list-title" id="cdir-list-title">Court Locations</h2>
+        <p class="cdir__count" data-cdir-count aria-live="polite"></p>
+      </div>
+      <div class="cdir__cols" data-cdir-cols>
+        <noscript><p class="cdir__noscript">Turn on JavaScript to browse the directory.</p></noscript>
+      </div>
+    </section>
+
+    <nav class="cdir__pager" aria-label="Directory pages" data-cdir-pager></nav>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="wrap container-fluid">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <img src="assets/logo.svg" alt="AYO">
+      </div>
+      <div class="foot-cta">
+        <span class="foot-cta-label">Own a sports venue?</span>
+        <a class="ayo-btn primary" href="venue.html">Become a Venue Partner <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
+      </div>
+    </div>
+    <div class="foot-cols">
+      <div class="ayo-foot-col"><h4>Product</h4><a href="index.html#aktivitas">Activity</a><a href="index.html#booking">Booking</a><a href="index.html#cerita">Community</a><a href="index.html#rating">PadelLevels</a></div>
+      <div class="ayo-foot-col"><h4>Company</h4><a href="#">About Us</a><a href="index.html#partner">Partner with Us</a><a href="#">Blog</a><a href="#">Careers</a></div>
+      <div class="ayo-foot-col"><h4>Support</h4><a href="#">Help Center</a><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Contact</a></div>
+      <div class="ayo-foot-col">
+        <h4>Follow us</h4>
+        <div class="foot-social">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 5.8a4.6 4.6 0 0 1-1.1-3H12v13.1a2.6 2.6 0 1 1-2.6-2.6c.3 0 .5 0 .8.1V9.7a5.9 5.9 0 1 0 5.2 5.9V9a7.7 7.7 0 0 0 4.4 1.4V7a4.6 4.6 0 0 1-3.2-1.2z"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 8s-.2-1.6-.9-2.3c-.9-.9-1.9-.9-2.3-1C16.9 4.5 12 4.5 12 4.5s-4.9 0-7.8.2c-.4 0-1.4.1-2.3 1C1.2 6.4 1 8 1 8S.8 9.9.8 11.8v1.4C.8 15.1 1 17 1 17s.2 1.6.9 2.3c.9.9 2 .9 2.5 1 1.8.2 7.6.2 7.6.2s4.9 0 7.8-.2c.4 0 1.4-.1 2.3-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.8v-1.4C23.2 9.9 23 8 23 8zM9.8 15V9l5.2 3-5.2 3z"/></svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.8 22H1.7l8.1-9.3L1 2h7l4.8 6.3L18.9 2zm-2.4 18h1.9L7.6 4H5.6L16.5 20z"/></svg></a>
+          <a href="#" aria-label="Threads"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.964-.065-1.19.408-2.285 1.33-3.082.88-.76 2.119-1.207 3.583-1.291a13.853 13.853 0 0 1 3.02.142c-.126-.742-.375-1.332-.75-1.757-.513-.586-1.308-.883-2.359-.89h-.029c-.844 0-1.992.232-2.721 1.32L7.734 7.847c.98-1.454 2.568-2.256 4.478-2.256h.044c3.194.02 5.097 1.975 5.287 5.388.108.046.216.094.321.142 1.49.7 2.58 1.761 3.154 3.07.797 1.82.871 4.79-1.548 7.158-1.85 1.81-4.094 2.628-7.277 2.65Zm1.003-11.69c-.242 0-.487.007-.739.021-1.836.103-2.98.946-2.916 2.143.067 1.256 1.452 1.839 2.784 1.767 1.224-.065 2.818-.543 3.086-3.71a10.5 10.5 0 0 0-2.215-.221z"/></svg></a>
+        </div>
+        <h4>Available on</h4>
+        <div class="foot-app">
+          <a class="app-badge" href="#" aria-label="Download on the App Store"><svg viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg><span class="abt"><small>Download on the</small><b>App Store</b></span></a>
+          <a class="app-badge" href="#" aria-label="Get it on Google Play"><svg class="ico-play" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg><span class="abt"><small>Get it on</small><b>Google Play</b></span></a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 AYO</span>
+      <div class="legal"><a href="#">Terms of service</a><a href="#">Privacy policy</a><a href="#">Cookie policy</a><a href="#">Help</a></div>
+    </div>
+  </div>
+</footer>
+<button class="to-top" id="toTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V4.5"/><path d="M7.5 9.5 12 5 16.5 9.5"/></svg>
+</button>
+
+<script src="vendor/jquery-3.5.1/jquery.min.js"></script>
+<script src="vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
+<script src="scripts/chrome.js"></script>
+<script src="scripts/court-directory.js"></script>
+</body>
+</html>

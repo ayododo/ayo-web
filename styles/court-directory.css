@@ -1,0 +1,109 @@
+/* ==========================================================================
+   AYO — Court Directory (court-directory.html, Figma 26230:2699)
+   A paged, alphabetical list of regencies, two columns on desktop.
+   Depends on: styles/tokens.css, styles/chrome.css (nav, footer).
+   ========================================================================== */
+
+.cdir {
+  background: var(--bg-white);
+  /* The nav is fixed (~81px), so the page starts below it plus Figma's 32px. */
+  padding: calc(81px + 32px) 0 72px;
+}
+/* Figma: 120px side padding on a 1440 frame = a 1200px content column. */
+.cdir__in {
+  max-width: calc(1200px + 2 * var(--edge, 24px));
+  margin: 0 auto; padding: 0 var(--edge, 24px);
+  display: flex; flex-direction: column; gap: 32px;
+}
+
+/* ---- Header ------------------------------------------------------------- */
+.cdir__head { display: flex; flex-direction: column; gap: 12px; }
+/* Breadcrumb is the shared .crumb (chrome.css), same as the activity pages.
+   Its own bottom margin is dropped: the header's gap already spaces it. */
+.cdir__head .crumb { margin-bottom: 8px; }
+.cdir__title {
+  margin: 0; font-weight: var(--fw-extrabold); font-size: 40px; line-height: 44px;
+  letter-spacing: -.02em; color: #1a1919;
+}
+.cdir__intro { margin: 0; font-size: 18px; line-height: 26px; color: #787373; }
+
+/* ---- List --------------------------------------------------------------- */
+.cdir__list { display: flex; flex-direction: column; gap: 12px; }
+.cdir__list-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding-bottom: 12px; border-bottom: 1px solid #1a1919;
+}
+.cdir__list-title { margin: 0; font-weight: var(--fw-bold); font-size: 14px; line-height: 20px; color: #1a1919; }
+.cdir__count { margin: 0; font-size: 14px; line-height: 20px; color: #787373; }
+
+.cdir__cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; }
+.cdir__col { list-style: none; margin: 0; padding: 0; }
+
+/* Directory / List row. Hover changes only the background (Figma note). */
+.cdir__row {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 48px; padding: 0 8px;
+  border-bottom: 1px solid var(--bg-disabled);
+  color: inherit; text-decoration: none;
+  transition: background-color .15s;
+}
+.cdir__row:hover { background: #f9f8f6; color: inherit; text-decoration: none; }   /* Cream-surface */
+.cdir__row:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; }
+/* "Lapangan Padel Kabupaten" stays in the anchor text for SEO; it is the quiet
+   prefix, the regency name is the part people scan for. */
+.cdir__label { min-width: 0; display: flex; flex-wrap: wrap; column-gap: 4px; padding: 12px 0; }
+.cdir__prefix { font-size: 16px; line-height: 22px; color: #787373; }
+.cdir__name { font-weight: var(--fw-semibold); font-size: 16px; line-height: 24px; color: #1a1919; }
+.cdir__chev { flex-shrink: 0; width: 16px; height: 16px; display: block; }
+
+.cdir__noscript { padding: 24px 8px; color: #787373; }
+
+/* ---- Pagination --------------------------------------------------------- */
+.cdir__pager { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 8px; }
+.cdir__nav {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  height: 40px; padding: 0 14px; border-radius: 10px;
+  border: 1px solid #a0a4a8; background: var(--bg-white);
+  font-weight: var(--fw-semibold); font-size: 14px; line-height: 20px; color: #1a1919;
+  text-decoration: none; transition: background-color .15s, border-color .15s;
+}
+.cdir__nav:hover { background: var(--bg-subtle); border-color: #1a1919; color: #1a1919; text-decoration: none; }
+.cdir__nav img { width: 16px; height: 16px; display: block; }
+/* Disabled on the first / last page (Figma note). Kept in place so the page
+   numbers don't shift sideways between page 1 and page 2. */
+.cdir__nav[aria-disabled="true"] { opacity: .4; pointer-events: none; }
+
+.cdir__pages { display: flex; align-items: center; gap: 4px; list-style: none; margin: 0; padding: 0; }
+.cdir__page {
+  display: flex; align-items: center; justify-content: center;
+  min-width: 40px; height: 40px; padding: 0 6px; border-radius: 10px;
+  font-weight: var(--fw-semibold); font-size: 16px; line-height: 24px; color: #1a1919;
+  text-decoration: none; transition: background-color .15s;
+}
+a.cdir__page:hover { background: var(--bg-subtle); color: #1a1919; text-decoration: none; }
+.cdir__page[aria-current="page"] { background: #1a1919; color: #fff; }
+.cdir__gap { min-width: 32px; color: #9b9797; }
+
+.cdir__nav:focus-visible,
+.cdir__page:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+/* ---- Responsive --------------------------------------------------------- */
+@media (max-width: 900px) {
+  .cdir { padding: calc(72px + 24px) 0 56px; }
+  .cdir__in { gap: 24px; }
+  .cdir__title { font-size: 32px; line-height: 38px; }
+  .cdir__intro { font-size: 16px; line-height: 24px; }
+  /* One column: the two halves of the page simply follow each other, so the
+     list still reads A→Z top to bottom. */
+  .cdir__cols { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .cdir__prefix, .cdir__name { font-size: 15px; }
+  /* Mobile: Prev/Next become 44px icon-only buttons (Figma note). */
+  .cdir__nav { width: 44px; height: 44px; padding: 0; }
+  .cdir__nav span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .cdir__pager { gap: 8px; }
+  .cdir__pages { gap: 2px; }
+  .cdir__page { min-width: 36px; height: 36px; font-size: 15px; }
+  .cdir__gap { min-width: 20px; }
+}
