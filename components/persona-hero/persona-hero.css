@@ -184,6 +184,75 @@
 }
 .ph-proof-row .ph-proof { margin-left: 0; }
 
+/* ---- Google Play award ------------------------------------------------------
+   Sits above the store rating, centred on it, 20px clear (Figma 26028:10602).
+   Absolute so it overlaps the hero's empty right side instead of pushing the
+   rating and the stats down.
+   The tile is a pre-rendered turn: 41 frames (250px each) laid side by side
+   in one strip. steps() shows exactly one frame at a time — no cross-fade, so
+   no ghosting — and `alternate` plays it forward then back, which makes the
+   one-way turn a seamless left–right loop. The plate turns slightly in 3D
+   behind it and a light band sweeps the gold. */
+.ph-proof { position: relative; }
+.ph-award {
+  position: absolute; left: 50%; bottom: calc(100% + 20px);
+  width: 168px; height: 168px; margin-left: -84px;
+  perspective: 600px;
+  animation: ph-award-in .9s cubic-bezier(.2,.9,.25,1.2) .5s both;
+}
+.ph-award__in {
+  position: relative; width: 100%; height: 100%;
+  animation: ph-award-float 3.28s ease-in-out infinite alternate;
+}
+.ph-award__plate,
+.ph-award__shine { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.ph-award__plate {
+  filter: drop-shadow(0 12px 24px rgba(0,0,0,.35));
+  animation: ph-award-plate 1.64s ease-in-out infinite alternate;
+}
+/* A light band sweeping the gold, clipped to the plate's own alpha so it
+   never paints outside the ring. */
+.ph-award__shine {
+  pointer-events: none;
+  -webkit-mask: url(../../assets/award/plate.png) center / contain no-repeat;
+          mask: url(../../assets/award/plate.png) center / contain no-repeat;
+  background: linear-gradient(115deg, transparent 38%, rgba(255,255,255,.5) 50%, transparent 62%) no-repeat;
+  background-size: 250% 100%;
+  mix-blend-mode: soft-light;
+  animation: ph-award-shine 6.56s ease-in-out infinite;
+}
+/* Box sized in % of the badge so it scales with it (112px on mobile). 69% of
+   168 = 116px, which puts the tile itself at the ~90px the design shows. */
+.ph-award__tile {
+  position: absolute; left: 15.5%; top: 15.5%; width: 69%; height: 69%;
+  background: url(../../assets/award/tile-seq.webp) 0 0 / 4100% 100% no-repeat;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.22));
+  animation: ph-award-seq 1.64s steps(41, jump-none) infinite alternate;
+}
+
+@keyframes ph-award-in {
+  from { opacity: 0; transform: translateY(-18px) scale(.7); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes ph-award-float {
+  from { transform: translateY(2px); }
+  to   { transform: translateY(-4px); }
+}
+/* Same 1.64s clock as the tile, turning the other way: the tile reads as
+   sitting in front of the ring. */
+@keyframes ph-award-plate {
+  from { transform: rotateY(-4deg); }
+  to   { transform: rotateY(4deg); }
+}
+@keyframes ph-award-seq {
+  from { background-position: 0 0; }
+  to   { background-position: 100% 0; }
+}
+@keyframes ph-award-shine {
+  0%, 20%   { background-position: 130% 0; }
+  60%, 100% { background-position: -30% 0; }
+}
+
 /* ---- Stat band (general — does not change per persona) --------------------- */
 .ph-stats { position: relative; z-index: 2; border-top: 1px solid rgba(255,255,255,.14); }
 .ph-stats-in {
@@ -213,6 +282,9 @@
   .ph-switcher { gap: var(--space-6); }
   .ph-switch-main { gap: var(--space-4); }
   .ph-proof { margin-left: 0; width: 100%; }
+  /* No empty right side to float into on a narrow hero — the award joins the
+     flow above the rating instead of covering the copy. */
+  .ph-award { position: relative; left: auto; bottom: auto; margin: 0 0 var(--space-4); width: 112px; height: 112px; }
   .ph-switcher--top { padding-top: calc(72px + var(--space-8)); }
   .ph-proof-row { justify-content: flex-start; }
   .ph-tabs { gap: var(--space-5); }
@@ -247,6 +319,9 @@
 @media (prefers-reduced-motion: reduce) {
   .ph-video { display: none; }
   .ph-content { animation: none; }
+  /* Award holds still, tile on its most frontal frame (20 of 0–40). */
+  .ph-award, .ph-award__in, .ph-award__plate, .ph-award__shine, .ph-award__tile { animation: none; }
+  .ph-award__tile { background-position: 50% 0; }
   .ph-hl::before { animation: none; clip-path: none; }
   .ph-btn, .ph-btn:hover, .ph-toggle { transition: none; transform: none; }
   .ph-tab.is-active::after,
