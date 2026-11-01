@@ -38,7 +38,15 @@
     search:   { icon: 'search-zoom.svg', w: 17.8,  h: 17.8 },
     zap:      { icon: 'zap.svg',         w: 16.8,  h: 21.8 },
     chart:    { icon: 'bar-chart.svg',   w: 17.8,  h: 15.8 },
-    bell:     { icon: 'bell.svg',        w: 19.8,  h: 20.8 }
+    bell:     { icon: 'bell.svg',        w: 19.8,  h: 20.8 },
+    calendarPlus: { icon: 'calendar-plus.svg',   w: 19.8, h: 19.8 },
+    sliders:      { icon: 'sliders.svg',         w: 17.8, h: 15.8 },
+    clipboard:    { icon: 'clipboard-check.svg', w: 15.8, h: 19.8 },
+    target:       { icon: 'target.svg',          w: 19.8, h: 19.8 },
+    scale:        { icon: 'scale.svg',           w: 21.8, h: 19.8 },
+    trophy:       { icon: 'trophy.svg',          w: 16.1, h: 18.8 },
+    shuffle:      { icon: 'shuffle.svg',         w: 19.8, h: 17.8 },
+    layers:       { icon: 'layers.svg',          w: 20.8, h: 20.3 }
   };
   function feat(ic, title, desc) { return { icon: ICON[ic], title: title, desc: desc }; }
 
@@ -54,17 +62,16 @@
       href: 'open-play.html',
       roles: {
         host: {
-          /* Figma only specifies the participant view. Host copy below is
-             adapted from the previous description — review with design. */
-          tagline: 'Host Your Game. Fill Every Spot.',
+          /* Figma: Activity/Open Play/Host (26212:7874). */
+          tagline: 'Host Games, Without the Hassle.',
           features: [
-            feat('calendar', 'Create a Session', 'Set the court, time, and player limit in a few taps.'),
-            feat('users', 'Manage Participants', 'See who has joined and keep the roster full until game day.'),
-            feat('card', 'Payments Tracked', 'Collect participant payments and follow them from one place.')
+            feat('calendarPlus', 'Create Sessions in Minutes', 'Set up your Open Play session quickly and easily.'),
+            feat('sliders', 'Control Your Session', 'Set player limits and skill levels to suit your game.'),
+            feat('clipboard', 'Manage Everything in One Place', 'Keep track of participants and payments with less manual work.')
           ],
           giant: '12,000+',
           giantLabel: 'Sessions / month',
-          cta: 'What you can do as a Host',
+          cta: 'Learn How to Host',
           /* The two roles used to share the activity's href, which meant the
              host CTA and the participant CTA led to the same place. Host has a
              page of its own now, so it carries its own destination. */
@@ -102,25 +109,27 @@
       image: '',            /* was activity-open-match.jpg */
       imageAlt: 'Two players in a competitive match',
       href: 'open-match.html',
-      /* Not in the Figma update — copy adapted from the previous description. */
-      tagline: 'Challenge Players. Prove Your Level.',
+      /* Figma: Activity/Open Match (26106:1821). The image carries a headline
+         instead of a figure, over a pair-vs-pair of faces; there is no lead
+         line and no micro-stats. Faces are empty until the portraits land. */
+      headline: 'Find Your Opponents',
+      headlineSub: 'Discover 4-player competitive matches with players at your levels.',
+      versus: [['', ''], ['', '']],
+      tagline: '',
       features: [
-        feat('search', 'Find Balanced Opponents', 'Get matched with players at your level through ratings.'),
-        feat('zap', 'Choose Your Format', 'Pick the match format that suits you and set it up in minutes.'),
-        feat('chart', 'Every Match Counts', 'Results feed your rating, so every match stays close and fun.')
+        feat('target', 'Challenge Other Players', 'Set up a match and choose your preferred match format.'),
+        feat('scale', 'Find Balanced Matchups', 'Use player ratings to find opponents at a similar skill level.'),
+        feat('trophy', 'Enjoy Focused Competition', 'Play a dedicated 4-player match where every point counts.')
       ],
-      giant: '5,400+',
-      giantLabel: 'Matches / month',
-      cta: 'Learn about Open Match',
-      micros: [
-        { value: '4.8', label: 'Match rating', star: true }
-      ]
+      giant: '',
+      giantLabel: '',
+      /* Copy as in Figma — it repeats the Host CTA; confirm with design. */
+      cta: 'Learn How to Host',
+      micros: []
     },
     {
-      /* New in the 2026-10 design. Figma names the tab only — the panel copy
-         below is PLACEHOLDER until product supplies GameTime's content, and it
-         deliberately carries no figure or micro-stats so nothing made-up is
-         shown as data. */
+      /* Figma: Activity/GameTime (26106:1894). A headline on the image, no
+         figure, no lead line and no micro-stats. */
       id: 'gametime',
       num: '03',
       title: 'GameTime',
@@ -129,15 +138,16 @@
       image: '',
       imageAlt: '',
       href: '#',
-      tagline: 'Your Regular Game, Sorted.',
+      headline: 'Every Points Counts. Every Round Matters',
+      tagline: '',
       features: [
-        feat('calendar', 'Keep a Regular Slot', 'Lock in the same time each week with the same group.'),
-        feat('userPlus', 'Invite Your Squad', 'Bring your regular players in with one tap.'),
-        feat('bell', 'Never Miss a Game', 'Everyone gets a reminder before the game starts.')
+        feat('shuffle', 'Automatically Generate Matchups', 'Generate match pairings and rounds for your session without organizing them manually.'),
+        feat('layers', 'Multiple Competitive Formats', 'Play your way with Americano, Mexicano, or a custom format tailored to your session.'),
+        feat('chart', 'Live Scores & Standings', 'Record match results and track standings to keep everyone engaged throughout the session.')
       ],
       giant: '',
       giantLabel: '',
-      cta: 'Learn about GameTime',
+      cta: 'Explore GameTime',
       micros: []
     }
   ];
@@ -251,6 +261,41 @@
     '</div>';
   }
 
+  /* Open Match: two pairs of faces either side of "vs". Decorative — the
+     headline below says what the picture means. */
+  function versusHTML(pairs) {
+    if (!pairs || !pairs.length) return '';
+    function face(f) {
+      return f
+        ? '<img class="actb__vs-face" src="' + esc(ASSETS + f) + '" alt="">'
+        : '<span class="actb__vs-face actb__vs-face--empty"></span>';
+    }
+    return '<div class="actb__vs" aria-hidden="true">' +
+      pairs.map(function (p) {
+        return '<span class="actb__vs-pair">' + p.map(face).join('') + '</span>';
+      }).join('<span class="actb__vs-word">vs</span>') +
+    '</div>';
+  }
+
+  /* What sits over the photo: a big figure (Open Play) or a headline
+     (Open Match, GameTime). */
+  function overlayHTML(d) {
+    if (d.giant) {
+      return '<div class="actb__overlay">' +
+          '<span class="actb__giant">' + esc(d.giant) + '</span>' +
+          '<span class="actb__giant-lbl">' + esc(d.giantLabel) + '</span>' +
+        '</div>';
+    }
+    if (d.headline) {
+      return '<div class="actb__overlay">' +
+          versusHTML(d.versus) +
+          '<p class="actb__headline">' + esc(d.headline) + '</p>' +
+          (d.headlineSub ? '<span class="actb__giant-lbl actb__headline-sub">' + esc(d.headlineSub) + '</span>' : '') +
+        '</div>';
+    }
+    return '';
+  }
+
   function rolesHTML() {
     return '<div class="actb__roles" role="group" aria-label="Point of view">' +
       /* These keys are also the visible labels (CSS uppercases them) and the
@@ -292,13 +337,11 @@
         (d.image ? '<img src="' + esc(ASSETS + d.image) + '" alt="' + esc(d.imageAlt) + '">' : '') +
         '<span class="actb__scrim" aria-hidden="true"></span>' +
         '<span class="actb__chip">' + chip + '</span>' +
-        (d.giant
-          ? '<div class="actb__overlay">' +
-              '<span class="actb__giant">' + esc(d.giant) + '</span>' +
-              '<span class="actb__giant-lbl">' + esc(d.giantLabel) + '</span>' +
-            '</div>'
-          : '') +
+        overlayHTML(d) +
       '</div>' +
+      /* Open Match and GameTime have no toggle, line or faces under the image,
+         so the lead row is left out rather than drawn empty. */
+      ((d.hasRole || d.tagline || (d.avatars && d.avatars.length)) ?
       '<div class="actb__lead">' +
         '<div class="actb__lead-main">' +
           /* No heading here on purpose: the active tab and the chip on the
@@ -308,10 +351,10 @@
           '<p class="actb__desc">' + esc(d.tagline) + '</p>' +
         '</div>' +
         proofHTML(d.avatars, d.avatarsNote) +
-      '</div>' +
+      '</div>' : '') +
       featuresHTML(d.features) +
       '<div class="actb__foot">' +
-        (d.micros.length ? '<div class="actb__micros">' + microsHTML(d.micros) + '</div>' : '<span></span>') +
+        (d.micros.length ? '<div class="actb__micros">' + microsHTML(d.micros) + '</div>' : '<span class="actb__micros"></span>') +
         '<a class="actb__cta" href="' + esc(d.href) + '">' + esc(d.cta) + ARROW + '</a>' +
       '</div>';
 

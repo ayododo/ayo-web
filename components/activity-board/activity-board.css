@@ -251,6 +251,31 @@
   text-transform: uppercase; color: rgba(255, 255, 255, .8); white-space: nowrap;
 }
 
+/* Open Match / GameTime: a headline in place of the figure (Figma Display/D3). */
+.actb__headline {
+  margin: 0; font-weight: var(--fw-bold); font-size: 32px; line-height: 40px;
+  color: var(--text-inverse); max-width: 640px;
+}
+/* The giant label is nowrap for its two words; a full sentence must wrap. */
+.actb__headline-sub { white-space: normal; }
+
+/* Two pairs of faces either side of "vs". No ring here: on the photo a white
+   ring would read as a sticker. The front face of each pair is cut where the
+   second one overlaps, so the two stay distinct without an outline. */
+.actb__vs { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-1); }
+.actb__vs-pair { display: flex; }
+.actb__vs-face { width: 44px; height: 44px; display: block; border-radius: 50%; object-fit: cover; }
+.actb__vs-face + .actb__vs-face { margin-left: -16px; }
+.actb__vs-face:first-child:not(:last-child) {
+  -webkit-mask: radial-gradient(circle 25px at 50px 50%, transparent 98%, #000 100%);
+          mask: radial-gradient(circle 25px at 50px 50%, transparent 98%, #000 100%);
+}
+.actb__vs-face--empty { background: rgb(232, 230, 227); }
+.actb__vs-word {
+  font-family: var(--font-mono); font-weight: var(--fw-bold); font-size: 24px;
+  line-height: 40px; letter-spacing: -.04em; color: var(--text-inverse);
+}
+
 /* ---- Avatar stack ----------------------------------------------------------
    The ring is a box-shadow, not a border: a border would sit inside the 44px
    box and shrink the photo, and the ring has to paint OUTSIDE the circle to cut
@@ -419,6 +444,7 @@
   .actb__panel { padding: var(--space-8); }
   .actb__media { height: 240px; }
   .actb__overlay { padding: var(--space-5); }
+  .actb__headline { font-size: 24px; line-height: 30px; }
   .actb__desc { max-width: none; }
 }
 
@@ -431,6 +457,7 @@
   .actb__avatar + .actb__avatar { margin-left: -12px; }
   .actb__foot { flex-direction: column; align-items: stretch; gap: var(--space-6); }
   .actb__micros { gap: var(--space-6); }
+  .actb__micros:empty { display: none; }
   .actb__cta { justify-content: center; }
 }
 
