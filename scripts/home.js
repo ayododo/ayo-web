@@ -145,3 +145,20 @@ document.addEventListener('DOMContentLoaded', function(){
   }, { rootMargin: '200px 0px' });
   mocks.forEach(function(m){ io.observe(m); });
 });
+
+/* Booking › "Join in 4 steps" — plays once when the steps scroll into view:
+   each number lights up in turn and the line runs on to the next step. Without
+   JS, IntersectionObserver or with reduced motion, the static Figma state
+   (step 1 current) stays as it is. */
+(function(){
+  var steps = document.querySelector('.bkg__steps');
+  if(!steps || !('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  [].forEach.call(steps.querySelectorAll('.bkg__step'), function(s, i){ s.style.setProperty('--i', i); });
+  steps.classList.add('is-anim');
+  var io = new IntersectionObserver(function(entries){
+    if(!entries[0].isIntersecting) return;
+    steps.classList.add('is-play');
+    io.disconnect();
+  }, { threshold: .5 });
+  io.observe(steps);
+})();

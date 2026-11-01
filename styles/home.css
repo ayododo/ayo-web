@@ -156,6 +156,26 @@
 .bkg__step:last-child .bkg__line{display:none}
 .bkg__step b{font-weight:var(--fw-bold);font-size:16px;line-height:22px;color:var(--bg-dark)}
 .bkg__step span{font-size:14px;line-height:20px;color:#787373}
+/* Step animation (scripts/home.js adds .is-anim, then .is-play in view).
+   Step i starts at i × .6s: the number pops red, the copy rises in, and the
+   line fills toward the next number, which it reaches as that one lights. */
+.bkg__line{position:relative;overflow:hidden}
+.bkg__line::after{content:"";position:absolute;inset:0;background:var(--brand);transform:scaleX(0);transform-origin:left center}
+.bkg__steps.is-anim .bkg__step{--d:calc(var(--i,0) * .6s)}
+.bkg__steps.is-anim .bkg__step.is-current .bkg__num{background:transparent;border-color:var(--bg-dark);color:var(--bg-dark)}
+.bkg__steps.is-anim .bkg__step > b,
+.bkg__steps.is-anim .bkg__step > span{opacity:0;transform:translateY(8px)}
+.bkg__steps.is-play .bkg__step .bkg__num{animation:bkg-num-on .45s cubic-bezier(.3,.7,.3,1) var(--d) both}
+.bkg__steps.is-play .bkg__step > b{animation:bkg-step-in .5s cubic-bezier(.2,.7,.2,1) calc(var(--d) + .1s) both}
+.bkg__steps.is-play .bkg__step > span{animation:bkg-step-in .5s cubic-bezier(.2,.7,.2,1) calc(var(--d) + .18s) both}
+.bkg__steps.is-play .bkg__line::after{animation:bkg-line-fill .4s linear calc(var(--d) + .2s) both}
+@keyframes bkg-num-on{
+  0%{background:transparent;border-color:var(--bg-dark);color:var(--bg-dark);transform:scale(1)}
+  55%{background:var(--brand);border-color:var(--brand);color:#fff;transform:scale(1.15)}
+  100%{background:var(--brand);border-color:var(--brand);color:#fff;transform:scale(1)}
+}
+@keyframes bkg-step-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes bkg-line-fill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 
 @media (max-width:1100px){
   .bkg__feats--4{grid-template-columns:repeat(2,minmax(0,1fr))}
