@@ -92,6 +92,9 @@
 .plr-card__caption { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
 .plr-card__caption a { font-weight: var(--fw-medium); }
 .plr-card__learn { color: #1679c1; }
+/* Keeps its blue on hover (the link reset would otherwise turn it white);
+   the underline is the hover cue. */
+.plr-card__learn:hover { color: #1679c1; text-decoration: underline; text-underline-offset: 2px; }
 .plr-card__view { display: inline-flex; align-items: center; gap: 8px; color: #fff; text-decoration: underline; text-underline-offset: 2px; }
 .plr-card__view img { display: block; }
 .plr-card__caption a:hover { opacity: .8; }

@@ -57,7 +57,7 @@
 .bkg__lede{max-width:620px;font-size:18px;line-height:28px;color:#787373}
 .bkg__jump{flex-shrink:0;display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 20px;border:1px solid #a0a4a8;border-radius:var(--radius-pill);
   background:var(--bg-white);font-weight:var(--fw-bold);font-size:16px;line-height:24px;color:var(--bg-dark);transition:border-color .15s,background .15s}
-.bkg__jump:hover{border-color:var(--bg-dark);background:var(--bg-subtle)}
+.bkg__jump:hover{border-color:var(--bg-dark);background:var(--bg-subtle);color:var(--bg-dark)}
 .bkg__jump-ico{width:20px;height:20px;display:grid;place-items:center;flex-shrink:0}
 .bkg__jump-arrow{width:16px;height:16px;display:grid;place-items:center;flex-shrink:0}
 .bkg__jump--up .bkg__jump-arrow img{transform:scaleY(-1)}
@@ -74,7 +74,9 @@
 .bkg__panel--owners .bkg__p{max-width:520px}
 .bkg__btn{margin-top:4px;display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 24px;border-radius:var(--radius-pill);
   background:var(--brand);color:#fff;font-weight:var(--fw-bold);font-size:16px;line-height:24px;transition:filter .15s,transform .15s}
-.bkg__btn:hover{filter:brightness(.93);transform:translateY(-2px)}
+/* Colour restated on hover: the Bootstrap-compat link reset (a:hover → inherit)
+   outranks a single class and turned the label dark. */
+.bkg__btn:hover{filter:brightness(.93);transform:translateY(-2px);color:#fff}
 .bkg__btn--dark{background:var(--bg-dark)}
 .bkg__btn--dark:hover{filter:brightness(1.25)}
 .bkg__btn-ico{width:16px;height:16px;display:grid;place-items:center}

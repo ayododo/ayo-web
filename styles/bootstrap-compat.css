@@ -59,3 +59,14 @@ body.ayo-web {
 :where(.ayo-web) *::after {
   box-sizing: content-box;
 }
+
+/* Bootstrap's reboot rings every focused button (button:focus → 5px auto
+   focus-ring), so a mouse click left a blue box on nav toggles, tabs and
+   chips. Drop it for pointer focus only — :focus-visible (keyboard) keeps the
+   browser ring, plus any component ring set elsewhere. The .ayo-web class
+   lifts this above Bootstrap's button:focus (0,1,1) without !important. */
+.ayo-web button:focus:not(:focus-visible),
+.ayo-web [role="button"]:focus:not(:focus-visible),
+.ayo-web [role="tab"]:focus:not(:focus-visible) {
+  outline: none;
+}

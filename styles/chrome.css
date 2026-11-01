@@ -336,7 +336,7 @@ a.mega__head:hover .mega__cta img{transform:translateX(2px)}
 .foot-social svg{width:18px;height:18px}
 .foot-app{display:flex;flex-wrap:wrap;gap:var(--space-3)}
 .app-badge{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:var(--radius-lg);padding:9px 16px;color:#fff;transition:background .2s,border-color .2s,transform .2s,box-shadow .2s}
-.app-badge:hover{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.55);transform:translateY(-3px);box-shadow:0 12px 26px rgba(0,0,0,.45)}
+.app-badge:hover{color:#fff;background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.55);transform:translateY(-3px);box-shadow:0 12px 26px rgba(0,0,0,.45)}
 .app-badge:active{transform:translateY(-1px);box-shadow:0 6px 14px rgba(0,0,0,.4)}
 .app-badge svg{height:26px;width:auto;flex-shrink:0}
 .app-badge .ico-play{height:23px}
