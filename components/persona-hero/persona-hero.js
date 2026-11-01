@@ -180,6 +180,16 @@
       tabs.forEach(function(t){ t.classList.remove('is-active'); });
       void tabsEl.offsetWidth;
       tabs[idx].classList.add('is-active');
+      revealTab(tabs[idx]);
+    }
+
+    /* On phones the tab row scrolls sideways (see persona-hero.css). Bring the
+       active tab into view by scrolling the ROW only — scrollIntoView would
+       also move the page, yanking the reader back up to the hero. */
+    function revealTab(t){
+      if(tabsEl.scrollWidth <= tabsEl.clientWidth) return;
+      var left = t.offsetLeft - (tabsEl.clientWidth - t.offsetWidth) / 2;
+      tabsEl.scrollTo({ left: Math.max(0, left), behavior: reduce ? 'auto' : 'smooth' });
     }
 
     function schedule(){

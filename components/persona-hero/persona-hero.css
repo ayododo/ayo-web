@@ -154,6 +154,11 @@
   transition: color .25s;
 }
 .ph-tab:hover { color: rgba(255,255,255,.85); }
+/* Bootstrap reboot rings every focused button, mouse clicks included. Keep a
+   ring for keyboard focus only. */
+.ph-tab:focus:not(:focus-visible),
+.ph-toggle:focus:not(:focus-visible) { outline: none; }
+.ph-tab:focus-visible { outline: 2px solid var(--text-inverse); outline-offset: 4px; border-radius: 2px; }
 .ph-tab[aria-selected="true"] { color: var(--text-inverse); font-weight: var(--fw-bold); }
 .ph-tab::after {
   content: ''; position: absolute; left: 0; right: 0;
@@ -281,10 +286,19 @@
   /* Not wide enough for two columns — social proof drops below the switcher. */
   .ph-switcher { gap: var(--space-6); }
   .ph-switch-main { gap: var(--space-4); }
-  .ph-proof { margin-left: 0; width: 100%; }
-  /* No empty right side to float into on a narrow hero — the award joins the
-     flow above the rating instead of covering the copy. */
-  .ph-award { position: relative; left: auto; bottom: auto; margin: 0 0 var(--space-4); width: 112px; height: 112px; }
+  /* No empty right side to float into on a narrow hero, so the award joins
+     the flow — beside the rating rather than above it. Both are trust
+     signals, so they read as one block, and side by side the badge can be
+     bigger while the block gets shorter. */
+  .ph-proof { margin-left: 0; width: 100%; display: flex; align-items: center; gap: var(--space-5); }
+  .ph-award { position: relative; left: auto; bottom: auto; margin: 0; flex-shrink: 0; width: 132px; height: 132px; }
+  .ph-proof .store-rating { min-width: 0; gap: var(--space-3); }
+  /* The two stores stack beside the badge; the divider turns horizontal. */
+  .ph-proof .sr-items { flex-direction: column; flex-wrap: nowrap; gap: var(--space-3); }
+  .ph-proof .sr-item + .sr-item {
+    border-left: 0; padding-left: 0;
+    border-top: 1px solid rgba(255,255,255,.18); padding-top: var(--space-3);
+  }
   .ph-switcher--top { padding-top: calc(72px + var(--space-8)); }
   .ph-proof-row { justify-content: flex-start; }
   .ph-tabs { gap: var(--space-5); }
@@ -293,24 +307,37 @@
   .ph-stat:nth-child(n+3) { padding-top: var(--space-6); }
 }
 
-/* Four tabs don't fit on one line at narrow widths. Here they lay out as a
-   2×2 grid — and since they're no longer on one line, the continuous rail is
-   swapped for a per-tab rail so each stays aligned with its own tab. */
+/* Four tabs don't fit on one line at phone width — even at 11px with no gaps
+   they need ~273px of ~287px, which is past readable. So they stay on ONE
+   line and the row scrolls sideways; the right edge fades to say there is
+   more, and persona-hero.js scrolls the active tab into view as the rotation
+   moves on. The rail can't be one ::before across a scrolling row (it would
+   only span the visible width), so each tab draws its own segment and the
+   gap becomes padding, which keeps the segments touching. */
 @media (max-width: 560px) {
-  .ph-switch-main { flex-wrap: nowrap; align-items: flex-start; gap: var(--space-4); }
+  /* Width has to be capped all the way down: the switcher row sizes this to
+     its content otherwise, and the tab row would just run off the screen
+     instead of scrolling. */
+  .ph-switch-main { width: 100%; min-width: 0; flex-wrap: nowrap; align-items: center; gap: var(--space-4); }
   .ph-switch-main > div { flex: 1; min-width: 0; }
   .ph-tabs {
-    display: grid; grid-template-columns: 1fr 1fr; justify-items: start;
-    gap: var(--space-4) var(--space-5); padding-bottom: 0;
+    flex-wrap: nowrap; gap: 0; padding-bottom: 0;
+    overflow-x: auto; overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+            mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
   }
+  .ph-tabs::-webkit-scrollbar { display: none; }
   .ph-tabs::before { display: none; }
-  .ph-tab { padding-bottom: var(--space-3); }
-  .ph-tab::after { bottom: 0; }
-  .ph-tab[aria-selected="true"]::before {
+  .ph-tab { flex-shrink: 0; white-space: nowrap; padding: var(--space-2) var(--space-5) var(--space-3) 0; }
+  /* Room past the last tab so it clears the fade when scrolled to the end. */
+  .ph-tab:last-child { padding-right: 28px; }
+  .ph-tab::before {
     content: ''; position: absolute; left: 0; right: 0; bottom: 0;
-    height: 2px; border-radius: var(--radius-sm);
-    background: rgba(255,255,255,.18);
+    height: 2px; background: rgba(255,255,255,.18);
   }
+  .ph-tab::after { bottom: 0; right: var(--space-5); z-index: 1; }
+  .ph-tab:last-child::after { right: 28px; }
 }
 
 /* ---- Reduced motion --------------------------------------------------------

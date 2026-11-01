@@ -412,12 +412,21 @@ a.mega__head:hover .mega__cta img{transform:translateX(2px)}
   .nav-actions > .ayo-btn{padding:10px 14px}
   .country-menu{left:0;right:auto}
   .lang-menu{min-width:216px;right:-44px}
-  .foot-cols{grid-template-columns:1fr 1fr}
+  /* Company, Ecosystem and Support side by side; the follow + store column
+     is too wide for a third of the row, so it takes a full row below. */
+  .foot-cols{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-8) var(--space-6)}
+  .foot-cols > .ayo-foot-col:last-child{grid-column:1 / -1}
 }
 
-/* Two columns stop fitting once the follow row — four 40px buttons and their
-   gaps — is wider than the column holding it. That happens just under 360px,
-   where the footer was the one thing on the page still overflowing. */
+/* Phones: the three link columns stay in one row — tighter gap and type so
+   the longer labels ("Terms & Conditions") wrap inside their own column. */
+@media (max-width:560px){
+  .foot-cols{column-gap:var(--space-4)}
+  .foot .ayo-foot-col > a{font-size:var(--fs-small);line-height:1.35}
+}
+
+/* Small phones: tighten the nav. (The footer's follow row now has a full row
+   of its own, so it no longer needs to collapse to one column here.) */
 @media (max-width:380px){
   .nav-in{gap:var(--space-2)}
   .nav-actions{gap:2px}
@@ -425,7 +434,7 @@ a.mega__head:hover .mega__cta img{transform:translateX(2px)}
   .nav-icon,.burger{width:32px;height:36px}
   .country-btn > .carbon-icon{display:none}
   .nav-actions > .ayo-btn{padding-inline:12px}
-  .foot-cols{grid-template-columns:1fr;gap:var(--space-8)}
+  .foot-cols{column-gap:var(--space-3)}
 }
 
 @media (prefers-reduced-motion: reduce){
