@@ -90,14 +90,12 @@
 .plr-card__bar { height: 6px; border-radius: 100px; background: rgba(255, 255, 255, .1); }
 .plr-card__bar i { display: block; width: 54%; height: 100%; border-radius: inherit; background: var(--brand); }
 .plr-card__caption { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
-.plr-card__caption a { font-weight: var(--fw-medium); }
+/* The card is an illustration of a rating, not a live widget: "Learn more"
+   and "View on PadelLevels" are plain text styled like links, with no hover. */
+.plr-card__caption > span { font-weight: var(--fw-medium); }
 .plr-card__learn { color: #1679c1; }
-/* Keeps its blue on hover (the link reset would otherwise turn it white);
-   the underline is the hover cue. */
-.plr-card__learn:hover { color: #1679c1; text-decoration: underline; text-underline-offset: 2px; }
 .plr-card__view { display: inline-flex; align-items: center; gap: 8px; color: #fff; text-decoration: underline; text-underline-offset: 2px; }
 .plr-card__view img { display: block; }
-.plr-card__caption a:hover { opacity: .8; }
 
 .plr-card__rank { display: flex; flex-direction: column; gap: 4px; }
 .plr-card__ranks { display: flex; gap: 4px; }

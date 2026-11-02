@@ -272,8 +272,8 @@
             </div>
             <div class="plr-card__bar" aria-hidden="true"><i></i></div>
             <div class="plr-card__caption">
-              <a class="plr-card__learn" href="#">Learn more</a>
-              <a class="plr-card__view" href="#">View on PadelLevels <img src="assets/icons/external-link.svg" alt="" width="16" height="16"></a>
+              <span class="plr-card__learn">Learn more</span>
+              <span class="plr-card__view">View on PadelLevels <img src="assets/icons/external-link.svg" alt="" width="16" height="16"></span>
             </div>
           </div>
           <div class="plr-card__rank">
@@ -423,28 +423,35 @@
   </div>
 </section>
 
-<!-- 7. MARKETING B2B -->
-<section class="sec" id="partner">
+<!-- 7. MARKETING B2B — bento (Figma 26407:4724) -->
+<section class="b2b" id="partner" aria-labelledby="b2b-title">
   <div class="wrap container-fluid">
-    <div class="b2b-grid">
-      <div class="b2b-content">
-        <div class="b2b-head reveal">
-          <p class="eyebrow-num">For Brands &amp; Sponsors</p>
-          <h2>Reach tens of thousands of active players.</h2>
-          <p class="sec-sub">Connect your brand with Indonesia’s most active sports community through campaigns, sponsorships, and in-platform activations.</p>
-        </div>
-        <div class="b2b-reach reveal">
-          <div class="stat"><span class="stat-num">90,000<sup>+</sup></span><span class="stat-txt"><span class="stat-lbl">Active players</span><span class="stat-sub">across Indonesia</span></span></div>
-          <div class="stat"><span class="stat-num">150<sup>+</sup></span><span class="stat-txt"><span class="stat-lbl">Cities</span><span class="stat-sub">covered</span></span></div>
-          <div class="stat"><span class="stat-num">12,000<sup>+</sup></span><span class="stat-txt"><span class="stat-lbl">Sessions</span><span class="stat-sub">every month</span></span></div>
-        </div>
-        <div class="btn-row reveal">
+    <div class="b2b__bento">
+      <div class="b2b__intro reveal">
+        <p class="b2b__eyebrow">Partnership</p>
+        <h2 class="b2b__title" id="b2b-title">Turn your brand into part of the game.</h2>
+        <p class="b2b__body">Reach hundreds of thousands of sports enthusiasts across AYO’s communities through strategic collaborations and partnerships that drive authentic engagement and connections.</p>
+        <div class="b2b__ctas">
           <a class="ayo-btn ghost" href="#">Contact Us</a>
-          <a class="ayo-btn primary" href="partner.html">Read more <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
+          <a class="ayo-btn primary" href="partner.html">Explore partnership <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.333 10.667l5.334-5.334"/><path d="M6 5.333h4.667V10"/></svg></a>
         </div>
       </div>
-      <!-- Photo slot — the image is being supplied separately. -->
-      <div class="b2b-visual reveal" aria-hidden="true"></div>
+      <figure class="b2b__tile b2b__tile--hero reveal">
+        <img src="assets/b2b/brand-partnership.webp" alt="AYO community members holding new shoes at the AYO Superhost Gathering" width="1400" height="933" loading="lazy">
+        <figcaption class="b2b__cap">Brand Partnership</figcaption>
+      </figure>
+      <figure class="b2b__tile b2b__tile--events reveal">
+        <img src="assets/b2b/sports-event-solutions.webp" alt="Football players celebrating on the pitch" width="1400" height="933" loading="lazy">
+        <figcaption class="b2b__cap">Sports Event Solutions</figcaption>
+      </figure>
+      <figure class="b2b__tile b2b__tile--community reveal">
+        <img src="assets/b2b/community-engagement.webp" alt="A women’s padel community posing on court" width="900" height="600" loading="lazy">
+        <figcaption class="b2b__cap">Community Engagement</figcaption>
+      </figure>
+      <!-- Photo slot — the Digital Activation image is being supplied separately. -->
+      <figure class="b2b__tile b2b__tile--digital reveal">
+        <figcaption class="b2b__cap">Digital Activation</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -484,9 +491,6 @@
         <div>
           <p class="eyebrow-num">Stories</p>
           <h2 class="st__title" id="st-title">From the people who <span class="hl-block">play every week</span>.</h2>
-        </div>
-        <div class="st__aside">
-          <p class="st__note">Four topics. Four players.<br>Pick one &mdash; the story follows.</p>
         </div>
       </div>
 
@@ -540,7 +544,6 @@
             <blockquote>“It used to be hard to find opponents at my level. Now there’s an Open Play session near home every Saturday — and the match-ups are spot on.”</blockquote>
             <div class="st__foot">
               <p class="st__stat">3 sesi / minggu · rating 3.75</p>
-              <a class="st__cta" href="#">Read all stories <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
             </div>
           </div>
         </div>
@@ -554,7 +557,6 @@
             <blockquote>“Booking a futsal court takes two minutes, paid with QRIS. No more endless phone calls on behalf of the group.”</blockquote>
             <div class="st__foot">
               <p class="st__stat">5 booking / bulan · 2 lapangan tetap</p>
-              <a class="st__cta" href="#">Read all stories <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
             </div>
           </div>
         </div>
@@ -568,7 +570,6 @@
             <blockquote>“I went from first-timer to having a regular playing circle. Somebody always shows up, and that is the whole point.”</blockquote>
             <div class="st__foot">
               <p class="st__stat">1 lingkaran tetap · 18 teman main</p>
-              <a class="st__cta" href="#">Read all stories <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
             </div>
           </div>
         </div>
@@ -582,7 +583,6 @@
             <blockquote>“The rating follows me to every court I play at. I stopped explaining my level to strangers — it is just there.”</blockquote>
             <div class="st__foot">
               <p class="st__stat">rating 5.2 / 7.0 · calibrated</p>
-              <a class="st__cta" href="#">Read all stories <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 16L16 8"/><path d="M9 8h7v7"/></svg></a>
             </div>
           </div>
         </div>
