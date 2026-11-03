@@ -418,6 +418,67 @@ a.mega__head:hover .mega__cta img{transform:translateX(2px)}
   .foot-cols > .ayo-foot-col:last-child{grid-column:1 / -1}
 }
 
+/* ---- Mobile nav + drawer (Figma "Mobile Nav — Open (360)") ----------------
+   Built by chrome.js. At ≤1000px the bar is logo · cart (with count) · divider ·
+   burger; everything else moves into the drawer. */
+.nav-icon{position:relative}
+.nav-badge{display:none;position:absolute;top:2px;right:0;min-width:16px;height:16px;padding:0 4px;border-radius:var(--radius-pill);
+  background:var(--brand);color:#fff;font-size:10px;font-weight:var(--fw-bold);line-height:16px;text-align:center;pointer-events:none}
+.nav-divider{display:none;width:1px;height:28px;flex-shrink:0;background:currentColor;opacity:.28}
+.m-drawer,.m-scrim{display:none}
+@media (max-width:1000px){
+  .nav-links,.nav-links.open{display:none}
+  .nav-actions .country,.nav-actions .lang,.nav-actions > [data-login],.nav-actions .nav-account{display:none!important}
+  .nav-badge{display:block}
+  .nav-divider{display:block;margin:0 4px}
+  /* Open: the bar turns into the top of the white sheet. */
+  .ayo-nav.menu-open{background:var(--bg-white);color:var(--text-default);border-bottom-color:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
+  html.m-lock{overflow:hidden}
+  .m-scrim:not([hidden]){display:block;position:fixed;inset:0;z-index:49;background:rgba(26,25,25,.5)}
+  .m-drawer:not([hidden]){display:block;position:absolute;top:100%;left:0;right:0;background:var(--bg-white);color:var(--text-default);
+    border-radius:0 0 20px 20px;box-shadow:0 12px 32px rgba(26,25,25,.12);
+    max-height:calc(100vh - 64px);max-height:calc(100dvh - 64px);overflow-y:auto;overscroll-behavior:contain}
+  .m-drawer__in{max-width:var(--container);margin:0 auto;padding:4px var(--edge) 20px}
+  .m-link{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:44px;padding:10px 0;
+    background:none;border:0;cursor:pointer;text-align:left;text-decoration:none;
+    font-family:var(--font-sans);font-size:16px;line-height:24px;font-weight:var(--fw-regular);color:#787373}
+  .m-link:hover{color:var(--text-default)}
+  .m-link:focus-visible,.m-acct:focus-visible,.m-lang__opt:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:6px}
+  .m-acc__btn .chev{width:20px;height:20px;color:var(--text-default)}
+  .m-acc__btn[aria-expanded="true"] .chev{transform:rotate(180deg)}
+  .m-sep{height:1px;background:var(--bg-disabled);margin:12px 0}
+  /* Activities: the desktop mega columns, stacked (see .mega__* above). */
+  .m-mega{display:flex;flex-direction:column;gap:4px;padding:0 0 8px}
+  .m-mega .mega__head{gap:12px;padding:8px 0}
+  .m-mega .mega__ico{border-radius:8px}
+  .m-mega .mega__subs{padding:0 0 4px 15px}
+  .m-mega .mega__indent{padding-left:16px}
+  .m-mega .mega__sub{min-height:52px;padding:6px 0}
+  .m-mega .mega__sub img{display:none}
+  .m-mega .mega__sub:hover{background:none}
+  .m-mega .mega__sub:hover b{color:var(--brand)}
+  /* Account (signed in) */
+  .m-account{display:flex;flex-direction:column;padding-top:4px}
+  .m-acct{display:flex;align-items:center;gap:12px;min-height:48px;padding:8px 0;font-size:16px;line-height:24px;font-weight:var(--fw-medium);color:var(--text-default);text-decoration:none}
+  .m-acct:hover{color:var(--brand)}
+  .m-acct__ico{position:relative;display:grid;place-items:center;flex-shrink:0;width:32px;height:32px;overflow:hidden;border-radius:50%;background:var(--bg-subtle-bold);color:var(--text-default)}
+  .m-acct__ico .carbon-icon{width:16px;height:16px}
+  .m-acct__ico--photo{background:var(--brand);color:#fff;font-size:11px;font-weight:var(--fw-bold)}
+  .m-acct__ico--photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .m-logout{color:var(--text-default);font-weight:var(--fw-medium)}
+  /* Language options */
+  .m-lang{display:flex;flex-direction:column;padding-bottom:4px}
+  .m-lang__opt{display:flex;align-items:center;gap:12px;min-height:44px;padding:8px 12px;border:0;border-radius:8px;background:none;cursor:pointer;text-align:left;
+    font-family:var(--font-sans);font-size:15px;color:var(--text-default)}
+  .m-lang__opt .flag{font-size:18px;line-height:1}
+  .m-lang__opt .carbon-icon{margin-left:auto;width:16px;height:16px;color:var(--brand);visibility:hidden}
+  .m-lang__opt[aria-pressed="true"]{background:var(--bg-cream);font-weight:var(--fw-semibold)}
+  .m-lang__opt[aria-pressed="true"] .carbon-icon{visibility:visible}
+  /* Signed out */
+  .m-guest{padding-top:4px}
+  .m-drawer .ayo-btn.primary.m-login{display:flex;justify-content:center;width:100%;background:var(--brand);color:#fff;border-color:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
+}
+
 /* Phones: the three link columns stay in one row — tighter gap and type so
    the longer labels ("Terms & Conditions") wrap inside their own column. */
 @media (max-width:560px){

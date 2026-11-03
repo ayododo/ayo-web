@@ -21,18 +21,33 @@
      control reports what it does and the icon can follow from it. */
   var links=document.getElementById('navlinks');
   var burger=document.querySelector('.burger');
-  function setMenu(open){
-    if(!links) return;
-    links.classList.toggle('open', open);
+  /* The burger opens the mobile drawer (built further down). #navlinks is the
+     desktop row; it is no longer reused as the drawer because the phone menu
+     has its own items, account block and language switch. */
+  var drawer=null, scrim=null;
+  function menuIsOpen(){ return Boolean(drawer && !drawer.hidden); }
+  function setMenu(open, restoreFocus){
+    if(!drawer){
+      if(links) links.classList.toggle('open', open);
+    } else {
+      var was = menuIsOpen();
+      drawer.hidden = !open;
+      if(scrim) scrim.hidden = !open;
+      var navEl = document.querySelector('.ayo-nav');
+      if(navEl) navEl.classList.toggle('menu-open', open);
+      document.documentElement.classList.toggle('m-lock', open);
+      if(open && !was){ var first = drawer.querySelector('a,button'); if(first) first.focus({preventScroll:true}); }
+      if(!open && was && restoreFocus && burger) burger.focus();
+    }
     if(burger){
       burger.setAttribute('aria-expanded', open);
       burger.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
     }
   }
-  if(burger) burger.addEventListener('click', function(){ setMenu(!links.classList.contains('open')); });
+  if(burger) burger.addEventListener('click', function(){ setMenu(drawer ? !menuIsOpen() : !links.classList.contains('open')); });
   if(links) links.addEventListener('click', function(e){ if(e.target.tagName==='A') setMenu(false); });
   /* Escape already closes the dropdowns below; the menu should go with them. */
-  addEventListener('keydown', function(e){ if(e.key==='Escape') setMenu(false); });
+  addEventListener('keydown', function(e){ if(e.key==='Escape' && menuIsOpen()) setMenu(false, true); });
 
   /* nav float + hide going down, show coming back up (rAF-throttled) */
   var nav=document.querySelector('.ayo-nav'), tick=false, lastY=Math.max(0,scrollY);
@@ -43,7 +58,7 @@
     /* An open menu or focus inside the nav means someone is using it — sliding
        it out from under them would be hostile. Near the top there is nothing to
        reclaim, so it stays put there too. */
-    if(nav.querySelector('.open') || nav.contains(document.activeElement) || y<120){
+    if(nav.querySelector('.open') || menuIsOpen() || nav.contains(document.activeElement) || y<120){
       nav.classList.remove('nav--away');
     } else if(Math.abs(dy)>6){          /* ignore trackpad jitter and rubber-banding */
       nav.classList.toggle('nav--away', dy>0);
@@ -63,6 +78,7 @@
   /* Activities mega menu (Figma 26094:7914). Replaces the plain fallback links
      inside .submenu[data-mega="activities"]. One copy here instead of one per
      page — every page shares this nav. */
+  var megaCols = '';   /* Open Play / Open Match / GameTime columns, reused by the mobile drawer */
   (function(){
     var menu = document.querySelector('.submenu[data-mega="activities"]');
     if(!menu) return;
@@ -87,7 +103,7 @@
       return '<img src="'+I+p[0]+'" alt="" width="'+p[1]+'" height="'+p[2]+'" style="left:'+p[3]+'px;top:'+p[4]+'px">';
     }).join('') + '</span>';
 
-    menu.innerHTML =
+    megaCols =
       '<div class="mega__col">' +
         head({ icon:'tennis-ball.svg', title:'Open Play', desc:'Play with new people, no team needed' }) +
         '<div class="mega__subs"><div class="mega__indent">' +
@@ -97,7 +113,8 @@
       '</div>' +
       '<div class="mega__col">' + head({ icon:'vs.svg', title:'Open Match', desc:'Bring your team and play another squad', cta:'Explore Open Match', href:'open-match.html' }) + '</div>' +
       /* GameTime copy is still "Description pending" in Figma — shown as designed. */
-      '<div class="mega__col">' + head({ icon:'score.svg', title:'GameTime', desc:'Description pending', pending:true, cta:'Explore GameTime', href:'#' }) + '</div>' +
+      '<div class="mega__col">' + head({ icon:'score.svg', title:'GameTime', desc:'Description pending', pending:true, cta:'Explore GameTime', href:'#' }) + '</div>';
+    menu.innerHTML = megaCols +
       '<a class="mega__promo" href="index.html#rating">' +
         '<span class="mega__promo-card">' +
           '<span class="mega__soon">Coming soon</span>' +
@@ -111,6 +128,80 @@
     menu.classList.add('submenu--mega');
     menu.parentElement.classList.add('has-mega');
   })();
+
+  /* Mobile drawer (Figma "Mobile Nav — Open (360)"). Opened by the burger at
+     ≤1000px. Booking, Activities (collapsed accordion), For Venue Owners,
+     Partner with Us, Blog, then the account
+     block (signed in: Profile with the avatar photo, Dashboard), Change
+     Language and Log Out — or a Login button when signed out. */
+  var syncDrawerLang = function(){};
+  var drawerNav = document.querySelector('.ayo-nav');
+  if(drawerNav && burger){
+    var cartLink = drawerNav.querySelector('.nav-icon[aria-label="Cart"]');
+    if(cartLink){
+      /* Count is a placeholder until the cart is wired. */
+      cartLink.insertAdjacentHTML('beforeend', '<span class="nav-badge" aria-hidden="true">0</span>');
+      cartLink.setAttribute('aria-label', 'Cart, 0 items');
+    }
+    burger.insertAdjacentHTML('beforebegin', '<span class="nav-divider" aria-hidden="true"></span>');
+    var CHEV = '<span class="chev" aria-hidden="true"></span>';
+    drawer = document.createElement('div');
+    drawer.className = 'm-drawer';
+    drawer.id = 'm-drawer';
+    drawer.hidden = true;
+    drawer.innerHTML =
+      '<div class="m-drawer__in">' +
+        '<div class="m-list" role="group" aria-label="Main">' +
+          '<a class="m-link" href="https://ayo.co.id/venues">Booking</a>' +
+          '<div class="m-acc">' +
+            '<button class="m-link m-acc__btn" type="button" aria-expanded="false" aria-controls="m-acc-activities">Activities'+CHEV+'</button>' +
+            '<div class="m-acc__panel m-mega" id="m-acc-activities" hidden>' + megaCols + '</div>' +
+          '</div>' +
+          '<a class="m-link" href="venue.html">For Venue Owners</a>' +
+          '<a class="m-link" href="partner.html">Partner with Us</a>' +
+          '<a class="m-link" href="#">Blog</a>' +
+        '</div>' +
+        '<div class="m-account" data-m-auth="in" hidden>' +
+          '<a class="m-acct" href="#"><span class="m-acct__ico m-acct__ico--photo"><span data-m-initials aria-hidden="true">AP</span><img src="assets/avatar-1.jpg" alt="" width="32" height="32"></span>Profile</a>' +
+          '<a class="m-acct" href="#"><span class="m-acct__ico"><span class="carbon-icon carbon-dashboard" aria-hidden="true"></span></span>Dashboard</a>' +
+        '</div>' +
+        '<div class="m-sep" data-m-lang-wrap></div>' +
+        '<div class="m-acc" data-m-lang-wrap>' +
+          '<button class="m-link m-acc__btn" type="button" aria-expanded="false" aria-controls="m-acc-lang">Change Language'+CHEV+'</button>' +
+          '<div class="m-acc__panel m-lang" id="m-acc-lang" role="group" aria-label="Language" hidden>' +
+            '<button type="button" class="m-lang__opt" data-m-lang="EN" aria-pressed="false"><span class="flag" aria-hidden="true">🇬🇧</span>English<span class="carbon-icon carbon-checkmark" aria-hidden="true"></span></button>' +
+            '<button type="button" class="m-lang__opt" data-m-lang="ID" aria-pressed="false"><span class="flag" aria-hidden="true">🇮🇩</span>Bahasa Indonesia<span class="carbon-icon carbon-checkmark" aria-hidden="true"></span></button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="m-sep"></div>' +
+        '<button class="m-link m-logout" type="button" data-m-auth="in" data-m-logout hidden>Log Out</button>' +
+        '<div class="m-guest" data-m-auth="out"><a class="ayo-btn primary m-login" href="#" data-login>Login</a></div>' +
+      '</div>';
+    drawerNav.appendChild(drawer);
+    scrim = document.createElement('div');
+    scrim.className = 'm-scrim';
+    scrim.hidden = true;
+    document.body.appendChild(scrim);
+    burger.setAttribute('aria-controls', 'm-drawer');
+    scrim.addEventListener('click', function(){ setMenu(false); });
+    drawer.querySelector('[data-m-initials]').nextElementSibling.addEventListener('error', function(){ this.hidden = true; });
+    /* Accordions: Activities and Change Language. Both start collapsed. */
+    drawer.querySelectorAll('.m-acc__btn').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var open = btn.getAttribute('aria-expanded') !== 'true';
+        btn.setAttribute('aria-expanded', String(open));
+        document.getElementById(btn.getAttribute('aria-controls')).hidden = !open;
+      });
+    });
+    drawer.addEventListener('click', function(e){ if(e.target.closest('a') && !e.target.closest('[data-login]')) setMenu(false); });
+    /* Leaving phone width with the drawer open would strand the scroll lock. */
+    var wide = matchMedia('(min-width:1001px)');
+    (wide.addEventListener ? wide.addEventListener.bind(wide,'change') : wide.addListener.bind(wide))(function(e){ if(e.matches) setMenu(false); });
+    syncDrawerLang = function(code, show){
+      drawer.querySelectorAll('[data-m-lang-wrap]').forEach(function(el){ el.hidden = !show; });
+      drawer.querySelectorAll('[data-m-lang]').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.mLang === code)); });
+    };
+  }
 
   /* nav dropdowns — hover (desktop, via CSS) + click/tap (mobile & keyboard) */
   var subTops=[].slice.call(document.querySelectorAll('.ayo-nav-item.has-sub > .nav-top'));
@@ -228,6 +319,7 @@
       }
     });
     document.documentElement.dataset.language = code;
+    syncDrawerLang(code, isIndonesia);
   }
   if(lang){
     countryRoot = document.createElement('div');
@@ -273,6 +365,14 @@
     });
     var languagePopup = setupPopup(lang, langButton, langMenu);
     syncCountryLanguage();
+    if(drawer) drawer.querySelectorAll('[data-m-lang]').forEach(function(b){
+      b.addEventListener('click', function(){
+        if(countryCode !== 'ID') return;
+        indonesiaLanguage = b.dataset.mLang;
+        savePreference(indonesiaLanguageKey, indonesiaLanguage);
+        syncCountryLanguage();
+      });
+    });
     langMenu.querySelectorAll('button').forEach(function(b){
       b.addEventListener('click', function(){
         if(countryCode !== 'ID') return;
@@ -316,8 +416,15 @@
       session = null; savePreference(sessionKey, null); accountPopup.close(); renderSession(); navLogin.focus();
     });
   }
+  if(drawer) drawer.querySelector('[data-m-logout]').addEventListener('click', function(){
+    session = null; savePreference(sessionKey, null); renderSession(); setMenu(false, true);
+  });
   function renderSession(){
     loginBtns.forEach(function(b){ b.hidden = Boolean(session); });
+    if(drawer){
+      drawer.querySelectorAll('[data-m-auth]').forEach(function(el){ el.hidden = (el.dataset.mAuth === 'in') !== Boolean(session); });
+      if(session) drawer.querySelector('[data-m-initials]').textContent = session.name.split(/\s+/).map(function(n){ return n[0]; }).join('').slice(0,2).toUpperCase();
+    }
     if(!accountRoot) return;
     accountRoot.hidden = !session;
     if(session){
