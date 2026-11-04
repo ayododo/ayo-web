@@ -51,7 +51,6 @@
   var ACTIVITIES = [
     {
       id: 'open-play',
-      num: '01',
       title: 'Open Play',
       tag: 'Open Play',
       hasRole: true,
@@ -99,7 +98,6 @@
     },
     {
       id: 'open-match',
-      num: '02',
       title: 'Open Match',
       tag: 'Open Match',
       hasRole: false,
@@ -128,7 +126,6 @@
       /* Figma: Activity/GameTime (26106:1894). A headline on the image, no
          figure, no lead line and no micro-stats. */
       id: 'gametime',
-      num: '03',
       title: 'GameTime',
       tag: 'GameTime',
       hasRole: false,
@@ -177,7 +174,7 @@
 
     var r = a.roles[role];
     return {
-      id: a.id, num: a.num, title: a.title, tag: a.tag, hasRole: true,
+      id: a.id, title: a.title, tag: a.tag, hasRole: true,
       /* A role may point somewhere of its own — host has its own page, while
          participant still falls back to the activity's. */
       image: a.image, imageAlt: a.imageAlt, href: r.href || a.href, micros: a.micros,
@@ -196,7 +193,6 @@
     b.id = 'actb-tab-' + a.id;
     b.setAttribute('aria-controls', 'actb-panel');
     b.innerHTML =
-      '<span class="actb__tab-num">' + esc(a.num) + '</span>' +
       '<span class="actb__tab-title">' + esc(a.title) + '</span>' +
       '<span class="actb__tab-arrow">' + ARROW + '</span>';
     b.addEventListener('click', function () { selectTab(i); });
