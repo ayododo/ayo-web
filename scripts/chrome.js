@@ -79,35 +79,32 @@
      (Open Play, Open Match) and GameTime; hovering Open Play opens a flyout
      with its two destinations. It replaces the plain fallback links inside
      .submenu[data-mega="activities"]. The mobile drawer keeps its own stacked
-     layout (megaCols). One copy here — every page shares this nav. */
-  var megaCols = '';   /* Open Play / Open Match / GameTime, used by the mobile drawer */
+     layout (mActs, below). One copy here — every page shares this nav. */
+  /* Mobile drawer's Activities panel (Figma 26492:1068): a grey box with the
+     Open Play group (its two destinations on an indent line), Open Match and
+     GameTime — plain text, no icons. Built here so both menus share the copy. */
+  var mActs = '';
   (function(){
     var menu = document.querySelector('.submenu[data-mega="activities"]');
     if(!menu) return;
     var I = 'assets/icons/mega/';
-    var ARROW = '<img src="'+I+'arrow-brand.svg" alt="" width="16" height="16">';
-    function head(o){
-      var inner =
-        '<span class="mega__ico" aria-hidden="true"><img src="'+I+o.icon+'" alt="" width="20" height="20"></span>' +
-        '<span class="mega__txt"><span class="mega__title">'+o.title+'</span>' +
-        '<span class="mega__desc'+(o.pending?' mega__desc--pending':'')+'">'+o.desc+'</span>' +
-        (o.cta ? '<span class="mega__cta">'+o.cta+ARROW+'</span>' : '') + '</span>';
-      return o.href ? '<a class="mega__head" href="'+o.href+'">'+inner+'</a>' : '<div class="mega__head">'+inner+'</div>';
+    function item(cls, href, t, d, pending){
+      var tag = href ? 'a' : 'div';
+      return '<'+tag+' class="m-acts__'+cls+'"'+(href?' href="'+href+'"':'')+'><b>'+t+'</b><small'+(pending?' class="is-pending"':'')+'>'+d+'</small></'+tag+'>';
     }
-    function sub(href, label, desc){
-      return '<a class="mega__sub" href="'+href+'"><span><b>'+label+'</b><small>'+desc+'</small></span>'+ARROW+'</a>';
-    }
-    megaCols =
-      '<div class="mega__col">' +
-        head({ icon:'tennis-ball.svg', title:'Open Play', desc:'Play with new people, no team needed' }) +
-        '<div class="mega__subs"><div class="mega__indent">' +
-          sub('https://ayo.co.id/main-bareng', 'Join activity', 'Find an open game near you') +
-          sub('open-play-host.html', 'Host activity', 'Learn how to be Host') +
-        '</div></div>' +
+    mActs =
+      '<div class="m-acts__group">' +
+        item('head', '', 'Open Play', 'Play with new people, no team needed') +
+        '<div class="m-acts__indent">' +
+          item('sub', 'https://ayo.co.id/main-bareng', 'Join activity', 'Find an open game near you') +
+          item('sub', 'open-play-host.html', 'Host activity', 'Learn how to be Host') +
+        '</div>' +
+        item('head', 'open-match.html', 'Open Match', 'Bring your team and play another squad') +
       '</div>' +
-      '<div class="mega__col">' + head({ icon:'vs.svg', title:'Open Match', desc:'Bring your team and play another squad', cta:'Explore Open Match', href:'open-match.html' }) + '</div>' +
-      /* GameTime copy is still "Description pending" in Figma — shown as designed. */
-      '<div class="mega__col">' + head({ icon:'score.svg', title:'GameTime', desc:'Description pending', pending:true, cta:'Explore GameTime', href:'#' }) + '</div>';
+      '<div class="m-acts__group">' +
+        /* GameTime copy is still "Description pending" in Figma — shown as designed. */
+        item('head', '#', 'GameTime', 'Description pending', true) +
+      '</div>';
 
     function txt(t, d, pending){
       return '<span class="amenu__txt"><b>'+t+'</b><small'+(pending?' class="is-pending"':'')+'>'+d+'</small></span>';
@@ -176,7 +173,7 @@
           '<a class="m-link" href="https://ayo.co.id/venues">Booking</a>' +
           '<div class="m-acc">' +
             '<button class="m-link m-acc__btn" type="button" aria-expanded="false" aria-controls="m-acc-activities">Activities'+CHEV+'</button>' +
-            '<div class="m-acc__panel m-mega" id="m-acc-activities" hidden>' + megaCols + '</div>' +
+            '<div class="m-acc__panel m-acts" id="m-acc-activities" hidden>' + mActs + '</div>' +
           '</div>' +
           '<a class="m-link" href="venue.html">For Venue Owners</a>' +
           '<a class="m-link" href="partner.html">Partner with Us</a>' +
