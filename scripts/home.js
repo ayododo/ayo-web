@@ -1,81 +1,46 @@
 (function(){
   var rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* Story rail — auto-advance, click, ArrowUp/Down, and a pause control.
-     The progress bar IS the timer: each slide ends on its animationend, so the
-     bar can never drift out of step with the story it belongs to, and the
-     pausing done in CSS needs no bookkeeping here. */
-  var stTabs = [].slice.call(document.querySelectorAll('.st__tab'));
-  var stStories = [].slice.call(document.querySelectorAll('.st__story'));
-  var stGrid = document.querySelector('.st__grid');
-  var stCur = 0;
-  /* Under reduced motion the global rule collapses every animation to ~0ms, so
-     an auto-advance would strobe. Those users get plain click-to-switch tabs. */
-  var stAuto = !!stGrid && stTabs.length > 1 && !rm;
+  /* Partnership panels — one panel open at a time. Desktop: the open panel
+     widens; phone: the panels are an accordion. Clicking (or, with a mouse,
+     hovering) a panel opens it. The progress bar IS the timer: the rotation
+     moves on at its animationend, so it can never drift from what is shown.
+     Hovering the row or the section being off screen pauses it (CSS). */
+  var row = document.querySelector('[data-ptn]');
+  if(!row) return;
+  var panels = [].slice.call(row.querySelectorAll('.ptn__panel'));
+  var cur = Math.max(0, panels.findIndex(function(p){ return p.classList.contains('is-active'); }));
+  /* Reduced motion collapses every animation to ~0ms, so an auto-advance
+     would strobe; those users get click-to-open panels with no timer. */
+  var auto = panels.length > 1 && !rm;
+  row.classList.toggle('is-static', !auto);
+  var hoverOpens = matchMedia('(hover: hover) and (pointer: fine) and (min-width: 761px)');
 
-  function stShow(i){
-    stCur = i;
-    stTabs.forEach(function(t,j){
-      t.setAttribute('aria-selected', i===j); t.classList.remove('ticking');
-      /* Collapsed tabs are hidden but still in the document — their control has
-         to leave the focus order with them, or Tab lands on nothing visible. */
-      var tg = t.querySelector('.st__toggle');
-      if(tg) tg.tabIndex = i===j ? 0 : -1;
+  function show(i){
+    cur = i;
+    panels.forEach(function(p,j){
+      p.classList.toggle('is-active', i===j);
+      p.classList.remove('ticking');
+      p.querySelector('.ptn__trigger').setAttribute('aria-expanded', i===j);
     });
-    stStories.forEach(function(p,j){ p.classList.toggle('is-active', i===j); });
-    if(stAuto){ void stTabs[i].offsetWidth; stTabs[i].classList.add('ticking'); }  /* reflow restarts the bar */
+    if(auto){ void panels[i].offsetWidth; panels[i].classList.add('ticking'); }  /* reflow restarts the bar */
   }
 
-  stTabs.forEach(function(b,i){
-    /* Picking a topic moves the rotation there rather than ending it. It used to
-       end it, back when hovering off the section was the only way to stop —
-       the pause control is the way to stop now, and it says so. */
-    b.addEventListener('click', function(e){
-      if(e.target.closest('.st__toggle')) return;   /* the control governs the bar, not the choice */
-      stShow(i);
-    });
-    b.addEventListener('keydown', function(e){
-      if(e.key==='ArrowDown'||e.key==='ArrowUp'){ e.preventDefault();
-        var n=(i+(e.key==='ArrowDown'?1:stTabs.length-1))%stTabs.length; stTabs[n].focus(); stTabs[n].click(); }
-      /* A div carries role=tab but not a button's built-in activation, so Enter
-         and Space have to be wired by hand. It is a div because the control
-         inside it is a real button, and a button cannot nest in one. */
-      else if((e.key==='Enter'||e.key===' ') && e.target===b){ e.preventDefault(); stShow(i); }
-    });
-    if(stAuto) b.addEventListener('animationend', function(e){
-      if(e.animationName==='sttick' && b.classList.contains('ticking')) stShow((stCur+1)%stTabs.length);
+  panels.forEach(function(p,i){
+    p.querySelector('.ptn__trigger').addEventListener('click', function(){ if(i!==cur) show(i); });
+    p.addEventListener('mouseenter', function(){ if(hoverOpens.matches && i!==cur) show(i); });
+    if(auto) p.addEventListener('animationend', function(e){
+      if(e.animationName==='ptntick' && p.classList.contains('ticking')) show((cur+1)%panels.length);
     });
   });
 
-  /* Pause is a real toggle, not a hover accident: it holds until pressed again.
-     It is the only thing that stops the rotation, which is why picking a topic
-     no longer does. */
-  /* Every bar carries one, but only the open tab's is reachable. They all drive
-     the same state, so whichever is on screen is the one that answers. */
-  var stToggles = [].slice.call(document.querySelectorAll('.st__toggle'));
-  if(stGrid && stToggles.length){
-    stToggles.forEach(function(tg){
-      tg.addEventListener('click', function(e){
-        e.stopPropagation();                        /* do not also re-pick the tab */
-        var held = stGrid.classList.toggle('is-paused');
-        stToggles.forEach(function(x){
-          x.setAttribute('aria-pressed', held);
-          x.setAttribute('aria-label', held ? 'Resume story rotation' : 'Pause story rotation');
-        });
-      });
-    });
+  if(auto && 'IntersectionObserver' in window){
+    row.classList.add('is-offscreen');   /* hold until the panels are actually on screen */
+    new IntersectionObserver(function(es){
+      row.classList.toggle('is-offscreen', !es[0].isIntersecting);
+    },{threshold:.35}).observe(row);
   }
-
-  if(stAuto){
-    if('IntersectionObserver' in window){
-      stGrid.classList.add('is-offscreen');   /* hold until the section is actually on screen */
-      new IntersectionObserver(function(es){
-        stGrid.classList.toggle('is-offscreen', !es[0].isIntersecting);
-      },{threshold:.25}).observe(stGrid);
-    }
-    stShow(0);
-  }
-
+  show(cur);
 })();
 
 /* stat-band count-up — fires only when the band scrolls into view.

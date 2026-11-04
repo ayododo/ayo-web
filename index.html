@@ -40,6 +40,7 @@
         </div>
       </div>
       <div class="ayo-nav-item"><a class="nav-top" href="venue.html">For Venue Owners</a></div>
+      <div class="ayo-nav-item"><a class="nav-top" href="partner.html">Partner with Us</a></div>
       <div class="ayo-nav-item"><a class="nav-top" href="#">Blog</a></div>
     </div>
     <div class="nav-actions">
@@ -423,35 +424,63 @@
   </div>
 </section>
 
-<!-- 7. MARKETING B2B — bento (Figma 26407:4724) -->
-<section class="b2b" id="partner" aria-labelledby="b2b-title">
-  <div class="wrap container-fluid">
-    <div class="b2b__bento">
-      <div class="b2b__intro reveal">
-        <p class="b2b__eyebrow">Partnership</p>
-        <h2 class="b2b__title" id="b2b-title">Turn your brand into part of the game.</h2>
-        <p class="b2b__body">Reach hundreds of thousands of sports enthusiasts across AYO’s communities through strategic collaborations and partnerships that drive authentic engagement and connections.</p>
-        <div class="b2b__ctas">
-          <a class="ayo-btn ghost" href="#">Contact Us</a>
-          <a class="ayo-btn primary" href="partner.html">Explore partnership <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.333 10.667l5.334-5.334"/><path d="M6 5.333h4.667V10"/></svg></a>
+<!-- 7. PARTNERSHIP — expanding panels (Figma 26491:27748; mobile 26504:750).
+     Desktop: four photo panels in a row, the active one widens and shows its
+     title + copy. Mobile: the same panels stack as an accordion. One markup,
+     scripts/home.js drives the active panel (autoplay + click/hover). -->
+<section class="ptn" id="partner" aria-labelledby="ptn-title">
+  <div class="ptn__in">
+    <div class="ptn__head reveal">
+      <div class="ptn__heading">
+        <p class="ptn__eyebrow">Partnership</p>
+        <h2 class="ptn__title" id="ptn-title">Turn your brand into part of the game.</h2>
+      </div>
+      <div class="ptn__intro">
+        <p class="ptn__body">Reach hundreds of thousands of sports enthusiasts across AYO’s communities through strategic collaborations and partnerships that drive authentic engagement and connections.</p>
+        <div class="ptn__ctas">
+          <a class="ptn__btn ptn__btn--ghost" href="#">Contact Us</a>
+          <a class="ptn__btn ptn__btn--primary" href="partner.html">Explore partnership <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.333 10.667l5.334-5.334"/><path d="M6 5.333h4.667V10"/></svg></a>
         </div>
       </div>
-      <figure class="b2b__tile b2b__tile--hero reveal">
-        <img src="assets/b2b/brand-partnership.webp" alt="AYO community members holding new shoes at the AYO Superhost Gathering" width="1400" height="933" loading="lazy">
-        <figcaption class="b2b__cap">Brand Partnership</figcaption>
-      </figure>
-      <figure class="b2b__tile b2b__tile--events reveal">
-        <img src="assets/b2b/sports-event-solutions.webp" alt="Football players celebrating on the pitch" width="1400" height="933" loading="lazy">
-        <figcaption class="b2b__cap">Sports Event Solutions</figcaption>
-      </figure>
-      <figure class="b2b__tile b2b__tile--community reveal">
-        <img src="assets/b2b/community-engagement.webp" alt="A women’s padel community posing on court" width="900" height="600" loading="lazy">
-        <figcaption class="b2b__cap">Community Engagement</figcaption>
-      </figure>
-      <!-- Photo slot — the Digital Activation image is being supplied separately. -->
-      <figure class="b2b__tile b2b__tile--digital reveal">
-        <figcaption class="b2b__cap">Digital Activation</figcaption>
-      </figure>
+    </div>
+
+    <div class="ptn__panels reveal" data-ptn>
+      <article class="ptn__panel">
+        <img src="assets/partnership/community.webp" alt="" width="1400" height="933" loading="lazy">
+        <button class="ptn__trigger" type="button" aria-expanded="false" aria-controls="ptn-p0"><span class="ptn__label">Community Engagement</span><span class="ptn__plus" aria-hidden="true">+</span></button>
+        <div class="ptn__content" id="ptn-p0">
+          <h3 class="ptn__name">Community Engagement</h3>
+          <p class="ptn__desc">Build meaningful connections with sports enthusiasts through community-powered experiences</p>
+        </div>
+        <span class="ptn__progress" aria-hidden="true"><i></i></span>
+      </article>
+      <article class="ptn__panel is-active">
+        <img src="assets/partnership/brand.webp" alt="" width="1400" height="933" loading="lazy">
+        <button class="ptn__trigger" type="button" aria-expanded="true" aria-controls="ptn-p1"><span class="ptn__label">Brand Partnership</span><span class="ptn__plus" aria-hidden="true">+</span></button>
+        <div class="ptn__content" id="ptn-p1">
+          <h3 class="ptn__name">Brand Partnership</h3>
+          <p class="ptn__desc">Bring your brand closer to active sports communities through strategic collaborations</p>
+        </div>
+        <span class="ptn__progress" aria-hidden="true"><i></i></span>
+      </article>
+      <article class="ptn__panel">
+        <img src="assets/partnership/digital.webp" alt="" width="1400" height="933" loading="lazy">
+        <button class="ptn__trigger" type="button" aria-expanded="false" aria-controls="ptn-p2"><span class="ptn__label">Digital Activation</span><span class="ptn__plus" aria-hidden="true">+</span></button>
+        <div class="ptn__content" id="ptn-p2">
+          <h3 class="ptn__name">Digital Activation</h3>
+          <p class="ptn__desc">Amplify your brand through community-powered content and interactive digital campaigns</p>
+        </div>
+        <span class="ptn__progress" aria-hidden="true"><i></i></span>
+      </article>
+      <article class="ptn__panel">
+        <img src="assets/partnership/sports.webp" alt="" width="1400" height="933" loading="lazy">
+        <button class="ptn__trigger" type="button" aria-expanded="false" aria-controls="ptn-p3"><span class="ptn__label">Sports Event Solutions</span><span class="ptn__plus" aria-hidden="true">+</span></button>
+        <div class="ptn__content" id="ptn-p3">
+          <h3 class="ptn__name">Sports Event Solutions</h3>
+          <p class="ptn__desc">Manage sports events with end-to-end solutions, from tournament management, live scoring and event operation based on your needs</p>
+        </div>
+        <span class="ptn__progress" aria-hidden="true"><i></i></span>
+      </article>
     </div>
   </div>
 </section>
@@ -482,114 +511,18 @@
   </div>
 </section>
 
-<!-- 8. TESTIMONIALS -->
-<section id="cerita" aria-labelledby="st-title">
-  <div class="wrap container-fluid">
-    <div class="st__grid reveal">
-
-      <div class="st__head">
-        <div>
-          <p class="eyebrow-num">Stories</p>
-          <h2 class="st__title" id="st-title">From the people who <span class="hl-block">play every week</span>.</h2>
-        </div>
-      </div>
-
-      <div class="st__rail" role="tablist" aria-orientation="vertical" aria-label="Story topics">
-        <div class="st__tab" role="tab" id="st-tab-0" aria-controls="st-story-0"
-                aria-selected="true" tabindex="0" style="--stdur:10s">
-          <span class="st__tab-head"><span class="st__num">01</span><span class="st__topic">Finding opponents</span></span>
-          <span class="st__body"><div>
-            <span class="st__desc">Match-ups yang sepadan tanpa harus nyari di grup chat.</span>
-            <span class="st__progress"><span class="st__bar"><i></i></span><button class="st__toggle" type="button" aria-pressed="false" tabindex="-1" aria-label="Pause story rotation"><svg class="ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg><svg class="ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button></span>
-          </div></span>
-        </div>
-        <div class="st__tab" role="tab" id="st-tab-1" aria-controls="st-story-1"
-                aria-selected="false" tabindex="0" style="--stdur:9s">
-          <span class="st__tab-head"><span class="st__num">02</span><span class="st__topic">Booking courts</span></span>
-          <span class="st__body"><div>
-            <span class="st__desc">Lapangan kosong ketemu dalam dua menit, bayar langsung.</span>
-            <span class="st__progress"><span class="st__bar"><i></i></span><button class="st__toggle" type="button" aria-pressed="false" tabindex="-1" aria-label="Pause story rotation"><svg class="ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg><svg class="ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button></span>
-          </div></span>
-        </div>
-        <div class="st__tab" role="tab" id="st-tab-2" aria-controls="st-story-2"
-                aria-selected="false" tabindex="0" style="--stdur:8.5s">
-          <span class="st__tab-head"><span class="st__num">03</span><span class="st__topic">Community</span></span>
-          <span class="st__body"><div>
-            <span class="st__desc">Lingkaran main yang tetap jalan tiap minggu.</span>
-            <span class="st__progress"><span class="st__bar"><i></i></span><button class="st__toggle" type="button" aria-pressed="false" tabindex="-1" aria-label="Pause story rotation"><svg class="ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg><svg class="ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button></span>
-          </div></span>
-        </div>
-        <div class="st__tab" role="tab" id="st-tab-3" aria-controls="st-story-3"
-                aria-selected="false" tabindex="0" style="--stdur:8.5s">
-          <span class="st__tab-head"><span class="st__num">04</span><span class="st__topic">Levels &amp; rating</span></span>
-          <span class="st__body"><div>
-            <span class="st__desc">Rating yang ikut kamu ke mana pun kamu main.</span>
-            <span class="st__progress"><span class="st__bar"><i></i></span><button class="st__toggle" type="button" aria-pressed="false" tabindex="-1" aria-label="Pause story rotation"><svg class="ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg><svg class="ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button></span>
-          </div></span>
-        </div>
-        <div class="st__count">
-          <p class="st__count-num">1,240</p>
-          <p class="st__count-lbl">Player stories collected</p>
-        </div>
-      </div>
-
-      <div class="st__panel">
-        <div class="st__story is-active" role="tabpanel" id="st-story-0" aria-labelledby="st-tab-0">
-          <div>
-            <div class="st__photo"><img src="assets/dian.jpg" alt="Dian N."><span class="st__badge">Open Play</span></div>
-            <p class="st__name">Dian N.</p>
-            <p class="st__meta">Jakarta · playing since 2023</p>
-          </div>
-          <div class="st__quote">
-            <blockquote>“It used to be hard to find opponents at my level. Now there’s an Open Play session near home every Saturday — and the match-ups are spot on.”</blockquote>
-            <div class="st__foot">
-              <p class="st__stat">3 sesi / minggu · rating 3.75</p>
-            </div>
-          </div>
-        </div>
-        <div class="st__story" role="tabpanel" id="st-story-1" aria-labelledby="st-tab-1">
-          <div>
-            <div class="st__photo"><img src="assets/fajar.jpg" alt="Fajar R."><span class="st__badge">Booking</span></div>
-            <p class="st__name">Fajar R.</p>
-            <p class="st__meta">Bandung · weekly host</p>
-          </div>
-          <div class="st__quote">
-            <blockquote>“Booking a futsal court takes two minutes, paid with QRIS. No more endless phone calls on behalf of the group.”</blockquote>
-            <div class="st__foot">
-              <p class="st__stat">5 booking / bulan · 2 lapangan tetap</p>
-            </div>
-          </div>
-        </div>
-        <div class="st__story" role="tabpanel" id="st-story-2" aria-labelledby="st-tab-2">
-          <div>
-            <div class="st__photo"><img src="assets/sinta.jpg" alt="Sinta W."><span class="st__badge">Community</span></div>
-            <p class="st__name">Sinta W.</p>
-            <p class="st__meta">Surabaya · joined last March</p>
-          </div>
-          <div class="st__quote">
-            <blockquote>“I went from first-timer to having a regular playing circle. Somebody always shows up, and that is the whole point.”</blockquote>
-            <div class="st__foot">
-              <p class="st__stat">1 lingkaran tetap · 18 teman main</p>
-            </div>
-          </div>
-        </div>
-        <div class="st__story" role="tabpanel" id="st-story-3" aria-labelledby="st-tab-3">
-          <div>
-            <div class="st__photo"><span class="st__ph">Player photo</span><span class="st__badge">PadelLevels</span></div>
-            <p class="st__name">Rangga P.</p>
-            <p class="st__meta">Denpasar · playing since 2024</p>
-          </div>
-          <div class="st__quote">
-            <blockquote>“The rating follows me to every court I play at. I stopped explaining my level to strangers — it is just there.”</blockquote>
-            <div class="st__foot">
-              <p class="st__stat">rating 5.2 / 7.0 · calibrated</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
+<!-- 8. TESTIMONIAL — single quote (Figma 26539:9499; mobile 26540:9537).
+     The people chips scroll sideways on phones. -->
+<section class="tq" id="cerita" aria-label="What people say about AYO">
+  <figure class="tq__quote reveal">
+    <img class="tq__mark" src="assets/icons/quote.svg" alt="" width="56" height="56">
+    <blockquote class="tq__text">“AYO Indonesia bringing a revolution among sport enthusiasts. The application makes it easy to find sport actvities, grow your sport community and book sport venues. It is an end to end ecosystem for sports”</blockquote>
+    <figcaption class="tq__people">
+      <span class="tq__chip is-active"><img src="assets/testimonials/opi.webp" alt="" width="48" height="48" loading="lazy"><span class="tq__who"><span class="tq__name">Opi H.</span><span class="tq__role">Backbone Indonesia</span></span></span>
+      <span class="tq__chip"><img src="assets/testimonials/dita.webp" alt="" width="48" height="48" loading="lazy"><span class="tq__who"><span class="tq__name">Dita S.</span><span class="tq__role">Host Mabar AYO</span></span></span>
+      <span class="tq__chip"><img src="assets/testimonials/bayu.webp" alt="" width="48" height="48" loading="lazy"><span class="tq__who"><span class="tq__name">Bayu A.</span><span class="tq__role">Kawan AYO</span></span></span>
+    </figcaption>
+  </figure>
 </section>
 
 <!-- 9. CTA BAND -->
@@ -614,6 +547,7 @@
       </div>
     </div>
     <div class="foot-cols">
+      <address class="ayo-foot-col foot-addr">PT Ayo Indonesia Maju<br>Jl. Wahid Hasyim No. 10D<br>Jakarta Pusat 10340<br>DKI Jakarta, Indonesia</address>
       <div class="ayo-foot-col"><h4>Company</h4><a href="#">About Us</a><a href="#">Policies &amp; Privacy</a><a href="#">Terms &amp; Conditions</a></div>
       <div class="ayo-foot-col"><h4>Ecosystem</h4><a href="#aktivitas">Activity</a><a href="#rating">PadelLevels</a><a href="#booking">Booking</a><a href="court-directory.html">Venue Directory</a><a href="venue.html">Venue Owner</a><a href="partner.html">Partnership</a></div>
       <div class="ayo-foot-col"><h4>Support</h4><a href="#">Contact us</a></div>
@@ -623,8 +557,8 @@
           <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg></a>
           <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 5.8a4.6 4.6 0 0 1-1.1-3H12v13.1a2.6 2.6 0 1 1-2.6-2.6c.3 0 .5 0 .8.1V9.7a5.9 5.9 0 1 0 5.2 5.9V9a7.7 7.7 0 0 0 4.4 1.4V7a4.6 4.6 0 0 1-3.2-1.2z"/></svg></a>
           <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 8s-.2-1.6-.9-2.3c-.9-.9-1.9-.9-2.3-1C16.9 4.5 12 4.5 12 4.5s-4.9 0-7.8.2c-.4 0-1.4.1-2.3 1C1.2 6.4 1 8 1 8S.8 9.9.8 11.8v1.4C.8 15.1 1 17 1 17s.2 1.6.9 2.3c.9.9 2 .9 2.5 1 1.8.2 7.6.2 7.6.2s4.9 0 7.8-.2c.4 0 1.4-.1 2.3-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.8v-1.4C23.2 9.9 23 8 23 8zM9.8 15V9l5.2 3-5.2 3z"/></svg></a>
-          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5.3-6.9L4.8 22H1.7l8.1-9.3L1 2h7l4.8 6.3L18.9 2zm-2.4 18h1.9L7.6 4H5.6L16.5 20z"/></svg></a>
           <a href="#" aria-label="Threads"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.964-.065-1.19.408-2.285 1.33-3.082.88-.76 2.119-1.207 3.583-1.291a13.853 13.853 0 0 1 3.02.142c-.126-.742-.375-1.332-.75-1.757-.513-.586-1.308-.883-2.359-.89h-.029c-.844 0-1.992.232-2.721 1.32L7.734 7.847c.98-1.454 2.568-2.256 4.478-2.256h.044c3.194.02 5.097 1.975 5.287 5.388.108.046.216.094.321.142 1.49.7 2.58 1.761 3.154 3.07.797 1.82.871 4.79-1.548 7.158-1.85 1.81-4.094 2.628-7.277 2.65Zm1.003-11.69c-.242 0-.487.007-.739.021-1.836.103-2.98.946-2.916 2.143.067 1.256 1.452 1.839 2.784 1.767 1.224-.065 2.818-.543 3.086-3.71a10.5 10.5 0 0 0-2.215-.221z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="-2.5 -2.5 29 29" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
         </div>
         <h4>Available on</h4>
         <div class="foot-app">

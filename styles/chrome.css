@@ -326,7 +326,9 @@ a.mega__head:hover .mega__cta img{transform:translateX(2px)}
 .foot-cta{display:flex;align-items:center;gap:var(--space-5)}
 .foot-cta-label{color:rgba(255,255,255,.72);font-size:var(--fs-body-lg);font-weight:var(--fw-medium)}
 .foot-cta .ayo-btn svg{width:16px;height:16px}
-.foot-cols{display:grid;grid-template-columns:1fr 1fr 1fr 1.3fr;gap:var(--space-10);padding:clamp(40px,5vw,64px) 0}
+.foot-cols{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1.37fr;gap:var(--space-10);padding:clamp(40px,5vw,64px) 0}
+/* Figma 26585:11670: the company address leads the columns, no heading. */
+.foot-addr{font-style:normal;font-size:var(--fs-body);line-height:20px;color:rgba(255,255,255,.6);margin:0}
 .foot h4{color:#fff;font-size:var(--fs-body);font-weight:var(--fw-bold);margin-bottom:var(--space-5)}
 .foot .ayo-foot-col > a{display:block;color:rgba(255,255,255,.6);font-size:var(--fs-body);padding:var(--space-2) 0;transition:color .2s}
 .foot .ayo-foot-col > a:hover{color:#fff}
@@ -412,10 +414,11 @@ a.mega__head:hover .mega__cta img{transform:translateX(2px)}
   .nav-actions > .ayo-btn{padding:10px 14px}
   .country-menu{left:0;right:auto}
   .lang-menu{min-width:216px;right:-44px}
-  /* Company, Ecosystem and Support side by side; the follow + store column
-     is too wide for a third of the row, so it takes a full row below. */
+  /* Company, Ecosystem and Support side by side; the address and the
+     follow + store column each take a full row (above and below). */
   .foot-cols{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-8) var(--space-6)}
   .foot-cols > .ayo-foot-col:last-child{grid-column:1 / -1}
+  .foot-cols > .foot-addr{grid-column:1 / -1}
 }
 
 /* ---- Mobile nav + drawer (Figma "Mobile Nav — Open (360)") ----------------
@@ -479,10 +482,14 @@ a.mega__head:hover .mega__cta img{transform:translateX(2px)}
   .m-drawer .ayo-btn.primary.m-login{display:flex;justify-content:center;width:100%;background:var(--brand);color:#fff;border-color:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
 }
 
-/* Phones: the three link columns stay in one row — tighter gap and type so
-   the longer labels ("Terms & Conditions") wrap inside their own column. */
+/* Phones: two link columns, tighter type. */
 @media (max-width:560px){
-  .foot-cols{column-gap:var(--space-4)}
+  /* Figma 26592:9750 (Footer / Mobile): logo, label and a full-width CTA
+     stack; Company + Ecosystem share a row, Support wraps under them. */
+  .foot-top{flex-direction:column;align-items:stretch;gap:var(--space-5)}
+  .foot-cta{flex-direction:column;align-items:flex-start;gap:var(--space-3)}
+  .foot-cta .ayo-btn{width:100%;justify-content:center}
+  .foot-cols{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:var(--space-8);column-gap:var(--space-4)}
   .foot .ayo-foot-col > a{font-size:var(--fs-small);line-height:1.35}
 }
 

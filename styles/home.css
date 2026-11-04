@@ -197,157 +197,124 @@
   .bkg__line{display:none}
 }
 
-/* ---------- 7. Marketing B2B (bento, Figma 26407:4724) ----------
-   Four columns, 280px rows: the intro and the hero photo take 2×2 each, and
-   the bottom row is a wide events photo plus two single tiles. Captions are
-   white pills pinned bottom-left. */
-.b2b{background:#f6f5f3;padding:72px 0}
-.b2b__bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(3,280px);gap:16px;
-  grid-template-areas:"intro intro hero hero" "intro intro hero hero" "events events community digital"}
-.b2b__intro{grid-area:intro;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;
-  padding:56px 48px;border-radius:24px;background:var(--bg-white);min-width:0}
-.b2b__eyebrow{font-family:var(--font-mono);font-weight:var(--fw-semibold);font-size:14px;letter-spacing:.18em;text-transform:uppercase;color:#d31223}  /* Text/Brand/Brand */
-.b2b__title{margin-top:20px;max-width:500px;font-weight:var(--fw-extrabold);font-size:clamp(36px,4.4vw,64px);line-height:1.03;letter-spacing:-.035em;color:#1a1919}
-.b2b__body{margin-top:28px;max-width:520px;font-size:18px;line-height:1.7;color:#787373}  /* Text/Neutral/Secondary */
-.b2b__ctas{display:flex;flex-wrap:wrap;gap:16px;padding-top:32px}
-.b2b__ctas .ayo-btn{font-weight:var(--fw-bold);line-height:20px}
-.b2b__ctas .ayo-btn.ghost{color:#2c2c2c}
-.b2b__ctas .ayo-btn svg{flex-shrink:0}
+/* ---------- 7. Partnership — expanding panels (Figma 26491:27748) ----------
+   Desktop: four photo panels in a row; the open one takes 4 shares of the
+   width and shows title + copy, the others show a vertical label under a dim.
+   Phone (≤760px, Figma 26504:750): the same panels stack as an accordion. */
+.ptn{background:#f9f8f6;padding:96px 0}   /* Cream-surface */
+.ptn__in{max-width:calc(1320px + 2 * var(--edge, 24px));margin:0 auto;padding:0 var(--edge, 24px);display:flex;flex-direction:column;gap:56px}
+.ptn__head{display:flex;align-items:flex-end;justify-content:space-between;gap:40px}
+.ptn__heading{display:flex;flex-direction:column;gap:20px}
+.ptn__eyebrow{margin:0;font-weight:var(--fw-semibold);font-size:14px;line-height:normal;letter-spacing:.18em;text-transform:uppercase;color:#d31223}  /* Text/Brand/Brand */
+.ptn__title{margin:0;max-width:560px;font-weight:var(--fw-extrabold);font-size:clamp(40px,4.45vw,64px);line-height:1.02;letter-spacing:-.035em;color:#1a1919}
+.ptn__intro{flex:0 1 520px;display:flex;flex-direction:column;gap:32px}
+.ptn__body{margin:0;font-size:18px;line-height:1.7;color:#787373}   /* Text/Neutral/Secondary */
+.ptn__ctas{display:flex;flex-wrap:wrap;gap:16px}
+.ptn__btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;height:56px;padding:0 32px;border-radius:999px;
+  font-weight:var(--fw-semibold);font-size:17px;line-height:1;text-decoration:none;white-space:nowrap;transition:background-color .2s,border-color .2s,filter .2s}
+.ptn__btn--ghost{background:#fff;border:1.5px solid #dcdbdb;color:#1a1919}
+.ptn__btn--ghost:hover{border-color:#1a1919;color:#1a1919;text-decoration:none}
+.ptn__btn--primary{background:var(--brand);color:#fff}
+.ptn__btn--primary:hover{filter:brightness(.93);color:#fff;text-decoration:none}
+.ptn__btn:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 
-.b2b__tile{position:relative;margin:0;min-width:0;border-radius:24px;overflow:hidden;background:rgba(0,0,0,.1)}
-.b2b__tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-.b2b__tile--hero{grid-area:hero}
-.b2b__tile--events{grid-area:events}
-.b2b__tile--community{grid-area:community}
-.b2b__tile--digital{grid-area:digital}
-.b2b__cap{position:absolute;left:24px;bottom:24px;max-width:calc(100% - 48px);padding:10px 18px;border-radius:999px;background:var(--bg-white);
-  font-weight:var(--fw-bold);font-size:18px;line-height:22px;color:#141414;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.b2b__tile--hero .b2b__cap{padding:12px 20px}
+.ptn__panels{display:flex;gap:6px;height:393px}
+.ptn__panel{position:relative;flex:1 1 0;min-width:0;overflow:hidden;background:#1a1919;
+  transition:flex-grow .6s cubic-bezier(.2,.7,.2,1)}
+.ptn__panel.is-active{flex-grow:4}
+.ptn__panel img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+/* Dim (inactive only) and the bottom gradient that carries the text. */
+.ptn__panel::before{content:'';position:absolute;inset:0;background:#1a1919;opacity:.42;transition:opacity .45s}
+.ptn__panel.is-active::before{opacity:0}
+.ptn__panel::after{content:'';position:absolute;left:0;right:0;bottom:0;height:216px;
+  background:linear-gradient(to bottom,rgba(26,25,25,0),rgba(26,25,25,.75));pointer-events:none}
 
-/* Tablet: two columns, intro and hero full width. */
-@media (max-width:900px){
-  .b2b{padding:56px 0}
-  .b2b__bento{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto 360px 240px 240px;
-    grid-template-areas:"intro intro" "hero hero" "events events" "community digital"}
-  .b2b__intro{padding:40px 32px}
+/* The whole panel is the button; the label is its visible text while closed. */
+.ptn__trigger{position:absolute;inset:0;z-index:2;width:100%;padding:0;border:0;background:none;color:#fff;cursor:pointer;font:inherit;text-align:left}
+.ptn__panel.is-active .ptn__trigger{cursor:default}
+.ptn__trigger:focus-visible{outline:2px solid #fff;outline-offset:-4px}
+.ptn__label{position:absolute;left:50%;bottom:28px;writing-mode:vertical-rl;transform:translateX(-50%) rotate(180deg);white-space:nowrap;
+  font-weight:var(--fw-bold);font-size:19px;line-height:23px;letter-spacing:-.01em;transition:opacity .25s}
+.ptn__panel.is-active .ptn__label{opacity:0}
+.ptn__plus{display:none}
+
+.ptn__content{position:absolute;z-index:1;left:32px;right:32px;bottom:40px;display:flex;flex-direction:column;gap:6px;color:#fff;
+  opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;pointer-events:none}
+/* Fades in once the panel has mostly widened, so the copy never reflows on screen. */
+.ptn__panel.is-active .ptn__content{opacity:1;transform:none;transition:opacity .35s .3s,transform .35s .3s}
+.ptn__name{margin:0;font-weight:var(--fw-extrabold);font-size:40px;line-height:1.05;letter-spacing:-.025em;color:#fff}
+.ptn__desc{margin:0;font-size:16px;line-height:22px;color:#fff}
+
+.ptn__progress{position:absolute;z-index:1;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.22);opacity:0;transition:opacity .3s}
+.ptn__progress i{display:block;height:100%;width:0;background:var(--brand)}
+.ptn__panel.is-active .ptn__progress{opacity:1}
+.ptn__panels.is-static .ptn__progress{display:none}
+.ptn__panel.ticking .ptn__progress i{animation:ptntick 7s linear forwards}
+.ptn__panels:hover .ptn__progress i,
+.ptn__panels.is-offscreen .ptn__progress i{animation-play-state:paused}
+@keyframes ptntick{from{width:0}to{width:100%}}
+
+@media (max-width:1100px){
+  .ptn{padding:72px 0}
+  .ptn__head{flex-direction:column;align-items:flex-start;gap:24px}
+  .ptn__intro{flex-basis:auto;max-width:620px}
+  .ptn__name{font-size:32px}
 }
-/* Phone: one column; the single tiles stop sharing a row so captions fit. */
-@media (max-width:560px){
-  .b2b{padding:40px 0}
-  .b2b__bento{grid-template-columns:minmax(0,1fr);grid-template-rows:auto 280px 220px 220px 220px;gap:12px;
-    grid-template-areas:"intro" "hero" "events" "community" "digital"}
-  .b2b__intro{padding:32px 24px;border-radius:20px}
-  .b2b__tile{border-radius:20px}
-  .b2b__body{font-size:16px;line-height:1.6;margin-top:20px}
-  .b2b__ctas{padding-top:24px;gap:12px;width:100%}
-  .b2b__ctas .ayo-btn{flex:1 1 0}
-  .b2b__cap{left:16px;bottom:16px;max-width:calc(100% - 32px);font-size:16px}
+
+/* Phone: accordion. Closed rows are 72px with the label and a "+"; the open
+   one is 280px with its title and copy over the gradient. */
+@media (max-width:760px){
+  .ptn{padding:56px 0}
+  .ptn__in{padding:0 16px;gap:32px}
+  .ptn__head{gap:20px}
+  .ptn__heading{gap:16px}
+  .ptn__eyebrow{font-size:12px}
+  .ptn__title{font-size:40px}
+  .ptn__intro{gap:28px}
+  .ptn__body{font-size:16px;line-height:1.6}
+  .ptn__ctas{flex-direction:column;gap:12px;width:100%}
+  .ptn__btn{height:52px;font-size:16px;width:100%}
+
+  .ptn__panels{flex-direction:column;height:auto}
+  .ptn__panel{flex:none;height:72px;transition:height .45s cubic-bezier(.2,.7,.2,1)}
+  .ptn__panel.is-active{height:280px}
+  .ptn__panel::after{top:0;height:auto}
+  .ptn__panel.is-active::after{top:auto;height:170px}
+  .ptn__label{left:20px;right:56px;top:50%;bottom:auto;writing-mode:horizontal-tb;transform:translateY(-50%);
+    overflow:hidden;text-overflow:ellipsis;font-size:17px;line-height:20px}
+  .ptn__plus{display:block;position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:24px;line-height:1;font-weight:var(--fw-regular,400);transition:opacity .25s}
+  .ptn__panel.is-active .ptn__plus{opacity:0}
+  .ptn__content{left:20px;right:20px;bottom:20px;gap:10px}
+  .ptn__name{font-size:28px}
 }
 
-/* ---------- 8. Testimonials (vertical rail + story panel) ----------
-   Same hairline language as Booking: one background colour showing through 1px
-   gaps, white children on top. Sits in .wrap and flushes its outer cells, so
-   the copy starts on the same line as every other section. */
-#cerita{background:var(--bg-white)}
-.st__grid{display:grid;grid-template-columns:380fr 1057fr;gap:1px;background:rgba(26,25,25,.16)}
-.st__head{grid-column:1/-1;background:var(--bg-white);display:flex;align-items:flex-end;justify-content:space-between;gap:clamp(24px,4vw,64px);padding:44px 0;position:relative}
-/* The mark where the header rule crosses the rail divider — the same 9px note
-   the Booking grid carries. */
-.st__head::after{content:'';position:absolute;left:calc(380 / 1438 * 100%);bottom:0;width:9px;height:9px;background:var(--brand);transform:translate(-50%,calc(50% + .5px))}
-.st__head .eyebrow-num{margin-bottom:0}
-.st__title{font-weight:var(--fw-extrabold);font-size:clamp(30px,3.75vw,54px);line-height:1.02;letter-spacing:-.03em;margin-top:10px}
-/* Progress row: the bar and the control that governs it, side by side. The
-   control used to sit in the section header, a long way from the thing it
-   paused and visible even while nothing was running. On the bar it is next to
-   the animation it stops, and it only exists where that animation does. */
-.st__progress{display:flex;align-items:center;gap:10px;max-width:294px;margin-top:12px}
-.st__toggle{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1px solid var(--hair);
-  background:var(--bg-white);color:var(--text-default);display:grid;place-items:center;cursor:pointer;
-  padding:0;transition:border-color .18s,background .18s}
-.st__toggle:hover{border-color:var(--text-default);background:var(--bg-subtle)}
-.st__toggle svg{width:9px;height:9px;display:block}
-.st__toggle .ico-play{display:none}
-.st__grid.is-paused .st__toggle .ico-play{display:block}
-.st__grid.is-paused .st__toggle .ico-pause{display:none}
-/* Collapsed tabs keep their markup but must not keep their tab stop.
-   visibility:hidden takes the button out of the focus order; display:none on
-   the parent body would too, but the body animates its height and needs to
-   stay laid out. */
-.st__tab[aria-selected="false"] .st__toggle{visibility:hidden}
+/* ---------- 8. Testimonial — single quote (Figma 26539:9499) ---------- */
+.tq{background:#f7f7f7;padding:90px 24px}   /* Background/Neutral/Subtle */
+.tq__quote{margin:0 auto;max-width:1120px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.tq__mark{display:block;width:56px;height:56px}
+.tq__text{margin:20px 0 0;padding:0;border:0;font-weight:var(--fw-bold);font-size:clamp(26px,2.8vw,40px);line-height:1.2;letter-spacing:-.02em;color:#1a1919}
+.tq__people{margin-top:48px;display:flex;justify-content:center;gap:16px}
+.tq__chip{display:inline-flex;align-items:center;gap:12px;flex-shrink:0;padding:12px 28px 12px 12px;border-radius:999px;background:#fff;border:1.5px solid transparent;text-align:left}
+.tq__chip.is-active{border-color:#ec221f}
+.tq__chip img{width:48px;height:48px;border-radius:50%;object-fit:cover;display:block;flex-shrink:0}
+.tq__who{display:flex;flex-direction:column;white-space:nowrap}
+.tq__name{font-weight:var(--fw-bold);font-size:16px;line-height:22px;color:#1a1919}
+.tq__role{font-size:14px;line-height:20px;color:#787373}
 
-/* ---- Left rail ---- */
-.st__rail{background:var(--bg-white);padding:40px 0;display:flex;flex-direction:column}
-/* No grid gap: a 0fr row still leaves its gap behind, so every collapsed tab
-   would carry 12px it never uses. The spacing lives inside the clipped part.
-   The tint is pulled out to the page edge while the text stays on the content
-   column — flush against its own background it read as cramped, and insetting
-   the text instead would have pushed the topics off the line the heading and
-   every other section sit on. */
-.st__tab{text-align:left;background:none;border:0;cursor:pointer;font-family:var(--font-sans);
-  display:grid;gap:0;padding:21px 40px 22px var(--edge);margin-left:calc(var(--edge) * -1);
-  border-radius:0 6px 6px 0;transition:background .25s}
-.st__tab-head{display:flex;align-items:baseline;gap:14px}
-.st__num{font-family:var(--font-mono);font-size:12px;font-weight:var(--fw-semibold);letter-spacing:1.2px;color:rgb(190,190,190);transition:color .25s}
-.st__topic{font-weight:var(--fw-extrabold);font-size:28px;line-height:1.05;letter-spacing:-.02em;color:rgb(163,163,163);transition:color .25s}
-/* Collapsed on the inactive tabs rather than hidden: the row keeps one height
-   while it opens, so the rail does not jump as the selection moves. */
-.st__body{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .3s cubic-bezier(.2,.7,.2,1),opacity .2s}
-/* Spacing as a margin on the content, not padding on the clipped box:
-   overflow:hidden clips content, and padding is not content — a collapsed
-   tab would still carry 12px it never shows. */
-.st__body > div{overflow:hidden;min-height:0}
-.st__body .st__desc{display:block;margin-top:12px}
-.st__desc{font-size:14px;line-height:1.55;color:var(--text-dim);max-width:294px}
-.st__bar{flex:1;height:3px;border-radius:2px;background:rgba(26,25,25,.12);overflow:hidden}
-.st__bar i{display:block;height:100%;width:0;background:var(--brand);border-radius:2px}
-.st__tab[aria-selected="true"]{background:rgba(236,36,53,.04)}
-.st__tab[aria-selected="true"] .st__num{color:var(--brand)}
-.st__tab[aria-selected="true"] .st__topic{color:var(--text-default)}
-.st__tab[aria-selected="true"] .st__body{grid-template-rows:1fr;opacity:1}
-.st__tab:hover .st__topic{color:var(--text-default)}
-/* The bar IS the timer: the slide advances on its animationend, so what is on
-   screen can never drift from what the script thinks is running. */
-.st__tab[aria-selected="true"].ticking .st__bar i{animation:sttick var(--stdur,9s) linear forwards}
-@keyframes sttick{from{width:0}to{width:100%}}
-/* These have to out-specify the rule above, not merely follow it. That rule
-   sets the `animation` shorthand, which writes animation-play-state back to
-   running as a side effect, and it was the more specific selector — so both
-   holds below were silently inert: pausing did nothing, and neither did
-   scrolling the section off screen.
-   There used to be a third, :focus-within. It has to go: the control lives
-   inside the grid now, so focus-within latched the moment it was clicked and
-   the bar could never be resumed — pressing play removed is-paused while
-   focus alone kept holding it. Rewriting it as :focus-visible on a tab would
-   hold for keyboard users and not for mouse ones, which is the right idea,
-   but it turns on a focus-visible heuristic that cannot be verified here —
-   and if it fired on a mouse click, picking a topic would stop the rotation,
-   which is exactly what this section is built not to do. The control beside
-   the bar is the mechanism now, and it says so. */
-.st__grid.is-paused .st__tab.ticking .st__bar i,
-.st__grid.is-offscreen .st__tab.ticking .st__bar i{animation-play-state:paused}
-.st__count{margin-top:auto;padding:24px 40px 0 0;border-top:1px solid var(--hair)}
-.st__count-num{font-family:var(--font-num);font-weight:var(--fw-bold);font-size:44px;line-height:.9;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-.st__count-lbl{margin-top:6px;font-family:var(--font-mono);font-weight:var(--fw-medium);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim)}
+/* Phone (Figma 26540:9537): 20/28 quote; the chips scroll sideways. */
+@media (max-width:600px){
+  .tq{padding:64px 0}
+  .tq__quote{max-width:none}
+  .tq__mark{width:40px;height:40px}
+  .tq__text{margin-top:16px;padding:0 16px;font-size:20px;line-height:28px;letter-spacing:-.01em}
+  .tq__people{margin-top:32px;align-self:stretch;justify-content:flex-start;gap:8px;padding:0 16px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .tq__people::-webkit-scrollbar{display:none}
+  .tq__chip{gap:10px;padding:8px 20px 8px 8px}
+  .tq__chip img{width:40px;height:40px}
+  .tq__name{font-size:14px;line-height:20px}
+  .tq__role{font-size:12px;line-height:18px}
+}
 
-/* ---- Story panel ---- */
-.st__panel{background:var(--bg-white);padding:40px 0 40px 40px;display:grid}
-.st__story{grid-area:1/1;display:grid;grid-template-columns:300px minmax(0,1fr);gap:40px;
-  opacity:0;visibility:hidden;transition:opacity .45s ease-out,visibility .45s}
-.st__story.is-active{opacity:1;visibility:visible}
-.st__photo{position:relative;aspect-ratio:300/340;border-radius:16px;overflow:hidden;background:rgb(232,230,227)}
-.st__photo img{width:100%;height:100%;object-fit:cover;display:block}
-/* Fourth story has no portrait yet — the slot says so rather than sitting
-   empty or borrowing someone else's face. */
-.st__ph{position:absolute;inset:0;display:grid;place-items:center;
-  font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:rgb(150,146,140)}
-.st__badge{position:absolute;top:16px;left:16px;padding:7px 14px;border-radius:var(--radius-pill);background:var(--brand);color:var(--bg-white);
-  font-family:var(--font-mono);font-size:11px;font-weight:var(--fw-semibold);letter-spacing:1.1px;text-transform:uppercase}
-.st__name{margin-top:16px;font-weight:var(--fw-extrabold);font-size:18px}
-.st__meta{margin-top:3px;font-family:var(--font-mono);font-weight:var(--fw-medium);font-size:12px;color:var(--text-dim)}
-.st__quote{display:flex;flex-direction:column}
-.st__quote blockquote{font-weight:var(--fw-semibold);font-size:clamp(22px,2.4vw,34px);line-height:1.38;letter-spacing:-.015em}
-.st__foot{margin-top:auto;padding-top:23px;border-top:1px solid var(--hair);display:flex;align-items:center;justify-content:space-between;gap:var(--space-6);flex-wrap:wrap}
-.st__stat{font-family:var(--font-mono);font-weight:var(--fw-medium);font-size:12px;color:var(--text-dim)}
 /* ---------- 9. CTA band ---------- */
 .ctaband{background:var(--brand);color:#fff;text-align:center;padding:clamp(48px,7vw,96px) 0}
 .ctaband h2{font-size:clamp(30px,4.8vw,60px);font-weight:var(--fw-extrabold);letter-spacing:-.02em;line-height:1.04;max-width:760px;margin:0 auto}
@@ -355,20 +322,6 @@
 .ctaband .ayo-btn.primary{background:#fff;color:var(--brand)}
 .ctaband .ayo-btn.primary:hover{background:var(--bg-cream);filter:none;transform:translateY(-2px)}
 
-
-@media (max-width:820px){
-  /* Stacked: the rail becomes a list above the story, and the panel loses the
-     inset that only made sense beside it. */
-  .st__grid{grid-template-columns:1fr}
-  .st__head{flex-direction:column;align-items:flex-start;gap:var(--space-5)}
-  .st__head::after{display:none}
-  .st__rail{padding:var(--space-6) 0}
-  .st__tab{padding-right:0}
-  .st__count{padding-right:0}
-  .st__panel{padding:var(--space-8) 0}
-  .st__story{grid-template-columns:1fr;gap:var(--space-6)}
-  .st__photo{max-width:300px}
-}
 
 /* ---------- Phone pass (≤600px) ----------------------------------------------
    Desktop sizes carried straight down made several sections far taller than
