@@ -26,7 +26,7 @@
 /* Empty illustration slot — artwork supplied separately. Sized and placed as
    in Figma (42px, 20px in from the top-right; the Padel tile's sits low). */
 .spt__art{position:absolute;top:20px;right:20px;width:42px;height:42px;pointer-events:none}
-.spt__art--feature{top:auto;bottom:12px;right:16px;width:53px;height:53px}
+.spt__art--feature{top:auto;bottom:16px;right:16px;width:53px;height:53px}
 .spt__art--badminton{top:15.5px;right:27px;width:47px;height:47px}   /* Figma sizes the shuttle up */
 .spt__art img{position:relative;display:block;width:100%;height:100%;object-fit:contain}
 /* Soft ground shadow under the soccer ball (Figma Ellipse 35), drawn behind it. */
