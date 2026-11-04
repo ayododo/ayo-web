@@ -499,18 +499,25 @@
   </div>
 </section>
 
-<!-- 8. TESTIMONIAL — single quote (Figma 26539:9499; mobile 26540:9537).
-     The people chips scroll sideways on phones. -->
+<!-- 8. TESTIMONIAL — quote per person (Figma 26609:13345; mobile 26540:9537).
+     The chips are tabs: click one to show that quote; otherwise they rotate on
+     their own (scripts/home.js). All quotes share one grid cell, so the
+     section keeps the tallest one's height and nothing jumps when it changes.
+     The chips scroll sideways on phones. -->
 <section class="tq" id="cerita" aria-label="What people say about AYO">
-  <figure class="tq__quote reveal">
+  <div class="tq__quote reveal" data-tq>
     <img class="tq__mark" src="assets/icons/quote.svg" alt="" width="56" height="56">
-    <blockquote class="tq__text">“AYO Indonesia bringing a revolution among sport enthusiasts. The application makes it easy to find sport actvities, grow your sport community and book sport venues. It is an end to end ecosystem for sports”</blockquote>
-    <figcaption class="tq__people">
-      <span class="tq__chip is-active"><img src="assets/testimonials/opi.webp" alt="" width="48" height="48" loading="lazy"><span class="tq__who"><span class="tq__name">Opi H.</span><span class="tq__role">Backbone Indonesia</span></span></span>
-      <span class="tq__chip"><img src="assets/testimonials/dita.webp" alt="" width="48" height="48" loading="lazy"><span class="tq__who"><span class="tq__name">Dita S.</span><span class="tq__role">Host Mabar AYO</span></span></span>
-      <span class="tq__chip"><img src="assets/testimonials/bayu.webp" alt="" width="48" height="48" loading="lazy"><span class="tq__who"><span class="tq__name">Bayu A.</span><span class="tq__role">Kawan AYO</span></span></span>
-    </figcaption>
-  </figure>
+    <div class="tq__texts">
+      <blockquote class="tq__text is-active" id="tq-q0" role="tabpanel" aria-labelledby="tq-t0">“AYO Indonesia bringing a revolution among sport enthusiasts. The application makes it easy to find sport actvities, grow your sport community and book sport venues. It is an end to end ecosystem for sports”</blockquote>
+      <blockquote class="tq__text" id="tq-q1" role="tabpanel" aria-labelledby="tq-t1">“The most interesting feature of the AYO App for me is the Open Play feature because this feature helps me as an admin of a fun football community to find new playmates who share the same hobby through the app.”</blockquote>
+      <blockquote class="tq__text" id="tq-q2" role="tabpanel" aria-labelledby="tq-t2">“Through joining an open play session on the Ayo, I was able to new friends and have lots of fun playing sports. I can even fulfill my dream of playing with Bayu Saptaji, the national team captain. There are also many options for open play, so I can play whenever I want to play football or futsal.”</blockquote>
+    </div>
+    <div class="tq__people" role="tablist" aria-label="Choose a testimonial">
+      <button class="tq__chip is-active" type="button" role="tab" id="tq-t0" aria-controls="tq-q0" aria-selected="true"><img src="assets/testimonials/opi.webp" alt="" width="48" height="48" loading="lazy"><span class="tq__who"><span class="tq__name">Opi H.</span><span class="tq__role">Backbone Indonesia</span></span></button>
+      <button class="tq__chip" type="button" role="tab" id="tq-t1" aria-controls="tq-q1" aria-selected="false" tabindex="-1"><img src="assets/testimonials/dita.webp" alt="" width="48" height="48" loading="lazy"><span class="tq__who"><span class="tq__name">Dita S.</span><span class="tq__role">Host Mabar AYO</span></span></button>
+      <button class="tq__chip" type="button" role="tab" id="tq-t2" aria-controls="tq-q2" aria-selected="false" tabindex="-1"><img src="assets/testimonials/bayu.webp" alt="" width="48" height="48" loading="lazy"><span class="tq__who"><span class="tq__name">Bayu A.</span><span class="tq__role">Kawan AYO</span></span></button>
+    </div>
+  </div>
 </section>
 
 <!-- 9. CTA BAND -->

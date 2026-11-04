@@ -43,6 +43,68 @@
   show(cur);
 })();
 
+/* Testimonial — the people chips are tabs. Click (or arrow keys) shows that
+   person's quote; otherwise the quotes rotate every DWELL ms. The rotation
+   holds while the pointer or focus is inside, while the section is off
+   screen and while the browser tab is hidden. No rotation under reduced
+   motion. */
+(function(){
+  var root = document.querySelector('[data-tq]');
+  if(!root) return;
+  var tabs = [].slice.call(root.querySelectorAll('.tq__chip'));
+  var quotes = [].slice.call(root.querySelectorAll('.tq__text'));
+  var row = root.querySelector('.tq__people');
+  if(tabs.length < 2) return;
+  var DWELL = 7000;
+  var auto = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cur = 0, timer = null, hovered = false, focused = false, visible = true;
+
+  function show(i, focus){
+    cur = i;
+    tabs.forEach(function(t,j){
+      var on = i === j;
+      t.classList.toggle('is-active', on);
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+    });
+    quotes.forEach(function(q,j){ q.classList.toggle('is-active', i === j); });
+    if(focus) tabs[i].focus();
+    /* Phones: bring the active chip into view by scrolling the ROW only, so
+       the page itself never jumps. */
+    if(row.scrollWidth > row.clientWidth){
+      var t = tabs[i], left = t.offsetLeft - (row.clientWidth - t.offsetWidth) / 2;
+      row.scrollTo({ left: Math.max(0, left), behavior: auto ? 'smooth' : 'auto' });
+    }
+    schedule();
+  }
+  function schedule(){
+    clearTimeout(timer);
+    if(auto && !hovered && !focused && visible && !document.hidden)
+      timer = setTimeout(function(){ show((cur + 1) % tabs.length); }, DWELL);
+  }
+
+  tabs.forEach(function(t,i){
+    t.addEventListener('click', function(){ show(i); });
+    t.addEventListener('keydown', function(e){
+      var n = null;
+      if(e.key === 'ArrowRight' || e.key === 'ArrowDown') n = (i + 1) % tabs.length;
+      else if(e.key === 'ArrowLeft' || e.key === 'ArrowUp') n = (i + tabs.length - 1) % tabs.length;
+      else if(e.key === 'Home') n = 0;
+      else if(e.key === 'End') n = tabs.length - 1;
+      if(n !== null){ e.preventDefault(); show(n, true); }
+    });
+  });
+  root.addEventListener('mouseenter', function(){ hovered = true; clearTimeout(timer); });
+  root.addEventListener('mouseleave', function(){ hovered = false; schedule(); });
+  root.addEventListener('focusin', function(){ focused = true; clearTimeout(timer); });
+  root.addEventListener('focusout', function(e){ if(!root.contains(e.relatedTarget)){ focused = false; schedule(); } });
+  document.addEventListener('visibilitychange', schedule);
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){ visible = es[0].isIntersecting; schedule(); },{threshold:.35}).observe(root);
+  }
+  schedule();
+})();
+
 /* stat-band count-up — fires only when the band scrolls into view.
    (The band sits at the foot of the full-height persona hero, so on load it is
    still below the fold; kept in its own IIFE so an error elsewhere can never
