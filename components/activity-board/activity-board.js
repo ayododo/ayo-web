@@ -109,7 +109,7 @@
          line and no micro-stats. */
       headline: 'Find Your Opponents',
       headlineSub: 'Discover 4-player competitive matches with players at your levels.',
-      versus: [['activity/avatar-1.webp', 'activity/avatar-2.webp'], ['activity/avatar-3.webp', 'activity/avatar-5.webp']],
+      versus: [['activity/avatar-1.webp', 'activity/avatar-3.webp'], ['activity/avatar-2.webp', 'activity/avatar-5.webp']],
       tagline: '',
       features: [
         feat('target', 'Challenge Other Players', 'Set up a match and choose your preferred match format.'),
