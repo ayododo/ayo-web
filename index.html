@@ -75,13 +75,16 @@
 </nav>
 
 <!-- 2. PERSONA HERO -->
-<!-- Background imagery (photo, video) is intentionally absent for
-     now — the new assets are being supplied separately. The component already
-     runs without a video: persona-hero.js skips the cross-fade when there is no
-     .ph-video, and the dark --bg-dark field plus the scrim carry the type.
-     To restore: add data-video-* attributes and a .ph-video element back. -->
+<!-- Background: one court photo per persona (Figma "Banner" 25942:1120),
+     cross-faded by persona-hero.js as the persona changes. The first one is
+     already .is-active so a photo shows with JS off. -->
 <section class="persona-hero ph--switch-top" data-persona-hero aria-label="AYO persona hero">
-  <div class="ph-media" aria-hidden="true"></div>
+  <div class="ph-media" aria-hidden="true">
+    <img class="ph-photo is-active" data-persona="player" src="assets/hero/court-1.webp" alt="" width="1086" height="1448" fetchpriority="high" style="object-position:50% 57%">
+    <img class="ph-photo" data-persona="host" src="assets/hero/court-2.webp" alt="" width="1926" height="1080" loading="lazy" style="object-position:52% 52%">
+    <img class="ph-photo" data-persona="venue" src="assets/hero/court-3.webp" alt="" width="1649" height="954" loading="lazy" style="object-position:50% 52%">
+    <img class="ph-photo" data-persona="business" src="assets/hero/court-4.webp" alt="" width="1024" height="576" loading="lazy" style="object-position:47% 60%">
+  </div>
   <div class="ph-scrim" aria-hidden="true"></div>
 
   <div class="ph-wrap">

@@ -25,10 +25,8 @@
      { icon, w, h } — the glyph's own size, centred in a 48px tile, so it must
      not be stretched to the tile.
 
-     Imagery: the panel photo and the avatar faces are being supplied
-     separately. Until then `image` is empty and `avatars` holds empty strings —
-     render() draws the same slots without a picture in them. Put the file names
-     back here when the assets land. */
+     Imagery (Figma exports) lives in assets/activity. An empty `image` or
+     avatar string still renders its slot, just without a picture. */
   var ICON = {
     pin:      { icon: 'map-pin.svg',     w: 15.8,  h: 20.3 },
     userPlus: { icon: 'user-plus.svg',   w: 21.3,  h: 17.3 },
@@ -57,7 +55,7 @@
       title: 'Open Play',
       tag: 'Open Play',
       hasRole: true,
-      image: '',            /* was activity-open-play.jpg */
+      image: 'activity/open-play.webp',
       imageAlt: 'Players in an open play session',
       href: 'open-play.html',
       roles: {
@@ -89,9 +87,8 @@
           cta: 'Find sessions near you',
           /* Faces only on this side of the toggle: 90,000+ counts people, so
              showing a few makes the figure concrete. The host figure counts
-             sessions, where a row of portraits would say nothing.
-             Empty for now (was avatar-1…5.jpg) — see the note above. */
-          avatars: ['', '', '', '', ''],
+             sessions, where a row of portraits would say nothing. */
+          avatars: ['activity/avatar-1.webp', 'activity/avatar-2.webp', 'activity/avatar-3.webp', 'activity/avatar-4.webp', 'activity/avatar-5.webp'],
           avatarsNote: '100+ joined this week'
         }
       },
@@ -106,15 +103,15 @@
       title: 'Open Match',
       tag: 'Open Match',
       hasRole: false,
-      image: '',            /* was activity-open-match.jpg */
+      image: 'activity/open-match.webp',
       imageAlt: 'Two players in a competitive match',
       href: 'open-match.html',
       /* Figma: Activity/Open Match (26106:1821). The image carries a headline
          instead of a figure, over a pair-vs-pair of faces; there is no lead
-         line and no micro-stats. Faces are empty until the portraits land. */
+         line and no micro-stats. */
       headline: 'Find Your Opponents',
       headlineSub: 'Discover 4-player competitive matches with players at your levels.',
-      versus: [['', ''], ['', '']],
+      versus: [['activity/avatar-1.webp', 'activity/avatar-2.webp'], ['activity/avatar-3.webp', 'activity/avatar-5.webp']],
       tagline: '',
       features: [
         feat('target', 'Challenge Other Players', 'Set up a match and choose your preferred match format.'),
@@ -135,8 +132,8 @@
       title: 'GameTime',
       tag: 'GameTime',
       hasRole: false,
-      image: '',
-      imageAlt: '',
+      image: 'activity/gametime.webp',
+      imageAlt: 'Players in a GameTime round',
       href: '#',
       headline: 'Every Points Counts. Every Round Matters',
       tagline: '',

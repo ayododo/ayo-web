@@ -197,8 +197,24 @@
       if(!paused) timer = setTimeout(function(){ go((idx + 1) % PERSONAS.length); }, DWELL);
     }
 
+    /* ---- Per-persona photo ----------------------------------------------
+       <img class="ph-photo" data-persona="key"> layers inside .ph-media. */
+    var photos = [].slice.call(root.querySelectorAll('.ph-photo'));
+    var photoTimer = null;
+    function setPhoto(key){
+      var incoming = photos.filter(function(ph){ return ph.dataset.persona === key; })[0];
+      if(!incoming || incoming.classList.contains('is-top')) return;
+      clearTimeout(photoTimer);
+      photos.forEach(function(ph){ ph.classList.remove('is-top'); });
+      incoming.classList.add('is-top', 'is-active');
+      photoTimer = setTimeout(function(){
+        photos.forEach(function(ph){ if(ph !== incoming) ph.classList.remove('is-active'); });
+      }, reduce ? 0 : FADE);
+    }
+
     function go(i){
       idx = i;
+      setPhoto(PERSONAS[i].key);
       tabs.forEach(function(t, j){ t.setAttribute('aria-selected', String(i === j)); });
       render(PERSONAS[i]);
       setVideo(videoFor(PERSONAS[i]));
