@@ -332,37 +332,56 @@
    Desktop sizes carried straight down made several sections far taller than
    their content needs on a phone — Booking alone ran to ~4,500px. */
 @media (max-width:600px){
-  /* Sports: one 2-up grid instead of rows of 3 and 4, which left Mahjong
-     alone on a full-width line. Seven tiles, so the first (Badminton, the
-     biggest after Padel) spans both columns and the rest pair up evenly. */
-  .spt .wrap{gap:24px}
+  /* Sports (Figma 26421:4962): one 2-up grid; the seventh tile (Basketball)
+     takes the full last row. Padel's ball sits top-right. */
+  .spt{padding:40px 0}
+  .spt .wrap{gap:20px}
+  .spt__title{font-weight:var(--fw-bold);font-size:32px;line-height:40px;letter-spacing:0}
+  .spt__sub{font-size:14px;line-height:20px}
   .spt__bento{gap:12px}
   .spt__rest{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .spt__row{display:contents}
-  .spt__row:first-child .spt__tile:first-child{grid-column:1 / -1}
-  .spt__tile{height:96px;padding:16px;border-radius:16px}
-  .spt__tile--feature{height:180px}
+  .spt__row:last-child .spt__tile:last-child{grid-column:1 / -1}
+  .spt__tile{height:104px;padding:16px;border-radius:20px}
+  .spt__tile--feature{height:200px;padding:20px}
+  .spt__count-big b{font-weight:var(--fw-bold);font-size:40px;line-height:48px;letter-spacing:0}
   .spt__name{font-size:18px;line-height:22px}
-  .spt__name--lg{font-size:20px;line-height:24px}
-  .spt__art{top:14px;right:14px;width:36px;height:36px}
-  .spt__art--badminton{top:12px;right:16px;width:40px;height:40px}
-  .spt__art--feature{top:auto;bottom:14px;right:16px;width:48px;height:48px}
-  .spt__art img.spt__shadow{left:4px;top:28px;width:28px}
+  .spt__name--lg{font-size:18px;line-height:22px}
+  .spt__tile--feature .spt__name--lg{font-size:24px;line-height:28px}
+  .spt__art,.spt__art--badminton{top:14px;right:16px;width:34px;height:34px}
+  .spt__art--feature{top:16px;bottom:auto;right:16px;width:53px;height:53px}
+  .spt__art img.spt__shadow{left:5px;top:26px;width:24px;height:8px}
+  .spt__more{gap:2px 14px}
+  .spt__more-lbl{flex-basis:100%}
 
-  /* Booking: feature cards go icon-left rows, and the panels drop to phone
-     padding. Same content, roughly 40% less scrolling. */
+  /* CTA band (Figma 26421:5487). */
+  .ctaband{padding:56px 0}
+  .ctaband h2{font-weight:var(--fw-bold);font-size:32px;line-height:40px;letter-spacing:0}
+  .ctaband p{margin:16px auto 20px;font-size:14px;line-height:20px;color:#fff}
+
+  /* Booking (Figma 26421:5218): stacked feature cards, owners copy before
+     the dashboard mock, onboarding steps as a vertical list. */
+  #booking{padding:40px 0}
   .bkg{gap:24px}
-  .bkg__panel{padding:20px 16px;border-radius:20px;gap:24px}
+  .bkg__head{gap:16px}
+  .bkg__eyebrow{font-family:var(--font-sans);font-size:14px;line-height:20px;letter-spacing:.06em}
+  .bkg__title,.bkg__h3{font-weight:var(--fw-bold);font-size:32px;line-height:40px;letter-spacing:0}
+  .bkg__lede,.bkg__p{font-size:16px;line-height:22px}
+  .bkg__panel{padding:20px;border-radius:28px;gap:24px}
   .bkg__top{gap:24px}
-  .bkg__p{font-size:16px;line-height:24px}
-  .bkg__pill{font-size:11px;letter-spacing:.06em;line-height:16px}
-  .bkg__feats{gap:10px}
-  /* Icon, title and text are siblings in the markup, so a grid (icon over
-     two rows) rather than a flex row, which would split title and text. */
-  .bkg__feat{display:grid;grid-template-columns:40px 1fr;column-gap:14px;row-gap:2px;align-items:start;padding:16px;border-radius:16px}
-  .bkg__ficon{grid-row:1 / span 2;width:40px;height:40px;border-radius:12px}
-  .bkg__feat h4{font-size:16px;line-height:22px}
-  .bkg__feat p{font-size:14px;line-height:20px}
-  .bkg__extra{padding-top:24px;gap:28px}
+  .bkg__pill{font-family:var(--font-sans);font-size:10px;line-height:16px;letter-spacing:.06em}
+  .bkg__panel--owners .bkg__mock{order:0}
+  .bkg__feats{gap:12px}
+  .bkg__feat{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:16px;border-radius:20px}
+  .bkg__ficon{width:48px;height:48px;border-radius:14px}
+  .bkg__feat h4{font-size:18px;line-height:22px}
+  .bkg__feat p{font-size:16px;line-height:22px}
+  .bkg__extra{padding-top:8px;gap:28px;border-top:0}
+  .bkg__extra h4{font-weight:var(--fw-bold);font-size:20px;line-height:24px}
+  .bkg__checks li{font-size:16px;line-height:22px}
+  .bkg__steps ol{flex-direction:column;flex-wrap:nowrap;gap:16px}
+  .bkg__step{flex:none}
+  .bkg__line{display:block}
+  .bkg__step:last-child .bkg__line{display:none}
 
 }

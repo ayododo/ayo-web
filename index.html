@@ -228,7 +228,7 @@
         <div class="actb__header">
           <div>
             <p class="actb__eyebrow">Activity</p>
-            <h2 class="actb__title" id="actb-title">Join activities, hassle-free.</h2>
+            <h2 class="actb__title" id="actb-title">Join activities, <span class="actb__nb">hassle-free.</span></h2>
           </div>
         </div>
 
@@ -491,6 +491,16 @@
           <span class="adslot__fallback">Brand partner creative</span>
           <img class="adslot__creative" src="assets/ad-endurance.png" alt="Nike — Endurance"
                width="1368" height="200" loading="lazy">
+          <!-- Phone layout of the same creative (Figma 26421:5415): the wide
+               banner would shrink to an unreadable strip, so on phones it is
+               stacked — copy on lime above, the swoosh on black below. -->
+          <div class="adslot__stack" role="img" aria-label="Nike — Endurance">
+            <div class="adslot__stack-copy">
+              <span class="adslot__stack-mark">ENDURANCE™</span>
+              <span class="adslot__stack-text">This event celebrates runners who don't just chase finish lines, but chase endurance as a mindset.</span>
+            </div>
+            <div class="adslot__stack-logo"><svg class="adslot__swoosh" viewBox="0 0 134.719 50.807" aria-hidden="true"><path fill="#fff" d="M17.2568 2.25297C8.49036 13.0409 0.0849689 26.4189 0.000684292 36.4184C-0.0321423 40.1808 1.11413 43.4654 3.86358 45.9532C7.82052 49.5361 12.1802 50.7995 16.5187 50.807C22.8587 50.8163 29.1543 48.136 34.0836 46.0694C42.3852 42.5905 134.152 0.832427 134.152 0.832427C135.037 0.367591 134.871 -0.211592 133.763 0.0775365C133.316 0.194675 33.8609 28.4372 33.8609 28.4372C31.977 28.9955 30.0304 29.2875 28.0728 29.3055C20.4295 29.3529 13.6282 24.9072 13.6832 15.5389C13.7045 11.8732 14.7753 7.45263 17.2568 2.25297Z"/></svg></div>
+          </div>
         </div>
 
 

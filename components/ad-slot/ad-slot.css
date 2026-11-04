@@ -115,6 +115,25 @@
   .adslot__rail { flex-wrap: wrap; align-items: flex-start; gap: var(--space-3); }
 }
 
+/* Phone (Figma 26421:5407): the stacked creative replaces the wide banner. */
+.adslot__stack { display: none; }
+@media (max-width: 600px) {
+  .adslot { padding: 40px 0; }
+  .adslot__inner { padding: 0; gap: 16px; }
+  .adslot__rail { flex-wrap: nowrap; align-items: flex-end; }
+  .adslot__kicker { font-family: var(--font-sans); font-size: 12px; line-height: 18px; color: #9b9797; }
+  .adslot__heading { font-size: 18px; line-height: 22px; }
+  .adslot__pill { font-family: var(--font-sans); font-size: 10px; line-height: 16px; color: #9b9797; }
+  .adslot__slot:has(.adslot__stack) { height: auto; background: none; box-shadow: none; }
+  .adslot__slot .adslot__creative { display: none; }
+  .adslot__stack { position: relative; z-index: 1; display: flex; flex-direction: column; background: #cef249; border-radius: 14px; overflow: hidden; }
+  .adslot__stack-copy { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 24px 20px; color: #1a1919; }
+  .adslot__stack-mark { font-family: var(--font-mono); font-weight: var(--fw-medium); font-size: 30px; letter-spacing: .06em; white-space: nowrap; }
+  .adslot__stack-text { align-self: stretch; font-size: 16px; line-height: 1.25; letter-spacing: .06em; }
+  .adslot__stack-logo { height: 140px; background: #1a1919; display: grid; place-items: center; }
+  .adslot__swoosh { width: 135px; height: auto; display: block; }
+}
+
 /* ---- Reduced motion --------------------------------------------------------
    Any video creative must not autoplay motion; the poster frame stands in. */
 @media (prefers-reduced-motion: reduce) {

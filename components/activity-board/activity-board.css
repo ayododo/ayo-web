@@ -87,6 +87,8 @@
   font-weight: var(--fw-extrabold);
   font-size: clamp(30px, 3.8vw, 54px); line-height: 1.06; letter-spacing: -.03em;
 }
+/* Keeps "hassle-free." whole when the heading wraps. */
+.actb__nb { white-space: nowrap; }
 .actb__caption {
   flex-shrink: 0; max-width: 260px; text-align: right;
   font-family: var(--font-mono); font-size: var(--fs-caption); line-height: 1.5;
@@ -443,17 +445,31 @@
   .actb__desc { max-width: none; }
 }
 
-@media (max-width: 560px) {
-  /* Copy and faces stop fitting side by side — the stack drops below the
-     paragraph rather than squeezing it into a two-word column. */
-  .actb__lead { flex-direction: column; align-items: flex-start; gap: var(--space-6); }
+/* Phone (Figma 26421:5049). */
+@media (max-width: 600px) {
+  .actb { padding: 40px 0; }
+  .actb__header { padding: 0 0 24px; gap: var(--space-3); }
+  .actb__eyebrow { font-family: var(--font-sans); font-size: 12px; line-height: 18px; margin-bottom: 0; }
+  .actb__title { font-weight: var(--fw-bold); font-size: 32px; line-height: 40px; letter-spacing: 0; }
+  .actb__tab { padding: 16px; gap: 12px; }
+  .actb__tab-title { font-weight: var(--fw-bold); font-size: 20px; line-height: 24px; letter-spacing: 0; }
+  .actb__tab[aria-selected="true"] .actb__tab-title { transform: none; }
+  .actb__panel { padding: 16px; gap: 20px; }
+  .actb__media { height: 200px; }
+  .actb__overlay { padding: 24px; }
+  .actb__chip { top: 17px; left: 17px; font-size: 10px; }
+  .actb__giant { font-size: 40px; line-height: 48px; letter-spacing: 0; }
+  .actb__giant-lbl, .actb__proof-note, .actb__micro-lbl { font-size: 10px; }
+  .actb__headline { font-size: 24px; line-height: 30px; }
+  /* Copy and faces stack: the faces drop below the line, left-aligned. */
+  .actb__lead { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .actb__desc { font-size: 16px; line-height: 22px; }
   .actb__proof { align-items: flex-start; }
-  .actb__avatar { width: 40px; height: 40px; }
-  .actb__avatar + .actb__avatar { margin-left: -12px; }
-  .actb__foot { flex-direction: column; align-items: stretch; gap: var(--space-6); }
-  .actb__micros { gap: var(--space-6); }
+  .actb__foot { flex-direction: column; align-items: flex-start; gap: 24px; }
+  .actb__micros { gap: 32px; }
   .actb__micros:empty { display: none; }
-  .actb__cta { justify-content: center; }
+  .actb__micro-val { font-size: 24px; line-height: 28px; }
+  .actb__cta { font-size: 14px; line-height: 20px; }
 }
 
 /* ---- Reduced motion --------------------------------------------------------

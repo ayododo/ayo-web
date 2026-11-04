@@ -94,3 +94,14 @@
   .plr-card { width: 100%; max-width: 360px; }
   .plr__copy { max-width: none; font-size: 18px; }
 }
+/* Phone (Figma 26421:5127): Figtree labels, full-width card, 16px copy. */
+@media (max-width: 600px) {
+  .plr { padding: 40px 0; }
+  .plr__inner { gap: 24px; }
+  .plr__eyebrow, .plr__label { font-family: var(--font-sans); font-size: 12px; line-height: 18px; }
+  .plr__title { font-weight: var(--fw-bold); font-size: 32px; line-height: 40px; letter-spacing: 0; }
+  .plr__body { gap: 24px; }
+  .plr-card { max-width: none; }
+  .plr__explain { gap: 12px; }
+  .plr__copy { font-size: 16px; line-height: 24px; }
+}
