@@ -1,10 +1,6 @@
 /* ---------- Homepage sections ---------- */
 #aktivitas{background:var(--bg-white)}
 
-/* Solid red block behind a phrase in a section heading (Activity, Stories).
-   Inline + clone so it still wraps cleanly on narrow screens. */
-.hl-block{background:var(--brand);color:#fff;padding:0 .22em;border-radius:var(--radius-md);
-  -webkit-box-decoration-break:clone;box-decoration-break:clone}
 
 /* ---------- 3. Sports bento ---------- */
 .spt{background:#f3f0ed;padding:56px 0}            /* Background/Neutral/Cream-subtle — no token yet */

@@ -77,9 +77,7 @@
    solid/hollow alternation, which flickered while the row was in motion and
    left half the names harder to read than the other half. Because nothing
    alternates, the phrase count per .mq-group is now free (it used to have to
-   be even so the pattern survived the loop seam).
-   The red block used in the hero is deliberately NOT repeated here: at marquee
-   scale it stops reading as emphasis and starts reading as a button. */
+   be even so the pattern survived the loop seam). */
 .mq-item.is-outline {
   color: transparent;
   /* Fixed width against type that scales: heavy enough to hold the row now that

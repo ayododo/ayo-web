@@ -22,7 +22,6 @@
   column-gap:clamp(40px,6vw,88px);align-items:start}
 
 .avm-hero h1{margin-top:0;font-weight:var(--fw-extrabold);font-size:var(--fs-hero);line-height:var(--lh-hero);letter-spacing:var(--ls-hero);text-wrap:balance}
-.avm-hero h1 .hl{background:linear-gradient(var(--brand),var(--brand)) no-repeat;color:var(--bg-white);border-radius:var(--hl-radius);padding:0 var(--hl-pad);white-space:nowrap;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .avm-hero .ayo-lead{margin-top:27px;max-width:490px;font-size:18px;line-height:1.6;color:rgb(151,151,151)}
 .avm-stores{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
 .avm-stores .avm-pill{padding:15px 26px}
@@ -141,13 +140,6 @@
 .avm-close h2{margin-top:22px;font-weight:var(--fw-extrabold);font-size:clamp(32px,3.9vw,56px);line-height:1.04;letter-spacing:-.03em;max-width:14ch;margin-inline:auto;text-wrap:balance}
 .avm-close .ayo-lead{margin-top:24px;max-width:52ch;margin-inline:auto;font-size:18px;line-height:1.6;color:var(--text-dim)}
 .avm-close .acts{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:32px}
-
-/* The highlight is held on one line so the red block reads as one mark, but
-   "from your pocket" at the 38px floor needs 328px and a 320px phone has 288.
-   Below that it wraps rather than pushing the page sideways. */
-@media (max-width:380px){
-  .avm-hero h1 .hl{white-space:normal}
-}
 
 @media (max-width:900px){
   .avm-hero .wrap{grid-template-columns:1fr}

@@ -168,8 +168,7 @@
 
       content.innerHTML =
         '<p class="ph-eyebrow">' + esc(p.eyebrow) + '</p>' +
-        '<h1 class="ph-title">' + esc(p.pre) +
-          '<span class="ph-hl">' + esc(p.hl) + '</span>' + esc(p.post) + '</h1>' +
+        '<h1 class="ph-title">' + esc(p.pre + p.hl + p.post) + '</h1>' +
         '<p class="ph-sub">' + esc(p.sub) + '</p>' +
         '<div class="ph-ctas">' + ctas + '</div>';
     }

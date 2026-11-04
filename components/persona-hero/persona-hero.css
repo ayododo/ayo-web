@@ -85,13 +85,6 @@
   font-size: var(--fs-hero);
   line-height: var(--lh-hero); letter-spacing: var(--ls-hero);
 }
-/* Highlight word: white text on top, brand block wiping in from the left. */
-.ph-hl { position: relative; isolation: isolate; display: inline-block; padding: 0 var(--hl-pad); }
-.ph-hl::before {
-  content: ''; position: absolute; inset: 0; z-index: -1;
-  background: var(--brand); border-radius: var(--hl-radius);
-  animation: ph-wipe var(--hl-wipe-dur) var(--hl-wipe-ease) var(--hl-wipe-delay) both;
-}
 
 .ph-sub {
   font-size: var(--fs-body-lg); line-height: var(--lh-body-lg);
@@ -288,7 +281,6 @@
 
 /* ---- Animation ------------------------------------------------------------- */
 @keyframes ph-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-@keyframes ph-wipe     { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
 @keyframes ph-enter    { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
 /* ---- Responsive ------------------------------------------------------------ */
@@ -359,7 +351,6 @@
   /* Award holds still, tile on its most frontal frame (20 of 0–40). */
   .ph-award, .ph-award__in, .ph-award__plate, .ph-award__shine, .ph-award__tile { animation: none; }
   .ph-award__tile { background-position: 50% 0; }
-  .ph-hl::before { animation: none; clip-path: none; }
   .ph-btn, .ph-btn:hover, .ph-toggle { transition: none; transform: none; }
   .ph-tab.is-active::after,
   .ph-tab[aria-selected="true"]::after { animation: none; transform: scaleX(1); }

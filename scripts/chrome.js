@@ -75,10 +75,12 @@
     if(burger) burger.innerHTML = '<span class="carbon-icon carbon-menu ico-open" aria-hidden="true"></span><span class="carbon-icon carbon-close ico-close" aria-hidden="true"></span>';
   }
 
-  /* Activities mega menu (Figma 26094:7914). Replaces the plain fallback links
-     inside .submenu[data-mega="activities"]. One copy here instead of one per
-     page — every page shares this nav. */
-  var megaCols = '';   /* Open Play / Open Match / GameTime columns, reused by the mobile drawer */
+  /* Activities menu. Desktop (Figma 26437:8614): a panel with the Padel group
+     (Open Play, Open Match) and GameTime; hovering Open Play opens a flyout
+     with its two destinations. It replaces the plain fallback links inside
+     .submenu[data-mega="activities"]. The mobile drawer keeps its own stacked
+     layout (megaCols). One copy here — every page shares this nav. */
+  var megaCols = '';   /* Open Play / Open Match / GameTime, used by the mobile drawer */
   (function(){
     var menu = document.querySelector('.submenu[data-mega="activities"]');
     if(!menu) return;
@@ -95,14 +97,6 @@
     function sub(href, label, desc){
       return '<a class="mega__sub" href="'+href+'"><span><b>'+label+'</b><small>'+desc+'</small></span>'+ARROW+'</a>';
     }
-    /* [file, width, height, left, top] — placement taken from the Figma frame. */
-    var PL = [['pl-mask.svg',30.0001,23.4426,0,.43],['pl-6.svg',26.9192,17.8736,2.89,6.55],['pl-7.svg',41.7304,15.1488,31.9,5.17],
-              ['pl-1.svg',6.6496,13.7936,73.92,6.26],['pl-2.svg',29.1744,12.9536,76.12,5.23],['pl-4.svg',36.5408,15.2264,81.2,5.02],
-              ['pl-5.svg',9.2808,11.9168,90.91,9.45],['pl-3.svg',18.9328,15.0128,98.48,5.23]];
-    var plMark = '<span class="pl-mark" role="img" aria-label="PadelLevels">' + PL.map(function(p){
-      return '<img src="'+I+p[0]+'" alt="" width="'+p[1]+'" height="'+p[2]+'" style="left:'+p[3]+'px;top:'+p[4]+'px">';
-    }).join('') + '</span>';
-
     megaCols =
       '<div class="mega__col">' +
         head({ icon:'tennis-ball.svg', title:'Open Play', desc:'Play with new people, no team needed' }) +
@@ -114,19 +108,46 @@
       '<div class="mega__col">' + head({ icon:'vs.svg', title:'Open Match', desc:'Bring your team and play another squad', cta:'Explore Open Match', href:'open-match.html' }) + '</div>' +
       /* GameTime copy is still "Description pending" in Figma — shown as designed. */
       '<div class="mega__col">' + head({ icon:'score.svg', title:'GameTime', desc:'Description pending', pending:true, cta:'Explore GameTime', href:'#' }) + '</div>';
-    menu.innerHTML = megaCols +
-      '<a class="mega__promo" href="index.html#rating">' +
-        '<span class="mega__promo-card">' +
-          '<span class="mega__soon">Coming soon</span>' +
-          '<span class="mega__promo-body">' +
-            '<span class="mega__lockup"><img src="'+I+'ayo-logotype.svg" alt="AYO" width="44" height="24"><span class="mega__x">X</span>'+plMark+'</span>' +
-            '<span class="mega__promo-caption">Go beyond your rating. See who you beat, how you’re trending, and where you rank.</span>' +
-          '</span>' +
-        '</span>' +
-        '<span class="mega__txt"><span class="mega__title">Padel rating coming up!</span><span class="mega__desc">Introduce AYO x Padellevels collaboration</span></span>' +
-      '</a>';
-    menu.classList.add('submenu--mega');
-    menu.parentElement.classList.add('has-mega');
+
+    function txt(t, d, pending){
+      return '<span class="amenu__txt"><b>'+t+'</b><small'+(pending?' class="is-pending"':'')+'>'+d+'</small></span>';
+    }
+    menu.innerHTML =
+      '<div class="amenu__panel">' +
+        '<span class="amenu__cat"><img src="'+I+'padel.webp" alt="Padel" width="44" height="44"></span>' +
+        '<div class="amenu__tree">' +
+          '<button class="amenu__item amenu__item--parent" type="button" aria-expanded="false" aria-controls="amenu-openplay">' +
+            txt('Open Play', 'Casual games with new people') +
+            '<img class="amenu__chev" src="'+I+'chevron-right.svg" alt="" width="16" height="16"></button>' +
+          '<a class="amenu__item" href="open-match.html">' + txt('Open Match', 'Bring your team and play another squad') + '</a>' +
+        '</div>' +
+        '<a class="amenu__item amenu__item--game" href="#">' +
+          '<span class="amenu__score" aria-hidden="true"><i>6</i><i>:</i><i>4</i></span>' +
+          txt('GameTime', 'Description pending', true) + '</a>' +
+      '</div>' +
+      '<div class="amenu__flyout" id="amenu-openplay">' +
+        '<a class="amenu__sub" href="https://ayo.co.id/main-bareng">' + txt('Join activity', 'Find an open game near you') +
+          '<img src="'+I+'arrow-right.svg" alt="" width="16" height="16"></a>' +
+        '<a class="amenu__sub" href="open-play-host.html">' + txt('Host activity', 'Post your game and fill empty slots') +
+          '<img src="'+I+'arrow-right.svg" alt="" width="16" height="16"></a>' +
+      '</div>';
+    menu.classList.add('submenu--cascade');
+
+    /* The flyout belongs to Open Play: it opens on hover/focus/click of that
+       row and closes when another row takes the pointer or focus. */
+    var parent = menu.querySelector('.amenu__item--parent');
+    function flyout(open){
+      menu.classList.toggle('is-flyout', open);
+      parent.setAttribute('aria-expanded', String(open));
+    }
+    parent.addEventListener('mouseenter', function(){ flyout(true); });
+    parent.addEventListener('focus', function(){ flyout(true); });
+    parent.addEventListener('click', function(){ flyout(!menu.classList.contains('is-flyout')); });
+    [].forEach.call(menu.querySelectorAll('.amenu__panel .amenu__item:not(.amenu__item--parent)'), function(it){
+      it.addEventListener('mouseenter', function(){ flyout(false); });
+      it.addEventListener('focus', function(){ flyout(false); });
+    });
+    menu.parentElement.addEventListener('mouseleave', function(){ flyout(false); });
   })();
 
   /* Mobile drawer (Figma "Mobile Nav — Open (360)"). Opened by the burger at
