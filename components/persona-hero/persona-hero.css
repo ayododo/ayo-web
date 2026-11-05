@@ -174,23 +174,17 @@
 .ph-tab.is-active::after { animation: ph-progress var(--ph-dwell) linear forwards; }
 .persona-hero.is-paused .ph-tab.is-active::after { animation-play-state: paused; }
 
-/* ---- Switcher-on-top layout (homepage, 2026-10 design) -----------------------
-   The persona tabs sit directly under the nav, the copy fills the middle, and
-   the social proof gets a row of its own, right-aligned above the stat band.
-   Opt-in via .ph--switch-top on the root so the original bottom-switcher
-   layout (see preview.html) keeps working unchanged. */
-.ph-switcher--top {
-  justify-content: flex-start;
-  padding-top: calc(72px + 84px);   /* nav height + the gap Figma leaves under it */
-  padding-bottom: var(--space-8);
-}
-.ph--switch-top .ph-main { padding: var(--space-8) 0; }
+/* ---- Bottom row (homepage, Figma 26417:4915) --------------------------------
+   The persona switcher sits bottom-left, level with the social proof on the
+   right, directly above the stat band; the copy fills the space under the
+   nav. The award still floats above the rating. */
 .ph-proof-row {
   position: relative; z-index: 2;
-  display: flex; justify-content: flex-end;
+  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+  gap: var(--space-6) var(--space-8);
   padding-bottom: var(--space-8);
 }
-.ph-proof-row .ph-proof { margin-left: 0; }
+.ph-proof-row .ph-proof { margin-left: auto; }
 
 /* ---- Google Play award ------------------------------------------------------
    Sits above the store rating, centred on it, 20px clear (Figma 26028:10602).
@@ -301,8 +295,8 @@
     border-left: 0; padding-left: 0;
     border-top: 1px solid rgba(255,255,255,.18); padding-top: var(--space-3);
   }
-  .ph-switcher--top { padding-top: calc(72px + var(--space-8)); }
   .ph-proof-row { justify-content: flex-start; }
+  .ph-proof-row .ph-proof { margin-left: 0; }
   .ph-tabs { gap: var(--space-5); }
   .ph-stats-in { grid-template-columns: 1fr 1fr; gap: var(--space-6) var(--space-4); }
   .ph-stat + .ph-stat { border-left: 0; padding-left: 0; }

@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="styles/tokens.css">
 <link rel="stylesheet" href="styles/bootstrap-compat.css">
 <link rel="stylesheet" href="styles/chrome.css">
-<link rel="stylesheet" href="components/persona-hero/persona-hero.css">
+<link rel="stylesheet" href="components/persona-hero/persona-hero.css?v=20261105">
 <link rel="stylesheet" href="components/store-rating/store-rating.css">
 <link rel="stylesheet" href="components/activity-board/activity-board.css">
 <link rel="stylesheet" href="components/padellevels-rating/padellevels-rating.css">
@@ -78,7 +78,7 @@
 <!-- Background: one court photo per persona (Figma "Banner" 25942:1120),
      cross-faded by persona-hero.js as the persona changes. The first one is
      already .is-active so a photo shows with JS off. -->
-<section class="persona-hero ph--switch-top" data-persona-hero aria-label="AYO persona hero">
+<section class="persona-hero" data-persona-hero aria-label="AYO persona hero">
   <div class="ph-media" aria-hidden="true">
     <img class="ph-photo is-active" data-persona="player" src="assets/hero/court-1.webp" alt="" width="1086" height="1448" fetchpriority="high" style="object-position:50% 57%">
     <img class="ph-photo" data-persona="host" src="assets/hero/court-2.webp" alt="" width="1926" height="1080" loading="lazy" style="object-position:52% 52%">
@@ -86,26 +86,6 @@
     <img class="ph-photo" data-persona="business" src="assets/hero/court-4.webp" alt="" width="1024" height="576" loading="lazy" style="object-position:47% 60%">
   </div>
   <div class="ph-scrim" aria-hidden="true"></div>
-
-  <div class="ph-wrap">
-    <div class="ph-switcher ph-switcher--top">
-      <div class="ph-switch-main">
-        <button class="ph-toggle" type="button" data-ph-toggle aria-label="Pause persona rotation">
-          <svg class="ph-ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
-          <svg class="ph-ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
-        </button>
-        <div>
-          <!-- Static tabs = no-JS fallback. JS rebuilds them from data. -->
-          <div class="ph-tabs" role="tablist" aria-label="Choose persona" data-ph-tabs>
-            <button class="ph-tab is-active" type="button" role="tab" aria-selected="true">Player</button>
-            <button class="ph-tab" type="button" role="tab" aria-selected="false">Host</button>
-            <button class="ph-tab" type="button" role="tab" aria-selected="false">Venue Owner</button>
-            <button class="ph-tab" type="button" role="tab" aria-selected="false">Business Partner</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <div class="ph-main">
     <div class="ph-wrap">
@@ -123,6 +103,22 @@
 
   <div class="ph-wrap">
     <div class="ph-proof-row">
+      <!-- Persona switcher: bottom-left, level with the rating (Figma 26417:4915). -->
+      <div class="ph-switch-main">
+        <button class="ph-toggle" type="button" data-ph-toggle aria-label="Pause persona rotation">
+          <svg class="ph-ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+          <svg class="ph-ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+        </button>
+        <div>
+          <!-- Static tabs = no-JS fallback. JS rebuilds them from data. -->
+          <div class="ph-tabs" role="tablist" aria-label="Choose persona" data-ph-tabs>
+            <button class="ph-tab is-active" type="button" role="tab" aria-selected="true">Player</button>
+            <button class="ph-tab" type="button" role="tab" aria-selected="false">Host</button>
+            <button class="ph-tab" type="button" role="tab" aria-selected="false">Venue Owner</button>
+            <button class="ph-tab" type="button" role="tab" aria-selected="false">Business Partner</button>
+          </div>
+        </div>
+      </div>
       <div class="ph-proof">
         <!-- Google Play "Best of 2026" award: the gold plate with the glass
              tile turning in front of it. The tile is a 41-frame render
