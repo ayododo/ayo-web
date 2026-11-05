@@ -9,34 +9,36 @@
   var DWELL = 8000;
   var FADE  = 1100;
 
+  /* Copy per Figma "Header Copies" (26639:11927). `title` may hold a "\n"
+     for a forced line break. */
   var PERSONAS = [
     {
       key: 'player', label: 'Player',
       eyebrow: 'Open Play · Open Match · Booking · Community',
-      pre: 'Join Activities, made ', hl: 'easy', post: '.',
-      sub: '90,000+ active players across 150 cities. Find a court, join an Open Play or Open Match session, and set up your own game — all from one app.',
-      ctas: [ { label: 'Download the App', kind: 'ghost' } ]
+      title: 'Find a game. Book a court.\nPlay together.',
+      sub: '900,000+ users across 100+ cities in Indonesia. Find a court, join an Open Play or Open Match session, or host your own game, all in one app.',
+      ctas: [ { label: 'Download AYO', kind: 'ghost' } ]
     },
     {
       key: 'host', label: 'Host',
       eyebrow: 'Open Play · Session Management · Payments',
-      pre: 'Host a session, run it ', hl: 'hassle-free', post: '.',
-      sub: 'Create a session, set participant limits, and track payments automatically. Run the whole match from one place.',
-      ctas: [ { label: 'Learn about hosting', kind: 'ghost' } ]
+      title: 'Host a session, hassle-free.',
+      sub: 'Create sessions, manage participants and track payment automatically. Run it all in one place.',
+      ctas: [ { label: 'Download AYO', kind: 'ghost' } ]
     },
     {
       key: 'venue', label: 'Venue Owner',
       eyebrow: 'Venue Management · Scheduling · Revenue',
-      pre: 'Manage your venue, fill every ', hl: 'time slot', post: '.',
-      sub: 'Set schedules, pricing, and payments from a single dashboard. Raise court occupancy through a network of 90,000+ active players.',
-      ctas: [ { label: 'Explore AYO Venue Management', kind: 'ghost', href: 'venue.html' } ]
+      title: 'Manage your venue, connect with more players.',
+      sub: 'Simplify venue management with one dashboard for schedules, pricing, and payments. Connect with 900,000+ AYO users and unlock more opportunities to fill your courts.',
+      ctas: [ { label: 'Download the App', kind: 'ghost' } ]
     },
     {
       key: 'business', label: 'Business Partner',
       eyebrow: 'Brand · Sponsorship · Activation',
-      pre: 'Reach ', hl: 'tens of thousands', post: ' of active players.',
+      title: 'Reach hundreds of thousands of sport enthusiasts.',
       sub: 'Connect your brand with Indonesia\u2019s most active sports community through campaigns, sponsorships, and in-platform activations.',
-      ctas: [ { label: 'Contact Sales', kind: 'solid' }, { label: 'Read the media kit', kind: 'ghost' } ]
+      ctas: [ { label: 'Explore Partnership', kind: 'ghost', href: 'partner.html' } ]
     }
   ];
 
@@ -168,7 +170,7 @@
 
       content.innerHTML =
         '<p class="ph-eyebrow">' + esc(p.eyebrow) + '</p>' +
-        '<h1 class="ph-title">' + esc(p.pre + p.hl + p.post) + '</h1>' +
+        '<h1 class="ph-title">' + esc(p.title).replace(/\n/g, '<br>') + '</h1>' +
         '<p class="ph-sub">' + esc(p.sub) + '</p>' +
         '<div class="ph-ctas">' + ctas + '</div>';
     }
