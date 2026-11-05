@@ -101,7 +101,11 @@
                        ['index.html#rating', 'PadelLevels', 'Learn PadelLevels international Padel rating']] }
     };
     function txt(t, d){ return '<span class="act-txt"><b>'+t+'</b><small>'+d+'</small></span>'; }
-    function face(n, extra){ return '<img class="mcard__face'+(extra||'')+'" src="'+I+'card-av'+n+'.webp" alt="" width="32" height="32">'; }
+    /* Some portraits are cut-outs on a transparent background; Figma sets a
+       soft colour behind each one, so the same colour is set here. */
+    var FACE_BG = { 3: '#ffd2a6', 4: '#ffdfdf', 5: '#c4caf0', 6: '#ccdcbd' };
+    function bg(n){ return FACE_BG[n] ? ' style="background:'+FACE_BG[n]+'"' : ''; }
+    function face(n, extra){ return '<img class="mcard__face'+(extra||'')+'" src="'+I+'card-av'+n+'.webp" alt="" width="32" height="32"'+bg(n)+'>'; }
     function chip(icon, label){ return '<span class="mcard__chip"><img src="'+I+'card-'+icon+'.svg" alt="" width="14" height="14">'+label+'</span>'; }
     function eventCard(kind){
       var play = kind === 'play';
@@ -123,7 +127,7 @@
     function scoreCard(){
       function stepper(n){ return '<span class="scard__step"><img src="'+I+'card-minus.svg" alt="" width="36" height="36"><b>'+n+'</b><img src="'+I+'card-plus.svg" alt="" width="36" height="36"></span>'; }
       return '<div class="scard" aria-hidden="true">' +
-        '<div class="scard__players"><img src="'+I+'card-av5.webp" alt="" width="44" height="44"><span class="scard__vs">VS</span><img src="'+I+'card-av6.webp" alt="" width="44" height="44"></div>' +
+        '<div class="scard__players"><img src="'+I+'card-av5.webp" alt="" width="44" height="44"'+bg(5)+'><span class="scard__vs">VS</span><img src="'+I+'card-av6.webp" alt="" width="44" height="44"'+bg(6)+'></div>' +
         '<div class="scard__score">'+stepper(6)+stepper(2)+'<span class="scard__set">1</span></div>' +
       '</div>';
     }
