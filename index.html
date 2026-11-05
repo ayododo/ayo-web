@@ -301,6 +301,9 @@
     <!-- Players — AYO app -->
     <article class="bkg__panel reveal" id="bkg-players" aria-labelledby="bkg-players-title">
       <div class="bkg__top">
+        <!-- Players mock: court × time price grid (Figma 26682:27439). The Lottie
+             plays: pick a date, pick a price, tap Book now → Booked ✓. The
+             markup phone below is the static fallback (final frame). -->
         <div class="bkg__mock" aria-hidden="true" data-lottie="assets/lottie/booking-ayo-app.json">
           <div class="bkg__phone">
             <div class="bkg__screen">
@@ -311,10 +314,11 @@
                 <span class="m-date">Sat<b>31</b></span>
                 <span class="m-date">Sun<b>1</b></span>
               </div>
-              <p class="m-label">Court 2 · pick a time</p>
-              <div class="m-slots"><span class="m-slot is-off">16:00</span><span class="m-slot">17:00</span><span class="m-slot">18:00</span></div>
-              <div class="m-slots"><span class="m-slot is-on">19:00</span><span class="m-slot">20:00</span><span class="m-slot is-off">21:00</span></div>
-              <div class="m-summary"><span>Fri · 19:00–20:00<b>Court 2</b></span><span class="m-book">Book now</span></div>
+              <div class="m-grid">
+                <span></span><span class="m-court">Court 1</span><span class="m-court">Court 2</span><span class="m-court">Court 3</span>
+                <span class="m-time">17:00</span><span class="m-cell is-off" style="--i:0">120K</span><span class="m-cell" style="--i:1">120K</span><span class="m-cell" style="--i:2">120K</span><span class="m-time">18:00</span><span class="m-cell" style="--i:3">150K</span><span class="m-cell is-off" style="--i:4">150K</span><span class="m-cell is-off" style="--i:5">150K</span><span class="m-time">19:00</span><span class="m-cell" style="--i:6">150K</span><span class="m-cell is-pick" style="--i:7">150K</span><span class="m-cell" style="--i:8">150K</span><span class="m-time">20:00</span><span class="m-cell is-off" style="--i:9">150K</span><span class="m-cell" style="--i:10">150K</span><span class="m-cell is-off" style="--i:11">150K</span>
+              </div>
+              <div class="m-summary"><span>Fri · 19:00 · Court 2<b>Rp150.000</b></span><span class="m-book">Book now</span></div>
             </div>
           </div>
         </div>

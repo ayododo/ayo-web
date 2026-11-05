@@ -111,6 +111,17 @@
 .m-summary > span:first-child{display:flex;flex-direction:column;color:#9b9797}
 .m-summary b{color:#fff;font-weight:var(--fw-bold)}
 .m-book{padding:8px 12px;border-radius:var(--radius-pill);background:var(--brand);color:#fff;font-weight:var(--fw-bold)}
+/* Players mock — court × time price grid (Figma 26680:13090). The picked
+   price is red; booked slots are struck through. */
+.m-grid{display:grid;grid-template-columns:34px repeat(3,minmax(0,1fr));gap:6px 4px;align-items:center}
+.m-court{text-align:center;font-weight:var(--fw-bold);font-size:11px;line-height:16px}
+.m-time{font-weight:var(--fw-medium);font-size:11px;line-height:16px;color:#787373}
+.m-cell{position:relative;display:grid;place-items:center;height:32px;border:1px solid var(--bg-disabled);border-radius:8px;background:#fff;
+  font-weight:var(--fw-semibold);font-size:12px;line-height:16px;color:var(--bg-dark)}
+.m-cell.is-off{background:#f3f0ed;border-color:#f3f0ed;color:#bebbbb;text-decoration:line-through}
+.m-cell.is-pick{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:var(--fw-bold)}
+.m-summary b{font-size:12px}
+
 .m-head{display:flex;align-items:center;justify-content:space-between;padding:0 2px}
 .m-head-venue{display:flex;align-items:center;gap:4px;font-weight:var(--fw-extrabold);font-size:14px;line-height:18px}
 .m-open{padding:2px 8px;border-radius:6px;background:#e6f6ee;color:#1b7a4b;font-weight:var(--fw-bold);font-size:10px;line-height:14px}
