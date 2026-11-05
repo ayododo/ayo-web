@@ -75,76 +75,94 @@
     if(burger) burger.innerHTML = '<span class="carbon-icon carbon-menu ico-open" aria-hidden="true"></span><span class="carbon-icon carbon-close ico-close" aria-hidden="true"></span>';
   }
 
-  /* Activities menu. Desktop (Figma 26437:8614): a panel with the Padel group
-     (Open Play, Open Match) and GameTime; hovering Open Play opens a flyout
-     with its two destinations. It replaces the plain fallback links inside
-     .submenu[data-mega="activities"]. The mobile drawer keeps its own stacked
-     layout (mActs, below). One copy here — every page shares this nav. */
-  /* Mobile drawer's Activities panel (Figma 26492:1068): a grey box with the
-     Open Play group (its two destinations on an indent line), Open Match and
-     GameTime — plain text, no icons. Built here so both menus share the copy. */
+  /* Activities menu. Desktop (Figma 26670:23051): a floating panel with three
+     columns — Open Play, Open Match, Scores — each with its icon, a preview
+     card and its links. Mobile drawer (Figma 26667:12714): the same three
+     groups stacked, icon + title, links on an indent line (mActs). Both are
+     built here from one copy; the plain links in the markup stay as the
+     no-JS fallback. Every page shares this nav. */
   var mActs = '';
   (function(){
     var menu = document.querySelector('.submenu[data-mega="activities"]');
     if(!menu) return;
     var I = 'assets/icons/mega/';
-    function item(cls, href, t, d, pending){
-      var tag = href ? 'a' : 'div';
-      return '<'+tag+' class="m-acts__'+cls+'"'+(href?' href="'+href+'"':'')+'><b>'+t+'</b><small'+(pending?' class="is-pending"':'')+'>'+d+'</small></'+tag+'>';
+    var ARROW = '<img src="'+I+'arrow-brand.svg" alt="" width="16" height="16">';
+    var VS = '<span class="act-ico act-ico--vs" aria-hidden="true"><i>VS</i></span>';
+    var SCORE = '<span class="act-ico act-ico--score" aria-hidden="true"><i>6</i><i>:</i><i>4</i></span>';
+    var PADEL = '<img class="act-ico act-ico--padel" src="'+I+'padel.webp" alt="" width="40" height="40">';
+    var GROUPS = {
+      play:  { icon: PADEL, title: 'Open Play',  desc: 'Play with new people, no team needed',
+               links: [['https://ayo.co.id/main-bareng', 'Join activity', 'Find an open game near you'],
+                       ['open-play-host.html', 'Host activity', 'Learn how to be Host']] },
+      match: { icon: VS,    title: 'Open Match', desc: 'Bring your team and play another squad',
+               cta: ['open-match.html', 'Explore Open Match'] },
+      score: { icon: SCORE, title: 'Scores',     desc: 'Play Americano, Mexicano, or Custom format',
+               links: [['#', 'Explore Scores', 'Learn how Scores works'],
+                       ['index.html#rating', 'PadelLevels', 'Learn PadelLevels international Padel rating']] }
+    };
+    function txt(t, d){ return '<span class="act-txt"><b>'+t+'</b><small>'+d+'</small></span>'; }
+    function face(n, extra){ return '<img class="mcard__face'+(extra||'')+'" src="'+I+'card-av'+n+'.webp" alt="" width="32" height="32">'; }
+    function chip(icon, label){ return '<span class="mcard__chip"><img src="'+I+'card-'+icon+'.svg" alt="" width="14" height="14">'+label+'</span>'; }
+    function eventCard(kind){
+      var play = kind === 'play';
+      return '<div class="mcard" aria-hidden="true">' +
+        '<img class="mcard__logo" src="'+I+'card-logo.svg" alt="" width="32" height="32">' +
+        '<div class="mcard__body">' +
+          '<div class="mcard__head"><div class="mcard__titles"><small>Kawan AYO Community</small>' +
+            '<b>'+(play ? 'Beginner/Firstimer Match All Level 16 pax, Upper Intermediete' : '[3H2C] 120K Intense Rally  Match All Level 16 pax, Upper Intermediete')+'</b></div>' +
+            '<img src="'+I+'card-padel.svg" alt="" width="20" height="20"></div>' +
+          '<div class="mcard__tags">' +
+            '<span class="mcard__status mcard__status--'+kind+'">'+(play ? 'Open play' : 'Open Match')+'</span><span class="mcard__sep"></span>' +
+            (play ? chip('hand', 'Casual') : chip('zap', 'Competitive')) + chip('clock', '120 Mins') +
+          '</div>' +
+          (play
+            ? '<div class="mcard__reel"><span class="mcard__faces"><span class="mcard__host">'+face(0)+'<img class="mcard__crown" src="'+I+'card-crown.svg" alt="" width="10" height="9"><em>Host</em></span>'+face(1)+face(2)+face(3)+face(4)+'</span><span class="mcard__slot">15 / 16</span></div>'
+            : '<div class="mcard__reel"><span class="mcard__faces mcard__faces--team"><span class="mcard__host">'+face(0)+'<em>Host</em></span>'+face(1)+'</span><span class="mcard__vs">VS</span><span class="mcard__faces mcard__faces--team">'+face(3)+face(2)+'</span></div>') +
+        '</div></div>';
     }
-    mActs =
-      '<div class="m-acts__group">' +
-        item('head', '', 'Open Play', 'Play with new people, no team needed') +
-        '<div class="m-acts__indent">' +
-          item('sub', 'https://ayo.co.id/main-bareng', 'Join activity', 'Find an open game near you') +
-          item('sub', 'open-play-host.html', 'Host activity', 'Learn how to be Host') +
-        '</div>' +
-        item('head', 'open-match.html', 'Open Match', 'Bring your team and play another squad') +
-      '</div>' +
-      '<div class="m-acts__group">' +
-        /* GameTime copy is still "Description pending" in Figma — shown as designed. */
-        item('head', '#', 'GameTime', 'Description pending', true) +
+    function scoreCard(){
+      function stepper(n){ return '<span class="scard__step"><img src="'+I+'card-minus.svg" alt="" width="36" height="36"><b>'+n+'</b><img src="'+I+'card-plus.svg" alt="" width="36" height="36"></span>'; }
+      return '<div class="scard" aria-hidden="true">' +
+        '<div class="scard__players"><img src="'+I+'card-av5.webp" alt="" width="44" height="44"><span class="scard__vs">VS</span><img src="'+I+'card-av6.webp" alt="" width="44" height="44"></div>' +
+        '<div class="scard__score">'+stepper(6)+stepper(2)+'<span class="scard__set">1</span></div>' +
       '</div>';
-
-    function txt(t, d, pending){
-      return '<span class="amenu__txt"><b>'+t+'</b><small'+(pending?' class="is-pending"':'')+'>'+d+'</small></span>';
     }
+    function subs(links){
+      return '<div class="amenu__subs"><div class="amenu__indent">' + links.map(function(l){
+        return '<a class="amenu__sub" href="'+l[0]+'">'+txt(l[1], l[2])+ARROW+'</a>';
+      }).join('') + '</div></div>';
+    }
+    function cta(c){ return '<a class="amenu__cta" href="'+c[0]+'">'+c[1]+ARROW+'</a>'; }
+
+    var g = GROUPS;
     menu.innerHTML =
-      '<div class="amenu__panel">' +
-        '<span class="amenu__cat"><img src="'+I+'padel.webp" alt="Padel" width="44" height="44"></span>' +
-        '<div class="amenu__tree">' +
-          '<button class="amenu__item amenu__item--parent" type="button" aria-expanded="false" aria-controls="amenu-openplay">' +
-            txt('Open Play', 'Casual games with new people') +
-            '<img class="amenu__chev" src="'+I+'chevron-right.svg" alt="" width="16" height="16"></button>' +
-          '<a class="amenu__item" href="open-match.html">' + txt('Open Match', 'Bring your team and play another squad') + '</a>' +
-        '</div>' +
-        '<a class="amenu__item amenu__item--game" href="#">' +
-          '<span class="amenu__score" aria-hidden="true"><i>6</i><i>:</i><i>4</i></span>' +
-          txt('GameTime', 'Description pending', true) + '</a>' +
+      '<div class="amenu__col">' +
+        '<div class="amenu__group"><div class="amenu__head">'+g.play.icon+txt(g.play.title, g.play.desc)+'</div>'+eventCard('play')+'</div>' +
+        subs(g.play.links) +
       '</div>' +
-      '<div class="amenu__flyout" id="amenu-openplay">' +
-        '<a class="amenu__sub" href="https://ayo.co.id/main-bareng">' + txt('Join activity', 'Find an open game near you') +
-          '<img src="'+I+'arrow-right.svg" alt="" width="16" height="16"></a>' +
-        '<a class="amenu__sub" href="open-play-host.html">' + txt('Host activity', 'Post your game and fill empty slots') +
-          '<img src="'+I+'arrow-right.svg" alt="" width="16" height="16"></a>' +
+      '<div class="amenu__col">' +
+        '<div class="amenu__group"><div class="amenu__head">'+g.match.icon+txt(g.match.title, g.match.desc)+'</div>'+eventCard('match')+cta(g.match.cta)+'</div>' +
+      '</div>' +
+      '<div class="amenu__col">' +
+        '<div class="amenu__group"><div class="amenu__head">'+g.score.icon+txt(g.score.title, g.score.desc)+'</div>'+scoreCard()+'</div>' +
+        subs(g.score.links) +
       '</div>';
     menu.classList.add('submenu--cascade');
+    menu.parentElement.classList.add('has-mega');
 
-    /* The flyout belongs to Open Play: it opens on hover/focus/click of that
-       row and closes when another row takes the pointer or focus. */
-    var parent = menu.querySelector('.amenu__item--parent');
-    function flyout(open){
-      menu.classList.toggle('is-flyout', open);
-      parent.setAttribute('aria-expanded', String(open));
+    /* Mobile drawer copy: same groups, icon + title, links on an indent. */
+    function mGroup(key){
+      var o = g[key];
+      return '<div class="m-acts__group">' +
+        '<div class="m-acts__headrow">'+o.icon+txt(o.title, o.desc)+'</div>' +
+        (o.links ? '<div class="m-acts__indent">' + o.links.map(function(l){
+          return '<a class="m-acts__sub" href="'+l[0]+'"><b>'+l[1]+'</b><small>'+l[2]+'</small></a>';
+        }).join('') + '</div>' : '') +
+        (o.cta ? '<a class="m-acts__cta" href="'+o.cta[0]+'">'+o.cta[1]+ARROW+'</a>' : '') +
+      '</div>';
     }
-    parent.addEventListener('mouseenter', function(){ flyout(true); });
-    parent.addEventListener('focus', function(){ flyout(true); });
-    parent.addEventListener('click', function(){ flyout(!menu.classList.contains('is-flyout')); });
-    [].forEach.call(menu.querySelectorAll('.amenu__panel .amenu__item:not(.amenu__item--parent)'), function(it){
-      it.addEventListener('mouseenter', function(){ flyout(false); });
-      it.addEventListener('focus', function(){ flyout(false); });
-    });
-    menu.parentElement.addEventListener('mouseleave', function(){ flyout(false); });
+    mActs = mGroup('play') + '<span class="m-acts__sep"></span>' + mGroup('match') + '<span class="m-acts__sep"></span>' + mGroup('score');
+
   })();
 
   /* Mobile drawer (Figma "Mobile Nav — Open (360)"). Opened by the burger at

@@ -175,48 +175,88 @@ img{max-width:100%;display:block}
 .submenu:not(.submenu--cascade) > a{display:block;color:var(--text-subtle);font-size:var(--fs-body-lg);font-weight:var(--fw-medium);padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);white-space:nowrap;transition:background .15s,color .15s}
 .submenu:not(.submenu--cascade) > a:hover{background:var(--bg-cream);color:var(--brand)}
 
-/* ---- Activities menu, desktop (Figma 26437:8614) ---------------------------
+/* ---- Activities menu, desktop (Figma 26670:23051) --------------------------
    Built by chrome.js into .submenu[data-mega="activities"]; the plain links in
-   the markup stay as the no-JS fallback. Two white cards side by side: the
-   panel (Padel group + GameTime) and the Open Play flyout, which shows while
-   Open Play has the pointer or focus (.is-flyout). */
-.submenu--cascade{left:-10px;top:calc(100% + 20px);min-width:0;padding:0;background:none;border:0;box-shadow:none;
-  -webkit-backdrop-filter:none;backdrop-filter:none;display:flex;align-items:flex-start;gap:12px;color:#2c2c2c}
+   the markup stay as the no-JS fallback. The item goes position:static so the
+   panel hangs off .nav-in and lines up with the page edge. Three columns, each
+   an icon + title, a preview card (decorative) and its links. */
+.ayo-nav-item.has-mega{position:static}
+.submenu--cascade{left:var(--edge);top:calc(100% - 11px);width:min(1131px,calc(100% - 2 * var(--edge)));min-width:0;
+  display:flex;align-items:stretch;padding:16px;border:0;border-radius:16px;background:#fff;color:#2c2c2c;
+  box-shadow:0 18px 44px rgba(26,25,25,.22),inset 0 1px 0 rgba(255,255,255,.85)}
 .submenu--cascade::before{top:-20px;height:20px}
-.amenu__panel,.amenu__flyout{background:#fff;border-radius:16px;
-  box-shadow:0 18px 22px rgba(26,25,25,.22),inset 0 1px 0 rgba(255,255,255,.85)}
-.amenu__panel{width:360px;padding:8px 12px;display:flex;flex-direction:column;align-items:flex-end}
-.amenu__cat{align-self:stretch;height:64px;display:flex;align-items:center}
-.amenu__cat img{display:block;width:44px;height:44px}
-/* Open Play and Open Match hang off the Padel icon on a hairline. */
-.amenu__tree{position:relative;width:292px;display:flex;flex-direction:column}
-.amenu__tree::before{content:'';position:absolute;left:-25px;top:-2px;width:1px;height:120px;background:#e8e8e8}
-.amenu__item{display:flex;align-items:center;gap:12px;width:100%;min-height:64px;padding:12px;border:0;border-radius:12px;
-  background:none;color:inherit;font:inherit;text-align:left;text-decoration:none;cursor:pointer;transition:background .15s}
-.amenu__item:hover,.submenu--cascade.is-flyout .amenu__item--parent{background:#f7f7f7;color:inherit;text-decoration:none}
-.amenu__item:focus-visible,.amenu__sub:focus-visible{outline:2px solid var(--brand);outline-offset:-2px}
-.amenu__txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
-.amenu__txt b{font-weight:var(--fw-bold);font-size:16px;line-height:22px;color:#2c2c2c}
-.amenu__txt small{font-size:14px;line-height:20px;color:#787373}
-.amenu__txt small.is-pending{color:#9b9797}
-.amenu__chev{display:block;flex-shrink:0}
-.amenu__item--game{padding-left:0;align-items:flex-start}
-.amenu__item--game:hover{padding-left:0}
-/* GameTime mark: a "6:4" scoreboard tile. */
-.amenu__score{position:relative;flex-shrink:0;width:44px;height:44px;display:flex;align-items:center;justify-content:center;gap:1px}
-.amenu__score::after{content:'';position:absolute;left:4.6px;top:4.6px;width:34.8px;height:34.8px;border-radius:7.3px;background:#1a1919;z-index:0}
-.amenu__score i{position:relative;z-index:1;font-style:normal;font-weight:var(--fw-extrabold);font-size:16.5px;line-height:15px;margin-top:-1px}
-.amenu__score i:nth-child(1){color:#bbdc42}
-.amenu__score i:nth-child(2){color:#bebbbb;font-size:14.7px}
-.amenu__score i:nth-child(3){color:#fff}
-.amenu__flyout{width:300px;padding:8px;display:flex;flex-direction:column;
-  opacity:0;visibility:hidden;transform:translateX(-6px);transition:opacity .18s,transform .22s cubic-bezier(.2,.7,.2,1),visibility .18s}
-.submenu--cascade.is-flyout .amenu__flyout{opacity:1;visibility:visible;transform:none}
+.amenu__col{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:4px;padding:0 12px}
+.amenu__col + .amenu__col{border-left:1px solid #ededed}
+.amenu__group{display:flex;flex-direction:column;gap:12px;padding:12px}
+.amenu__head{display:flex;flex-direction:column;gap:6px}
+.act-txt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.act-txt b{font-weight:var(--fw-bold);font-size:16px;line-height:22px;color:#2c2c2c}
+.act-txt small{font-size:14px;line-height:20px;color:#787373}
+/* Activity marks: the padel racket, a red "VS" tile and a "6:4" scoreboard. */
+.act-ico{position:relative;flex-shrink:0;display:grid;place-items:center;width:40px;height:40px}
+img.act-ico{object-fit:contain}
+.act-ico::before{content:'';position:absolute;inset:4.2px;border-radius:6.7px}
+.act-ico i{position:relative;font-style:normal;font-weight:var(--fw-extrabold);font-size:15px;line-height:1;letter-spacing:-.02em}
+.act-ico--vs::before{background:var(--brand)}
+.act-ico--vs i{color:#fff}
+.act-ico--score{display:flex;align-items:center;justify-content:center;gap:1px}
+.act-ico--score::before{background:#1a1919}
+.act-ico--score i:nth-child(1){color:#bbdc42}
+.act-ico--score i:nth-child(2){color:#bebbbb;font-size:13px}
+.act-ico--score i:nth-child(3){color:#fff}
+
+/* Preview cards — static pictures of what the activity looks like in the app. */
+.mcard,.scard{background:#fff;border:1px solid #dcdbdb;border-radius:16px;padding:10px}
+.mcard{display:flex;gap:12px;align-items:flex-start}
+.mcard__logo{flex-shrink:0;display:block}
+.mcard__body{flex:1;min-width:0;display:flex;flex-direction:column;gap:10px}
+.mcard__head{display:flex;gap:16px;align-items:flex-start}
+.mcard__head > img{flex-shrink:0;display:block}
+.mcard__titles{flex:1;min-width:0;display:flex;flex-direction:column}
+.mcard__titles small{font-weight:var(--fw-medium);font-size:12px;line-height:16px;color:#9b9797}
+.mcard__titles b{font-weight:var(--fw-bold);font-size:14px;line-height:20px;color:#2c2c2c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mcard__tags{display:flex;align-items:center;gap:4px;white-space:nowrap}
+.mcard__status{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:999px;font-weight:var(--fw-bold);font-size:12px;line-height:18px}
+.mcard__status--play{background:#00474d;color:#bdff61}
+.mcard__status--match{background:var(--brand);color:#fff}
+.mcard__sep{width:1px;height:16px;background:#dcdbdb}
+.mcard__chip{display:inline-flex;align-items:center;gap:2px;height:22px;padding:0 4px;font-weight:var(--fw-medium);font-size:12px;line-height:16px;color:#2c2c2c}
+.mcard__chip img{display:block}
+.mcard__reel{display:flex;align-items:center;gap:16px;padding:8px 0 4px}
+.mcard__faces{display:flex;gap:6px}
+.mcard__face{display:block;width:32px;height:32px;border-radius:50%;object-fit:cover}
+.mcard__host{position:relative;display:block}
+.mcard__host em{position:absolute;left:4px;top:27px;width:24px;height:11px;display:grid;place-items:center;border:1.2px solid #fff;border-radius:3px;background:#e8f3fb;color:#115e97;font-style:normal;font-weight:var(--fw-bold);font-size:7px;line-height:1}
+.mcard__crown{position:absolute;left:-4px;top:-4px;width:14px;height:14px;padding:2px;border-radius:50%;background:#fff}
+.mcard__slot{margin-left:auto;padding:2px 6px;border-radius:6px;background:#f2f2f2;font-weight:var(--fw-bold);font-size:12px;line-height:18px;color:#2c2c2c}
+.mcard__vs{font-weight:var(--fw-semibold);font-size:12px;color:#413f3f}
+.scard{height:142px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:19px}
+.scard__players{display:flex;align-items:center;gap:11px}
+.scard__players img{display:block;width:44px;height:44px;border-radius:50%;object-fit:cover}
+.scard__vs{display:grid;place-items:center;width:20px;height:20px;border-radius:5px;background:#25282b;color:#fff;font-weight:var(--fw-extrabold);font-style:italic;font-size:9px}
+.scard__score{position:relative;display:flex;gap:7px}
+.scard__step{display:flex;align-items:center;width:142px;height:50px;padding:0 6px;border:1px solid #e8e8e8;border-radius:8px;background:#fff}
+.scard__step img{display:block;flex-shrink:0}
+.scard__step b{flex:1;text-align:center;font-weight:var(--fw-bold);font-size:16px;color:#25282b}
+.scard__set{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:32px;height:32px;border:.8px solid #e8e8e8;border-radius:6px;background:#f9f9f9;font-weight:var(--fw-bold);font-size:11px;color:#25282b}
+
+/* Links under a group, on an indent line; the arrow shows on hover. */
+.amenu__subs{padding:0 0 4px 32px}
+.amenu__indent{display:flex;flex-direction:column;gap:2px;padding-left:8px;border-left:1.5px solid #ededed}
 .amenu__sub{display:flex;align-items:center;gap:12px;min-height:56px;padding:8px 12px;border-radius:8px;color:inherit;text-decoration:none;transition:background .15s}
-.amenu__sub .amenu__txt small{font-size:12px;line-height:18px}
+.amenu__sub .act-txt b{font-weight:var(--fw-regular)}
+.amenu__sub .act-txt small{font-size:12px;line-height:18px}
 .amenu__sub img{display:block;flex-shrink:0;opacity:0;transform:translateX(-4px);transition:opacity .15s,transform .15s}
 .amenu__sub:hover,.amenu__sub:focus-visible{background:#f7f7f7;color:inherit;text-decoration:none}
 .amenu__sub:hover img,.amenu__sub:focus-visible img{opacity:1;transform:none}
+.amenu__cta{display:inline-flex;align-items:center;gap:4px;align-self:flex-start;padding:8px 0;font-weight:var(--fw-bold);font-size:14px;line-height:20px;color:#d31223;text-decoration:none}
+.amenu__cta img{display:block;transition:transform .15s}
+.amenu__cta:hover{color:#d31223;text-decoration:none}
+.amenu__cta:hover img{transform:translateX(2px)}
+.amenu__sub:focus-visible,.amenu__cta:focus-visible{outline:2px solid var(--brand);outline-offset:-2px}
+/* Below ~1180px the three cards no longer fit; the panel keeps the columns
+   and drops the preview cards. */
+@media (max-width:1180px){ .mcard,.scard{display:none} }
 
 /* Sized and shaped like .nav-icon beside it. It used to be a bordered box
    around a ☰ glyph, which put a second button shape next to Login and left
@@ -423,20 +463,25 @@ img{max-width:100%;display:block}
   .m-acc__btn .chev{width:20px;height:20px;color:var(--text-default)}
   .m-acc__btn[aria-expanded="true"] .chev{transform:rotate(180deg)}
   .m-sep{height:1px;background:var(--bg-disabled);margin:12px 0}
-  /* Activities (Figma 26492:1068): open = dark label; the panel is a grey
-     box with the Open Play group on an indent line, then Open Match and
-     GameTime. Plain text, no icons. */
+  /* Activities (Figma 26667:12714): open = dark label; a grey box with the
+     three groups — icon + title, links on an indent line under the icon. */
   .m-acc__btn[aria-expanded="true"]{color:var(--text-default)}
-  .m-acts{display:flex;flex-direction:column;gap:4px;padding:0 0 8px;border-radius:12px;background:#f7f7f7}
-  .m-acts__group{display:flex;flex-direction:column;gap:12px;padding:8px 0 8px 16px}
-  .m-acts__head,.m-acts__sub{display:flex;flex-direction:column;gap:2px;color:inherit;text-decoration:none}
-  .m-acts__head b,.m-acts__sub b{font-weight:var(--fw-bold);font-size:16px;line-height:22px;color:var(--text-default)}
-  .m-acts__head small{font-size:14px;line-height:20px;color:#787373}
+  .m-acts{display:flex;flex-direction:column;padding:8px 0;border-radius:12px;background:#f7f7f7}
+  .m-acts__group{display:flex;flex-direction:column;gap:4px;padding:8px 16px}
+  .m-acts__headrow{display:flex;align-items:center;gap:12px}
+  .m-acts .act-ico{width:32px;height:32px}
+  .m-acts .act-ico::before{inset:3.3px;border-radius:5.3px}
+  .m-acts .act-ico i{font-size:12px}
+  .m-acts .act-ico--score i:nth-child(2){font-size:10.5px}
+  .m-acts .act-txt b{color:var(--text-default)}
+  .m-acts__indent{margin-left:15px;padding:0 0 2px 27px;border-left:1.5px solid #ededed;display:flex;flex-direction:column}
+  .m-acts__sub{display:flex;flex-direction:column;justify-content:center;gap:2px;min-height:52px;padding:6px 0;color:inherit;text-decoration:none}
+  .m-acts__sub b{font-weight:var(--fw-medium);font-size:16px;line-height:22px;color:var(--text-default)}
   .m-acts__sub small{font-size:12px;line-height:18px;color:#787373}
-  .m-acts small.is-pending{color:#9b9797}
-  .m-acts__indent{margin-left:15px;padding:0 0 4px 16px;border-left:1.5px solid #ededed;display:flex;flex-direction:column;gap:2px}
-  .m-acts__sub{justify-content:center;min-height:52px;padding:6px 0}
-  a.m-acts__head:hover b,.m-acts__sub:hover b{color:var(--brand)}
+  .m-acts__sub:hover b{color:var(--brand)}
+  .m-acts__cta{display:inline-flex;align-items:center;gap:4px;align-self:flex-start;margin-left:44px;padding:4px 0;font-weight:var(--fw-bold);font-size:14px;line-height:20px;color:#d31223;text-decoration:none}
+  .m-acts__cta img{display:block}
+  .m-acts__sep{display:block;height:1px;margin:4px 16px;background:#e2e1e0}
   .m-acts a:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:6px}
   /* Account (signed in) */
   .m-account{display:flex;flex-direction:column;padding-top:4px}
