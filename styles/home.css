@@ -304,10 +304,10 @@
 .ctaband .ayo-btn.primary{background:#ec2435;color:#fff;border-radius:12px;padding:16px 32px;font-size:16px;line-height:19px;font-weight:var(--fw-semibold)}
 .ctaband .ayo-btn.primary:hover{background:#ec2435;color:#fff;filter:brightness(.93);transform:translateY(-2px)}
 .ctaband__lbl-sm{display:none}
-/* Tennis ball (Figma 26735:33431): 53px, resting on the band's bottom edge,
-   212px right of centre, its bottom 5px cut off by the edge. scripts/home.js
+/* Tennis ball (Figma 26735:33431): 53px, standing on the band's bottom
+   edge (the "floor"), 212px right of centre. scripts/home.js
    rolls it in; --x is its offset from that rest spot, --rot its spin. */
-.ctaband__ball{position:absolute;left:calc(50% + 212px);bottom:-5px;width:53px;height:53px;display:block;pointer-events:none;
+.ctaband__ball{position:absolute;left:calc(50% + 212px);bottom:0;width:53px;height:53px;display:block;pointer-events:none;
   transform:translateX(var(--x,0px)) scale(var(--sx,1),var(--sy,1)) rotate(var(--rot,0deg));will-change:transform}
 .ctaband[data-ball="ready"] .ctaband__ball{visibility:hidden}
 

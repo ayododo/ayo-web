@@ -143,10 +143,10 @@ document.addEventListener('DOMContentLoaded', function(){
   if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if(getComputedStyle(ball).display === 'none') return;
 
-  var FRICTION = 520;       // px/s² — how fast the roll dies away
-  var RESTITUTION = 0.5;    // share of speed kept after hitting the wall
-  var CONTACT = 0.09;       // s the ball stays squashed against the wall
-  var SQUASH = 0.12;        // max horizontal squash at impact
+  var FRICTION = 150;       // px/s² — low, so it rolls slowly and drifts to a stop
+  var RESTITUTION = 0.6;    // share of speed kept after hitting the wall (soft hit)
+  var CONTACT = 0.12;       // s the ball stays squashed against the wall
+  var SQUASH = 0.07;        // max horizontal squash at impact
   var DEG = 180 / Math.PI;
 
   band.setAttribute('data-ball', 'ready');   // hidden until it rolls in
