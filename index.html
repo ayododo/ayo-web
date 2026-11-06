@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="components/padellevels-rating/padellevels-rating.css">
 <link rel="stylesheet" href="components/ad-slot/ad-slot.css">
 <link rel="stylesheet" href="components/shorts-rail/shorts-rail.css?v=20261106c">
-<link rel="stylesheet" href="styles/home.css?v=20261106f">
+<link rel="stylesheet" href="styles/home.css?v=20261106g">
 </head>
 <body class="ayo-web">
 
@@ -613,10 +613,11 @@
 </section>
 
 <!-- 9. CTA BAND (Figma 26735:33565; mobile 26421:5487). On wide screens the
-     balls arrive when the band scrolls into view: the tennis ball rolls in
-     from the left, hits the right edge and rolls back; the others drop in
-     behind it and bounce to rest, and the shuttlecock floats down cork-first
-     and tips over. All physics, in scripts/home.js. Decoration only. -->
+     balls arrive when the band scrolls into view, from a different random
+     direction each visit, and knock into each other on the way. A small 2D
+     physics simulation in scripts/home.js (mass, gravity, bounce, rolling
+     friction, air drag, ball-to-ball collisions); once a ball has landed it
+     rolls on to its design spot. Decoration only. -->
 <section class="ctaband reveal" data-ctaband>
   <div class="wrap container-fluid">
     <h2>Start playing together today.</h2>
@@ -624,12 +625,12 @@
     <a class="ayo-btn primary lg" href="#"><span class="ctaband__lbl-lg">Download AYO</span><span class="ctaband__lbl-sm">Download the app</span></a>
   </div>
   <div class="ctaband__balls" aria-hidden="true">
-    <img class="ctaband__ball" data-ball="drop" data-e=".6" data-dx="-90" style="--cx:-627px;--d:108px" src="assets/cta-balls/football-blue.webp" alt="" width="108" height="108" loading="lazy">
-    <img class="ctaband__ball" data-ball="drop" data-e=".72" data-dx="-60" style="--cx:-403px;--d:138px" src="assets/cta-balls/basketball.webp" alt="" width="138" height="138" loading="lazy">
-    <img class="ctaband__ball" data-ball="drop" data-e=".5" data-dx="40" style="--cx:112px;--d:40px" src="assets/cta-balls/pickleball.webp" alt="" width="40" height="40" loading="lazy">
-    <img class="ctaband__ball" data-ball="roll" style="--cx:238px;--d:42px" src="assets/cta-balls/tennis.webp" alt="" width="42" height="42" loading="lazy">
-    <img class="ctaband__ball ctaband__ball--shuttle" data-ball="shuttle" style="--cx:409px;--d:54px" src="assets/cta-balls/shuttle.webp" alt="" width="54" height="54" loading="lazy">
-    <img class="ctaband__ball" data-ball="drop" data-e=".6" data-dx="90" style="--cx:568px;--d:100px" src="assets/cta-balls/football-orange.webp" alt="" width="100" height="100" loading="lazy">
+    <img class="ctaband__ball" data-ball="ball" data-m="430" data-e=".56" data-mu="260" style="--cx:-627px;--d:108px" src="assets/cta-balls/football-blue.webp" alt="" width="108" height="108" loading="lazy">
+    <img class="ctaband__ball" data-ball="ball" data-m="600" data-e=".68" data-mu="300" style="--cx:-403px;--d:138px" src="assets/cta-balls/basketball.webp" alt="" width="138" height="138" loading="lazy">
+    <img class="ctaband__ball" data-ball="ball" data-m="26" data-e=".5" data-mu="200" data-cd=".0006" style="--cx:112px;--d:40px" src="assets/cta-balls/pickleball.webp" alt="" width="40" height="40" loading="lazy">
+    <img class="ctaband__ball" data-ball="tennis" data-m="58" data-e=".66" data-mu="110" style="--cx:238px;--d:42px" src="assets/cta-balls/tennis.webp" alt="" width="42" height="42" loading="lazy">
+    <img class="ctaband__ball ctaband__ball--shuttle" data-ball="shuttle" data-m="5" data-e=".1" data-cd=".002" style="--cx:409px;--d:54px" src="assets/cta-balls/shuttle.webp" alt="" width="54" height="54" loading="lazy">
+    <img class="ctaband__ball" data-ball="ball" data-m="430" data-e=".56" data-mu="260" style="--cx:568px;--d:100px" src="assets/cta-balls/football-orange.webp" alt="" width="100" height="100" loading="lazy">
   </div>
 </section>
 
@@ -678,7 +679,8 @@
 
 <script src="vendor/jquery-3.5.1/jquery.min.js"></script>
 <script src="vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
-<script src="scripts/home.js?v=20261106f"></script>
+<script src="scripts/home.js?v=20261106g"></script>
+<script src="scripts/cta-balls.js?v=20261106h"></script>
 <script src="components/shorts-rail/shorts-rail.js?v=20261106c"></script>
 <script src="scripts/chrome.js"></script>
 <script src="components/persona-hero/persona-hero.js"></script>
