@@ -298,11 +298,18 @@
 /* ---------- 8. Testimonial — see components/shorts-rail ---------- */
 
 /* ---------- 9. CTA band ---------- */
-.ctaband{background:var(--brand);color:#fff;text-align:center;padding:clamp(48px,7vw,96px) 0}
+.ctaband{position:relative;overflow:hidden;background:#2c2c2c;color:#fff;text-align:center;padding:clamp(48px,7vw,96px) 0}   /* Background/Neutral/Dark-soft */
 .ctaband h2{font-size:clamp(30px,4.8vw,60px);font-weight:var(--fw-extrabold);letter-spacing:-.02em;line-height:1.04;max-width:760px;margin:0 auto}
 .ctaband p{margin:var(--space-4) auto var(--space-8);max-width:430px;line-height:1.6;color:rgba(255,255,255,.85);font-size:var(--fs-body-lg)}
-.ctaband .ayo-btn.primary{background:#fff;color:var(--brand)}
-.ctaband .ayo-btn.primary:hover{background:var(--bg-cream);filter:none;transform:translateY(-2px)}
+.ctaband .ayo-btn.primary{background:#ec2435;color:#fff;border-radius:12px;padding:16px 32px;font-size:16px;line-height:19px;font-weight:var(--fw-semibold)}
+.ctaband .ayo-btn.primary:hover{background:#ec2435;color:#fff;filter:brightness(.93);transform:translateY(-2px)}
+.ctaband__lbl-sm{display:none}
+/* Tennis ball (Figma 26735:33431): 53px, resting on the band's bottom edge,
+   212px right of centre, its bottom 5px cut off by the edge. scripts/home.js
+   rolls it in; --x is its offset from that rest spot, --rot its spin. */
+.ctaband__ball{position:absolute;left:calc(50% + 212px);bottom:-5px;width:53px;height:53px;display:block;pointer-events:none;
+  transform:translateX(var(--x,0px)) scale(var(--sx,1),var(--sy,1)) rotate(var(--rot,0deg));will-change:transform}
+.ctaband[data-ball="ready"] .ctaband__ball{visibility:hidden}
 
 
 /* ---------- Phone pass (≤600px) ----------------------------------------------
@@ -335,6 +342,9 @@
   .ctaband{padding:56px 0}
   .ctaband h2{font-weight:var(--fw-bold);font-size:32px;line-height:40px;letter-spacing:0}
   .ctaband p{margin:16px auto 20px;font-size:14px;line-height:20px;color:#fff}
+  .ctaband__lbl-lg{display:none}
+  .ctaband__lbl-sm{display:inline}
+  .ctaband__ball{display:none}   /* not in the mobile design */
 
   /* Booking (Figma 26421:5218): stacked feature cards, owners copy before
      the dashboard mock, onboarding steps as a vertical list. */

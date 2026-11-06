@@ -127,3 +127,75 @@ document.addEventListener('DOMContentLoaded', function(){
   }, { threshold: .5 });
   io.observe(steps);
 })();
+
+/* CTA band — the tennis ball rolls in once the band is in view.
+   Plain rolling physics, not keyframes: constant rolling friction slows it,
+   it hits the band's right edge, loses part of its speed (restitution) with
+   a short squash against the "wall", rolls back and comes to rest exactly at
+   its design spot. The start speed is solved backwards from that rest spot,
+   so it always settles in the same place whatever the screen width. Spin
+   follows distance travelled (angle = x / radius), so it never slides.
+   No animation under reduced motion or where the ball is hidden (phones). */
+(function(){
+  var band = document.querySelector('[data-ctaband]');
+  var ball = band && band.querySelector('.ctaband__ball');
+  if(!ball || !('IntersectionObserver' in window)) return;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if(getComputedStyle(ball).display === 'none') return;
+
+  var FRICTION = 520;       // px/s² — how fast the roll dies away
+  var RESTITUTION = 0.5;    // share of speed kept after hitting the wall
+  var CONTACT = 0.09;       // s the ball stays squashed against the wall
+  var SQUASH = 0.12;        // max horizontal squash at impact
+  var DEG = 180 / Math.PI;
+
+  band.setAttribute('data-ball', 'ready');   // hidden until it rolls in
+
+  function set(x, sx, sy){
+    var r = ball.offsetWidth / 2;
+    ball.style.setProperty('--x', x.toFixed(2) + 'px');
+    ball.style.setProperty('--rot', (x / r * DEG).toFixed(2) + 'deg');
+    ball.style.setProperty('--sx', sx.toFixed(3));
+    ball.style.setProperty('--sy', sy.toFixed(3));
+  }
+
+  function roll(){
+    var d = ball.offsetWidth;
+    var rest = ball.offsetLeft;                    // design position (left edge)
+    var wall = Math.max(rest, band.clientWidth - d);
+    var x0 = -d - 12 - rest;                       // just outside the left edge
+    var xw = wall - rest;                          // touching the right edge
+    var vBack = Math.sqrt(2 * FRICTION * xw);      // leaves the wall with this…
+    var vHit = vBack / RESTITUTION;                // …so arrives with this
+    var v0 = Math.sqrt(vHit * vHit + 2 * FRICTION * (xw - x0));
+    var tIn = (v0 - vHit) / FRICTION;
+    var tOut = vBack / FRICTION;
+    var start = null;
+
+    band.removeAttribute('data-ball');
+    set(x0, 1, 1);
+    requestAnimationFrame(function frame(now){
+      if(start === null) start = now;
+      var t = (now - start) / 1000;
+      if(t < tIn){                                           // rolling in
+        set(x0 + v0 * t - FRICTION * t * t / 2, 1, 1);
+      } else if(t < tIn + CONTACT){                          // squashed on the wall
+        var k = Math.sin(Math.PI * (t - tIn) / CONTACT);
+        var sx = 1 - SQUASH * k;
+        set(xw + d * (1 - sx) / 2, sx, 1 + SQUASH * .5 * k); // keep the right side on the wall
+      } else if(t < tIn + CONTACT + tOut){                   // rolling back
+        var u = t - tIn - CONTACT;
+        set(xw - (vBack * u - FRICTION * u * u / 2), 1, 1);
+      } else {
+        set(0, 1, 1);
+        return;
+      }
+      requestAnimationFrame(frame);
+    });
+  }
+
+  var io = new IntersectionObserver(function(es){
+    if(es[0].isIntersecting){ io.disconnect(); roll(); }
+  }, { threshold: .4 });
+  io.observe(band);
+})();

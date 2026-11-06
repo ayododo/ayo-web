@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="components/padellevels-rating/padellevels-rating.css">
 <link rel="stylesheet" href="components/ad-slot/ad-slot.css">
 <link rel="stylesheet" href="components/shorts-rail/shorts-rail.css?v=20261106c">
-<link rel="stylesheet" href="styles/home.css">
+<link rel="stylesheet" href="styles/home.css?v=20261106d">
 </head>
 <body class="ayo-web">
 
@@ -612,13 +612,17 @@
   </div>
 </section>
 
-<!-- 9. CTA BAND -->
-<section class="ctaband reveal">
+<!-- 9. CTA BAND (Figma 26417:5553; mobile 26421:5487). On wide screens a
+     tennis ball rolls in from the left when the band scrolls into view, hits
+     the right edge, rolls back and settles where the design puts it
+     (scripts/home.js). It is decoration only. -->
+<section class="ctaband reveal" data-ctaband>
   <div class="wrap container-fluid">
     <h2>Start playing together today.</h2>
     <p>900,000+ users have already joined. Find a court, join an Open Play session, and meet opponents at your level!</p>
-    <a class="ayo-btn primary lg" href="#">Download the app</a>
+    <a class="ayo-btn primary lg" href="#"><span class="ctaband__lbl-lg">Download AYO</span><span class="ctaband__lbl-sm">Download the app</span></a>
   </div>
+  <img class="ctaband__ball" src="assets/tennis-ball.webp" alt="" width="53" height="53" loading="lazy" aria-hidden="true">
 </section>
 
 <!-- 10. FOOTER -->
@@ -666,7 +670,7 @@
 
 <script src="vendor/jquery-3.5.1/jquery.min.js"></script>
 <script src="vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
-<script src="scripts/home.js"></script>
+<script src="scripts/home.js?v=20261106d"></script>
 <script src="components/shorts-rail/shorts-rail.js?v=20261106c"></script>
 <script src="scripts/chrome.js"></script>
 <script src="components/persona-hero/persona-hero.js"></script>
