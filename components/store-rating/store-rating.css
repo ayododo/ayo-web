@@ -1,26 +1,27 @@
 /* ==========================================================================
-   AYO — Store Rating
-   Social proof from App Store & Google Play ratings. White text; store icons
-   keep their own brand colours. Built for dark backgrounds (hero / dark section).
+   AYO — Store links ("Available on")
+   App Store & Google Play, each an icon plus the store name in caps, split by
+   a hairline (Figma 26671:26274). White text; store icons keep their own
+   brand colours. Built for dark backgrounds (hero / dark section).
    Depends on: styles/tokens.css (tokens only).
    ========================================================================== */
 
-.store-rating { display: flex; flex-direction: column; gap: var(--space-4); }
+.store-rating { display: flex; flex-direction: column; gap: var(--space-3); }
 
 .sr-label {
-  font-family: var(--font-mono); font-size: var(--fs-caption); font-weight: var(--fw-semibold);
-  text-transform: uppercase; letter-spacing: .12em;
+  margin: 0;
+  font-family: var(--font-sans); font-size: 14px; line-height: 20px; font-weight: var(--fw-regular);
   color: rgba(255,255,255,.55);
 }
 
-.sr-items { display: flex; flex-wrap: wrap; align-items: stretch; gap: var(--space-6); }
+.sr-items { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; }
 
 .sr-item {
-  display: flex; align-items: center; gap: var(--space-3);
+  display: flex; align-items: center; gap: 6px;
   color: var(--text-inverse); text-decoration: none;
 }
 /* Hairline divider between stores — not a card, so the hero stays airy. */
-.sr-item + .sr-item { border-left: 1px solid rgba(255,255,255,.18); padding-left: var(--space-6); }
+.sr-item + .sr-item { border-left: 1px solid rgba(255,255,255,.18); padding-left: 18px; }
 
 /* Store icons load as asset files — each colour belongs to its own brand, so
    they deliberately do not inherit currentColor.
@@ -29,18 +30,10 @@
    --sr-ico-h is the hook for per-icon optical tuning. */
 .sr-ico { height: var(--sr-ico-h, 30px); width: auto; flex-shrink: 0; display: block; }
 
-.sr-text { display: flex; flex-direction: column; gap: 1px; }
-.sr-score {
-  display: inline-flex; align-items: center; gap: var(--space-1);
-  font-family: var(--font-num); font-weight: var(--fw-bold);
-  font-size: var(--fs-h3); line-height: 1;
-  font-variant-numeric: tabular-nums; letter-spacing: -.01em;
-}
-.sr-star { width: 14px; height: 14px; fill: currentColor; flex-shrink: 0; }
 .sr-store {
-  font-family: var(--font-mono); font-size: var(--fs-caption);
-  text-transform: uppercase; letter-spacing: .08em;
-  color: rgba(255,255,255,.6);
+  font-family: var(--font-sans); font-size: var(--fs-caption); font-weight: var(--fw-semibold);
+  line-height: 14px; text-transform: uppercase; letter-spacing: .08em;
+  white-space: nowrap;
 }
 
 /* Only show a hover affordance when the item is actually a link. */

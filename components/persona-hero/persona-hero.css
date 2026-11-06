@@ -187,7 +187,8 @@
 .ph-proof-row .ph-proof { margin-left: auto; }
 
 /* ---- Google Play award ------------------------------------------------------
-   Sits above the store rating, centred on it, 20px clear (Figma 26028:10602).
+   Sits above the store links, 15px clear, its right edge 64px in from the
+   block's right edge — a touch left of centre (Figma 26671:26313).
    Absolute so it overlaps the hero's empty right side instead of pushing the
    rating and the stats down.
    The tile is a pre-rendered turn: 41 frames (250px each) laid side by side
@@ -197,8 +198,8 @@
    behind it and a light band sweeps the gold. */
 .ph-proof { position: relative; }
 .ph-award {
-  position: absolute; left: 50%; bottom: calc(100% + 20px);
-  width: 168px; height: 168px; margin-left: -84px;
+  position: absolute; right: 64px; bottom: calc(100% + 15px);
+  width: 168px; height: 168px;
   perspective: 600px;
   animation: ph-award-in .9s cubic-bezier(.2,.9,.25,1.2) .5s both;
 }
@@ -287,7 +288,7 @@
      signals, so they read as one block, and side by side the badge can be
      bigger while the block gets shorter. */
   .ph-proof { margin-left: 0; width: 100%; display: flex; align-items: center; gap: var(--space-5); }
-  .ph-award { position: relative; left: auto; bottom: auto; margin: 0; flex-shrink: 0; width: 132px; height: 132px; }
+  .ph-award { position: relative; left: auto; right: auto; bottom: auto; margin: 0; flex-shrink: 0; width: 132px; height: 132px; }
   .ph-proof .store-rating { min-width: 0; gap: var(--space-3); }
   /* The two stores stack beside the badge; the divider turns horizontal. */
   .ph-proof .sr-items { flex-direction: column; flex-wrap: nowrap; gap: var(--space-3); }

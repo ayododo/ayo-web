@@ -76,7 +76,7 @@
   }
 
   /* Activities menu. Desktop (Figma 26670:23051): a floating panel with three
-     columns — Open Play, Open Match, Scores — each with its icon, a preview
+     columns — Open Play, Open Match, Scoring — each with its icon, a preview
      card and its links. Mobile drawer (Figma 26667:12714): the same three
      groups stacked, icon + title, links on an indent line (mActs). Both are
      built here from one copy; the plain links in the markup stay as the
@@ -93,12 +93,12 @@
     var GROUPS = {
       play:  { icon: PADEL, title: 'Open Play',  desc: 'Play with new people, no team needed',
                links: [['https://ayo.co.id/main-bareng', 'Join activity', 'Find an open game near you'],
-                       ['open-play-host.html', 'Host activity', 'Learn how to be Host']] },
-      match: { icon: VS,    title: 'Open Match', desc: 'Bring your team and play another squad',
+                       ['open-play-host.html', 'Host activity', 'Learn how to Host']] },
+      match: { icon: VS,    title: 'Open Match', desc: 'Bring your team and play against another squad',
                cta: ['open-match.html', 'Explore Open Match'] },
-      score: { icon: SCORE, title: 'Scores',     desc: 'Play Americano, Mexicano, or Custom format',
-               links: [['#', 'Explore Scores', 'Learn how Scores works'],
-                       ['index.html#rating', 'PadelLevels', 'Learn PadelLevels international Padel rating']] }
+      score: { icon: SCORE, title: 'Scoring',    desc: 'Play Americano, Mexicano, or Custom',
+               links: [['#', 'Explore Scoring', 'Learn how Scoring works'],
+                       ['index.html#rating', 'Learn about PadelLevels', 'An international padel rating system']] }
     };
     function txt(t, d){ return '<span class="act-txt"><b>'+t+'</b><small>'+d+'</small></span>'; }
     /* Some portraits are cut-outs on a transparent background; Figma sets a
@@ -113,7 +113,7 @@
         '<img class="mcard__logo" src="'+I+'card-logo.svg" alt="" width="32" height="32">' +
         '<div class="mcard__body">' +
           '<div class="mcard__head"><div class="mcard__titles"><small>Kawan AYO Community</small>' +
-            '<b>'+(play ? 'Beginner/Firstimer Match All Level 16 pax, Upper Intermediete' : '[3H2C] 120K Intense Rally  Match All Level 16 pax, Upper Intermediete')+'</b></div>' +
+            '<b>'+(play ? 'Beginner/First-timer Match All Level 16 pax, Upper Intermediate' : '[3H2C] 120K Intense Rally Match All Level 16 pax, Upper Intermediate')+'</b></div>' +
             '<img src="'+I+'card-padel.svg" alt="" width="20" height="20"></div>' +
           '<div class="mcard__tags">' +
             '<span class="mcard__status mcard__status--'+kind+'">'+(play ? 'Open play' : 'Open Match')+'</span><span class="mcard__sep"></span>' +
