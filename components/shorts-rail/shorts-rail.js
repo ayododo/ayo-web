@@ -1,6 +1,8 @@
 /* ==========================================================================
    AYO — Shorts Rail
-   - Arrows scroll the rail by a page of cards; they disable at either end.
+   - Chips switch between the AYO Shorts rail and the AVM rail (written
+     venue testimonials, no video).
+   - Arrows scroll the active rail by a page of cards; they disable at either end.
    - Dots (phones) follow the scroll position.
    - A card click opens the player instead of leaving for YouTube:
        desktop → lightbox (9:16 player + story info, prev/next arrows)
@@ -13,7 +15,9 @@
 (function(){
   var root = document.querySelector('[data-shr]');
   if(!root) return;
-  var rail = root.querySelector('[data-shr-rail]');
+  var rails = [].slice.call(root.querySelectorAll('[data-shr-rail]'));
+  var rail = rails[0];
+  var chips = [].slice.call(root.querySelectorAll('.shr__chip'));
   var cards = [].slice.call(root.querySelectorAll('.shr__card'));
   var prevBtn = root.querySelector('[data-shr-prev]');
   var nextBtn = root.querySelector('[data-shr-next]');
@@ -32,7 +36,13 @@
   if(prevBtn) prevBtn.addEventListener('click', function(){ scrollByPage(-1); });
   if(nextBtn) nextBtn.addEventListener('click', function(){ scrollByPage(1); });
 
-  var dots = cards.map(function(){ var i = document.createElement('i'); dotsBox && dotsBox.appendChild(i); return i; });
+  var dots = [];
+  function buildDots(){
+    if(!dotsBox) return;
+    dotsBox.innerHTML = '';
+    dots = [].slice.call(rail.children).map(function(){ var i = document.createElement('i'); dotsBox.appendChild(i); return i; });
+  }
+  buildDots();
   var ticking = false;
   function sync(){
     ticking = false;
@@ -40,10 +50,36 @@
     if(prevBtn) prevBtn.disabled = rail.scrollLeft <= 2;
     if(nextBtn) nextBtn.disabled = rail.scrollLeft >= max - 2;
     var item = rail.children[0], gap = parseFloat(getComputedStyle(rail).columnGap) || 0;
-    var idx = rail.scrollLeft >= max - 2 ? cards.length - 1 : Math.round(rail.scrollLeft / (item.offsetWidth + gap));
+    var idx = rail.scrollLeft >= max - 2 ? dots.length - 1 : Math.round(rail.scrollLeft / (item.offsetWidth + gap));
     dots.forEach(function(d, i){ d.classList.toggle('is-on', i === idx); });
   }
-  rail.addEventListener('scroll', function(){ if(!ticking){ ticking = true; requestAnimationFrame(sync); } }, { passive: true });
+  rails.forEach(function(r){
+    r.addEventListener('scroll', function(){ if(r === rail && !ticking){ ticking = true; requestAnimationFrame(sync); } }, { passive: true });
+  });
+
+  /* ---- Chips: AYO (Shorts) / AVM (written venue testimonials) --------- */
+  function pick(i, focus){
+    chips.forEach(function(c, j){
+      var on = i === j;
+      c.classList.toggle('is-active', on);
+      c.setAttribute('aria-selected', String(on));
+      c.tabIndex = on ? 0 : -1;
+      var panel = document.getElementById(c.getAttribute('aria-controls'));
+      if(panel){ panel.hidden = !on; if(on) rail = panel; }
+    });
+    root.setAttribute('data-tab', chips[i].id.replace('shr-tab-', ''));
+    if(focus) chips[i].focus();
+    rail.scrollLeft = 0;
+    buildDots();
+    sync();
+  }
+  chips.forEach(function(c, i){
+    c.addEventListener('click', function(){ pick(i); });
+    c.addEventListener('keydown', function(e){
+      var n = e.key === 'ArrowRight' ? (i + 1) % chips.length : e.key === 'ArrowLeft' ? (i + chips.length - 1) % chips.length : null;
+      if(n !== null){ e.preventDefault(); pick(n, true); }
+    });
+  });
   addEventListener('resize', sync);
   sync();
 

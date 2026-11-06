@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="components/activity-board/activity-board.css">
 <link rel="stylesheet" href="components/padellevels-rating/padellevels-rating.css">
 <link rel="stylesheet" href="components/ad-slot/ad-slot.css">
-<link rel="stylesheet" href="components/shorts-rail/shorts-rail.css?v=20261106b">
+<link rel="stylesheet" href="components/shorts-rail/shorts-rail.css?v=20261106c">
 <link rel="stylesheet" href="styles/home.css">
 </head>
 <body class="ayo-web">
@@ -511,15 +511,19 @@
       <div class="shr__heading reveal">
         <p class="shr__eyebrow">Testimonials</p>
         <h2 class="shr__title" id="shr-title">From the people who play every week.</h2>
-        <p class="shr__sub"><span class="shr__sub-long">Real stories from players, hosts, and venue owners — straight from our YouTube Shorts.</span><span class="shr__sub-short">Real stories from the AYO community.</span></p>
+        <p class="shr__sub">Real stories from players, hosts, and venue owners from our YouTube Shorts.</p>
       </div>
       <div class="shr__nav" aria-label="Scroll the stories">
         <button class="shr__arrow" type="button" data-shr-prev aria-label="Previous stories" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
         <button class="shr__arrow shr__arrow--next" type="button" data-shr-next aria-label="Next stories"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
       </div>
     </div>
+    <div class="shr__chips" role="tablist" aria-label="Choose testimonials">
+      <button class="shr__chip is-active" type="button" role="tab" id="shr-tab-ayo" aria-controls="shr-panel-ayo" aria-selected="true">AYO</button>
+      <button class="shr__chip" type="button" role="tab" id="shr-tab-avm" aria-controls="shr-panel-avm" aria-selected="false" tabindex="-1">AVM</button>
+    </div>
   </div>
-  <ul class="shr__rail" data-shr-rail>
+  <ul class="shr__rail" data-shr-rail id="shr-panel-ayo" role="tabpanel" aria-labelledby="shr-tab-ayo">
     <li class="shr__item"><a class="shr__card" href="https://www.youtube.com/shorts/AE7GUQ63w-o" target="_blank" rel="noopener" data-id="AE7GUQ63w-o" data-name="My Club House" data-role="Tournament · Tennis" data-initial="M" data-quote="Straight from the players and organizers themselves!" data-about="See how AYO turned scoring at the My Club House Tennis Tournament 2026 into a seamless, pro-level event." aria-label="Play: My Club House, Straight from the players and organizers themselves! (1:46)">
       <img class="shr__thumb" src="assets/testimonials/shorts/AE7GUQ63w-o.webp" alt="" width="480" height="853" loading="lazy">
       <span class="shr__dur"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M3 2v6l5-3z"/></svg><span class="shr__dur-pre">Shorts · </span>1:46</span>
@@ -584,6 +588,22 @@
       </span>
     </a></li>
   </ul>
+  <!-- AVM (AYO Venue Management): written testimonials, no video.
+       TODO: replace the bracketed placeholders with real AVM quotes. -->
+  <ul class="shr__rail" data-shr-rail id="shr-panel-avm" role="tabpanel" aria-labelledby="shr-tab-avm" hidden>
+    <li class="shr__item shr__item--text"><figure class="shr__tcard">
+      <blockquote class="shr__tquote">[Testimonial from a venue owner about running their venue with AVM — 2–3 sentences.]</blockquote>
+      <figcaption class="shr__person shr__person--dark"><span class="shr__av" aria-hidden="true">V</span><span class="shr__names"><span class="shr__name">[Venue owner name]</span><span class="shr__role">[Venue name, city]</span></span></figcaption>
+    </figure></li>
+    <li class="shr__item shr__item--text"><figure class="shr__tcard">
+      <blockquote class="shr__tquote">[Testimonial about bookings, payments or schedules in AVM — 2–3 sentences.]</blockquote>
+      <figcaption class="shr__person shr__person--dark"><span class="shr__av" aria-hidden="true">V</span><span class="shr__names"><span class="shr__name">[Venue owner name]</span><span class="shr__role">[Venue name, city]</span></span></figcaption>
+    </figure></li>
+    <li class="shr__item shr__item--text"><figure class="shr__tcard">
+      <blockquote class="shr__tquote">[Testimonial about reports or staff access in AVM — 2–3 sentences.]</blockquote>
+      <figcaption class="shr__person shr__person--dark"><span class="shr__av" aria-hidden="true">V</span><span class="shr__names"><span class="shr__name">[Venue manager name]</span><span class="shr__role">[Venue name, city]</span></span></figcaption>
+    </figure></li>
+  </ul>
   <div class="shr__shell">
     <div class="shr__foot">
       <div class="shr__dots" data-shr-dots aria-hidden="true"></div>
@@ -647,7 +667,7 @@
 <script src="vendor/jquery-3.5.1/jquery.min.js"></script>
 <script src="vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
 <script src="scripts/home.js"></script>
-<script src="components/shorts-rail/shorts-rail.js"></script>
+<script src="components/shorts-rail/shorts-rail.js?v=20261106c"></script>
 <script src="scripts/chrome.js"></script>
 <script src="components/persona-hero/persona-hero.js"></script>
 <script src="components/activity-board/activity-board.js" defer></script>
