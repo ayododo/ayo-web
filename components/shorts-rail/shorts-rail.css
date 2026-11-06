@@ -1,0 +1,236 @@
+/* ==========================================================================
+   AYO — Shorts Rail (testimonials)
+   YouTube Shorts as 9:16 cards on a horizontal rail, with a lightbox player
+   on desktop and a full-screen story player on phones.
+   Figma: desktop 26694:13090 · lightbox 26695:13197 · mobile rail 26696:13304
+   · mobile player 26696:13384. Type and colour follow Kickoff DS 2.0.
+   Depends on: styles/tokens.css (tokens only).
+
+   Anatomy:  .shr                     section
+               .shr__shell            site container (aligns with nav/hero)
+                 .shr__head           heading + arrows
+               .shr__rail             full-bleed scroller, padded to the container
+                 .shr__card           one Short (a real link to YouTube)
+               .shr__foot             dots + "See all on YouTube"
+             .shr-lb                  dialog: lightbox / story player (built by JS)
+   ========================================================================== */
+
+.shr {
+  --shr-edge: var(--edge, clamp(16px, 2.5vw, 40px));
+  --shr-max: var(--container, 1440px);
+  /* Left inset of the container on any viewport, so the rail's first card
+     lines up with the heading while the rail itself runs edge to edge. */
+  --shr-inset: max(var(--shr-edge), calc((100vw - var(--shr-max)) / 2 + var(--shr-edge)));
+  --shr-gap: 20px;
+  --shr-card-w: 236px;
+  background: #fff;
+  padding: 72px 0;
+  color: #25282b;                       /* Text/Default */
+}
+.shr__shell { width: 100%; max-width: var(--shr-max); margin: 0 auto; padding: 0 var(--shr-edge); }
+
+/* ---- Heading ---------------------------------------------------------- */
+.shr__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding-bottom: 4px; }
+.shr__heading { display: flex; flex-direction: column; gap: 12px; max-width: 900px; }
+.shr__eyebrow {                         /* Caption/C2 · Colors/Text/Brand */
+  margin: 0; font-size: 14px; line-height: 16px; font-weight: var(--fw-medium, 500);
+  text-transform: uppercase; color: #d31223;
+}
+.shr__title {                           /* Display/D1 */
+  margin: 0; font-size: 48px; line-height: 56px; font-weight: var(--fw-bold, 700);
+  letter-spacing: 0; color: #25282b;
+}
+.shr__sub {                             /* Body/B1 · Text/Secondary */
+  margin: 0; font-size: 16px; line-height: 22px; color: #52575c;
+}
+.shr__sub-short { display: none; }
+
+.shr__nav { display: flex; gap: 12px; flex-shrink: 0; }
+.shr__arrow {
+  display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%;
+  background: #1a1919; border: 1px solid #1a1919; color: #fff; cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s, opacity .15s;
+}
+.shr__arrow svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.shr__arrow:disabled { background: #fff; border-color: #a0a4a8; color: #a0a4a8; cursor: default; }
+.shr__arrow:not(:disabled):hover { background: #2c2c2c; }
+.shr__arrow:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; }
+
+/* ---- Rail -------------------------------------------------------------- */
+.shr__rail {
+  list-style: none; margin: 28px 0 0; padding: 0 var(--shr-inset);
+  display: flex; gap: var(--shr-gap);
+  overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; scroll-padding-inline: var(--shr-inset);
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.shr__rail::-webkit-scrollbar { display: none; }
+.shr__item { flex: 0 0 var(--shr-card-w); scroll-snap-align: start; }
+
+.shr__card {
+  position: relative; display: block; aspect-ratio: 236 / 420; border-radius: 12px; overflow: hidden;
+  background: #2c2c2c;                  /* Background/Neutral/Dark-soft */
+  color: #fff; text-decoration: none; isolation: isolate;
+}
+.shr__thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+.shr__card:hover .shr__thumb { transform: scale(1.04); }
+.shr__card:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; }
+
+.shr__dur {
+  position: absolute; top: 14px; left: 14px; z-index: 1;
+  display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 999px;
+  background: rgba(0,0,0,.55); font-size: 12px; line-height: 16px; font-weight: var(--fw-medium, 500);
+}
+.shr__dur svg { width: 10px; height: 10px; fill: #fff; }
+
+.shr__play {
+  position: absolute; left: 50%; top: 50%; z-index: 1; width: 60px; height: 60px; margin: -44px 0 0 -30px;
+  display: grid; place-items: center; border-radius: 50%; background: #ec2435;  /* Brand/Primary/Default */
+  box-shadow: 0 8px 24px rgba(0,0,0,.25); transition: transform .2s;
+}
+.shr__play svg { width: 24px; height: 24px; fill: #fff; }
+.shr__card:hover .shr__play { transform: scale(1.08); }
+
+.shr__cap {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 1;
+  display: flex; flex-direction: column; gap: 12px; padding: 48px 16px 16px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,.88));
+}
+.shr__quote { font-size: 16px; line-height: 18px; font-weight: var(--fw-medium, 500); }   /* Caption/C3 */
+.shr__person { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.shr__av {
+  flex-shrink: 0; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%;
+  background: #fff; color: #25282b; font-size: 14px; line-height: 16px; font-weight: var(--fw-medium, 500);
+}
+.shr__names { display: flex; flex-direction: column; min-width: 0; }
+.shr__name, .shr__role { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.shr__name { font-size: 14px; line-height: 16px; font-weight: var(--fw-medium, 500); }
+.shr__role { font-size: 12px; line-height: 18px; }
+
+/* ---- Foot (dots + link) — phones only; on desktop the arrows do the job
+   (Figma 26694:13090 has no foot). ------------------------------------- */
+.shr__foot { display: none; }
+.shr__dots { display: flex; align-items: center; gap: 6px; }
+.shr__dots i { display: block; width: 6px; height: 6px; border-radius: 999px; background: #ededed; transition: width .25s, background .25s; }
+.shr__dots i.is-on { width: 20px; background: #1a1919; }
+.shr__all {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 44px;
+  font-size: 14px; line-height: 16px; font-weight: var(--fw-medium, 500); color: #d31223; text-decoration: none;
+}
+.shr__all svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.shr__all:hover { text-decoration: underline; }
+
+/* ==========================================================================
+   Lightbox (desktop) — overlay + 780×604 modal: 9:16 player | story info.
+   ========================================================================== */
+.shr-lb { position: fixed; inset: 0; z-index: 1000; display: none; align-items: center; justify-content: center; gap: 20px; padding: 32px;
+  background: rgba(26,25,25,.75); }                 /* Background/Overlay */
+.shr-lb.is-open { display: flex; animation: shr-fade .2s ease-out; }
+@keyframes shr-fade { from { opacity: 0; } }
+.shr-lb__step {
+  flex-shrink: 0; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(255,255,255,.14); border: 0; color: #fff; cursor: pointer; transition: background .15s;
+}
+.shr-lb__step:hover { background: rgba(255,255,255,.24); }
+.shr-lb__step:disabled { opacity: .35; cursor: default; }
+.shr-lb__step svg, .shr-lb__close svg, .shr-lb__mute svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.shr-lb__modal {
+  position: relative; display: flex; width: 780px; max-width: calc(100vw - 208px); height: 604px; max-height: calc(100vh - 64px);
+  border-radius: 16px; overflow: hidden; background: #fff; animation: shr-pop .28s cubic-bezier(.2,.9,.25,1.1);
+}
+@keyframes shr-pop { from { transform: translateY(12px) scale(.98); opacity: 0; } }
+.shr-lb__player { position: relative; flex: 0 0 auto; aspect-ratio: 9 / 16; height: 100%; background: #1a1919; }
+.shr-lb__player iframe, .shr-lb__poster { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; object-fit: cover; }
+.shr-lb__info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 22px; padding: 32px; overflow-y: auto; }
+.shr-lb__top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.shr-lb__person { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.shr-lb__av { flex-shrink: 0; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: #1a1919; color: #fff;
+  font-size: 16px; font-weight: var(--fw-medium, 500); }
+.shr-lb__names { display: flex; flex-direction: column; min-width: 0; }
+.shr-lb__name { font-size: 18px; line-height: 22px; font-weight: var(--fw-bold, 700); color: #25282b; }   /* Heading/H3 */
+.shr-lb__role { font-size: 12px; line-height: 18px; color: #52575c; }
+.shr-lb__close {
+  flex-shrink: 0; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
+  background: #fff; border: 1px solid #a0a4a8; color: #25282b; cursor: pointer;
+}
+.shr-lb__close:hover { background: #f7f7f7; }
+.shr-lb__quote { margin: 0; font-size: 24px; line-height: 28px; font-weight: var(--fw-bold, 700); color: #25282b; }   /* Heading/H1 */
+.shr-lb__about { margin: 0; font-size: 16px; line-height: 22px; color: #52575c; }
+.shr-lb__yt { margin-top: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; min-height: 44px;
+  font-size: 16px; line-height: 18px; font-weight: var(--fw-medium, 500); color: #d31223; text-decoration: none; }
+.shr-lb__yt svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.shr-lb__yt:hover { text-decoration: underline; }
+.shr-lb button:focus-visible, .shr-lb a:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; }
+
+/* Story-player chrome — phones only. */
+.shr-lb__progress, .shr-lb__mobile-top, .shr-lb__mobile-bottom { display: none; }
+
+/* ==========================================================================
+   Phones (Figma 26696:13304 / 26696:13384)
+   ========================================================================== */
+@media (max-width: 760px) {
+  .shr { padding: 56px 0 40px; --shr-card-w: 216px; --shr-gap: 12px; }
+  .shr__heading { gap: 10px; }
+  .shr__title { font-size: 32px; line-height: 40px; }      /* Display/D3 */
+  .shr__sub-long { display: none; }
+  .shr__sub-short { display: inline; }
+  .shr__nav { display: none; }
+  .shr__rail { margin-top: 24px; }
+  .shr__card { aspect-ratio: 216 / 384; }
+  .shr__dur { top: 12px; left: 12px; height: 24px; padding: 0 9px; }
+  .shr__dur-pre { display: none; }
+  .shr__play { width: 54px; height: 54px; margin: -40px 0 0 -27px; }
+  .shr__play svg { width: 22px; height: 22px; }
+  .shr__cap { gap: 10px; padding: 40px 14px 14px; }
+  .shr__quote { font-size: 14px; line-height: 16px; }      /* Caption/C2 */
+  .shr__av { display: none; }
+  .shr__foot { display: flex; align-items: center; justify-content: space-between; margin-top: 24px; }
+
+  /* Full-screen story player */
+  .shr-lb { padding: 0; background: #000; }
+  .shr-lb__step { display: none; }
+  .shr-lb__modal { width: 100%; max-width: none; height: 100%; max-height: none; border-radius: 0; background: #000; animation: none; }
+  .shr-lb__player { width: 100%; height: 100%; aspect-ratio: auto; }
+  /* The embed sits between the top bar and the quote so neither covers
+     YouTube's own controls; the poster still fills the screen behind it. */
+  .shr-lb__player iframe { top: calc(104px + env(safe-area-inset-top)); bottom: auto;
+    height: calc(100% - 228px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); }
+  .shr-lb__info { display: none; }
+  .shr-lb__mobile-top {
+    display: flex; flex-direction: column; gap: 14px; position: absolute; left: 0; right: 0; top: 0; z-index: 2;
+    padding: calc(16px + env(safe-area-inset-top)) 16px 40px;
+    background: linear-gradient(to bottom, rgba(0,0,0,.6), rgba(0,0,0,0)); pointer-events: none;
+  }
+  .shr-lb__progress { display: flex; gap: 4px; }
+  .shr-lb__progress i { flex: 1; height: 3px; border-radius: 999px; background: rgba(255,255,255,.35); overflow: hidden; }
+  .shr-lb__progress i.is-done { background: #fff; }
+  .shr-lb__progress i.is-on::after { content: ''; display: block; height: 100%; width: 60%; background: #fff; }
+  .shr-lb__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .shr-lb__mobile-top .shr-lb__person { color: #fff; gap: 10px; }
+  .shr-lb__mobile-top .shr-lb__av { width: 36px; height: 36px; background: #fff; color: #25282b; font-size: 14px; }
+  .shr-lb__mobile-top .shr-lb__name { color: #fff; font-size: 14px; line-height: 16px; font-weight: var(--fw-medium, 500); }
+  .shr-lb__mobile-top .shr-lb__role { color: #fff; }
+  .shr-lb__controls { display: flex; gap: 4px; pointer-events: auto; }
+  .shr-lb__mobile-top .shr-lb__close, .shr-lb__mute {
+    display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 0;
+    background: rgba(0,0,0,.35); color: #fff; cursor: pointer;
+  }
+  .shr-lb__mobile-bottom {
+    display: block; position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; pointer-events: none;
+    padding: 72px 16px calc(28px + env(safe-area-inset-bottom));
+    background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,.9));
+  }
+  .shr-lb__mobile-bottom .shr-lb__quote { color: #fff; font-size: 20px; line-height: 24px; }   /* Heading/H2 */
+  /* Tap zones: left third = previous story, right third = next. They sit
+     between the top and bottom chrome so YouTube's own controls stay usable. */
+  .shr-lb__tap { position: absolute; top: 120px; bottom: 160px; width: 28%; z-index: 1; border: 0; background: transparent; }
+  .shr-lb__tap--prev { left: 0; }
+  .shr-lb__tap--next { right: 0; }
+}
+@media (min-width: 761px) { .shr-lb__tap { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .shr__thumb, .shr__play, .shr__dots i { transition: none; }
+  .shr__card:hover .shr__thumb, .shr__card:hover .shr__play { transform: none; }
+  .shr-lb.is-open, .shr-lb__modal { animation: none; }
+}

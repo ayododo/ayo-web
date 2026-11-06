@@ -22,6 +22,7 @@
 <link rel="stylesheet" href="components/activity-board/activity-board.css">
 <link rel="stylesheet" href="components/padellevels-rating/padellevels-rating.css">
 <link rel="stylesheet" href="components/ad-slot/ad-slot.css">
+<link rel="stylesheet" href="components/shorts-rail/shorts-rail.css">
 <link rel="stylesheet" href="styles/home.css">
 </head>
 <body class="ayo-web">
@@ -499,23 +500,94 @@
   </div>
 </section>
 
-<!-- 8. TESTIMONIAL — quote per person (Figma 26609:13345; mobile 26540:9537).
-     The chips are tabs: click one to show that quote; otherwise they rotate on
-     their own (scripts/home.js). All quotes share one grid cell, so the
-     section keeps the tallest one's height and nothing jumps when it changes.
-     The chips scroll sideways on phones. -->
-<section class="tq" id="cerita" aria-label="What people say about AYO">
-  <div class="tq__quote reveal" data-tq>
-    <img class="tq__mark" src="assets/icons/quote.svg" alt="" width="56" height="56">
-    <div class="tq__texts">
-      <blockquote class="tq__text is-active" id="tq-q0" role="tabpanel" aria-labelledby="tq-t0">“AYO Indonesia bringing a revolution among sport enthusiasts. The application makes it easy to find sport actvities, grow your sport community and book sport venues. It is an end to end ecosystem for sports”</blockquote>
-      <blockquote class="tq__text" id="tq-q1" role="tabpanel" aria-labelledby="tq-t1">“The most interesting feature of the AYO App for me is the Open Play feature because this feature helps me as an admin of a fun football community to find new playmates who share the same hobby through the app.”</blockquote>
-      <blockquote class="tq__text" id="tq-q2" role="tabpanel" aria-labelledby="tq-t2">“Through joining an open play session on the Ayo, I was able to new friends and have lots of fun playing sports. I can even fulfill my dream of playing with Bayu Saptaji, the national team captain. There are also many options for open play, so I can play whenever I want to play football or futsal.”</blockquote>
+<!-- 8. TESTIMONIAL — YouTube Shorts rail (Figma 26731:13348; mobile 26731:13376).
+     Each card is a real link to the Short, so it still works with JS off.
+     components/shorts-rail/shorts-rail.js turns a click into the lightbox
+     (desktop) or a full-screen story player (phones), plays the Short in a
+     youtube-nocookie embed, and drives the arrows and dots. -->
+<section class="shr" id="cerita" data-shr aria-labelledby="shr-title">
+  <div class="shr__shell">
+    <div class="shr__head">
+      <div class="shr__heading reveal">
+        <p class="shr__eyebrow">Testimonials</p>
+        <h2 class="shr__title" id="shr-title">From the people who play every week.</h2>
+        <p class="shr__sub"><span class="shr__sub-long">Real stories from players, hosts, and venue owners — straight from our YouTube Shorts.</span><span class="shr__sub-short">Real stories from the AYO community.</span></p>
+      </div>
+      <div class="shr__nav" aria-label="Scroll the stories">
+        <button class="shr__arrow" type="button" data-shr-prev aria-label="Previous stories" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <button class="shr__arrow shr__arrow--next" type="button" data-shr-next aria-label="Next stories"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
     </div>
-    <div class="tq__people" role="tablist" aria-label="Choose a testimonial">
-      <button class="tq__chip is-active" type="button" role="tab" id="tq-t0" aria-controls="tq-q0" aria-selected="true"><img src="assets/testimonials/opi.webp" alt="" width="48" height="48" loading="lazy"><span class="tq__who"><span class="tq__name">Opi H.</span><span class="tq__role">Backbone Indonesia</span></span></button>
-      <button class="tq__chip" type="button" role="tab" id="tq-t1" aria-controls="tq-q1" aria-selected="false" tabindex="-1"><img src="assets/testimonials/dita.webp" alt="" width="48" height="48" loading="lazy"><span class="tq__who"><span class="tq__name">Dita S.</span><span class="tq__role">Host Mabar AYO</span></span></button>
-      <button class="tq__chip" type="button" role="tab" id="tq-t2" aria-controls="tq-q2" aria-selected="false" tabindex="-1"><img src="assets/testimonials/bayu.webp" alt="" width="48" height="48" loading="lazy"><span class="tq__who"><span class="tq__name">Bayu A.</span><span class="tq__role">Kawan AYO</span></span></button>
+  </div>
+  <ul class="shr__rail" data-shr-rail>
+    <li class="shr__item"><a class="shr__card" href="https://www.youtube.com/shorts/AE7GUQ63w-o" target="_blank" rel="noopener" data-id="AE7GUQ63w-o" data-name="My Club House" data-role="Tournament · Tennis" data-initial="M" data-quote="Straight from the players and organizers themselves!" data-about="See how AYO turned scoring at the My Club House Tennis Tournament 2026 into a seamless, pro-level event." aria-label="Play: My Club House, Straight from the players and organizers themselves! (1:46)">
+      <img class="shr__thumb" src="assets/testimonials/shorts/AE7GUQ63w-o.webp" alt="" width="480" height="853" loading="lazy">
+      <span class="shr__dur"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M3 2v6l5-3z"/></svg><span class="shr__dur-pre">Shorts · </span>1:46</span>
+      <span class="shr__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+      <span class="shr__cap">
+        <span class="shr__quote">Straight from the players and organizers themselves!</span>
+        <span class="shr__person"><span class="shr__av" aria-hidden="true">M</span><span class="shr__names"><span class="shr__name">My Club House</span><span class="shr__role">Tournament · Tennis</span></span></span>
+      </span>
+    </a></li>
+    <li class="shr__item"><a class="shr__card" href="https://www.youtube.com/shorts/orXJcLKCqRk" target="_blank" rel="noopener" data-id="orXJcLKCqRk" data-name="Holy Padel Tournament" data-role="Tournament · Padel" data-initial="H" data-quote="Star-studded tournament. Professional scoring service." data-about="AYO was the Official Tournament Scoring Service for Holy Padel Tournament Season 3, with live scoring and real-time match updates." aria-label="Play: Holy Padel Tournament, Star-studded tournament. Professional scoring service. (1:43)">
+      <img class="shr__thumb" src="assets/testimonials/shorts/orXJcLKCqRk.webp" alt="" width="480" height="853" loading="lazy">
+      <span class="shr__dur"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M3 2v6l5-3z"/></svg><span class="shr__dur-pre">Shorts · </span>1:43</span>
+      <span class="shr__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+      <span class="shr__cap">
+        <span class="shr__quote">Star-studded tournament. Professional scoring service.</span>
+        <span class="shr__person"><span class="shr__av" aria-hidden="true">H</span><span class="shr__names"><span class="shr__name">Holy Padel Tournament</span><span class="shr__role">Tournament · Padel</span></span></span>
+      </span>
+    </a></li>
+    <li class="shr__item"><a class="shr__card" href="https://www.youtube.com/shorts/YzEc9Qu9Xw0" target="_blank" rel="noopener" data-id="YzEc9Qu9Xw0" data-name="Wibowo Hadisubroto" data-role="Tennis Academy · Bandung" data-initial="W" data-quote="From tennis legend to the next generation." data-about="Coaching players of every level since 1989, and now easier to book: find a session with the academy on AYO." aria-label="Play: Wibowo Hadisubroto, From tennis legend to the next generation. (1:46)">
+      <img class="shr__thumb" src="assets/testimonials/shorts/YzEc9Qu9Xw0.webp" alt="" width="480" height="853" loading="lazy">
+      <span class="shr__dur"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M3 2v6l5-3z"/></svg><span class="shr__dur-pre">Shorts · </span>1:46</span>
+      <span class="shr__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+      <span class="shr__cap">
+        <span class="shr__quote">From tennis legend to the next generation.</span>
+        <span class="shr__person"><span class="shr__av" aria-hidden="true">W</span><span class="shr__names"><span class="shr__name">Wibowo Hadisubroto</span><span class="shr__role">Tennis Academy · Bandung</span></span></span>
+      </span>
+    </a></li>
+    <li class="shr__item"><a class="shr__card" href="https://www.youtube.com/shorts/cGaiFnLbwRA" target="_blank" rel="noopener" data-id="cGaiFnLbwRA" data-name="Rumah Maciok" data-role="Venue · Mahjong" data-initial="R" data-quote="Mahjong is having a moment." data-about="From first-timers to seasoned players, mahjong is bringing generations together, and Rumah Maciok&#39;s Game Master can teach you the basics." aria-label="Play: Rumah Maciok, Mahjong is having a moment. (1:45)">
+      <img class="shr__thumb" src="assets/testimonials/shorts/cGaiFnLbwRA.webp" alt="" width="480" height="853" loading="lazy">
+      <span class="shr__dur"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M3 2v6l5-3z"/></svg><span class="shr__dur-pre">Shorts · </span>1:45</span>
+      <span class="shr__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+      <span class="shr__cap">
+        <span class="shr__quote">Mahjong is having a moment.</span>
+        <span class="shr__person"><span class="shr__av" aria-hidden="true">R</span><span class="shr__names"><span class="shr__name">Rumah Maciok</span><span class="shr__role">Venue · Mahjong</span></span></span>
+      </span>
+    </a></li>
+    <li class="shr__item"><a class="shr__card" href="https://www.youtube.com/shorts/AEwBrmQnFKk" target="_blank" rel="noopener" data-id="AEwBrmQnFKk" data-name="McDonald&#39;s Football Clinic" data-role="Brand · Football clinic" data-initial="M" data-quote="Mimpi besar dimulai dari satu langkah kecil." data-about="Hundreds of young players in Bandung trained with Coach Indra Sjafri and national football legend Atep." aria-label="Play: McDonald&#39;s Football Clinic, Mimpi besar dimulai dari satu langkah kecil. (1:44)">
+      <img class="shr__thumb" src="assets/testimonials/shorts/AEwBrmQnFKk.webp" alt="" width="480" height="853" loading="lazy">
+      <span class="shr__dur"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M3 2v6l5-3z"/></svg><span class="shr__dur-pre">Shorts · </span>1:44</span>
+      <span class="shr__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+      <span class="shr__cap">
+        <span class="shr__quote">Mimpi besar dimulai dari satu langkah kecil.</span>
+        <span class="shr__person"><span class="shr__av" aria-hidden="true">M</span><span class="shr__names"><span class="shr__name">McDonald&#39;s Football Clinic</span><span class="shr__role">Brand · Football clinic</span></span></span>
+      </span>
+    </a></li>
+    <li class="shr__item"><a class="shr__card" href="https://www.youtube.com/shorts/TotNQrldc8U" target="_blank" rel="noopener" data-id="TotNQrldc8U" data-name="Urban Republic Berpadel Ria" data-role="Event · Padel exhibition" data-initial="U" data-quote="Spain&#39;s pro players. One epic exhibition match." data-about="Coaches and pro players from Spain and Indonesia put on a show at Urban Republic Berpadel Ria." aria-label="Play: Urban Republic Berpadel Ria, Spain&#39;s pro players. One epic exhibition match. (2:11)">
+      <img class="shr__thumb" src="assets/testimonials/shorts/TotNQrldc8U.webp" alt="" width="480" height="853" loading="lazy">
+      <span class="shr__dur"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M3 2v6l5-3z"/></svg><span class="shr__dur-pre">Shorts · </span>2:11</span>
+      <span class="shr__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+      <span class="shr__cap">
+        <span class="shr__quote">Spain&#39;s pro players. One epic exhibition match.</span>
+        <span class="shr__person"><span class="shr__av" aria-hidden="true">U</span><span class="shr__names"><span class="shr__name">Urban Republic Berpadel Ria</span><span class="shr__role">Event · Padel exhibition</span></span></span>
+      </span>
+    </a></li>
+    <li class="shr__item"><a class="shr__card" href="https://www.youtube.com/shorts/cpHD2eBdsu0" target="_blank" rel="noopener" data-id="cpHD2eBdsu0" data-name="Terpickle Pickle" data-role="Community · Pickleball" data-initial="T" data-quote="“Pickleball is easy.” Is it really?" data-about="We asked the host and players of Terpickle Pickle, a pickleball community on AYO, what they really think of the game." aria-label="Play: Terpickle Pickle, “Pickleball is easy.” Is it really? (1:55)">
+      <img class="shr__thumb" src="assets/testimonials/shorts/cpHD2eBdsu0.webp" alt="" width="480" height="853" loading="lazy">
+      <span class="shr__dur"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M3 2v6l5-3z"/></svg><span class="shr__dur-pre">Shorts · </span>1:55</span>
+      <span class="shr__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+      <span class="shr__cap">
+        <span class="shr__quote">“Pickleball is easy.” Is it really?</span>
+        <span class="shr__person"><span class="shr__av" aria-hidden="true">T</span><span class="shr__names"><span class="shr__name">Terpickle Pickle</span><span class="shr__role">Community · Pickleball</span></span></span>
+      </span>
+    </a></li>
+  </ul>
+  <div class="shr__shell">
+    <div class="shr__foot">
+      <div class="shr__dots" data-shr-dots aria-hidden="true"></div>
+      <a class="shr__all" href="https://www.youtube.com/@ayo.indonesia/shorts" target="_blank" rel="noopener">See all on YouTube<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
     </div>
   </div>
 </section>
@@ -575,6 +647,7 @@
 <script src="vendor/jquery-3.5.1/jquery.min.js"></script>
 <script src="vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
 <script src="scripts/home.js"></script>
+<script src="components/shorts-rail/shorts-rail.js"></script>
 <script src="scripts/chrome.js"></script>
 <script src="components/persona-hero/persona-hero.js"></script>
 <script src="components/activity-board/activity-board.js" defer></script>
