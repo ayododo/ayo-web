@@ -304,12 +304,19 @@
 .ctaband .ayo-btn.primary{background:#ec2435;color:#fff;border-radius:12px;padding:16px 32px;font-size:16px;line-height:19px;font-weight:var(--fw-semibold)}
 .ctaband .ayo-btn.primary:hover{background:#ec2435;color:#fff;filter:brightness(.93);transform:translateY(-2px)}
 .ctaband__lbl-sm{display:none}
-/* Tennis ball (Figma 26735:33431): 53px, standing on the band's bottom
-   edge (the "floor"), 212px right of centre. scripts/home.js
-   rolls it in; --x is its offset from that rest spot, --rot its spin. */
-.ctaband__ball{position:absolute;left:calc(50% + 212px);bottom:0;width:53px;height:53px;display:block;pointer-events:none;
-  transform:translateX(var(--x,0px)) scale(var(--sx,1),var(--sy,1)) rotate(var(--rot,0deg));will-change:transform}
-.ctaband[data-ball="ready"] .ctaband__ball{visibility:hidden}
+.ctaband .wrap{position:relative;z-index:1}
+/* Balls (Figma 26735:33565). Each image is cropped tight to the ball, so its
+   box bottom IS the ball's bottom and bottom:0 stands it on the band's lower
+   edge — the floor. --cx is the ball's centre measured from the band's
+   centre (as on the 1440 frame), --d its diameter. scripts/home.js moves them
+   with --x/--y/--rot/--sx/--sy; with JS off or reduced motion they just sit
+   at rest. The shuttlecock's box is the whole (square) image, rotated 35°
+   at rest, so it sits lower to put the cork and feather tips on the floor. */
+.ctaband__balls{position:absolute;inset:0;pointer-events:none}
+.ctaband__ball{position:absolute;bottom:0;left:calc(50% + var(--cx) - var(--d) / 2);width:var(--d);height:var(--d);display:block;
+  --rot:0deg;transform:translate(var(--x,0px),var(--y,0px)) scale(var(--sx,1),var(--sy,1)) rotate(var(--rot));will-change:transform}
+.ctaband__ball--shuttle{bottom:-12.5px;--rot:35deg}
+.ctaband[data-balls="ready"] .ctaband__ball{visibility:hidden}
 
 
 /* ---------- Phone pass (≤600px) ----------------------------------------------
@@ -344,7 +351,7 @@
   .ctaband p{margin:16px auto 20px;font-size:14px;line-height:20px;color:#fff}
   .ctaband__lbl-lg{display:none}
   .ctaband__lbl-sm{display:inline}
-  .ctaband__ball{display:none}   /* not in the mobile design */
+  .ctaband__balls{display:none}   /* not in the mobile design */
 
   /* Booking (Figma 26421:5218): stacked feature cards, owners copy before
      the dashboard mock, onboarding steps as a vertical list. */

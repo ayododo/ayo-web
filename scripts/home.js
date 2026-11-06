@@ -128,74 +128,195 @@ document.addEventListener('DOMContentLoaded', function(){
   io.observe(steps);
 })();
 
-/* CTA band — the tennis ball rolls in once the band is in view.
-   Plain rolling physics, not keyframes: constant rolling friction slows it,
-   it hits the band's right edge, loses part of its speed (restitution) with
-   a short squash against the "wall", rolls back and comes to rest exactly at
-   its design spot. The start speed is solved backwards from that rest spot,
-   so it always settles in the same place whatever the screen width. Spin
-   follows distance travelled (angle = x / radius), so it never slides.
-   No animation under reduced motion or where the ball is hidden (phones). */
+/* CTA band — the balls arrive once the band is in view (Figma 26735:33565).
+   All real physics, stepped at a fixed 240 Hz so it plays the same at any
+   frame rate:
+   - Tennis ball ("roll") rolls in from the left under constant rolling
+     friction, hits the band's right edge with a soft squash, loses part of
+     its speed and rolls back to its rest spot. Its start speed is solved
+     backwards from that spot, so it always settles in the same place.
+   - The other balls ("drop") fall in from above the band under gravity and
+     bounce (restitution per ball: basketball springiest), drifting sideways
+     a little; spin always equals distance travelled / radius. Each one waits
+     until the tennis ball has rolled clear of its spot, so nothing overlaps.
+   - The shuttlecock falls slowly against air drag, cork first with a small
+     sway, lands on the cork and tips over onto its side.
+   Phones (no balls in the mobile design) and reduced motion: no animation,
+   everything just sits at rest. */
 (function(){
   var band = document.querySelector('[data-ctaband]');
-  var ball = band && band.querySelector('.ctaband__ball');
-  if(!ball || !('IntersectionObserver' in window)) return;
+  var balls = band ? [].slice.call(band.querySelectorAll('[data-ball]')) : [];
+  if(!balls.length || !('IntersectionObserver' in window)) return;
   if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  if(getComputedStyle(ball).display === 'none') return;
+  if(getComputedStyle(balls[0].parentNode).display === 'none') return;
 
-  var FRICTION = 150;       // px/s² — low, so it rolls slowly and drifts to a stop
-  var RESTITUTION = 0.6;    // share of speed kept after hitting the wall (soft hit)
-  var CONTACT = 0.12;       // s the ball stays squashed against the wall
-  var SQUASH = 0.07;        // max horizontal squash at impact
   var DEG = 180 / Math.PI;
+  var G = 1700;              // gravity, px/s²
+  var FRICTION = 150;        // tennis rolling friction, px/s²
+  var RESTITUTION = 0.6;     // tennis vs. the wall
+  var CONTACT = 0.12;        // s the tennis ball stays squashed on the wall
+  var DT = 1 / 240;
 
-  band.setAttribute('data-ball', 'ready');   // hidden until it rolls in
+  /* Shuttlecock: lowest point of the image below its centre, as a share of
+     its size, for rotations -60°…40° in 5° steps (measured from the art). */
+  var LOW = [.464,.4756,.4851,.4909,.4953,.496,.4943,.4898,.4824,.4726,.4597,.4433,.4236,.4067,.3867,.3638,.3381,.3099,.2818,.269,.2933];
+  function low(deg){ var f = (Math.max(-60, Math.min(40, deg)) + 60) / 5, i = Math.min(19, Math.floor(f)); return LOW[i] + (LOW[i + 1] - LOW[i]) * (f - i); }
 
-  function set(x, sx, sy){
-    var r = ball.offsetWidth / 2;
-    ball.style.setProperty('--x', x.toFixed(2) + 'px');
-    ball.style.setProperty('--rot', (x / r * DEG).toFixed(2) + 'deg');
-    ball.style.setProperty('--sx', sx.toFixed(3));
-    ball.style.setProperty('--sy', sy.toFixed(3));
+  band.setAttribute('data-balls', 'ready');   // hidden until they arrive
+
+  function put(el, x, y, rot, sx, sy){
+    el.style.setProperty('--x', x.toFixed(2) + 'px');
+    el.style.setProperty('--y', y.toFixed(2) + 'px');
+    el.style.setProperty('--rot', rot.toFixed(2) + 'deg');
+    el.style.setProperty('--sx', sx.toFixed(3));
+    el.style.setProperty('--sy', sy.toFixed(3));
+  }
+  function squash(hits, t){            // sum of short sine pulses after each impact
+    var k = 0;
+    for(var i = 0; i < hits.length; i++){ var u = t - hits[i][0]; if(u >= 0 && u < .08) k += hits[i][1] * Math.sin(Math.PI * u / .08); }
+    return Math.min(k, .2);
   }
 
-  function roll(){
-    var d = ball.offsetWidth;
-    var rest = ball.offsetLeft;                    // design position (left edge)
+  /* --- Tennis: closed-form roll ------------------------------------------ */
+  function tennisPlan(el){
+    var d = el.offsetWidth, rest = el.offsetLeft;
     var wall = Math.max(rest, band.clientWidth - d);
-    var x0 = -d - 12 - rest;                       // just outside the left edge
-    var xw = wall - rest;                          // touching the right edge
-    var vBack = Math.sqrt(2 * FRICTION * xw);      // leaves the wall with this…
-    var vHit = vBack / RESTITUTION;                // …so arrives with this
+    var x0 = -d - 12 - rest, xw = wall - rest;
+    var vBack = Math.sqrt(2 * FRICTION * xw), vHit = vBack / RESTITUTION;
     var v0 = Math.sqrt(vHit * vHit + 2 * FRICTION * (xw - x0));
-    var tIn = (v0 - vHit) / FRICTION;
-    var tOut = vBack / FRICTION;
-    var start = null;
-
-    band.removeAttribute('data-ball');
-    set(x0, 1, 1);
-    requestAnimationFrame(function frame(now){
-      if(start === null) start = now;
-      var t = (now - start) / 1000;
-      if(t < tIn){                                           // rolling in
-        set(x0 + v0 * t - FRICTION * t * t / 2, 1, 1);
-      } else if(t < tIn + CONTACT){                          // squashed on the wall
-        var k = Math.sin(Math.PI * (t - tIn) / CONTACT);
-        var sx = 1 - SQUASH * k;
-        set(xw + d * (1 - sx) / 2, sx, 1 + SQUASH * .5 * k); // keep the right side on the wall
-      } else if(t < tIn + CONTACT + tOut){                   // rolling back
-        var u = t - tIn - CONTACT;
-        set(xw - (vBack * u - FRICTION * u * u / 2), 1, 1);
-      } else {
-        set(0, 1, 1);
-        return;
+    var tIn = (v0 - vHit) / FRICTION, tOut = vBack / FRICTION;
+    function x(t){
+      if(t < tIn) return x0 + v0 * t - FRICTION * t * t / 2;
+      if(t < tIn + CONTACT) return xw;
+      var u = Math.min(t - tIn - CONTACT, tOut);
+      return xw - (vBack * u - FRICTION * u * u / 2);
+    }
+    return {
+      end: tIn + CONTACT + tOut, wallAt: tIn,
+      leftAt: function(t){ return rest + x(t); },
+      draw: function(t){
+        var sx = 1, sy = 1, xx = x(t);
+        if(t >= tIn && t < tIn + CONTACT){
+          var k = Math.sin(Math.PI * (t - tIn) / CONTACT);
+          sx = 1 - .07 * k; sy = 1 + .035 * k; xx += d * (1 - sx) / 2;   // right side stays on the wall
+        }
+        put(el, xx, 0, xx / (d / 2) * DEG, sx, sy);
       }
-      requestAnimationFrame(frame);
+    };
+  }
+  /* When is the tennis ball's left edge first past px going right (or, with
+     back = true, back below px going left)? */
+  function tennisPass(plan, px, back){
+    for(var t = 0; t < plan.end; t += .01){
+      var l = plan.leftAt(t);
+      if(!back && l > px) return t;
+      if(back && t > plan.wallAt && l < px) return t;
+    }
+    return 0;
+  }
+
+  /* --- Drop: integrate fall + bounces ------------------------------------ */
+  function dropPlan(el, start){
+    var d = el.offsetWidth, r = d / 2, e = parseFloat(el.dataset.e) || .6, dx = parseFloat(el.dataset.dx) || 0;
+    var y = -(el.offsetTop + d + 20), v = 0, t = 0, frames = [], hits = [];
+    while(t < 6){
+      v += G * DT; y += v * DT; t += DT;
+      if(y >= 0){
+        y = 0;
+        if(v < 60){ frames.push(0); break; }
+        hits.push([t, Math.min(.16, v / 9000)]);
+        v = -v * e;
+      }
+      frames.push(y);
+    }
+    var T = frames.length * DT;
+    return {
+      start: start, end: start + T,
+      draw: function(now){
+        var u = now - start;
+        if(u < 0) return false;
+        var y = frames[Math.min(frames.length - 1, Math.floor(u / DT))];
+        var p = Math.min(1, u / T), x = dx * Math.pow(1 - p, 3);          // drift eases out to the rest spot
+        var k = squash(hits, u), sx = 1 + k * .6, sy = 1 - k;
+        put(el, x, y + d * (1 - sy) / 2, x / r * DEG, sx, sy);           // squash stays on the floor
+        return true;
+      }
+    };
+  }
+
+  /* --- Shuttlecock: drag-limited fall, then tip over ---------------------- */
+  function shuttlePlan(el, start){
+    var s = el.offsetWidth, REST = 35, FALL = -35, TIP = .55;
+    var restLow = low(REST) * s;
+    var y = -(el.offsetTop + s + 40), v = 0, t = 0, frames = [];
+    var VT = 230;                                   // terminal speed, px/s
+    while(t < 8){
+      v += G * (1 - (v / VT) * (v / VT)) * DT; y += v * DT; t += DT;
+      // y is the cork tip relative to where it touches the floor (cork down)
+      if(y >= 0){ frames.push(0); break; }
+      frames.push(y);
+    }
+    var tLand = frames.length * DT;
+    return {
+      start: start, end: start + tLand + TIP + .25,
+      draw: function(now){
+        var u = now - start;
+        if(u < 0) return false;
+        var rot, yy, x;
+        if(u < tLand){
+          var fy = frames[Math.floor(u / DT)];
+          var fade = 1 - u / tLand;
+          rot = FALL + 7 * Math.sin(u * 4.2) * fade;
+          x = 26 * Math.sin(u * 2.4) * fade;
+          yy = fy + (restLow - low(rot) * s);       // cork tip, not the box, meets the floor
+        } else {
+          var w = Math.min(1, (u - tLand) / TIP);
+          var ease = w * w;                         // tipping over speeds up as it falls…
+          var settle = u - tLand - TIP;             // …then a small rock once it lands
+          rot = FALL + (REST - FALL) * ease - (settle > 0 ? 4 * Math.exp(-settle * 9) * Math.sin(settle * 30) : 0);
+          x = 0;
+          yy = restLow - low(rot) * s;
+        }
+        put(el, x, yy, rot, 1, 1);
+        return true;
+      }
+    };
+  }
+
+  function run(){
+    var tennisEl = balls.filter(function(b){ return b.dataset.ball === 'roll'; })[0];
+    var tennis = tennisEl ? tennisPlan(tennisEl) : null;
+    var plans = [];
+    balls.forEach(function(el){
+      var kind = el.dataset.ball;
+      if(kind === 'roll') return;
+      var left = el.offsetLeft, right = left + el.offsetWidth, start = 0;
+      if(tennis){
+        var tennisRest = tennisEl.offsetLeft;
+        start = right < tennisRest
+          ? tennisPass(tennis, right + 10) + .05             // it has rolled past on the way in
+          : Math.max(0, tennisPass(tennis, left - tennisEl.offsetWidth - 10, true) - .45);  // gone on the way back (land just after)
+      }
+      plans.push(kind === 'shuttle' ? shuttlePlan(el, start + .2) : dropPlan(el, start));
+      plans[plans.length - 1].el = el;
+    });
+    balls.forEach(function(el){ el.style.visibility = 'hidden'; });
+    band.removeAttribute('data-balls');
+    var t0 = null;
+    requestAnimationFrame(function frame(now){
+      if(t0 === null) t0 = now;
+      var t = (now - t0) / 1000, busy = false;
+      if(tennis){ tennis.draw(Math.min(t, tennis.end)); tennisEl.style.visibility = ''; busy = t < tennis.end; }
+      plans.forEach(function(p){
+        if(p.draw(Math.min(t, p.end))) p.el.style.visibility = '';
+        if(t < p.end) busy = true;
+      });
+      if(busy) requestAnimationFrame(frame);
     });
   }
 
   var io = new IntersectionObserver(function(es){
-    if(es[0].isIntersecting){ io.disconnect(); roll(); }
+    if(es[0].isIntersecting){ io.disconnect(); run(); }
   }, { threshold: .4 });
   io.observe(band);
 })();
