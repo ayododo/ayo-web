@@ -74,6 +74,8 @@
 }
 .shr__thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s cubic-bezier(.2,.7,.2,1); }
 .shr__card:hover .shr__thumb { transform: scale(1.04); }
+/* Bootstrap's a:hover (0056b3) outranks .shr__card — pin the colour. */
+.shr__card:hover, .shr__card:focus { color: #fff; }
 .shr__card:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; }
 
 .shr__dur {
@@ -118,7 +120,7 @@
   font-size: 14px; line-height: 16px; font-weight: var(--fw-medium, 500); color: #d31223; text-decoration: none;
 }
 .shr__all svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.shr__all:hover { text-decoration: underline; }
+.shr__all:hover { color: #d31223; text-decoration: underline; }
 
 /* ==========================================================================
    Lightbox (desktop) — overlay + 780×604 modal: 9:16 player | story info.
@@ -159,7 +161,7 @@
 .shr-lb__yt { margin-top: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; min-height: 44px;
   font-size: 16px; line-height: 18px; font-weight: var(--fw-medium, 500); color: #d31223; text-decoration: none; }
 .shr-lb__yt svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.shr-lb__yt:hover { text-decoration: underline; }
+.shr-lb__yt:hover { color: #d31223; text-decoration: underline; }
 .shr-lb button:focus-visible, .shr-lb a:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; }
 
 /* Story-player chrome — phones only. */
