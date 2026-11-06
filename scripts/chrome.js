@@ -337,7 +337,9 @@
     {code:'SG', name:'Singapore', flag:'🇸🇬'}
   ];
   var countryKey = 'ayo-country-v1';
-  var countryCode = readPreference(countryKey) || 'ID';
+  /* Country picker is hidden for now (Indonesia only). Flip to true to bring it back. */
+  var COUNTRY_PICKER = false;
+  var countryCode = COUNTRY_PICKER ? (readPreference(countryKey) || 'ID') : 'ID';
   var countryRoot, countryButton, countryPopup;
   var lang = document.getElementById('lang');
   var indonesiaLanguageKey = 'ayo-indonesia-language-v1';
@@ -374,6 +376,7 @@
         COUNTRIES.map(function(c){ return '<button type="button" role="menuitemradio" aria-checked="false" data-country="'+c.code+'"><span class="flag" aria-hidden="true">'+c.flag+'</span><span>'+c.name+'</span><span class="carbon-icon carbon-checkmark menu-check" aria-hidden="true"></span></button>'; }).join('') +
       '</div>';
     lang.parentNode.insertBefore(countryRoot, lang);
+    if(!COUNTRY_PICKER) countryRoot.hidden = true;
     countryButton = countryRoot.querySelector('.country-btn');
     countryPopup = setupPopup(countryRoot, countryButton, countryRoot.querySelector('.country-menu'));
     function renderCountry(){
@@ -481,7 +484,7 @@
     if(e.key === sessionKey || e.key === null){
       session = readPreference(sessionKey); if(!validSession(session)) session = null; renderSession();
     }
-    if(countryRoot && (e.key === countryKey || e.key === null)){
+    if(COUNTRY_PICKER && countryRoot && (e.key === countryKey || e.key === null)){
       countryCode = readPreference(countryKey) || 'ID'; renderCountry();
     }
   });

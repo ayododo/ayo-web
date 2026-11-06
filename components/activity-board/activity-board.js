@@ -91,10 +91,8 @@
           avatarsNote: '100+ joined this week'
         }
       },
-      micros: [
-        { value: '4.8', label: 'Session avg', star: true },
-        { value: '150+', label: 'Cities', star: false }
-      ]
+      /* Rating and cities hidden for now. */
+      micros: []
     },
     {
       id: 'open-match',
