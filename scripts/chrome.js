@@ -92,8 +92,8 @@
     var PADEL = '<img class="act-ico act-ico--padel" src="'+I+'padel.webp" alt="" width="40" height="40">';
     var GROUPS = {
       play:  { icon: PADEL, title: 'Open Play',  desc: 'Play with new people, no team needed',
-               links: [['https://ayo.co.id/main-bareng', 'Join activity', 'Find an open game near you'],
-                       ['open-play-host.html', 'Host activity', 'Learn how to Host']] },
+               links: [['https://ayo.co.id/main-bareng', 'Join an activity', 'Find an open game near you'],
+                       ['open-play-host.html', 'Host an activity', 'See how hosting works']] },
       match: { icon: VS,    title: 'Open Match', desc: 'Bring your team and play against another squad',
                cta: ['open-match.html', 'Explore Open Match'] },
       score: { icon: SCORE, title: 'Scoring',    desc: 'Play Americano, Mexicano, or Custom',
@@ -101,56 +101,47 @@
                        ['index.html#rating', 'Learn about PadelLevels', 'An international padel rating system']] }
     };
     function txt(t, d){ return '<span class="act-txt"><b>'+t+'</b><small>'+d+'</small></span>'; }
-    /* Some portraits are cut-outs on a transparent background; Figma sets a
-       soft colour behind each one, so the same colour is set here. */
-    var FACE_BG = { 3: '#ffd2a6', 4: '#ffdfdf', 5: '#c4caf0', 6: '#ccdcbd' };
-    function bg(n){ return FACE_BG[n] ? ' style="background:'+FACE_BG[n]+'"' : ''; }
-    function face(n, extra){ return '<img class="mcard__face'+(extra||'')+'" src="'+I+'card-av'+n+'.webp" alt="" width="32" height="32"'+bg(n)+'>'; }
-    function chip(icon, label){ return '<span class="mcard__chip"><img src="'+I+'card-'+icon+'.svg" alt="" width="14" height="14">'+label+'</span>'; }
-    function eventCard(kind){
-      var play = kind === 'play';
-      return '<div class="mcard" aria-hidden="true">' +
-        '<img class="mcard__logo" src="'+I+'card-logo.svg" alt="" width="32" height="32">' +
-        '<div class="mcard__body">' +
-          '<div class="mcard__head"><div class="mcard__titles"><small>Kawan AYO Community</small>' +
-            '<b>'+(play ? 'Beginner/First-timer Match All Level 16 pax, Upper Intermediate' : '[3H2C] 120K Intense Rally Match All Level 16 pax, Upper Intermediate')+'</b></div>' +
-            '<img src="'+I+'card-padel.svg" alt="" width="20" height="20"></div>' +
-          '<div class="mcard__tags">' +
-            '<span class="mcard__status mcard__status--'+kind+'">'+(play ? 'Open play' : 'Open Match')+'</span><span class="mcard__sep"></span>' +
-            (play ? chip('hand', 'Casual') : chip('zap', 'Competitive')) + chip('clock', '120 Mins') +
-          '</div>' +
-          (play
-            ? '<div class="mcard__reel"><span class="mcard__faces"><span class="mcard__host">'+face(0)+'<img class="mcard__crown" src="'+I+'card-crown.svg" alt="" width="10" height="9"><em>Host</em></span>'+face(1)+face(2)+face(3)+face(4)+'</span><span class="mcard__slot">15 / 16</span></div>'
-            : '<div class="mcard__reel"><span class="mcard__faces mcard__faces--team"><span class="mcard__host">'+face(0)+'<em>Host</em></span>'+face(1)+'</span><span class="mcard__vs">VS</span><span class="mcard__faces mcard__faces--team">'+face(3)+face(2)+'</span></div>') +
-        '</div></div>';
-    }
-    function scoreCard(){
-      function stepper(n){ return '<span class="scard__step"><img src="'+I+'card-minus.svg" alt="" width="36" height="36"><b>'+n+'</b><img src="'+I+'card-plus.svg" alt="" width="36" height="36"></span>'; }
-      return '<div class="scard" aria-hidden="true">' +
-        '<div class="scard__players"><img src="'+I+'card-av5.webp" alt="" width="44" height="44"'+bg(5)+'><span class="scard__vs">VS</span><img src="'+I+'card-av6.webp" alt="" width="44" height="44"'+bg(6)+'></div>' +
-        '<div class="scard__score">'+stepper(6)+stepper(2)+'<span class="scard__set">1</span></div>' +
-      '</div>';
-    }
-    function subs(links){
-      return '<div class="amenu__subs"><div class="amenu__indent">' + links.map(function(l){
-        return '<a class="amenu__sub" href="'+l[0]+'">'+txt(l[1], l[2])+ARROW+'</a>';
-      }).join('') + '</div></div>';
-    }
-    function cta(c){ return '<a class="amenu__cta" href="'+c[0]+'">'+c[1]+ARROW+'</a>'; }
 
+    /* Desktop panel (Figma 26813:15580; hover states 26821:6855). A MATCH
+       column of three activity rows, Open Play carrying its two sub-actions
+       as cards, beside a grey Learn panel for PadelLevels. Each row, card and
+       the whole Learn panel is one link. */
+    var UP = '<img class="amenu__go" src="'+I+'arrow-up-right.svg" alt="" width="20" height="20">';
+    var PLAY_ICO = '<img class="act-ico act-ico--img" src="'+I+'padel-48.webp" alt="" width="48" height="48">';
+    var PL_ICO = '<img class="act-ico act-ico--img" src="'+I+'padelevels.svg" alt="" width="48" height="48">';
+    function row(href, icon, t, d){
+      return '<a class="amenu__item" href="'+href+'">'+icon+txt(t, d)+'</a>';
+    }
+    function card(l){
+      return '<a class="amenu__card" href="'+l[0]+'"><span class="act-txt"><b>'+l[1]+'</b><small>'+l[2]+'</small></span>'+UP+'</a>';
+    }
+    var DESK = {
+      /* Open Play has no page of its own yet; the row goes where "Join" does. */
+      play:  ['https://ayo.co.id/main-bareng', [['https://ayo.co.id/main-bareng', 'Join an activity', 'Find an open game near you'],
+                                                ['open-play-host.html', 'Host an activity', 'See how hosting works']]],
+      match: 'open-match.html',
+      score: '#',  /* TODO: Scoring page. */
+      learn: 'index.html#rating'
+    };
     var g = GROUPS;
     menu.innerHTML =
-      '<div class="amenu__col">' +
-        '<div class="amenu__group"><div class="amenu__head">'+g.play.icon+txt(g.play.title, g.play.desc)+'</div>'+eventCard('play')+'</div>' +
-        subs(g.play.links) +
+      '<div class="amenu__main">' +
+        '<p class="amenu__label">Match</p>' +
+        '<div class="amenu__play">' +
+          row(DESK.play[0], PLAY_ICO, g.play.title, g.play.desc) +
+          '<div class="amenu__cards">' + DESK.play[1].map(card).join('') + '</div>' +
+        '</div>' +
+        row(DESK.match, VS, g.match.title, g.match.desc) +
+        row(DESK.score, SCORE, g.score.title, g.score.desc) +
       '</div>' +
-      '<div class="amenu__col">' +
-        '<div class="amenu__group"><div class="amenu__head">'+g.match.icon+txt(g.match.title, g.match.desc)+'</div>'+eventCard('match')+cta(g.match.cta)+'</div>' +
-      '</div>' +
-      '<div class="amenu__col">' +
-        '<div class="amenu__group"><div class="amenu__head">'+g.score.icon+txt(g.score.title, g.score.desc)+'</div>'+scoreCard()+'</div>' +
-        subs(g.score.links) +
-      '</div>';
+      '<a class="amenu__learn" href="'+DESK.learn+'">' +
+        '<span class="amenu__learn-top">' +
+          '<span class="amenu__label">Collaboration</span>' +
+          PL_ICO +
+          '<span class="act-txt amenu__learn-txt"><b>PadelLevels</b><small>An international padel rating system</small></span>' +
+        '</span>' +
+        '<span class="amenu__more">Read more'+ARROW+'</span>' +
+      '</a>';
     menu.classList.add('submenu--cascade');
     menu.parentElement.classList.add('has-mega');
 
