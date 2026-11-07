@@ -188,22 +188,10 @@ img{max-width:100%;display:block}
 .act-txt{display:flex;flex-direction:column;gap:2px;min-width:0}
 .act-txt b{font-weight:var(--fw-bold);font-size:16px;line-height:22px;color:#2c2c2c}
 .act-txt small{font-size:14px;line-height:20px;color:#787373}
-/* Activity marks: the padel racket, a red "VS" tile and a "6:4" scoreboard. */
+/* Activity marks: the padel racket, the VS tile and the 6:4 scoreboard (SVGs). */
 .act-ico{position:relative;flex-shrink:0;display:grid;place-items:center;width:40px;height:40px}
 img.act-ico{object-fit:contain}
-.act-ico::before{content:'';position:absolute;inset:4.2px;border-radius:6.7px}
-.act-ico i{position:relative;font-style:normal;font-weight:var(--fw-extrabold);font-size:15px;line-height:1;letter-spacing:-.02em}
-.act-ico--vs::before{background:var(--brand)}
-.act-ico--vs i{color:#fff}
-.act-ico--score{display:flex;align-items:center;justify-content:center;gap:1px}
-.act-ico--score::before{background:#1a1919}
-.act-ico--score i:nth-child(1){color:#bbdc42}
-.act-ico--score i:nth-child(2){color:#bebbbb;font-size:13px}
-.act-ico--score i:nth-child(3){color:#fff}
 .submenu--cascade .act-ico{width:48px;height:48px}
-.submenu--cascade .act-ico::before{inset:5px;border-radius:8px}
-.submenu--cascade .act-ico i{font-size:18px}
-.submenu--cascade .act-ico--score i:nth-child(2){font-size:16px}
 
 .amenu__main{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:20px;padding:24px 0 24px 24px}
 .amenu__label{margin:0;font-weight:var(--fw-medium);font-size:12px;line-height:16px;letter-spacing:.04em;text-transform:uppercase;color:#52575c}
@@ -454,9 +442,6 @@ img.act-ico{object-fit:contain}
   .m-acts__group{display:flex;flex-direction:column;gap:4px;padding:8px 16px}
   .m-acts__headrow{display:flex;align-items:center;gap:12px}
   .m-acts .act-ico{width:32px;height:32px}
-  .m-acts .act-ico::before{inset:3.3px;border-radius:5.3px}
-  .m-acts .act-ico i{font-size:12px}
-  .m-acts .act-ico--score i:nth-child(2){font-size:10.5px}
   .m-acts .act-txt b{color:var(--text-default)}
   .m-acts__indent{margin-left:15px;padding:0 0 2px 27px;border-left:1.5px solid #ededed;display:flex;flex-direction:column}
   .m-acts__sub{display:flex;flex-direction:column;justify-content:center;gap:2px;min-height:52px;padding:6px 0;color:inherit;text-decoration:none}

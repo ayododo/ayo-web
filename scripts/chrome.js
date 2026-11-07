@@ -87,8 +87,10 @@
     if(!menu) return;
     var I = 'assets/icons/mega/';
     var ARROW = '<img src="'+I+'arrow-brand.svg" alt="" width="16" height="16">';
-    var VS = '<span class="act-ico act-ico--vs" aria-hidden="true"><i>VS</i></span>';
-    var SCORE = '<span class="act-ico act-ico--score" aria-hidden="true"><i>6</i><i>:</i><i>4</i></span>';
+    /* Exported from Figma (26813:15605, 26813:15612) with the Oxanium
+       lettering outlined, so the marks match the design exactly. */
+    var VS = '<img class="act-ico" src="'+I+'open-match.svg" alt="" width="48" height="48">';
+    var SCORE = '<img class="act-ico" src="'+I+'scoring.svg" alt="" width="48" height="48">';
     var PADEL = '<img class="act-ico act-ico--padel" src="'+I+'padel.webp" alt="" width="40" height="40">';
     var GROUPS = {
       play:  { icon: PADEL, title: 'Open Play',  desc: 'Play with new people, no team needed',
