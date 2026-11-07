@@ -104,8 +104,8 @@
 
     /* Desktop panel (Figma 26813:15580; hover states 26821:6855). A MATCH
        column of three activity rows, Open Play carrying its two sub-actions
-       as cards, beside a grey Learn panel for PadelLevels. Each row, card and
-       the whole Learn panel is one link. */
+       as cards, beside a grey Learn panel for PadelLevels. Open Match, Scoring,
+       each card and the whole Learn panel are links; the Open Play heading is not. */
     var UP = '<img class="amenu__go" src="'+I+'arrow-up-right.svg" alt="" width="20" height="20">';
     var PLAY_ICO = '<img class="act-ico act-ico--img" src="'+I+'padel-48.webp" alt="" width="48" height="48">';
     var PL_ICO = '<img class="act-ico act-ico--img" src="'+I+'padelevels.svg" alt="" width="48" height="48">';
@@ -116,8 +116,8 @@
       return '<a class="amenu__card" href="'+l[0]+'"><span class="act-txt"><b>'+l[1]+'</b><small>'+l[2]+'</small></span>'+UP+'</a>';
     }
     var DESK = {
-      /* Open Play has no page of its own yet; the row goes where "Join" does. */
-      play:  ['https://ayo.co.id/main-bareng', [['https://ayo.co.id/main-bareng', 'Join an activity', 'Find an open game near you'],
+      /* Open Play's heading is not a link; its two cards are the entry points. */
+      play:  [null, [['https://ayo.co.id/main-bareng', 'Join an activity', 'Find an open game near you'],
                                                 ['open-play-host.html', 'Host an activity', 'See how hosting works']]],
       match: 'open-match.html',
       score: '#',  /* TODO: Scoring page. */
@@ -128,7 +128,7 @@
       '<div class="amenu__main">' +
         '<p class="amenu__label">Match</p>' +
         '<div class="amenu__play">' +
-          row(DESK.play[0], PLAY_ICO, g.play.title, g.play.desc) +
+          '<div class="amenu__head">'+PLAY_ICO+txt(g.play.title, g.play.desc)+'</div>' +
           '<div class="amenu__cards">' + DESK.play[1].map(card).join('') + '</div>' +
         '</div>' +
         row(DESK.match, VS, g.match.title, g.match.desc) +
