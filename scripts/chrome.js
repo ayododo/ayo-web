@@ -94,7 +94,7 @@
     var PADEL = '<img class="act-ico act-ico--padel" src="'+I+'padel.webp" alt="" width="40" height="40">';
     var GROUPS = {
       play:  { icon: PADEL, title: 'Open Play',  desc: 'Play with new people, no team needed',
-               links: [['https://ayo.co.id/main-bareng', 'Join an activity', 'Find an open game near you'],
+               links: [['#', 'Join an activity', 'Find an open game near you'],
                        ['#', 'Host an activity', 'See how hosting works']] },
       match: { icon: VS,    title: 'Open Match', desc: 'Bring your team and play against another squad',
                cta: ['#', 'Explore Open Match'] },
@@ -119,7 +119,7 @@
     }
     var DESK = {
       /* Open Play's heading is not a link; its two cards are the entry points. */
-      play:  [null, [['https://ayo.co.id/main-bareng', 'Join an activity', 'Find an open game near you'],
+      play:  [null, [['#', 'Join an activity', 'Find an open game near you'],
                                                 ['#', 'Host an activity', 'See how hosting works']]],
       match: '#',
       score: '#',  /* TODO: Scoring page. */
@@ -185,7 +185,7 @@
     drawer.innerHTML =
       '<div class="m-drawer__in">' +
         '<div class="m-list" role="group" aria-label="Main">' +
-          '<a class="m-link" href="https://ayo.co.id/venues">Booking</a>' +
+          '<a class="m-link" href="#">Booking</a>' +
           '<div class="m-acc">' +
             '<button class="m-link m-acc__btn" type="button" aria-expanded="false" aria-controls="m-acc-activities">Activities'+CHEV+'</button>' +
             '<div class="m-acc__panel m-acts" id="m-acc-activities" hidden>' + mActs + '</div>' +
