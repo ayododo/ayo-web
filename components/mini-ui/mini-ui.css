@@ -158,9 +158,10 @@
 .mu-scorebox.is-focus{border-color:#2c2c2c}
 .mu-photo{width:52px;height:52px;border:1px dashed #d9d9d9;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#787373}
 .mu-tabs{display:flex;gap:16px;padding:0 12px;border-bottom:1px solid #eee;font-size:10.5px;color:#787373;flex:0 0 auto;background:#fff;position:relative;z-index:2}
-.mu-tabs span{padding:7px 0}
-.mu-tabs .is-on{color:#17171a;font-weight:700;box-shadow:inset 0 -2px #17171a}
-.mu-new-badge{display:inline-block;margin-left:4px;padding:1px 4px;border-radius:4px;background:#ec2435;color:#fff;font-size:7.5px;font-weight:700;vertical-align:1px}
+/* Only the tabs themselves get the padding — the NEW badge is a span too. */
+.mu-tabs>span{display:flex;align-items:center;padding:7px 0}
+.mu-tabs>.is-on{color:#17171a;font-weight:700;box-shadow:inset 0 -2px #17171a}
+.mu-new-badge{margin-left:4px;padding:1.5px 4px;border-radius:4px;background:#ec2435;color:#fff;font-size:7px;line-height:1.2;font-weight:700;letter-spacing:.02em}
 .mu-chan{display:flex;justify-content:space-between}
 .mu-chan>span{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:9.5px;font-weight:500;color:#787373}
 .mu-chan i{width:30px;height:30px;border-radius:50%;background:#f4f4f5;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:12px;font-weight:700;color:#17171a}
