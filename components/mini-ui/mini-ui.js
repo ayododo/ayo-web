@@ -122,16 +122,6 @@
     }
     return page('gd', top, body);
   }
-  // The hero shows the GameTime tab of an activity: header, people, tab bar,
-  // then the standings — built separately so the tab bar sits mid-screen.
-  function heroScreen(){
-    var people = ['fajar','maya','bayu','tari','raka','sinta'].map(function(k){ return av(k,22); }).join('');
-    return '<div class="mu-page is-active" data-page="hero">'+head(ico('back')+'<span class="mu-head__sp"></span>'+ico('share')+ico('more'))+
-      '<div style="padding:0 12px 8px;display:flex;flex-direction:column;gap:5px"><div class="mu-title" style="font-size:13.5px">Fun Padel Kawan AYO Chapter Jakarta Area</div><div class="mu-s">Competitive · Padel · Jakarta</div><div class="mu-avs">'+people+'<span class="mu-s" style="font-weight:600">8/8 ›</span></div></div>'+
-      '<div class="mu-tabs"><span>Details</span><span>Discussion</span><span class="is-on">GameTime<span class="mu-new-badge">NEW</span></span></div>'+
-      '<div class="mu-body"><div class="mu-scroll" style="padding-top:9px"><div class="mu-t"><b>Americano</b> · Rotating Partner</div>'+
-      '<div class="mu-seg" data-on="1"><span class="mu-seg__knob"></span><span class="mu-seg__i">Matches</span><span class="mu-seg__i is-on">Standings</span></div>'+table()+'</div></div></div>';
-  }
   function inputScore(){
     function side(a, b, el){ return '<div class="mu-col" style="flex:1;align-items:center;gap:5px"><span class="mu-pair">'+av(a,32)+av(b,32)+'</span><span class="mu-s">'+NAME[a]+' / '+NAME[b]+'</span></div>'; }
     return page('input', head(ico('close')+'<span class="mu-head__title">Round 1 · Court A</span><span class="mu-head__sp"></span><span class="mu-h" data-el="save">Save</span>'),
@@ -184,7 +174,6 @@
 
   /* ---------- Cards: pages (first = static frame), scroll target, flow ---------- */
   var CARDS = {
-    hero: {html: heroScreen},
     f01: {pages:[setup({fmt:'Americano'})], to:'formats'},
     f02: {pages:[setup({fmt:'Mexicano'})], to:'formats'},
     f03: {pages:[setup({fmt:'Custom'})], to:'formats'},
