@@ -187,8 +187,8 @@
 .ph-proof-row .ph-proof { margin-left: auto; }
 
 /* ---- Google Play award ------------------------------------------------------
-   Sits above the store links, 15px clear, its right edge 64px in from the
-   block's right edge — a touch left of centre (Figma 26671:26313).
+   112px, sitting right above the store links (1px clear) with its right edge
+   14px in from the block's right edge (Figma 26417:4915, node 26715:13425).
    Absolute so it overlaps the hero's empty right side instead of pushing the
    rating and the stats down.
    The tile is a pre-rendered turn: 41 frames (250px each) laid side by side
@@ -198,8 +198,8 @@
    behind it and a light band sweeps the gold. */
 .ph-proof { position: relative; }
 .ph-award {
-  position: absolute; right: 64px; bottom: calc(100% + 15px);
-  width: 168px; height: 168px;
+  position: absolute; right: 14px; bottom: calc(100% + 1px);
+  width: 112px; height: 112px;
   perspective: 600px;
   animation: ph-award-in .9s cubic-bezier(.2,.9,.25,1.2) .5s both;
 }
@@ -224,8 +224,8 @@
   mix-blend-mode: soft-light;
   animation: ph-award-shine 6.56s ease-in-out infinite;
 }
-/* Box sized in % of the badge so it scales with it (112px on mobile). 69% of
-   168 = 116px, which puts the tile itself at the ~90px the design shows. */
+/* Box sized in % of the badge so it scales with it (132px on mobile). 69% of
+   112 = 77px, matching the 76.7px tile in the design. */
 .ph-award__tile {
   position: absolute; left: 15.5%; top: 15.5%; width: 69%; height: 69%;
   background: url(../../assets/award/tile-seq.webp) 0 0 / 4100% 100% no-repeat;
