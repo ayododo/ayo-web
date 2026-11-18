@@ -337,6 +337,50 @@
   .ph-tab:last-child::after { right: 28px; }
 }
 
+/* ---- Phone layout (Figma 26421:4842, 360 wide) ------------------------------
+   The persona switcher moves to the top, right under the nav, and the copy,
+   proof and stats follow in one column. The proof row's wrappers dissolve
+   (display: contents) so the switcher and the proof become direct flex items
+   of the hero and can be reordered without duplicating markup. */
+@media (max-width: 560px) {
+  .persona-hero > .ph-wrap:has(> .ph-proof-row),
+  .ph-proof-row { display: contents; }
+
+  .ph-switch-main {
+    order: -1; position: relative; z-index: 2;
+    margin-top: 72px; padding: 32px var(--edge) 32px;
+  }
+  .ph-tab { font-family: var(--font-sans); font-size: 12px; line-height: 18px; letter-spacing: 0; }
+
+  .ph-main { flex: none; align-items: flex-start; padding: var(--space-10) 0 0; }
+  .ph-eyebrow {
+    font-family: var(--font-sans); font-size: 12px; line-height: 18px;
+    letter-spacing: .13em; margin-bottom: var(--space-5);
+  }
+  .ph-title { font-size: 40px; line-height: 48px; font-weight: var(--fw-bold); letter-spacing: 0; }
+  .ph-sub { margin-top: var(--space-4); max-width: none; }
+  .ph-ctas { margin-top: var(--space-6); }
+  .ph-btn { line-height: 22px; }
+
+  .ph-proof {
+    position: relative; z-index: 2;
+    gap: var(--space-6); padding: 34px var(--edge) 36px;
+  }
+  .ph-award { width: 120px; height: 120px; }
+  .ph-proof .store-rating { gap: var(--space-4); }
+  .ph-proof .sr-items { gap: var(--space-6); align-items: flex-start; }
+  .ph-proof .sr-item + .sr-item { border-top: 0; padding-top: 0; }
+  .ph-proof .sr-ico { --sr-ico-h: 30px; }
+
+  .ph-stats-in { padding: var(--space-6) 0; gap: var(--space-5) var(--space-4); }
+  .ph-stat:nth-child(n+3) { padding-top: 0; }
+  .ph-stat-num { font-family: var(--font-sans); font-size: 32px; line-height: 40px; letter-spacing: 0; }
+  .ph-stat-lbl {
+    margin-top: 6px; font-family: var(--font-sans); font-size: 10px; line-height: 16px;
+    font-weight: var(--fw-regular); letter-spacing: .08em;
+  }
+}
+
 /* ---- Reduced motion --------------------------------------------------------
    JS switches the auto-rotate off. Here: drop the wipe/fade, hide the video,
    and show the underline at full width with no progress animation. */
