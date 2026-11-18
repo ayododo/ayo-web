@@ -99,7 +99,7 @@
       match: { icon: VS,    title: 'Open Match', desc: 'Bring your team and play against another squad',
                cta: ['#', 'Explore Open Match'] },
       score: { icon: SCORE, title: 'Scoring',    desc: 'Play Americano, Mexicano, or Custom',
-               links: [['#', 'Explore Scoring', 'Learn how Scoring works'],
+               links: [['scoring.html', 'Explore Scoring', 'Learn how Scoring works'],
                        ['index.html#rating', 'Learn about PadelLevels', 'An international padel rating system']] }
     };
     function txt(t, d){ return '<span class="act-txt"><b>'+t+'</b><small>'+d+'</small></span>'; }
@@ -122,7 +122,7 @@
       play:  [null, [['#', 'Join an activity', 'Find an open game near you'],
                                                 ['#', 'Host an activity', 'See how hosting works']]],
       match: '#',
-      score: '#',  /* TODO: Scoring page. */
+      score: 'scoring.html',
       learn: 'index.html#rating'
     };
     var g = GROUPS;
