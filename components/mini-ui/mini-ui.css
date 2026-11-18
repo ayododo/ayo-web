@@ -80,7 +80,7 @@
 .mu-radio{width:14px;height:14px;border-radius:50%;border:1.5px solid #d9d9d9;flex:0 0 auto;transition:border .25s}
 .mu-radio.is-on{border:4.5px solid #17171a}
 
-.mu-btn{display:flex;align-items:center;justify-content:center;padding:10px;border-radius:10px;font-size:12px;font-weight:700;background:#ec2435;color:#fff;transition:background .3s,color .3s}
+.mu-btn{display:flex;align-items:center;justify-content:center;padding:10px;border-radius:10px;font-size:12px;font-weight:700;background:#2c2c2c;color:#fff;transition:background .3s,color .3s}
 .mu-btn--line{background:#fff;color:#17171a;border:1px solid #d9d9d9}
 .mu-btn--off{background:#f4f4f5;color:#787373}
 .mu-btns{display:flex;gap:8px}.mu-btns>*{flex:1}
