@@ -1,0 +1,104 @@
+/* ==========================================================================
+   AYO — Scoring (GameTime) page
+   Figma: desktop 28109:21824, mobile 28109:22535 (section 28109:21823).
+   Depends on: tokens.css, chrome.css, components/mini-ui, components/site-footer.
+   ========================================================================== */
+
+.ayo-web{background:var(--bg-white)}
+.sc-ink{color:#25282b}
+:root{--sc-ink:#25282b;--sc-body:#52575c;--sc-cream:#f9f8f6}
+
+/* ---- Shared type + button ---- */
+.sc-h2{font-size:40px;line-height:48px;font-weight:var(--fw-bold);letter-spacing:-.01em;color:var(--sc-ink)}
+.sc-h3{font-size:32px;line-height:40px;font-weight:var(--fw-bold);letter-spacing:-.01em;color:var(--sc-ink)}
+.sc-eyebrow{font-size:12px;line-height:16px;font-weight:var(--fw-medium);letter-spacing:.02em;text-transform:uppercase;color:#d31223;margin-bottom:12px}
+.sc-btn{display:inline-flex;align-items:center;gap:12px;padding:13px 24px;border-radius:8px;background:var(--brand);color:#fff;
+  font-size:14px;font-weight:var(--fw-medium);line-height:18px;transition:filter .15s,transform .15s}
+.sc-btn:hover{color:#fff;filter:brightness(.93);transform:translateY(-2px)}
+.sc-btn svg{width:16px;height:16px}
+.sc-btn--sm{padding:11px 16px}
+
+/* ---- 2. Hero ---- */
+.sc-hero{padding:172px 0 56px;background:#fff}
+.sc-hero__in{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:48px;align-items:center}
+.sc-crumb ol{display:flex;flex-wrap:wrap;gap:14px;list-style:none;margin:0 0 30px;padding:0;font-size:12px;line-height:18px;text-transform:uppercase;color:var(--sc-body)}
+.sc-crumb li{display:flex;align-items:center;gap:14px}
+.sc-crumb li+li::before{content:'';width:5px;height:5px;border-right:1.2px solid currentColor;border-top:1.2px solid currentColor;transform:rotate(45deg)}
+.sc-crumb a:hover{color:var(--sc-ink)}
+.sc-crumb [aria-current]{color:var(--sc-ink);font-weight:var(--fw-medium)}
+.sc-hero__title{font-size:var(--fs-hero);line-height:1.12;font-weight:var(--fw-extrabold);letter-spacing:-.02em;color:#1a1a1a}
+.sc-hero__lead{margin-top:4px;font-size:32px;line-height:40px;font-weight:var(--fw-bold);color:var(--sc-ink)}
+.sc-hero__sub{margin:24px 0 40px;max-width:640px;font-size:16px;line-height:22px;color:var(--sc-body)}
+.sc-hero__visual{height:420px;border-radius:24px;background:#f5f5f5}
+.sc-hero__visual .mu-phone{--mu-scale:1;top:28px}
+
+/* ---- 3. Sports list ---- */
+.sc-sports{background:#f7f7f7;padding:20px 0}
+.sc-sports__track{display:flex;gap:12px;overflow-x:auto;padding:0 var(--edge);scrollbar-width:none;max-width:var(--container);margin:0 auto}
+.sc-sports__track::-webkit-scrollbar{display:none}
+.sc-sport{position:relative;flex:0 0 156px;height:56px;padding:0 16px;display:flex;align-items:center;overflow:hidden;border-radius:12px;background:#fff;
+  font-size:16px;line-height:22px;font-weight:var(--fw-bold);color:var(--sc-ink);white-space:nowrap}
+.sc-sport img{position:absolute;right:-8px;top:6px;width:56px;height:56px;object-fit:contain}
+
+/* ---- 4. USP ---- */
+.sc-usp{padding:96px 0}
+.sc-usp__grid{display:grid;grid-template-columns:repeat(4,1fr);margin-top:48px;border-top:1px solid #d9d9d9}
+.sc-usp__item{padding:40px 32px 8px 0}
+.sc-usp__item+.sc-usp__item{padding-left:32px;border-left:1px solid #d9d9d9}
+.sc-usp__ico{display:flex;align-items:center;justify-content:center;width:52px;height:52px;margin-bottom:32px;border-radius:12px;background:#f5f5f5;color:var(--sc-ink)}
+.sc-usp__ico svg{width:24px;height:24px}
+.sc-usp__item h3{font-size:20px;line-height:24px;font-weight:var(--fw-bold);color:var(--sc-ink);margin-bottom:8px}
+.sc-usp__item p{font-size:16px;line-height:22px;color:var(--sc-body)}
+
+/* ---- 5. Key features ---- */
+.sc-kf{padding:40px 0 0;border-top:1px solid #eee}
+.sc-tabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.sc-tabs::-webkit-scrollbar{display:none}
+.sc-tab{flex:0 0 auto;padding:9px 20px;border-radius:999px;border:1px solid #d9d9d9;background:#fff;color:var(--sc-body);
+  font:var(--fw-bold) 14px/20px var(--font-sans);cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.sc-tab:hover{border-color:var(--sc-ink);color:var(--sc-ink)}
+.sc-tab.is-on{background:#1a1919;border-color:#1a1919;color:#fff}
+.sc-intro{padding-top:44px;padding-bottom:44px}
+.sc-intro p{margin-top:8px;font-size:16px;line-height:22px;color:var(--sc-body);max-width:640px}
+.sc-panel[hidden]{display:none}
+.sc-feat{display:grid;grid-template-columns:minmax(0,820fr) minmax(0,620fr);border-top:1px solid #eee}
+.sc-feat__txt{display:flex;flex-direction:column;justify-content:center;gap:16px;padding:36px 36px 36px max(var(--edge),calc((100vw - var(--container))/2 + var(--edge)))}
+.sc-num{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:#1a1919;color:#fff;font-size:12px;line-height:18px;font-weight:var(--fw-bold)}
+.sc-feat__txt h3{font-size:32px;line-height:40px;font-weight:var(--fw-bold);letter-spacing:-.01em;color:var(--sc-ink)}
+.sc-feat__txt p{max-width:440px;font-size:16px;line-height:22px;color:var(--sc-body)}
+.sc-feat__vis{background:var(--sc-cream);padding:36px 56px 36px 36px;display:flex;align-items:center}
+.sc-card{width:528px;max-width:100%;height:300px;border-radius:16px;background:#fff;border:1px solid #e8e6e3}
+.sc-card .mu-phone{--mu-scale:1.15;top:28px}
+.sc-card--free{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;color:var(--sc-body);font-size:14px}
+.sc-card--free b{font-size:56px;line-height:1;font-weight:var(--fw-extrabold);letter-spacing:-.03em;color:var(--sc-ink);margin-bottom:8px}
+
+/* ---- 6. Closing ---- */
+.sc-close{padding:96px 0;background:var(--sc-cream);text-align:center}
+.sc-close p{margin:16px auto 28px;font-size:16px;line-height:22px;color:var(--sc-body)}
+
+/* ---- Tablet / mobile (Figma 360 frame) ---- */
+@media (max-width:1100px){
+  .sc-feat__vis{padding:28px}
+  .sc-card{width:100%}
+}
+@media (max-width:900px){
+  .sc-hero{padding:120px 0 40px}
+  .sc-hero__in{grid-template-columns:1fr;gap:32px}
+  .sc-hero__visual{height:380px;max-width:420px;width:100%;margin:0 auto}
+  .sc-hero__lead{font-size:22px;line-height:28px}
+  .sc-hero__sub{margin:16px 0 28px}
+  .sc-h2{font-size:28px;line-height:34px}
+  .sc-h3{font-size:24px;line-height:30px}
+  .sc-usp{padding:56px 0}
+  .sc-usp__grid{grid-template-columns:1fr;margin-top:24px}
+  .sc-usp__item,.sc-usp__item+.sc-usp__item{padding:32px 0;border-left:0;border-bottom:1px solid #d9d9d9}
+  .sc-usp__ico{margin-bottom:20px}
+  .sc-feat{grid-template-columns:1fr;border-top:0}
+  .sc-feat__txt{padding:32px var(--edge) 24px;gap:12px}
+  .sc-feat__txt h3{font-size:22px;line-height:28px}
+  .sc-feat__vis{padding:16px var(--edge) 32px;justify-content:center}
+  .sc-card{height:200px;max-width:528px}
+  .sc-card .mu-phone{--mu-scale:.75;top:18px}
+  .sc-intro{padding-top:32px;padding-bottom:8px}
+  .sc-close{padding:64px 0}
+}

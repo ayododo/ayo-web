@@ -36,8 +36,10 @@ framework preset, no build command, and serve the repository root.
 | File | Purpose |
 | --- | --- |
 | `index.html` | Homepage |
+| `scoring.html` | Scoring (GameTime) — Figma 28109:21824, mobile 28109:22535. Deep links `#setup`, `#match`, `#klasemen`, `#bagikan` open a key-feature tab. |
 
-The repository currently focuses on the homepage only (decision 2026-11-18).
+The repository focused on the homepage only (decision 2026-11-18); the Scoring
+page is the first page rebuilt since.
 The earlier venue, partner, Open Play host, Open Match, court directory, and
 foundations pages were removed and will be rebuilt from scratch. Homepage links
 to those pages point to `#` until the new pages exist.
@@ -57,7 +59,18 @@ to those pages point to `#` until the new pages exist.
 and the type scale. `styles/chrome.css` and `scripts/chrome.js` provide shared
 navigation, buttons, footer styles, and account demo behavior.
 
-Homepage-specific code lives in `styles/home.css` / `scripts/home.js`.
+Homepage-specific code lives in `styles/home.css` / `scripts/home.js`; the
+Scoring page in `styles/scoring.css` / `scripts/scoring.js`.
+
+### Mini UI
+
+`components/mini-ui/` draws the simplified phone screens in the Scoring
+feature cards (Figma "Phone · Mini UI · …"). `mini-ui.js` renders each
+`<div data-mu="…">` from templates and plays the multi-screen flows from the
+Scoring staging board (Figma 28125:11094): Setup 01–03, Match & Skor 02 and
+04, and Bagikan 01. Flows run while the card is in view and loop. With reduced
+motion they stay on the first screen. The player photos in
+`assets/scoring/avatars/` are AI-generated, fictional people.
 `tools/lottie/` regenerates the Booking section animation.
 
 Keep stylesheet and script order consistent with the HTML entry points:
