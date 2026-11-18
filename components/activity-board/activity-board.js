@@ -52,6 +52,7 @@
     {
       id: 'open-play',
       title: 'Open Play',
+      icon: { on: 'icons/activity/padel.webp', off: 'icons/activity/padel.webp', fadeOff: true },
       tag: 'Open Play',
       hasRole: true,
       image: 'activity/open-play.webp',
@@ -97,6 +98,7 @@
     {
       id: 'open-match',
       title: 'Open Match',
+      icon: { on: 'icons/activity/open-match.svg', off: 'icons/activity/open-match-off.svg' },
       tag: 'Open Match',
       hasRole: false,
       image: 'activity/open-match.webp',
@@ -125,6 +127,7 @@
          figure, no lead line and no micro-stats. */
       id: 'gametime',
       title: 'GameTime',
+      icon: { on: 'icons/activity/gametime.svg', off: 'icons/activity/gametime-off.svg' },
       tag: 'GameTime',
       hasRole: false,
       image: 'activity/gametime.webp',
@@ -190,7 +193,16 @@
     b.setAttribute('role', 'tab');
     b.id = 'actb-tab-' + a.id;
     b.setAttribute('aria-controls', 'actb-panel');
-    b.innerHTML =
+    /* Tab mark (Figma 27233:26128 / 26437:9176): in colour on the open tab,
+       grey on the others. Both states are in the markup and CSS shows one, so
+       switching tabs never waits on an image request. */
+    var ic = a.icon
+      ? '<span class="actb__tab-icon' + (a.icon.fadeOff ? ' actb__tab-icon--fade' : '') + '" aria-hidden="true">' +
+          '<img class="actb__tab-icon-on" src="' + esc(ASSETS + a.icon.on) + '" alt="" width="48" height="48">' +
+          '<img class="actb__tab-icon-off" src="' + esc(ASSETS + a.icon.off) + '" alt="" width="48" height="48">' +
+        '</span>'
+      : '';
+    b.innerHTML = ic +
       '<span class="actb__tab-title">' + esc(a.title) + '</span>' +
       '<span class="actb__tab-arrow">' + ARROW + '</span>';
     b.addEventListener('click', function () { selectTab(i); });
