@@ -31,9 +31,28 @@
 .spt__art img{position:relative;display:block;width:100%;height:100%;object-fit:contain}
 /* Soft ground shadow under the soccer ball (Figma Ellipse 35), drawn behind it. */
 .spt__art img.spt__shadow{position:absolute;left:6px;top:33px;width:30px;height:10px}
-.spt__more{display:flex;flex-wrap:wrap;align-items:center;gap:0 20px;padding-top:16px;border-top:1px solid #a0a4a8}
+.spt__more{width:100%;display:flex;flex-wrap:wrap;align-items:center;gap:0 20px;padding-top:16px;border-top:1px solid #a0a4a8}
 .spt__more-lbl{font-weight:var(--fw-semibold);font-size:14px;line-height:20px;color:var(--bg-dark)}
-.spt__more > span:not(.spt__more-lbl){padding:4px 0;font-size:14px;line-height:20px;color:#787373}
+.spt__track{display:flex;flex-wrap:wrap;align-items:center;gap:0 20px;min-width:0}
+.spt__track > span,.spt__expand{padding:4px 0;font-size:14px;line-height:20px;color:#787373;white-space:nowrap}
+.spt__expand{background:none;border:0;cursor:pointer;font-family:inherit;transition:color .15s}
+.spt__expand:hover{color:var(--bg-dark)}
+.spt__track > span[tabindex="-1"]:focus{outline:none}
+.spt__expand:focus:not(:focus-visible),.spt__arrow:focus:not(:focus-visible){outline:none}
+.spt__expand:focus-visible,.spt__arrow:focus-visible{outline:2px solid var(--bg-dark);outline-offset:2px;border-radius:4px}
+/* Expanded (Figma 26937:6700): one line that scrolls, a fade on the right
+   while there is more to see, and prev/next arrows when it overflows. */
+.spt__more.is-open{display:grid;grid-template-columns:auto minmax(0,1fr) auto}
+.spt__more.is-open .spt__track{flex-wrap:nowrap;overflow-x:auto;scroll-behavior:smooth;overscroll-behavior-x:contain;scrollbar-width:none}
+.spt__more.is-open .spt__track::-webkit-scrollbar{display:none}
+.spt__more.is-open.has-more .spt__track{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 72px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 72px),transparent)}
+.spt__ctrl{display:flex;gap:8px;flex-shrink:0}
+.spt__ctrl[hidden]{display:none}
+.spt__arrow{display:flex;align-items:center;justify-content:center;width:32px;height:32px;padding:0;border-radius:16px;border:1px solid #cacccf;background:#f3f0ed;color:var(--bg-dark);cursor:pointer;transition:opacity .15s,background .15s}
+.spt__arrow svg{width:16px;height:16px;display:block}
+.spt__arrow:hover:not(:disabled){background:#fff}
+.spt__arrow:disabled{opacity:.35;cursor:default}
+@media (prefers-reduced-motion: reduce){ .spt__more.is-open .spt__track{scroll-behavior:auto} }
 @media (max-width:900px){
   .spt__bento{grid-template-columns:1fr}
   .spt__tile--feature{height:200px}
@@ -331,7 +350,10 @@
   .spt__art--feature{top:16px;bottom:auto;right:16px;width:53px;height:53px}
   .spt__art img.spt__shadow{left:5px;top:26px;width:24px;height:8px}
   .spt__more{gap:2px 14px}
+  .spt__track{gap:2px 14px}
   .spt__more-lbl{flex-basis:100%}
+  .spt__more.is-open{grid-template-columns:minmax(0,1fr) auto;row-gap:8px}
+  .spt__more.is-open .spt__more-lbl{grid-column:1 / -1}
 
   /* CTA band (Figma 26421:5487). */
   .ctaband{padding:56px 0}

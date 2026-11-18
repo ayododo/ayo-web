@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="components/padellevels-rating/padellevels-rating.css">
 <link rel="stylesheet" href="components/ad-slot/ad-slot.css">
 <link rel="stylesheet" href="components/shorts-rail/shorts-rail.css?v=20261106c">
-<link rel="stylesheet" href="styles/home.css?v=20261106g">
+<link rel="stylesheet" href="styles/home.css?v=20261118">
 </head>
 <body class="ayo-web">
 
@@ -201,7 +201,16 @@
 
     <div class="spt__more">
       <span class="spt__more-lbl">Also on AYO</span>
-      <span>Mahjong</span><span>Billiard</span><span>Tenis Meja</span><span>Squash</span><span>Volley</span><span>Golf</span><span>Running</span><span>Yoga</span><span>Pilates</span><span>Bowling</span><span>Fitness</span><span>Esport</span><span>+15 more</span>
+      <!-- Figma 26417:5028 (collapsed) → 26937:6700 (expanded). "+N more"
+           reveals the hidden sports; the row then turns into one line that
+           scrolls with the arrows (or a swipe), fading out on the right. -->
+      <div class="spt__track" data-spt-track>
+        <span>Mahjong</span><span>Billiard</span><span>Tenis Meja</span><span>Squash</span><span>Volley</span><span>Golf</span><span>Running</span><span>Yoga</span><span>Pilates</span><span>Bowling</span><span>Fitness</span><span>Esport</span><span class="spt__extra" hidden>Baseball</span><span class="spt__extra" hidden>Softball</span><span class="spt__extra" hidden>Hockey</span><span class="spt__extra" hidden>Recovery</span><span class="spt__extra" hidden>Airsoftgun</span><span class="spt__extra" hidden>Climbing</span><span class="spt__extra" hidden>Rugby</span><span class="spt__extra" hidden>Sepak Takraw</span><span class="spt__extra" hidden>Chess</span><span class="spt__extra" hidden>Frisbee</span><span class="spt__extra" hidden>Hiking</span><button class="spt__expand" type="button" data-spt-expand aria-expanded="false">+11 more</button>
+      </div>
+      <div class="spt__ctrl" data-spt-ctrl hidden>
+        <button class="spt__arrow" type="button" data-spt-prev aria-label="Scroll sports left"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 4L6 8l4 4"/></svg></button>
+        <button class="spt__arrow" type="button" data-spt-next aria-label="Scroll sports right"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4l4 4-4 4"/></svg></button>
+      </div>
     </div>
   </div>
 </section>
@@ -667,7 +676,7 @@
 
 <script src="vendor/jquery-3.5.1/jquery.min.js"></script>
 <script src="vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
-<script src="scripts/home.js?v=20261106g"></script>
+<script src="scripts/home.js?v=20261118"></script>
 <script src="components/shorts-rail/shorts-rail.js?v=20261106c"></script>
 <script src="scripts/chrome.js"></script>
 <script src="components/persona-hero/persona-hero.js"></script>

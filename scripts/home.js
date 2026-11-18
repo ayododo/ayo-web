@@ -127,3 +127,41 @@ document.addEventListener('DOMContentLoaded', function(){
   }, { threshold: .5 });
   io.observe(steps);
 })();
+
+/* "Also on AYO" — "+N more" reveals the rest of the sports; the row then
+   scrolls sideways with the arrows (Figma 26417:5028 → 26937:6700). */
+(function(){
+  var more = document.querySelector('.spt__more');
+  if(!more) return;
+  var track = more.querySelector('[data-spt-track]');
+  var expand = more.querySelector('[data-spt-expand]');
+  var ctrl = more.querySelector('[data-spt-ctrl]');
+  var prev = more.querySelector('[data-spt-prev]');
+  var next = more.querySelector('[data-spt-next]');
+  if(!track || !expand) return;
+
+  function update(){
+    var max = track.scrollWidth - track.clientWidth;
+    var overflow = max > 1;
+    ctrl.hidden = !overflow;
+    prev.disabled = track.scrollLeft <= 1;
+    next.disabled = track.scrollLeft >= max - 1;
+    more.classList.toggle('has-more', overflow && track.scrollLeft < max - 1);
+  }
+
+  expand.addEventListener('click', function(){
+    [].forEach.call(track.querySelectorAll('.spt__extra'), function(s){ s.hidden = false; });
+    expand.setAttribute('aria-expanded', 'true');
+    expand.remove();
+    more.classList.add('is-open');
+    update();
+    var first = track.querySelector('.spt__extra');
+    if(first) first.setAttribute('tabindex', '-1'), first.focus({ preventScroll: true });
+  });
+
+  function step(dir){ track.scrollBy({ left: dir * Math.max(120, track.clientWidth * 0.7) }); }
+  prev.addEventListener('click', function(){ step(-1); });
+  next.addEventListener('click', function(){ step(1); });
+  track.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', function(){ if(more.classList.contains('is-open')) update(); });
+})();
