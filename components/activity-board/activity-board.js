@@ -56,7 +56,7 @@
       hasRole: true,
       image: 'activity/open-play.webp',
       imageAlt: 'Players in an open play session',
-      href: 'open-play.html',
+      href: '#',
       roles: {
         host: {
           /* Figma: Activity/Open Play/Host (26212:7874). */
@@ -72,7 +72,7 @@
           /* The two roles used to share the activity's href, which meant the
              host CTA and the participant CTA led to the same place. Host has a
              page of its own now, so it carries its own destination. */
-          href: 'open-play-host.html'
+          href: '#'
         },
         participant: {
           tagline: 'Find Your Game. Meet New People.',
@@ -101,7 +101,7 @@
       hasRole: false,
       image: 'activity/open-match.webp',
       imageAlt: 'Two players in a competitive match',
-      href: 'open-match.html',
+      href: '#',
       /* Figma: Activity/Open Match (26106:1821). The image carries a headline
          instead of a figure, over a pair-vs-pair of faces; there is no lead
          line and no micro-stats. */

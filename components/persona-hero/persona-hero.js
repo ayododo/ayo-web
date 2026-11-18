@@ -38,7 +38,7 @@
       eyebrow: 'Brand · Sponsorship · Activation',
       title: 'Reach hundreds of thousands of sport enthusiasts.',
       sub: 'Connect your brand with Indonesia\u2019s most active sports community through campaigns, sponsorships, and in-platform activations.',
-      ctas: [ { label: 'Explore Partnership', kind: 'ghost', href: 'partner.html' } ]
+      ctas: [ { label: 'Explore Partnership', kind: 'ghost', href: '#' } ]
     }
   ];
 

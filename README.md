@@ -26,7 +26,7 @@ python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
 Open <http://127.0.0.1:8000/index.html>. Use an HTTP server rather than opening
-files directly, because the venue page fetches animation data.
+files directly, because the homepage fetches Lottie animation data.
 
 The same files can be served by any static server. On Vercel, use the **Other**
 framework preset, no build command, and serve the repository root.
@@ -36,19 +36,19 @@ framework preset, no build command, and serve the repository root.
 | File | Purpose |
 | --- | --- |
 | `index.html` | Homepage |
-| `venue.html` | AYO Venue Management |
-| `partner.html` | Business partners and sponsors |
-| `open-play-host.html` | Open Play for hosts; some content remains placeholder |
-| `open-match.html` | Open Match; some content remains placeholder |
-| `foundations.html` | Visual reference for colors and typography |
+
+The repository currently focuses on the homepage only (decision 2026-11-18).
+The earlier venue, partner, Open Play host, Open Match, court directory, and
+foundations pages were removed and will be rebuilt from scratch. Homepage links
+to those pages point to `#` until the new pages exist.
 
 ## Source organization
 
 | Directory | Contents |
 | --- | --- |
 | `styles/` | Design tokens, Bootstrap compatibility defaults, shared chrome, and page styles |
-| `scripts/` | Shared navigation/account demo, activity tabs, and page scripts |
-| `components/` | Reusable visual components, snippets, and isolated previews |
+| `scripts/` | Shared navigation/account demo and homepage script |
+| `components/` | Reusable visual components used by the homepage |
 | `assets/` | Images, videos, animation data, brand assets, and icons in use |
 | `vendor/` | Pinned Bootstrap, jQuery, Lottie, and dependency license notices |
 | `.claude/skills/sport-ui/` | Shared design guidance for continuing work with Claude |
@@ -57,10 +57,8 @@ framework preset, no build command, and serve the repository root.
 and the type scale. `styles/chrome.css` and `scripts/chrome.js` provide shared
 navigation, buttons, footer styles, and account demo behavior.
 
-Page-specific code lives in `styles/home.css` / `scripts/home.js`,
-`styles/partner.css` / `scripts/partner.js`, and `styles/venue.css` /
-`scripts/venue-tabs.js` / `scripts/venue-loading.js`. The two activity detail
-pages share `styles/activity-page.css` and `scripts/activity-tabs.js`.
+Homepage-specific code lives in `styles/home.css` / `scripts/home.js`.
+`tools/lottie/` regenerates the Booking section animation.
 
 Keep stylesheet and script order consistent with the HTML entry points:
 
@@ -72,28 +70,15 @@ Keep stylesheet and script order consistent with the HTML entry points:
 6. `vendor/bootstrap-4.3.1/bootstrap.bundle.min.js`
 7. Shared, component, and page scripts in their existing order
 
-All full pages and component previews load Bootstrap. The two HTML component
-snippets rely on their host page to load these dependencies. Production content
-wrappers use Bootstrap's `container-fluid` with AYO's existing maximum width
-and padding. Detailed layouts and custom interactions remain in their component
-files so the reference design stays consistent.
-
-`venue.html` loads Lottie with `defer`; its animation initialization waits for
-`DOMContentLoaded`.
+Production content wrappers use Bootstrap's `container-fluid` with AYO's
+existing maximum width and padding. Detailed layouts and custom interactions
+remain in their component files so the reference design stays consistent.
 
 ### Component references
 
-- [Persona hero](components/persona-hero/preview.html)
-- [Activity board](components/activity-board/preview.html)
-- [Marquee](components/marquee/preview.html)
-- [Store rating](components/store-rating/preview.html)
-- [Button](components/button/preview.html)
-- [PadelLevels markup](components/padellevels-rating/padellevels-rating.html)
-- [Ad slot markup](components/ad-slot/ad-slot.html)
-
-The last two files are snippets for integration, not standalone preview pages.
-The button preview is a component reference; production pages currently use the
-shared button rules in `styles/chrome.css`. Reconcile these when integrating.
+- [Button](components/button/preview.html) — a component reference; the
+  homepage currently uses the shared button rules in `styles/chrome.css`.
+  Reconcile these when integrating.
 
 ## Bootstrap 4 handoff
 
@@ -139,10 +124,9 @@ and [JavaScript dependencies](https://getbootstrap.com/docs/4.3/getting-started/
 - Login/register and Google sign-in simulate a local session. Connect these to
   the application's authentication service before production.
 - Media kit forms and several CTA, store, and blog links are placeholders.
-- Activity content and statistics include sample data. The Open Play participant
-  destination `open-play.html` is referenced by the activity board but does not
-  exist in this repository; replace it with the application's actual route.
-- Venue feature artwork includes temporary loading animations.
+- Activity content and statistics include sample data. Links to pages that are
+  not rebuilt yet (venue, partner, Open Play, Open Match, court directory) are
+  `#` placeholders.
 - Fonts load from Google Fonts. Review font hosting with the frontend team.
 - Keep `assets/icons/carbon/LICENSE` and `NOTICE.md` with the Carbon icons, and
   `vendor/lottie.LICENSE.md` with the Lottie runtime (lottie-web 5.12.2).

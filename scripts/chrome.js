@@ -95,9 +95,9 @@
     var GROUPS = {
       play:  { icon: PADEL, title: 'Open Play',  desc: 'Play with new people, no team needed',
                links: [['https://ayo.co.id/main-bareng', 'Join an activity', 'Find an open game near you'],
-                       ['open-play-host.html', 'Host an activity', 'See how hosting works']] },
+                       ['#', 'Host an activity', 'See how hosting works']] },
       match: { icon: VS,    title: 'Open Match', desc: 'Bring your team and play against another squad',
-               cta: ['open-match.html', 'Explore Open Match'] },
+               cta: ['#', 'Explore Open Match'] },
       score: { icon: SCORE, title: 'Scoring',    desc: 'Play Americano, Mexicano, or Custom',
                links: [['#', 'Explore Scoring', 'Learn how Scoring works'],
                        ['index.html#rating', 'Learn about PadelLevels', 'An international padel rating system']] }
@@ -120,8 +120,8 @@
     var DESK = {
       /* Open Play's heading is not a link; its two cards are the entry points. */
       play:  [null, [['https://ayo.co.id/main-bareng', 'Join an activity', 'Find an open game near you'],
-                                                ['open-play-host.html', 'Host an activity', 'See how hosting works']]],
-      match: 'open-match.html',
+                                                ['#', 'Host an activity', 'See how hosting works']]],
+      match: '#',
       score: '#',  /* TODO: Scoring page. */
       learn: 'index.html#rating'
     };
@@ -190,8 +190,8 @@
             '<button class="m-link m-acc__btn" type="button" aria-expanded="false" aria-controls="m-acc-activities">Activities'+CHEV+'</button>' +
             '<div class="m-acc__panel m-acts" id="m-acc-activities" hidden>' + mActs + '</div>' +
           '</div>' +
-          '<a class="m-link" href="venue.html">For Venue Owners</a>' +
-          '<a class="m-link" href="partner.html">Partner with Us</a>' +
+          '<a class="m-link" href="#">For Venue Owners</a>' +
+          '<a class="m-link" href="#">Partner with Us</a>' +
           '<a class="m-link" href="#">Blog</a>' +
         '</div>' +
         '<div class="m-account" data-m-auth="in" hidden>' +
