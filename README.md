@@ -74,6 +74,13 @@ Production content wrappers use Bootstrap's `container-fluid` with AYO's
 existing maximum width and padding. Detailed layouts and custom interactions
 remain in their component files so the reference design stays consistent.
 
+### Shared footer
+
+`components/site-footer/` is the footer for every page (Figma 26585:11670,
+mobile 26592:9750). Copy the block in `site-footer.html` into the page and load
+`site-footer.css`; its icons live in `assets/icons/footer/`. English only for
+now.
+
 ### Component references
 
 - [Button](components/button/preview.html) — a component reference; the

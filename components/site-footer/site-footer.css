@@ -1,0 +1,115 @@
+/* ==========================================================================
+   AYO — Site footer (shared across pages)
+   Figma: desktop "Footer" 26585:11670 (homepage instance 26596:11965),
+   mobile "Footer / Mobile" 26592:9750 (instance 26596:12605).
+   Markup: components/site-footer/site-footer.html — copy it as is into every
+   page; links are page-relative anchors or "#" until the pages exist.
+   Depends on: styles/tokens.css (tokens only). Icons: assets/icons/footer/.
+   ========================================================================== */
+
+.sft {
+  background: #1a1919; color: #a0a4a8;
+  padding: 80px 0 32px;
+  font-family: var(--font-sans);
+}
+.sft__in { max-width: var(--container, 1440px); margin: 0 auto; padding: 0 var(--edge, 36px); }
+.sft a { text-decoration: none; }
+
+/* ---- Top: logo | "Own a sports venue?" + CTA ------------------------------- */
+.sft__top {
+  display: flex; align-items: center; justify-content: space-between; gap: 40px;
+  padding-bottom: 32px; border-bottom: 1px solid rgba(255, 255, 255, .12);
+}
+.sft__logo { display: block; flex-shrink: 0; }
+.sft__logo img { display: block; width: 48px; height: 26px; }
+.sft__cta { display: flex; align-items: center; gap: 20px; }
+.sft__cta-label { margin: 0; font-weight: var(--fw-medium); font-size: 16px; line-height: 18px; color: #cacccf; }
+.sft__btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 24px; border-radius: 8px; background: #ec2435;
+  font-weight: var(--fw-medium); font-size: 14px; line-height: 16px; color: #fff;
+  white-space: nowrap; transition: filter .15s;
+}
+.sft__btn:hover { color: #fff; filter: brightness(.93); }
+.sft__btn img { width: 16px; height: 16px; display: block; }
+
+/* ---- Columns --------------------------------------------------------------- */
+.sft__cols {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px;
+  padding: 64px 0;
+}
+.sft__col { min-width: 0; }
+.sft__h { margin: 0; font-weight: var(--fw-medium); font-size: 14px; line-height: 16px; color: #fff; }
+.sft__links { display: flex; flex-direction: column; align-items: flex-start; padding-top: 20px; }
+.sft__links a {
+  display: block; padding: 8px 0;
+  font-size: 14px; line-height: 20px; color: #a0a4a8;
+  transition: color .15s;
+}
+.sft__links a:hover { color: #fff; }
+
+/* Follow us: socials, then the store buttons. */
+.sft__social { display: flex; flex-wrap: wrap; gap: 12px; padding: 20px 0 32px; }
+.sft__social a {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(255, 255, 255, .2);
+  transition: background-color .15s, border-color .15s;
+}
+.sft__social a:hover { background: rgba(255, 255, 255, .1); border-color: rgba(255, 255, 255, .4); }
+.sft__social img { width: 18px; height: 18px; display: block; }
+
+.sft__apps { display: flex; flex-direction: column; gap: 8px; }
+.sft__apps-label { margin: 0; font-size: 14px; line-height: 20px; color: #a0a4a8; }
+.sft__stores { display: flex; flex-wrap: wrap; gap: 12px; }
+.sft__store {
+  display: inline-flex; align-items: center; gap: 10.28px;
+  height: 48px; padding: 8px 16px 8px 12px; box-sizing: border-box;
+  border-radius: 10px; background: #000; border: .857px solid rgba(255, 255, 255, .24);
+  color: #fff; transition: border-color .15s, transform .15s;
+}
+.sft__store:hover { color: #fff; border-color: rgba(255, 255, 255, .55); transform: translateY(-2px); }
+.sft__store img { display: block; flex-shrink: 0; height: 27.42px; width: auto; }
+.sft__store span { display: flex; flex-direction: column; white-space: nowrap; }
+.sft__store small { font-weight: var(--fw-medium); font-size: 9.43px; line-height: 12px; }
+.sft__store b { font-weight: var(--fw-semibold); font-size: 15.42px; line-height: 18.85px; }
+
+/* ---- Bottom ---------------------------------------------------------------- */
+.sft__bottom { padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, .12); }
+.sft__copy { margin: 0; font-size: 12px; line-height: 18px; color: #a0a4a8; }
+
+.sft a:focus:not(:focus-visible) { outline: none; }
+.sft a:focus-visible { outline: 2px solid #fff; outline-offset: 3px; border-radius: 4px; }
+
+/* ---- Tablet: Company / Ecosystem / Support in a row, Follow us below. ------ */
+@media (max-width: 1000px) {
+  .sft__cols { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .sft__col--follow { grid-column: 1 / -1; }
+}
+
+/* ---- Phone (Figma 26592:9750) ---------------------------------------------- */
+@media (max-width: 640px) {
+  .sft { padding: 48px 0 24px; }
+  .sft__in { padding: 0 16px; }
+  .sft__top { flex-direction: column; align-items: stretch; gap: 16px; }
+  .sft__cta { flex-direction: column; align-items: stretch; gap: 12px; }
+  .sft__btn { width: 100%; }
+  /* Company and Support stack on the left, Ecosystem on the right, Follow us
+     takes a full row below. */
+  .sft__cols {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas: "company eco" "support eco" "follow follow";
+    grid-template-rows: auto 1fr auto;
+    column-gap: 16px; row-gap: 32px; padding: 40px 0;
+  }
+  .sft__col--company { grid-area: company; }
+  .sft__col--eco     { grid-area: eco; }
+  .sft__col--support { grid-area: support; }
+  .sft__col--follow  { grid-area: follow; }
+  .sft__social { padding-bottom: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sft__store, .sft__btn, .sft__links a, .sft__social a { transition: none; }
+  .sft__store:hover { transform: none; }
+}

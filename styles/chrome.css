@@ -322,37 +322,7 @@ img.act-ico{object-fit:contain}
 
 
 
-/* ---------- 10. Footer ---------- */
-.foot{background:var(--bg-dark);color:rgba(255,255,255,.7);padding:clamp(48px,6vw,80px) 0 var(--space-8)}
-.foot-top{display:flex;justify-content:space-between;align-items:center;gap:var(--space-6) var(--space-10);flex-wrap:wrap;padding-bottom:var(--space-8);border-bottom:1px solid rgba(255,255,255,.12)}
-.foot-brand{display:flex;align-items:center;gap:var(--space-4)}
-.foot-brand img{height:26px;filter:brightness(0) invert(1)}
-.foot-brand .tl{color:rgba(255,255,255,.65);font-size:var(--fs-body);font-weight:var(--fw-medium)}
-.foot-cta{display:flex;align-items:center;gap:var(--space-5)}
-.foot-cta-label{color:rgba(255,255,255,.72);font-size:var(--fs-body-lg);font-weight:var(--fw-medium)}
-.foot-cta .ayo-btn svg{width:16px;height:16px}
-.foot-cols{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1.37fr;gap:var(--space-10);padding:clamp(40px,5vw,64px) 0}
-/* Figma 26585:11670: the company address leads the columns, no heading. */
-.foot-addr{font-style:normal;font-size:var(--fs-body);line-height:20px;color:rgba(255,255,255,.6);margin:0}
-.foot h4{color:#fff;font-size:var(--fs-body);font-weight:var(--fw-bold);margin-bottom:var(--space-5)}
-.foot .ayo-foot-col > a{display:block;color:rgba(255,255,255,.6);font-size:var(--fs-body);padding:var(--space-2) 0;transition:color .2s}
-.foot .ayo-foot-col > a:hover{color:#fff}
-.foot-social{display:flex;flex-wrap:wrap;gap:var(--space-3);margin-bottom:var(--space-8)}
-.foot-social a{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.2);display:grid;place-items:center;color:#fff;transition:background .2s,border-color .2s}
-.foot-social a:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.4)}
-.foot-social svg{width:18px;height:18px}
-.foot-app{display:flex;flex-wrap:wrap;gap:var(--space-3)}
-.app-badge{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:var(--radius-lg);padding:9px 16px;color:#fff;transition:background .2s,border-color .2s,transform .2s,box-shadow .2s}
-.app-badge:hover{color:#fff;background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.55);transform:translateY(-3px);box-shadow:0 12px 26px rgba(0,0,0,.45)}
-.app-badge:active{transform:translateY(-1px);box-shadow:0 6px 14px rgba(0,0,0,.4)}
-.app-badge svg{height:26px;width:auto;flex-shrink:0}
-.app-badge .ico-play{height:23px}
-.app-badge .abt{display:flex;flex-direction:column;line-height:1.2}
-.app-badge .abt small{font-size:10px;font-weight:var(--fw-medium);color:rgba(255,255,255,.65)}
-.app-badge .abt b{font-size:15px;font-weight:var(--fw-bold);letter-spacing:-.01em}
-.foot-bottom{display:flex;align-items:center;gap:var(--space-4) var(--space-6);flex-wrap:wrap;padding-top:var(--space-6);border-top:1px solid rgba(255,255,255,.12);font-size:var(--fs-small);color:rgba(255,255,255,.5)}
-.foot-bottom .legal{display:flex;gap:var(--space-5);flex-wrap:wrap}
-.foot-bottom a:hover{color:#fff}
+/* ---------- 10. Footer — components/site-footer/site-footer.css ---------- */
 /* Back to top — glossy white, like the scrolled navbar */
 .to-top{position:fixed;right:clamp(16px,2.5vw,32px);bottom:clamp(16px,2.5vw,32px);z-index:40;width:52px;height:52px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:var(--text-default);cursor:pointer;
   background:linear-gradient(180deg,rgba(255,255,255,.86),rgba(255,255,255,.62));backdrop-filter:blur(22px) saturate(1.5);-webkit-backdrop-filter:blur(22px) saturate(1.5);
@@ -399,11 +369,6 @@ img.act-ico{object-fit:contain}
   .nav-actions > .ayo-btn{padding:10px 14px}
   .country-menu{left:0;right:auto}
   .lang-menu{min-width:216px;right:-44px}
-  /* Company, Ecosystem and Support side by side; the address and the
-     follow + store column each take a full row (above and below). */
-  .foot-cols{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-8) var(--space-6)}
-  .foot-cols > .ayo-foot-col:last-child{grid-column:1 / -1}
-  .foot-cols > .foot-addr{grid-column:1 / -1}
 }
 
 /* ---- Mobile nav + drawer (Figma "Mobile Nav — Open (360)") ----------------
@@ -474,19 +439,8 @@ img.act-ico{object-fit:contain}
   .m-drawer .ayo-btn.primary.m-login{display:flex;justify-content:center;width:100%;background:var(--brand);color:#fff;border-color:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
 }
 
-/* Phones: two link columns, tighter type. */
-@media (max-width:560px){
-  /* Figma 26592:9750 (Footer / Mobile): logo, label and a full-width CTA
-     stack; Company + Ecosystem share a row, Support wraps under them. */
-  .foot-top{flex-direction:column;align-items:stretch;gap:var(--space-5)}
-  .foot-cta{flex-direction:column;align-items:flex-start;gap:var(--space-3)}
-  .foot-cta .ayo-btn{width:100%;justify-content:center}
-  .foot-cols{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:var(--space-8);column-gap:var(--space-4)}
-  .foot .ayo-foot-col > a{font-size:var(--fs-small);line-height:1.35}
-}
 
-/* Small phones: tighten the nav. (The footer's follow row now has a full row
-   of its own, so it no longer needs to collapse to one column here.) */
+/* Small phones: tighten the nav. */
 @media (max-width:380px){
   .nav-in{gap:var(--space-2)}
   .nav-actions{gap:2px}
@@ -494,7 +448,6 @@ img.act-ico{object-fit:contain}
   .nav-icon,.burger{width:32px;height:36px}
   .country-btn > .carbon-icon{display:none}
   .nav-actions > .ayo-btn{padding-inline:12px}
-  .foot-cols{column-gap:var(--space-3)}
 }
 
 @media (prefers-reduced-motion: reduce){
