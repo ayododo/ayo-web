@@ -165,3 +165,97 @@ document.addEventListener('DOMContentLoaded', function(){
   track.addEventListener('scroll', update, { passive: true });
   window.addEventListener('resize', function(){ if(more.classList.contains('is-open')) update(); });
 })();
+
+/* PadelLevels card motion (Figma 28194:24718): Unknown → Calibrating →
+   Calibrated, looping while the card is on screen. The rating rolls per
+   character (old glyph out downward, new one in from the top), the bar fills
+   and the confidence figure counts up with it. Reduced motion / no
+   IntersectionObserver: the markup's final state stays as is. */
+(function(){
+  var card = document.querySelector('[data-plr-card]');
+  if(!card || !('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var numEl = card.querySelector('[data-plr-num]');
+  var tagEl = card.querySelector('[data-plr-tag]');
+  var confEl = card.querySelector('[data-plr-conf]');
+  var barEl = card.querySelector('[data-plr-bar]');
+  if(!numEl || !tagEl || !confEl || !barEl) return;
+
+  var STEPS = [
+    { num: 'X.XX', tag: 'Unknown',     conf: 0,  unknown: true, hold: 1400 },
+    { num: '2.XX', tag: 'Calibrating', conf: 40,                hold: 1700 },
+    { num: '4.35', tag: 'Calibrated',  conf: 75,                hold: 3200 }
+  ];
+
+  /* Rating: one slot per character. */
+  var slots = [];
+  function glyphWidth(ch){
+    var m = document.createElement('span');
+    m.textContent = ch; m.style.cssText = 'position:absolute;visibility:hidden;white-space:pre';
+    numEl.appendChild(m); var w = m.getBoundingClientRect().width; m.remove(); return w;
+  }
+  function slot(){
+    var s = document.createElement('span'); s.className = 'plr-roll__slot';
+    numEl.appendChild(s); return { el: s, ch: null };
+  }
+  function setNum(str, instant){
+    while(slots.length < str.length) slots.push(slot());
+    for(var i = 0; i < slots.length; i++){
+      var sl = slots[i], ch = str.charAt(i) || '';
+      if(sl.ch === ch) continue;
+      sl.el.style.width = (ch ? glyphWidth(ch) : 0) + 'px';
+      var old = sl.el.lastElementChild;
+      if(old && !instant){
+        old.classList.add('is-below');
+        (function(o){ setTimeout(function(){ o.remove(); }, 600); })(old);
+      } else if(old){ old.remove(); }
+      if(ch){
+        var n = document.createElement('span'); n.className = 'plr-roll__ch'; n.textContent = ch;
+        if(!instant){ n.classList.add('is-above'); }
+        sl.el.appendChild(n);
+        if(!instant){ void n.offsetWidth; (function(x, d){ setTimeout(function(){ x.classList.remove('is-above'); }, d); })(n, i * 60); }
+      }
+      sl.ch = ch;
+    }
+  }
+
+  function setTag(step, instant){
+    tagEl.classList.toggle('is-unknown', !!step.unknown);
+    var sp = document.createElement('span'); sp.textContent = step.tag;
+    if(!instant) sp.className = 'is-in';
+    tagEl.replaceChildren(sp);
+  }
+
+  var confNow = 0, confRaf = 0;
+  function setConf(to, instant){
+    cancelAnimationFrame(confRaf);
+    barEl.style.transition = instant ? 'none' : '';
+    barEl.style.width = to + '%';
+    if(instant){ confNow = to; confEl.textContent = to + '%'; void barEl.offsetWidth; barEl.style.transition = ''; return; }
+    var from = confNow, t0 = performance.now(), dur = 1000;
+    (function tick(t){
+      var k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      confNow = Math.round(from + (to - from) * e);
+      confEl.textContent = confNow + '%';
+      if(k < 1) confRaf = requestAnimationFrame(tick);
+    })(t0);
+  }
+
+  var i = 0, timer = 0, running = false;
+  function show(k, instant){
+    var st = STEPS[k];
+    setNum(st.num, instant); setTag(st, instant); setConf(st.conf, instant);
+  }
+  function next(){
+    i = (i + 1) % STEPS.length;
+    show(i, i === 0);   /* the loop restarts from Unknown without rolling back */
+    timer = setTimeout(next, STEPS[i].hold);
+  }
+  function start(){ if(running) return; running = true; i = 0; show(0, true); timer = setTimeout(next, STEPS[0].hold); }
+  function stop(){ running = false; clearTimeout(timer); cancelAnimationFrame(confRaf); }
+
+  numEl.textContent = '';
+  setNum(STEPS[2].num, true);
+  new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting) start(); else stop(); });
+  }, { threshold: 0.6 }).observe(card);
+})();

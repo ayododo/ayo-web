@@ -20,10 +20,10 @@
 <link rel="stylesheet" href="components/persona-hero/persona-hero.css?v=20261118b">
 <link rel="stylesheet" href="components/store-rating/store-rating.css?v=20261106">
 <link rel="stylesheet" href="components/activity-board/activity-board.css?v=20261118">
-<link rel="stylesheet" href="components/padellevels-rating/padellevels-rating.css">
+<link rel="stylesheet" href="components/padellevels-rating/padellevels-rating.css?v=20261118">
 <link rel="stylesheet" href="components/ad-slot/ad-slot.css">
 <link rel="stylesheet" href="components/shorts-rail/shorts-rail.css?v=20261106c">
-<link rel="stylesheet" href="styles/home.css?v=20261118">
+<link rel="stylesheet" href="styles/home.css?v=20261118b">
 </head>
 <body class="ayo-web">
 
@@ -253,7 +253,11 @@
       <div class="plr__body">
         <!-- Example rating card, as shown in the AYO app. Built in markup so the
              figures are live text. -->
-        <figure class="plr-card" aria-label="Example PadelLevels rating card">
+        <!-- Motion (Figma 28194:24718): the card steps Unknown → Calibrating →
+             Calibrated while in view — the rating rolls in from the top, the
+             confidence bar fills and its figure counts up. The markup is the
+             final state, so no JS / reduced motion shows the Figma card. -->
+        <figure class="plr-card" data-plr-card aria-label="Example PadelLevels rating card: rating 4.35, calibrated, confidence level 75%">
           <div class="plr-card__head">
             <p class="plr-card__top">International Rating by PadelLevels</p>
             <div class="plr-card__score">
@@ -261,13 +265,13 @@
                 <img class="plr-logo__a" src="assets/icons/padellevels-mask.svg" alt="" width="21.8182" height="17.049">
                 <img class="plr-logo__b" src="assets/icons/padellevels-vector.svg" alt="" width="19.5776" height="12.999">
               </span>
-              <b>4.35</b>
-              <span class="plr-card__status">Confirmed</span>
+              <b class="plr-roll" data-plr-num aria-hidden="true">4.35</b>
+              <span class="plr-card__status" data-plr-tag aria-hidden="true"><span>Calibrated</span></span>
             </div>
           </div>
           <div class="plr-card__conf">
-            <p><small>Confidence Level</small><b>86%</b></p>
-            <div class="plr-card__bar" aria-hidden="true"><i></i></div>
+            <p aria-hidden="true"><small>Confidence Level</small><b data-plr-conf>75%</b></p>
+            <div class="plr-card__bar" aria-hidden="true"><i data-plr-bar></i></div>
           </div>
         </figure>
 
@@ -676,7 +680,7 @@
 
 <script src="vendor/jquery-3.5.1/jquery.min.js"></script>
 <script src="vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
-<script src="scripts/home.js?v=20261118"></script>
+<script src="scripts/home.js?v=20261118b"></script>
 <script src="components/shorts-rail/shorts-rail.js?v=20261106c"></script>
 <script src="scripts/chrome.js"></script>
 <script src="components/persona-hero/persona-hero.js"></script>
