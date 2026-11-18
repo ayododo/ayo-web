@@ -12,7 +12,7 @@ const FR = 30, OP = 240, W = 420, H = 420;
 const F = {}; for (const w of [400, 500, 600, 700, 800]) F[w] = opentype.loadSync(new URL(`./fonts/${w}.ttf`, import.meta.url).pathname);
 
 const hex = h => { const n = parseInt(h.slice(1), 16); return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255, 1].map(v => +v.toFixed(4)); };
-const C = { white: '#ffffff', ink: '#1a1919', sub: '#787373', mute: '#9b9797', line: '#ededed', off: '#f3f0ed', offTx: '#bebbbb', red: '#ec2435', phone: '#ebe7e0' };
+const C = { white: '#ffffff', ink: '#1a1919', sub: '#787373', mute: '#9b9797', line: '#ededed', off: '#f3f0ed', offTx: '#bebbbb', red: '#ec2435', phone: '#ececec' };
 
 // ---- keyframes --------------------------------------------------------------
 const EASE = { i: { x: 0.2, y: 1 }, o: { x: 0.4, y: 0 } };
