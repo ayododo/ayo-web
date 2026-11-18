@@ -167,7 +167,8 @@ document.addEventListener('DOMContentLoaded', function(){
 })();
 
 /* PadelLevels card motion (Figma 28194:24718): Unknown → Calibrating →
-   Calibrated, looping while the card is on screen. The rating rolls per
+   Calibrated, played once — it waits in the Unknown state until the card is
+   well inside the viewport, then runs and stays on Calibrated. The rating rolls per
    character (old glyph out downward, new one in from the top), the bar fills
    and the confidence figure counts up with it. Reduced motion / no
    IntersectionObserver: the markup's final state stays as is. */
@@ -183,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function(){
   var STEPS = [
     { num: 'X.XX', tag: 'Unknown',     conf: 0,  unknown: true, hold: 1400 },
     { num: '2.XX', tag: 'Calibrating', conf: 40,                hold: 1700 },
-    { num: '4.35', tag: 'Calibrated',  conf: 75,                hold: 3200 }
+    { num: '4.35', tag: 'Calibrated',  conf: 75 }
   ];
 
   /* Rating: one slot per character. */
@@ -240,22 +241,23 @@ document.addEventListener('DOMContentLoaded', function(){
     })(t0);
   }
 
-  var i = 0, timer = 0, running = false;
   function show(k, instant){
     var st = STEPS[k];
     setNum(st.num, instant); setTag(st, instant); setConf(st.conf, instant);
   }
-  function next(){
-    i = (i + 1) % STEPS.length;
-    show(i, i === 0);   /* the loop restarts from Unknown without rolling back */
-    timer = setTimeout(next, STEPS[i].hold);
+  function play(k){
+    if(k >= STEPS.length) return;
+    show(k, false);
+    if(STEPS[k].hold) setTimeout(function(){ play(k + 1); }, STEPS[k].hold);
   }
-  function start(){ if(running) return; running = true; i = 0; show(0, true); timer = setTimeout(next, STEPS[0].hold); }
-  function stop(){ running = false; clearTimeout(timer); cancelAnimationFrame(confRaf); }
 
+  /* Start from Unknown so the first thing the user sees is the climb. */
   numEl.textContent = '';
-  setNum(STEPS[2].num, true);
-  new IntersectionObserver(function(es){
-    es.forEach(function(e){ if(e.isIntersecting) start(); else stop(); });
-  }, { threshold: 0.6 }).observe(card);
+  show(0, true);
+  var io = new IntersectionObserver(function(es){
+    if(!es.some(function(e){ return e.isIntersecting; })) return;
+    io.disconnect();
+    setTimeout(function(){ play(1); }, STEPS[0].hold);
+  }, { threshold: 0.6 });
+  io.observe(card);
 })();
