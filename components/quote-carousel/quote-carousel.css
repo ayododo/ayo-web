@@ -49,6 +49,11 @@
   background: #f9f9f9; border: 1px solid var(--qtc-line);
   font-weight: var(--fw-bold); font-size: 16px; line-height: 22px; color: #25282b;
 }
+/* Photo avatars (Figma 27961:18135…18213): photo fills the circle, no ring
+   except where the design keeps one. */
+.qtc__avatar--photo { overflow: hidden; border: 0; background: #ececec; }
+.qtc__avatar--photo.qtc__avatar--ring { border: 1px solid var(--qtc-line); }
+.qtc__avatar--photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .qtc__who { min-width: 0; display: flex; flex-direction: column; }
 .qtc__name { font-weight: var(--fw-bold); font-size: 16px; line-height: 22px; }
 .qtc__role { font-size: 14px; line-height: 20px; color: var(--qtc-muted); }
