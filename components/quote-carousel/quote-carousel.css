@@ -1,0 +1,111 @@
+/* ==========================================================================
+   AYO — Quote carousel (testimonials)
+   Figma: desktop 27967:7943 (all slides 27942:18522), mobile 27967:7970.
+   Heading on the left, one quote card on the right that autoplays through the
+   testimonials; dots and arrows step it by hand. Stacks on narrow screens.
+   Depends on: styles/tokens.css (tokens only). Behaviour: quote-carousel.js.
+   ========================================================================== */
+
+.qtc {
+  --qtc-ink: #1a1919;
+  --qtc-muted: #787373;
+  --qtc-line: #dcdbdb;
+  background: #f7f7f7;
+  padding: 120px 0;
+  color: var(--qtc-ink);
+  font-family: var(--font-sans);
+}
+.qtc__shell {
+  width: 100%; max-width: 1120px; margin: 0 auto;
+  padding: 0 var(--edge, 24px); box-sizing: content-box;
+  display: flex; align-items: center; gap: 80px;
+}
+
+/* ---- Heading --------------------------------------------------------------- */
+.qtc__head { flex: 0 1 400px; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+.qtc__eyebrow {
+  font-size: 14px; line-height: 20px; font-weight: var(--fw-semibold);
+  letter-spacing: .08em; text-transform: uppercase; color: var(--brand);
+}
+.qtc__title { font-weight: var(--fw-extrabold); font-size: 40px; line-height: 48px; letter-spacing: 0; color: var(--qtc-ink); }
+.qtc__sub { font-size: 18px; line-height: 28px; color: var(--qtc-muted); }
+
+/* ---- Card ------------------------------------------------------------------ */
+.qtc__card {
+  flex: 0 1 640px; min-width: 0; box-sizing: border-box;
+  min-height: 618px;
+  display: flex; flex-direction: column; gap: 32px;
+  padding: 56px; border: 1px solid var(--qtc-line); border-radius: 24px; background: #fff;
+}
+/* The swapping part: person + quote. Fades out, swaps, fades back in. */
+.qtc__slide { flex: 1; display: flex; transition: opacity .3s ease, transform .3s ease; }
+.qtc__fig { flex: 1; margin: 0; display: flex; flex-direction: column; gap: 32px; }
+.qtc__slide.is-out { opacity: 0; transform: translateY(8px); }
+
+.qtc__person { display: flex; align-items: center; gap: 12px; }
+.qtc__avatar {
+  flex-shrink: 0; width: 52px; height: 52px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: #f9f9f9; border: 1px solid var(--qtc-line);
+  font-weight: var(--fw-bold); font-size: 16px; line-height: 22px; color: #25282b;
+}
+.qtc__who { min-width: 0; display: flex; flex-direction: column; }
+.qtc__name { font-weight: var(--fw-bold); font-size: 16px; line-height: 22px; }
+.qtc__role { font-size: 14px; line-height: 20px; color: var(--qtc-muted); }
+
+.qtc__quote {
+  flex: 1; display: flex; align-items: center; margin: 0;
+  font-weight: var(--fw-medium); font-size: 24px; line-height: 36px; color: var(--qtc-ink);
+}
+
+/* ---- Footer: dots + arrows ------------------------------------------------- */
+.qtc__foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.qtc__dots { display: flex; align-items: center; gap: 8px; }
+.qtc__dot {
+  width: 8px; height: 8px; padding: 0; border: 0; border-radius: 999px;
+  background: #cacccf; cursor: pointer;
+  transition: width .3s ease, background-color .3s ease;
+}
+.qtc__dot[aria-current="true"] { width: 24px; background: var(--brand); }
+.qtc__arrows { display: flex; gap: 12px; }
+.qtc__arrow {
+  width: 44px; height: 44px; padding: 0; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+  background: #fff; border: 1px solid var(--qtc-line); color: var(--qtc-ink);
+  transition: background-color .15s, transform .15s;
+}
+.qtc__arrow svg { width: 20px; height: 20px; display: block; }
+.qtc__arrow--next { background: #2c2c2c; border-color: #2c2c2c; color: #fff; }
+.qtc__arrow:hover { transform: translateY(-1px); }
+.qtc__arrow:not(.qtc__arrow--next):hover { background: #f7f7f7; }
+.qtc__dot:focus:not(:focus-visible), .qtc__arrow:focus:not(:focus-visible) { outline: none; }
+.qtc__dot:focus-visible, .qtc__arrow:focus-visible { outline: 2px solid var(--qtc-ink); outline-offset: 3px; }
+
+/* ---- Responsive ------------------------------------------------------------ */
+@media (max-width: 1100px) {
+  .qtc { padding: 96px 0; }
+  .qtc__shell { flex-direction: column; align-items: stretch; gap: 40px; max-width: 640px; }
+  .qtc__head { flex: none; }
+  .qtc__card { flex: none; min-height: 560px; }
+}
+/* Phone (Figma 27967:7970). */
+@media (max-width: 600px) {
+  .qtc { padding: 64px 0; }
+  .qtc__shell { gap: 32px; }
+  .qtc__head { gap: 12px; }
+  .qtc__eyebrow { font-size: 12px; line-height: 16px; }
+  .qtc__title { font-size: 32px; line-height: 40px; }
+  .qtc__sub { font-size: 14px; line-height: 20px; }
+  .qtc__card { min-height: 552px; padding: 24px; gap: 24px; border-radius: 20px; }
+  .qtc__fig { gap: 24px; }
+  .qtc__avatar { width: 44px; height: 44px; font-size: 14px; }
+  .qtc__name { font-size: 14px; line-height: 20px; }
+  .qtc__role { font-size: 12px; line-height: 16px; }
+  .qtc__quote { font-size: 18px; line-height: 28px; }
+  .qtc__arrow { width: 40px; height: 40px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qtc__slide, .qtc__dot, .qtc__arrow { transition: none; }
+  .qtc__slide.is-out { transform: none; }
+}

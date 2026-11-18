@@ -314,7 +314,7 @@
   .ptn__name{font-size:28px}
 }
 
-/* ---------- 8. Testimonial — see components/shorts-rail ---------- */
+/* ---------- 8. Testimonials — see components/quote-carousel ---------- */
 
 /* ---------- 9. CTA band ---------- */
 .ctaband{position:relative;overflow:hidden;background:#2c2c2c;color:#fff;text-align:center;padding:clamp(48px,7vw,96px) 0}   /* Background/Neutral/Dark-soft */
