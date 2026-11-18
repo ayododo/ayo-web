@@ -36,7 +36,6 @@
     plus: S+'<path d="M12 5v14"/><path d="M5 12h14"/></svg>',
     chev: S+'<path d="m9 6 6 6-6 6"/></svg>',
     cam: S+'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>',
-    shuffle: S+'<path d="M3 7h3.5c2.5 0 4 1.5 5.5 5s3 5 5.5 5H21"/><path d="M3 17h3.5c1.4 0 2.5-.5 3.4-1.4"/><path d="M14.1 8.4c.9-.9 2-1.4 3.4-1.4H21"/><path d="m18 4 3 3-3 3"/><path d="m18 14 3 3-3 3"/></svg>',
     download: S+'<path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>',
     grip: '<svg class="mu-grip" viewBox="0 0 10 14" aria-hidden="true"><g fill="currentColor"><circle cx="2.5" cy="2" r="1.2"/><circle cx="7.5" cy="2" r="1.2"/><circle cx="2.5" cy="7" r="1.2"/><circle cx="7.5" cy="7" r="1.2"/><circle cx="2.5" cy="12" r="1.2"/><circle cx="7.5" cy="12" r="1.2"/></g></svg>'
   };
@@ -70,7 +69,7 @@
   function partnerRows(fmt, on){
     var rows = fmt === 'Custom' ? [['Singles · 1 vs 1',''],['Doubles · 2 vs 2','']] :
       [['Rotating Partner','Partners rotate every match.'],['Fixed Partner','Same partner in every match.'],['Mixed Partner','Mixed pairs from two groups.'],['Singles','Individuals compete 1 vs 1.']];
-    if(fmt === 'Custom') on = 'Doubles · 2 vs 2';
+    if(fmt === 'Custom' && on === undefined) on = 'Doubles · 2 vs 2';
     return rows.map(function(r){ return '<div class="mu-li" data-el="p-'+r[0].replace(/\W/g,'')+'"><div class="mu-col mu-grow"><span class="mu-h">'+r[0]+'</span>'+(r[1]?'<span class="mu-s">'+r[1]+'</span>':'')+'</div><span class="mu-radio'+(r[0]===on?' is-on':'')+'"></span></div>'; }).join('');
   }
   function setup(o){
@@ -85,7 +84,7 @@
       '<div class="mu-seg" data-el="mode" data-on="0"><span class="mu-seg__knob"></span><span class="mu-seg__i is-on" data-el="mode-0">Competitive</span><span class="mu-seg__i" data-el="mode-1">Casual</span></div>'+
       '<div class="mu-tint" data-el="info"><div class="mu-t mu-b">This is for your intense matches</div><div class="mu-s">Scores affect your skill rating.</div></div>'+
       '<div class="mu-tiles" data-el="formats">'+tiles+'</div>'+
-      '<div class="mu-list" data-el="partners">'+partnerRows(fmt, partner)+'</div>'+
+      '<div class="mu-list" data-el="partners">'+partnerRows(fmt, fmt === 'Custom' ? undefined : partner)+'</div>'+
       '<div class="mu-card mu-pad mu-col" style="gap:4px" data-el="criteria"><span class="mu-h">Standings Ranking Criteria</span><span class="mu-s" style="font-size:10.5px">1&nbsp; Total Points<br>2&nbsp; Number of Wins<br>3&nbsp; Point Difference</span></div>'+
       '<div class="mu-row mu-row--between" data-el="courts"><span class="mu-h">Number of Courts</span><span class="mu-step"><i>–</i><span data-el="courts-n">1</span><span data-el="courts-plus">+</span></span></div>'+
       '<div class="mu-col" style="gap:6px" data-el="court-list"><div class="mu-field" data-el="court-1">Court 1</div></div>'+
@@ -132,11 +131,11 @@
     o = o || {};
     var top = head(ico('back')+'<span class="mu-head__sp"></span>'+ico('share','share')+ico('more'));
     var people = ['fajar','maya','bayu','tari','raka','sinta'].map(function(k){ return av(k,22); }).join('');
-    var seg = '<div class="mu-seg mu-grow" data-on="'+(o.tab||0)+'"><span class="mu-seg__knob"></span><span class="mu-seg__i'+(o.tab?'':' is-on')+'">Matches</span><span class="mu-seg__i'+(o.tab?' is-on':'')+'">Standings</span></div>';
+    var seg = '<div class="mu-seg mu-seg--sm mu-grow" data-on="'+(o.tab||0)+'"><span class="mu-seg__knob"></span><span class="mu-seg__i'+(o.tab?'':' is-on')+'">Matches</span><span class="mu-seg__i'+(o.tab?' is-on':'')+'">Standings</span></div>';
     var body = '<div class="mu-title">Fun Padel Kawan AYO</div><div class="mu-s">Padel · 8 players · 10 Aug 2026</div>'+
       '<div class="mu-avs">'+people+'<span class="mu-s" style="font-weight:600">8/8 ›</span></div>'+
       '<div class="mu-t"><b>Americano</b> · Rotating Partner</div>'+
-      '<div class="mu-row" data-el="tabs-row">'+seg+(o.tab ? '' : '<span class="mu-reshuffle" data-el="reshuffle">'+I.shuffle+'Re-Shuffle</span>')+'</div>';
+      '<div class="mu-row" data-el="tabs-row">'+seg+(o.tab ? '' : '<span class="mu-reshuffle" data-el="reshuffle">Re-Shuffle</span>')+'</div>';
     if(o.tab){ body += (o.winner?winner():'')+table(); }
     else {
       body += round(1, ['fajar','maya'], ['bayu','tari'], o.r1 ? SC(16,'s1a') : '<span data-el="s1a"></span>', o.r1 ? SC(8,'s1b') : PLUS('plus-1'));
@@ -189,13 +188,8 @@
       '<div class="mu-card mu-pad mu-col" style="gap:8px" data-el="league"><div class="mu-row mu-row--between"><span class="mu-h">Advanced League System</span><span class="mu-toggle'+(adv?' is-on':'')+'"></span></div>'+steps+'</div>'+
       '<div class="mu-s">Hold &amp; drag to change order.</div><div data-el="crit">'+list+'</div><div class="mu-btn" data-el="save">Save</div>');
   }
-  // Share Standings sheet over the dimmed standings. The card shows only the
-  // top ~240px of the screen, so the sheet is lifted to end there and keep
-  // "Download Standings (PDF)" in view.
-  function pdfScreen(){
-    return '<div class="mu-page is-active" data-page="sheet" style="background:#8c8c8c">'+
-      '<div class="mu-toast" data-el="toast"><span class="mu-toast__pdf">PDF</span><span class="mu-col"><b>Standings_FunPadel.pdf</b><span>Saved to Downloads</span></span></div>'+
-      shareType('share-type', ' is-on mu-sheet--lift')+'</div>';
+  function toast(){
+    return '<div class="mu-toast" data-el="toast"><span class="mu-toast__pdf">PDF</span><span class="mu-col"><b>Standings_FunPadel.pdf</b><span>Saved to Downloads</span></span></div>';
   }
 
   /* ---------- Cards: pages (first = static frame), scroll target, flow ---------- */
@@ -216,7 +210,7 @@
     k02: {pages:[ranking(false)], to:'crit', margin:24, flow:'k02'},
     k03: {pages:[ranking(true)], flow:'k03'},
     b01: {pages:[gd({tab:1, winner:true}), story()], extra:shareSheets, flow:'b01'},
-    b02: {html: pdfScreen, flow:'b02'},
+    b02: {pages:[gd({tab:1, winner:true})], extra:function(){ return shareType('share-type')+toast(); }, open:'share-type', flow:'b02'},
     b03: {pages:[gd({tab:1, winner:true})], to:'winner', margin:40, flow:'b03'}
   };
 
@@ -229,6 +223,8 @@
     var inner = c.html ? c.html() : c.pages.join('') + (c.extra ? c.extra() : '');
     stage.innerHTML = '<div class="mu-phone" aria-hidden="true"><div class="mu-screen">'+inner+'<div class="mu-dim" data-el="dim"></div><span class="mu-tap"></span></div></div>';
     var first = stage.querySelector('.mu-page'); if(first) first.classList.add('is-active');
+    // A card that is about a sheet shows it open in its static frame.
+    if(c.open){ stage.querySelector('[data-el="'+c.open+'"]').classList.add('is-on'); stage.querySelector('[data-el="dim"]').classList.add('is-on'); }
     stage._mu = {card:c, initial: stage.querySelector('.mu-screen').innerHTML};
     place(stage, true);
   }
@@ -251,8 +247,17 @@
   // without, it rests on the content (the Figma frame).
   function place(stage, instant){
     if(!stage._mu) return;
+    measure(stage);
     var sc = stage.querySelector('.mu-page .mu-scroll'); if(!sc) return;
     setY(sc, MOTION ? 0 : targetY(stage), instant);
+  }
+  // Visible part of the screen in screen px; sheets end at its bottom edge.
+  function measure(stage){
+    var phone = stage.querySelector('.mu-phone'), scr = stage.querySelector('.mu-screen');
+    if(!stage.clientHeight) return;
+    var vis = Math.min(scr.offsetHeight, (stage.clientHeight - phone.offsetTop) / scaleOf(stage) - 10);
+    scr.style.setProperty('--mu-vis-h', vis+'px');
+    scr.style.setProperty('--mu-sheet-bottom', Math.max(0, scr.offsetHeight - vis)+'px');
   }
   function setY(sc, y, instant, dur){
     if(instant) sc.classList.add('no-anim');
@@ -293,6 +298,7 @@
       return {x:(a.left + a.width/2 - b.left)/s, y:(a.top + a.height/2 - b.top)/s};
     }
     var api = {
+      stage: stage,
       wait: function(ms){ return new Promise(function(res, rej){ setTimeout(function(){ player.run === id ? res() : rej(STOP); }, ms); }); },
       el: function(n){ return scr().querySelector('[data-el="'+n+'"]'); },
       // A touch: the marker appears on the element, presses, and lifts. It
@@ -340,6 +346,7 @@
         var t = api.el(n), pg = t.closest('.mu-page');
         return api.scroll(t.offsetTop + t.offsetHeight - visibleBody(stage, pg) + 10, dur);
       },
+      jump: function(y){ setY(scr().querySelector('.mu-page.is-active .mu-scroll'), y, true); },
       toTarget: function(){ return api.wait(300).then(function(){ return api.scroll(targetY(stage), 1100); }); },
       maxY: function(){ var pg = scr().querySelector('.mu-page.is-active'), sc = pg.querySelector('.mu-scroll'); return Math.max(0, sc.offsetHeight - visibleBody(stage, pg)); },
       select: function(group, item){ [].forEach.call(api.el(group).children, function(c){ c.classList.toggle('is-on', c === api.el(item)); }); },
@@ -369,24 +376,27 @@
   }
 
   function on(el, cls, v){ el.classList.toggle(cls, v !== false); }
+  function formatFlow(a, fmt, partner){
+    var tiles = [].slice.call(a.el('formats').children), parts = a.el('partners');
+    tiles.forEach(function(t){ t.classList.remove('is-on'); t.style.opacity = '0'; t.style.transform = 'translateY(6px)'; });
+    parts.style.opacity = '0';
+    a.jump(targetY(a.stage));
+    var p = a.wait(500);
+    tiles.forEach(function(t){ p = p.then(function(){ t.style.opacity = ''; t.style.transform = ''; return a.wait(140); }); });
+    return p.then(function(){ return a.wait(350); })
+      .then(function(){ return a.tap('tile-'+fmt); })
+      .then(function(){ a.select('formats', 'tile-'+fmt); parts.innerHTML = partnerRows(fmt, null); return a.wait(250); })
+      .then(function(){ parts.style.opacity = ''; return a.wait(700); })
+      .then(function(){ return a.tap(partner); })
+      .then(function(){ a.radio(partner); return a.wait(300); });
+  }
   var FLOWS = {
-    // Format cards: scroll down to the formats, pick one, then its pairing.
-    f01: function(a){
-      return a.toTarget().then(function(){ return a.tap('tile-Americano'); })
-        .then(function(){ a.select('formats','tile-Americano'); return a.scrollTo('partners', 40, 700); })
-        .then(function(){ return a.tap('p-RotatingPartner'); }).then(function(){ a.radio('p-RotatingPartner'); return a.wait(300); });
-    },
-    f02: function(a){
-      a.select('formats','tile-Americano');
-      return a.toTarget().then(function(){ return a.tap('tile-Mexicano'); })
-        .then(function(){ a.select('formats','tile-Mexicano'); return a.wait(400); });
-    },
-    f03: function(a){
-      a.select('formats','tile-Americano'); a.el('partners').innerHTML = partnerRows('Americano','Rotating Partner');
-      return a.toTarget().then(function(){ return a.tap('tile-Custom'); })
-        .then(function(){ a.select('formats','tile-Custom'); var p = a.el('partners'); p.innerHTML = partnerRows('Custom'); p.classList.add('mu-new');
-          return a.wait(500); }).then(function(){ return a.tap('p-Singles1vs1'); }).then(function(){ a.radio('p-Singles1vs1'); return a.wait(300); });
-    },
+    // Format cards (Americano, Mexicano, Custom): the format area starts
+    // empty, the three formats appear, one is picked, then its pairing
+    // options appear with none chosen and one is picked.
+    f01: function(a){ return formatFlow(a, 'Americano', 'p-RotatingPartner'); },
+    f02: function(a){ return formatFlow(a, 'Mexicano', 'p-FixedPartner'); },
+    f03: function(a){ return formatFlow(a, 'Custom', 'p-Doubles2vs2'); },
     f04: function(a){
       a.radio('p-RotatingPartner');
       return a.toTarget().then(function(){ return a.tap('p-FixedPartner'); }).then(function(){ a.radio('p-FixedPartner'); return a.wait(500); })
@@ -492,7 +502,9 @@
     },
     // B02 · PDF: Download → progress → saved toast.
     b02: function(a){
-      return a.tap('pdf').then(function(){ on(a.el('pdf'), 'is-busy'); a.el('pdf-label').textContent = 'Downloading…'; return a.wait(1100); })
+      var sh = a.el('share-type'); sh.classList.add('no-anim'); sh.classList.remove('is-on'); a.el('dim').classList.remove('is-on'); sh.offsetHeight; sh.classList.remove('no-anim');
+      return a.wait(500).then(function(){ return a.sheet('share-type', true); }).then(function(){ return a.wait(500); })
+        .then(function(){ return a.tap('pdf'); }).then(function(){ on(a.el('pdf'), 'is-busy'); a.el('pdf-label').textContent = 'Downloading…'; return a.wait(1100); })
         .then(function(){ a.el('pdf').classList.remove('is-busy'); a.el('pdf-label').innerHTML = I.download.replace('<svg','<svg class="mu-inline"')+' Downloaded'; on(a.el('toast'), 'is-on'); return a.wait(1800); })
         .then(function(){ a.el('toast').classList.remove('is-on'); return a.wait(300); });
     },

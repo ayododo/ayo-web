@@ -66,15 +66,19 @@
 
 .mu-seg{display:flex;gap:2px;padding:3px;border-radius:10px;background:#f4f4f5;position:relative}
 .mu-seg__i{flex:1;text-align:center;padding:7px 8px;border-radius:8px;font-size:11.5px;font-weight:500;color:#787373;position:relative;z-index:1;transition:color .3s}
+/* Compact variant for the Matches / Standings tabs of an activity. */
+.mu-seg--sm{padding:2px;border-radius:9px}
+.mu-seg--sm .mu-seg__i{padding:5px 6px;font-size:10.5px;white-space:nowrap}
+.mu-seg--sm .mu-seg__knob{top:2px;bottom:2px;left:2px;width:calc(50% - 3px);border-radius:7px}
 .mu-seg__i.is-on{font-weight:700;color:#17171a}
 .mu-seg__knob{position:absolute;top:3px;bottom:3px;left:3px;width:calc(50% - 4px);border-radius:8px;background:#fff;transition:transform .35s cubic-bezier(.32,.72,0,1)}
 .mu-seg[data-on="1"] .mu-seg__knob{transform:translateX(calc(100% + 2px))}
 
 .mu-tiles{display:flex;gap:5px}
-.mu-tile{flex:1;min-width:0;text-align:center;padding:9px 2px;border:1px solid #eee;border-radius:10px;font-size:12px;font-weight:700;color:#787373}
+.mu-tile{flex:1;transition:opacity .35s,transform .35s,border-color .25s,color .25s;min-width:0;text-align:center;padding:9px 2px;border:1px solid #eee;border-radius:10px;font-size:12px;font-weight:700;color:#787373}
 .mu-tile.is-on{border-color:#2c2c2c;border-width:1.05px;color:#17171a}
 
-.mu-list{border:1px solid #eee;border-radius:12px;overflow:hidden}
+.mu-list{border:1px solid #eee;border-radius:12px;overflow:hidden;transition:opacity .4s}
 .mu-li{display:flex;align-items:center;gap:8px;padding:10px;border-bottom:1px solid #eee}
 .mu-li:last-child{border-bottom:0}
 .mu-radio{width:14px;height:14px;border-radius:50%;border:1.5px solid #d9d9d9;flex:0 0 auto;transition:border .25s}
@@ -122,16 +126,21 @@
 /* ---- Overlays: dim, bottom sheet, dialog, tap marker ----------------------- */
 .mu-dim{position:absolute;inset:0;z-index:5;background:rgba(26,25,25,.45);opacity:0;pointer-events:none;transition:opacity .35s}
 .mu-dim.is-on{opacity:1}
-.mu-sheet{position:absolute;left:0;right:0;bottom:0;z-index:6;background:#fff;border-radius:16px 16px 0 0;padding:8px 14px 18px;
-  display:flex;flex-direction:column;gap:11px;transform:translateY(105%);transition:transform .45s cubic-bezier(.32,.72,0,1)}
+/* Sheets and dialogs sit inside the part of the screen the card shows:
+   mini-ui.js sets --mu-vis-h (visible screen height) and --mu-sheet-bottom
+   (the hidden strip below it) on each .mu-screen. A sheet ends at the
+   visible bottom edge, so it is seen whole rather than cut by the card. */
+.mu-sheet{position:absolute;left:0;right:0;bottom:var(--mu-sheet-bottom,0px);z-index:6;background:#fff;border-radius:16px;padding:8px 14px 14px;
+  display:flex;flex-direction:column;gap:10px;transform:translateY(calc(100% + var(--mu-sheet-bottom,0px) + 4px));transition:transform .45s cubic-bezier(.32,.72,0,1)}
+.mu-sheet.no-anim{transition:none}
 .mu-sheet.is-on{transform:none}
 .mu-sheet__bar{width:32px;height:4px;border-radius:2px;background:#d9d9d9;margin:0 auto}
-.mu-dialog{position:absolute;left:14px;right:14px;top:50%;z-index:6;background:#fff;border-radius:14px;padding:16px 14px 14px;text-align:center;
+.mu-dialog{position:absolute;left:14px;right:14px;top:calc(var(--mu-vis-h,382px) / 2);z-index:6;background:#fff;border-radius:14px;padding:16px 14px 14px;text-align:center;
   display:flex;flex-direction:column;gap:6px;opacity:0;transform:translateY(-50%) scale(.92);transition:opacity .3s,transform .3s cubic-bezier(.32,.72,0,1);pointer-events:none}
 .mu-dialog.is-on{opacity:1;transform:translateY(-50%) scale(1)}
 
-.mu-keys{display:grid;grid-template-columns:repeat(3,1fr);gap:2px 0;text-align:center;font-size:15px;font-weight:500}
-.mu-keys span{padding:7px 0;border-radius:8px;transition:background .15s}
+.mu-keys{display:grid;grid-template-columns:repeat(3,1fr);gap:0;text-align:center;font-size:14px;font-weight:500}
+.mu-keys span{padding:4px 0;border-radius:8px;transition:background .15s}
 .mu-keys span.is-press{background:#f4f4f5}
 
 /* Touch marker: placed on the element touched (left/top), fades in, darkens
@@ -153,10 +162,8 @@
 .mu-inline{width:12px;height:12px;margin-right:4px;vertical-align:-2px}
 
 /* Re-Shuffle (Matches tab): highlighted while it redraws the pairs. */
-.mu-reshuffle{display:inline-flex;align-items:center;gap:4px;flex:0 0 auto;padding:7px 9px;border:1px solid #d9d9d9;border-radius:999px;font-size:10px;font-weight:700;transition:background .25s,color .25s,border-color .25s}
-.mu-reshuffle svg{width:12px;height:12px;transition:transform .6s cubic-bezier(.45,0,.2,1)}
+.mu-reshuffle{display:inline-flex;align-items:center;flex:0 0 auto;padding:6px 10px;border:1px solid #d9d9d9;border-radius:999px;font-size:10px;font-weight:700;transition:background .25s,color .25s,border-color .25s}
 .mu-reshuffle.is-hl{background:#2c2c2c;border-color:#2c2c2c;color:#fff}
-.mu-reshuffle.is-hl svg{transform:rotate(180deg)}
 .mu-row.is-shuffling{opacity:.12;transform:translateY(4px)}
 [data-el^="t1"],[data-el^="t2"]{transition:opacity .35s,transform .35s}
 
@@ -181,7 +188,7 @@
 @keyframes mu-twinkle{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.78) rotate(12deg);opacity:.75}}
 
 /* PDF download: the share sheet lifted into view, then a saved toast. */
-.mu-sheet--lift{bottom:146px;border-radius:16px;transition:none}
+
 .mu-toast{position:absolute;left:12px;right:12px;top:12px;z-index:8;display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:12px;background:#2c2c2c;color:#fff;font-size:10px;
   opacity:0;transform:translateY(-10px);transition:opacity .3s,transform .35s cubic-bezier(.32,.72,0,1)}
 .mu-toast.is-on{opacity:1;transform:none}
