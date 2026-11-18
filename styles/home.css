@@ -95,9 +95,15 @@
 .bkg__btn--dark{background:var(--bg-dark)}
 .bkg__btn--dark:hover{filter:brightness(1.25)}
 .bkg__btn-ico{width:16px;height:16px;display:grid;place-items:center}
+/* Owners CTA row (Figma 26417:5359): solid "Register" + outline "Learn more". */
+.bkg__ctas{margin-top:4px;display:flex;flex-wrap:wrap;gap:12px}
+.bkg__ctas .bkg__btn{margin-top:0}
+.bkg__btn--ghost{background:transparent;color:var(--bg-dark);box-shadow:inset 0 0 0 1.5px var(--bg-dark)}
+.bkg__btn--ghost:hover{filter:none;color:var(--bg-dark);background:rgba(26,25,25,.06)}
 
 .bkg__feats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;list-style:none;margin:0;padding:0}
 .bkg__feats--4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.bkg__feats--5{grid-template-columns:repeat(5,minmax(0,1fr))}
 .bkg__feat{background:var(--bg-white);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:14px}
 .bkg__ficon{width:48px;height:48px;border-radius:14px;background:#f3f0ed;display:grid;place-items:center}
 .bkg__feat h4{font-weight:var(--fw-bold);font-size:18px;line-height:26px;color:var(--bg-dark)}
@@ -205,6 +211,10 @@
 
 @media (max-width:1100px){
   .bkg__feats--4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  /* Five cards: three over two, no card left alone on a row. */
+  .bkg__feats--5{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .bkg__feats--5 > li{grid-column:span 2}
+  .bkg__feats--5 > li:nth-child(n+4){grid-column:span 3}
   .bkg__extra{flex-direction:column;gap:32px}
   .bkg__flex{width:auto}
 }
@@ -217,7 +227,8 @@
   .bkg__mock.is-lottie .bkg__phone{display:none}
   .bkg__panel--owners .bkg__mock{order:-1}
   .bkg__feats{grid-template-columns:1fr}
-  .bkg__feats--4{grid-template-columns:1fr}
+  .bkg__feats--4,.bkg__feats--5{grid-template-columns:1fr}
+  .bkg__feats--5 > li,.bkg__feats--5 > li:nth-child(n+4){grid-column:auto}
   .bkg__steps ol{flex-wrap:wrap;row-gap:24px}
   .bkg__step{flex:1 1 calc(50% - 8px)}
   .bkg__line{display:none}
