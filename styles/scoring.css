@@ -116,7 +116,7 @@
   .sc-feat{grid-template-columns:1fr;border-top:0}
   .sc-feat__txt{padding:32px var(--edge) 24px;gap:12px}
   .sc-feat__txt h3{font-size:22px;line-height:28px}
-  .sc-feat__vis{padding:16px var(--edge) 32px;justify-content:center}
+  .sc-feat__vis{padding:16px var(--edge);justify-content:center}   /* equal top and bottom */
   .sc-card{height:200px;max-width:528px}
   .sc-card .mu-phone{--mu-scale:.75;top:18px}
   .sc-free__price{font-size:40px;margin-bottom:10px}   /* "IDR500.000" fits the 328px card */
