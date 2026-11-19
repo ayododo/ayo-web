@@ -154,11 +154,12 @@
     <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">04</span><h3>Bergilir, tetap, campuran, atau singles</h3><p>Ganti pasangan setiap match, tetap dengan pasangan yang sama, campur pasangan dari dua grup, atau main singles.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="f04"></div></div></div>
     <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">05</span><h3>Semua Fitur, Sepenuhnya Gratis.</h3><p>Jalankan Americano, Mexicano, dan game dengan format pilihanmu. Nikmati fitur pengaturan pasangan otomatis, pencatatan skor secara langsung, hingga klasemen akhir—semuanya gratis di AYO.</p></div>
       <!-- Figma: "Visual: TBD". A plain stand-in until the artwork exists. -->
-      <!-- Motion (scoring.js): the price counts down from 500.000 to 0, the
+      <!-- Currency follows the selected country (scoring.js, FREE_PRICE):
+           IDR / RM / A$ / S$ / ฿, else $. Motion: the price counts down to 0, the
            features appear one by one, then the +more pill. The markup is the
            end state, which is what shows with reduced motion. -->
       <div class="sc-feat__vis"><div class="sc-card sc-card--free" data-free>
-        <p class="sc-free__price"><span class="sc-free__cur">IDR</span><span class="sc-free__num" data-free-num>0</span></p>
+        <p class="sc-free__price"><span class="sc-free__cur" data-free-cur>IDR</span><span class="sc-free__num" data-free-num>0</span></p>
         <p class="sc-free__feats">
           <span class="sc-free__line"><span class="sc-free__item">Americano</span><span class="sc-free__item sc-free__sep" aria-hidden="true">·</span><span class="sc-free__item">Mexicano</span><span class="sc-free__item sc-free__sep" aria-hidden="true">·</span><span class="sc-free__item">Custom</span></span>
           <span class="sc-free__line"><span class="sc-free__item">Pasangan otomatis</span><span class="sc-free__item sc-free__sep" aria-hidden="true">·</span><span class="sc-free__item">Skor live</span><span class="sc-free__item sc-free__sep" aria-hidden="true">·</span><span class="sc-free__item">Klasemen</span></span>
@@ -265,6 +266,6 @@
 <script src="vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
 <script src="scripts/chrome.js?v=20261118"></script>
 <script src="components/mini-ui/mini-ui.js?v=20261119c"></script>
-<script src="scripts/scoring.js?v=20261119d"></script>
+<script src="scripts/scoring.js?v=20261119e"></script>
 </body>
 </html>
