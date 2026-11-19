@@ -183,10 +183,10 @@
   function ranking(adv){
     var items = CRIT.slice();
     if(adv) items.unshift(['Advanced League System','Points from win / draw / loss.']);
-    var steps = adv ? [['Win Points',3],['Draw Points',1],['Loss Points',0]].map(function(p){ return '<div class="mu-row mu-row--between"><span class="mu-t" style="color:#787373">'+p[0]+'</span><span class="mu-step"><i>–</i>'+p[1]+'<span>+</span></span></div>'; }).join('') : '';
+    var steps = adv ? '<div class="mu-col" style="gap:8px" data-el="league-steps">'+[['Win Points',3,'win'],['Draw Points',1,'draw'],['Loss Points',0,'loss']].map(function(p){ return '<div class="mu-row mu-row--between"><span class="mu-t" style="color:#787373">'+p[0]+'</span><span class="mu-step"><i>–</i><span data-el="pt-'+p[2]+'">'+p[1]+'</span><span data-el="plus-'+p[2]+'">+</span></span></div>'; }).join('')+'</div>' : '';
     var list = items.map(function(it, i){ return '<div class="mu-crit" data-el="crit-'+i+'"><span class="mu-no">'+(i+1)+'</span><div class="mu-col mu-grow"><span class="mu-h">'+it[0]+'</span><span class="mu-s">'+it[1]+'</span></div><span data-el="grip-'+i+'">'+I.grip+'</span></div>'; }).join('');
     return page('rank', head(ico('back')+'<span class="mu-head__title">Standings Ranking Criteria</span>'),
-      '<div class="mu-card mu-pad mu-col" style="gap:8px" data-el="league"><div class="mu-row mu-row--between"><span class="mu-h">Advanced League System</span><span class="mu-toggle'+(adv?' is-on':'')+'"></span></div>'+steps+'</div>'+
+      '<div class="mu-card mu-pad mu-col" style="gap:8px" data-el="league"><div class="mu-row mu-row--between"><span class="mu-h">Advanced League System</span><span class="mu-toggle'+(adv?' is-on':'')+'" data-el="league-toggle"></span></div>'+steps+'</div>'+
       '<div class="mu-s">Hold &amp; drag to change order.</div><div data-el="crit">'+list+'</div><div class="mu-btn" data-el="save">Save</div>');
   }
   function toast(){
@@ -418,6 +418,15 @@
       .then(function(){ return a.scroll(a.maxY(), 1600); });
   }
   var PREP = {f01: formatPrep, f02: formatPrep, f03: formatPrep,
+    // K03 opens with the league system off: points hidden and at 0, and no
+    // "Advanced League System" criterion yet (kept aside to re-insert).
+    k03: function(a){
+      a.el('league-toggle').classList.remove('is-on');
+      a.el('league-steps').style.display = 'none';
+      ['win','draw','loss'].forEach(function(k){ a.el('pt-'+k).textContent = '0'; });
+      var row = a.el('crit-0'); if(row){ a.stage._advRow = row; row.parentNode.removeChild(row); }   // safe to run twice
+      [].forEach.call(a.el('crit').children, function(r, i){ r.querySelector('.mu-no').textContent = String(i + 1); });
+    },
     // F04 opens scrolled to the formats, Americano chosen, no pairing yet.
     f04: function(a){ a.select('formats', 'tile-Americano'); a.el('partners').innerHTML = partnerRows('Americano', null); a.jump(a.el('formats').offsetTop - 6); }};
   var FLOWS = {
@@ -530,9 +539,22 @@
     // K02 · Aturan fleksibel: drag Point Difference above Number of Wins.
     k02: function(a){ return a.toTarget().then(function(){ return a.drag('crit', 2, 1); }); },
     // K03 · Poin liga: set the league points, then scroll down the criteria.
+    // K03 · Poin liga: switch Advanced League System on, the points rows
+    // appear at 0; Win goes to 3 and Draw to 1 (one tap each step), then the
+    // screen scrolls down the criteria to Save.
     k03: function(a){
-      return a.wait(300).then(function(){ return a.scroll(a.maxY(), 1500); }).then(function(){ return a.wait(900); })
-        .then(function(){ return a.scroll(0, 1200); });
+      function plus(k, times){ var p = Promise.resolve(); for(var i = 0; i < times; i++) p = p.then(function(){ return a.tap('plus-'+k); }).then(function(){ var v = a.el('pt-'+k); v.textContent = String(+v.textContent + 1); return a.wait(260); }); return p; }
+      return a.wait(300).then(function(){ return a.tap('league-toggle'); })
+        .then(function(){
+          on(a.el('league-toggle'), 'is-on');
+          var st = a.el('league-steps'); st.style.display = ''; st.classList.add('mu-new');
+          var list = a.el('crit'), adv = a.stage._advRow; if(adv){ list.insertBefore(adv, list.firstChild); adv.classList.add('mu-new'); }
+          [].forEach.call(list.children, function(r, i){ r.querySelector('.mu-no').textContent = String(i + 1); });
+          return a.wait(500); })
+        .then(function(){ return plus('win', 3); })
+        .then(function(){ return plus('draw', 1); })
+        .then(function(){ return a.wait(500); })
+        .then(function(){ return a.scroll(a.maxY(), 1600); });
     },
     // B01 · Bagikan: share → Share Activity → Standings → Share Standings → Stories.
     b01: function(a){
