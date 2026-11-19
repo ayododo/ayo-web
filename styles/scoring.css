@@ -29,10 +29,59 @@
 .sc-hero__title{font-size:var(--fs-hero);line-height:1.12;font-weight:var(--fw-extrabold);letter-spacing:-.02em;color:#1a1a1a}
 .sc-hero__lead{margin-top:4px;font-size:32px;line-height:40px;font-weight:var(--fw-bold);color:var(--sc-ink)}
 .sc-hero__sub{margin:24px 0 40px;max-width:640px;font-size:16px;line-height:22px;color:var(--sc-body)}
-/* The 420px box is the layout slot; the image overhangs it on the left and
-   top by the floating cards (130px / 48px at 1x). */
+/* Hero illustration (Figma 28337:306). The 420px box is the layout slot; the
+   floating cards overhang it. scoring.js sets --hs (scale) on narrow screens.
+   Until JS has built it (or with JS off) the exported image shows instead. */
 .sc-hero__visual{position:relative;width:420px;height:420px}
-.sc-hero__visual img{position:absolute;left:-130px;top:-48px;width:616px;max-width:none;height:auto}
+.sc-hero__visual:not(.is-ready) .sc-hero__art{display:none}
+.sc-hero__visual.is-ready .sc-hero__fallback{display:none}
+.sc-hero__fallback img{position:absolute;left:-130px;top:-48px;width:616px;max-width:none;height:auto}
+.sc-hero__art{--hs:1;position:absolute;left:0;top:0;width:420px;height:420px;transform:translate(var(--hx,0px),0) scale(var(--hs));transform-origin:0 0;font-family:var(--font-sans);color:#25282b}
+.hx-box{position:absolute;inset:0;border-radius:24px;
+  background:
+    linear-gradient(#fff,#fff) 30px 0/3px 100% no-repeat,
+    linear-gradient(#fff,#fff) 387px 0/3px 100% no-repeat,
+    linear-gradient(#fff,#fff) 207px 0/3px 100% no-repeat,
+    linear-gradient(#fff,#fff) 30px 135px/360px 3px no-repeat,
+    #eaf1fa}
+.hx-box .mu-phone{top:28px}
+.hx-float{position:absolute;z-index:2;background:#fff;border-radius:16px;box-shadow:0 10px 28px rgba(0,0,0,.12)}
+.hx-float small{display:block;font-size:9px;line-height:12px;font-weight:700;letter-spacing:.04em;color:#787373}
+/* Toast */
+.hx-toast{left:236px;top:2px;display:flex;align-items:center;gap:10px;padding:10px 14px 10px 12px;border-radius:14px;background:#2c2c2c;color:#fff}
+.hx-toast b{display:block;font-size:11.5px;line-height:15px}
+.hx-toast small{font-weight:400;letter-spacing:0;font-size:9.5px;color:#c7c7c7}
+.hx-check{display:flex;width:20px;height:20px;border-radius:50%;background:#33c773;flex:0 0 auto}
+.hx-check svg{width:20px;height:20px}
+/* Format */
+.hx-format{left:-41px;top:119px;width:132px;padding:10px;display:flex;flex-direction:column;gap:6px}
+.hx-format span{padding:7px 12px;border:1px solid #eee;border-radius:10px;font-size:11.5px;font-weight:500;color:#787373}
+.hx-format span.is-on{border:1.2px solid #2c2c2c;color:#25282b;font-weight:700}
+/* PadelLevels */
+.hx-pl{left:322px;top:168px;white-space:nowrap;display:flex;align-items:center;gap:10px;padding:8px 14px 8px 8px;border-radius:14px}
+.hx-pl svg{width:28px;height:28px;flex:0 0 auto}
+.hx-pl b{white-space:nowrap;display:flex;align-items:baseline;gap:6px;font-size:14px;font-weight:800;font-variant-numeric:tabular-nums}
+.hx-pl em{font-style:normal;font-size:10px;font-weight:700;color:#1b7a4b;transition:opacity .3s,transform .3s}
+/* Live score card */
+.hx-score{left:-70px;top:330px;width:178px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.hx-score small i{display:inline-block;width:6px;height:6px;margin-right:6px;border-radius:50%;background:#ec2435;vertical-align:1px}
+.hx-row{position:relative;display:flex;align-items:center;gap:8px;font-size:11px;font-weight:500;white-space:nowrap}
+.hx-row b{margin-left:auto;font-size:14px;font-weight:800}
+.hx-pair{display:flex}.hx-pair img{width:20px;height:20px;border-radius:50%;border:1.5px solid #fff;object-fit:cover}.hx-pair img+img{margin-left:-7px}
+.hx-row em{position:absolute;right:-27px;top:50%;transform:translateY(-50%);padding:3px 6px;border-radius:8px;font-style:normal;font-size:10px;font-weight:700;box-shadow:0 4px 10px rgba(0,0,0,.1)}
+.hx-row em.up{background:#e6f6ee;color:#1b7a4b}.hx-row em.down{background:#fdeced;color:#ec2435}
+/* Motion (scoring.js adds .is-live while in view): the cards drift gently;
+   the toast and the PadelLevels gain are played by the hero flow. */
+.sc-hero__visual.is-motion .hx-toast:not(.is-in){opacity:0;transform:translateY(-8px)}
+.sc-hero__visual.is-motion [data-hf="pl-up"]:not(.is-in){opacity:0;transform:translateY(4px)}
+.hx-toast{transition:opacity .35s,transform .35s}
+.hx-toast.is-pop{animation:hx-pop .55s cubic-bezier(.34,1.56,.64,1)}
+@keyframes hx-pop{from{opacity:0;transform:translateY(-10px) scale(.94)}to{opacity:1;transform:none}}
+.sc-hero__visual.is-live .hx-format,.sc-hero__visual.is-live .hx-pl,.sc-hero__visual.is-live .hx-score{animation:hx-bob 5.5s ease-in-out infinite}
+.sc-hero__visual.is-live .hx-pl{animation-delay:-1.8s}
+.sc-hero__visual.is-live .hx-score{animation-delay:-3.4s}
+@keyframes hx-bob{0%,100%{translate:0 0}50%{translate:0 -6px}}
+@media (prefers-reduced-motion:reduce){.sc-hero__visual .hx-float{animation:none!important}}
 
 /* ---- 3. Sports list ---- */
 .sc-sports{background:#f7f7f7;padding:20px 0}
@@ -107,9 +156,12 @@
 @media (max-width:900px){
   .sc-hero{padding:120px 0 40px}
   .sc-hero__in{grid-template-columns:1fr;gap:32px}
-  /* Mobile: one full-bleed strip (the 360px Figma frame), capped in width. */
-  .sc-hero__visual{width:auto;height:auto;margin:0 calc(-1 * var(--edge))}
-  .sc-hero__visual img{position:static;display:block;width:100%;max-width:480px;margin:0 auto}
+  /* Mobile: the art is scaled to the column (scoring.js sets --hs, --hx and
+     the height); the left cards pull in as in the mobile frame 28337:511. */
+  .sc-hero__visual{width:100%;max-width:458px;margin:0 auto}
+  .hx-format,.hx-score{left:-10px}
+  .sc-hero__visual:not(.is-ready){height:auto;margin:0 calc(-1 * var(--edge));max-width:none}
+  .sc-hero__fallback img{position:static;display:block;width:100%;max-width:480px;margin:0 auto}
   .sc-hero__lead{font-size:22px;line-height:28px}
   .sc-hero__sub{margin:16px 0 28px}
   .sc-h2{font-size:28px;line-height:34px}

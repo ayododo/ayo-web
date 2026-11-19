@@ -97,3 +97,23 @@ function freePrice(){ return FREE_PRICE; }
   }, {threshold:.5}).observe(card);
 
 })();
+
+/* Hero illustration: fit the 420px art (plus the cards that overhang it on
+   mobile, -10px…448px) to the column, and run the drift only while in view.
+   The phone's own motion is the "hero" flow in mini-ui.js. */
+(function(){
+  'use strict';
+  var vis = document.querySelector('[data-hero]'), art = vis && vis.querySelector('[data-hero-art]');
+  if(!vis || !art || !art.querySelector('.mu-phone')) return;   // no Mini UI → keep the image
+  vis.classList.add('is-ready');
+  var mobile = matchMedia('(max-width: 900px)');
+  function fit(){
+    if(!mobile.matches){ art.style.removeProperty('--hs'); art.style.removeProperty('--hx'); vis.style.height = ''; return; }
+    var hs = Math.min(1, vis.clientWidth / 458);
+    art.style.setProperty('--hs', hs); art.style.setProperty('--hx', (10 * hs) + 'px'); vis.style.height = (420 * hs) + 'px';
+  }
+  fit(); addEventListener('resize', fit);
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+  vis.classList.add('is-motion');
+  new IntersectionObserver(function(es){ es.forEach(function(e){ vis.classList.toggle('is-live', e.isIntersecting); }); }).observe(vis);
+})();

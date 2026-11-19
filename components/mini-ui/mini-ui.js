@@ -38,6 +38,7 @@
     chev: S+'<path d="m9 6 6 6-6 6"/></svg>',
     cam: S+'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>',
     download: S+'<path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>',
+    gear: S+'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>',
     grip: '<svg class="mu-grip" viewBox="0 0 10 14" aria-hidden="true"><g fill="currentColor"><circle cx="2.5" cy="2" r="1.2"/><circle cx="7.5" cy="2" r="1.2"/><circle cx="2.5" cy="7" r="1.2"/><circle cx="7.5" cy="7" r="1.2"/><circle cx="2.5" cy="12" r="1.2"/><circle cx="7.5" cy="12" r="1.2"/></g></svg>'
   };
   // Share channels in their own colours (white glyphs drawn here, not the
@@ -194,8 +195,40 @@
     return '<div class="mu-toast" data-el="toast"><span class="mu-toast__pdf">PDF</span><span class="mu-col"><b>Standings_FunPadel.pdf</b><span>Saved to Downloads</span></span></div>';
   }
 
+  /* ---------- Hero (Figma "Hero illustration · Standings" 28337:306) ----------
+     The activity's GameTime tab with its own players (photos from the hero
+     design, assets/scoring/hero-faces/p0–p7). Standings first; the motion
+     switches to Matches and back. The floating cards around the phone live
+     in scoring.html; the hero flow below drives them too. */
+  var HF = 'assets/scoring/hero-faces/p';
+  var HN = ['Bayu G.','Gabriella T.','Budi S.','Fredy R.','Gilberta L.','Lagerta R.','Gilang K.','Leo V.'];
+  var HS_ROWS = [['Bayu G.','4','4-0-0','+24','52'],['Budi S.','4','3-0-1','+12','49'],['Fredy R.','4','2-1-1','+5','46'],['Gabriella T.','4','2-0-2','+2','42'],
+                 ['Gilberta L.','4','1-2-1','-3','36'],['Gilang K.','4','1-1-2','-8','32'],['Lagerta R.','4','0-2-2','-12','29'],['Leo V.','4','0-0-4','-20','27']];
+  function hav(i, size){ return '<img class="mu-av'+(size?' mu-av--'+size:'')+'" src="'+HF+i+'.webp" alt="" width="40" height="40" decoding="async">'; }
+  function hteam(a, b, right){ return '<div class="mu-row"><span class="mu-pair">'+hav(a)+hav(b)+'</span><span class="mu-t mu-grow" style="font-weight:500">'+HN[a]+' / '+HN[b]+'</span>'+(right||'')+'</div>'; }
+  function hround(n, t1, t2, r1, r2){
+    return '<div class="mu-col" style="gap:6px"><span class="mu-cap">ROUND '+n+'</span><div class="mu-card mu-pad mu-col" style="gap:8px">'+
+      '<div class="mu-row"><span class="mu-t mu-b mu-grow">Court A</span><span class="mu-link">Bench</span><span class="mu-link">Edit</span></div>'+hteam(t1[0],t1[1],r1)+hteam(t2[0],t2[1],r2)+'</div></div>';
+  }
+  function heroPage(){
+    var people = [0,1,2,3,4,5].map(function(i){ return hav(i,22); }).join('');
+    var rows = HS_ROWS.map(function(r, i){ return '<div class="mu-tr"><span'+(i===0?' style="font-weight:700"':'')+'>'+(i+1)+'&nbsp; '+r[0]+'</span><span class="c-g">'+r[1]+'</span><span class="c-wtl">'+r[2]+'</span><span class="c-d">'+r[3]+'</span><span class="c-p">'+r[4]+'</span></div>'; }).join('');
+    return page('hero', head(ico('back')+'<span class="mu-head__sp"></span>'+ico('share')+ico('more')),
+      '<div class="mu-title" style="font-size:14px">Fun Padel AYO Chapter Jakarta Area</div>'+
+      '<div class="mu-s">Competitive · Padel · Jakarta</div>'+
+      '<div class="mu-avs">'+people+'<span class="mu-s" style="font-weight:600">8/8 ›</span></div>'+
+      '<div class="mu-tabs" style="margin:0 -12px"><span>Details</span><span>Discussion</span><span class="is-on">GameTime<span class="mu-new-badge">NEW</span></span></div>'+
+      '<div class="mu-row mu-row--between"><span class="mu-t"><b>Americano</b> · Rotating Partner</span><span class="mu-ico">'+I.gear+'</span></div>'+
+      '<div class="mu-row" data-el="h-tabs-row"><div class="mu-seg mu-seg--sm" data-el="h-seg" data-on="1" style="width:132px"><span class="mu-seg__knob"></span><span class="mu-seg__i" data-el="h-matches-tab">Matches</span><span class="mu-seg__i is-on" data-el="h-standings-tab">Standings</span></div><span class="mu-head__sp"></span><span class="mu-swap">↔</span></div>'+
+      '<div data-el="h-standings"><div class="mu-table"><div class="mu-tr mu-tr--head"><span>PLAYERS</span><span class="c-g">G</span><span class="c-wtl">W-T-L</span><span class="c-d">Diff</span><span class="c-p">P</span></div>'+rows+'</div></div>'+
+      '<div class="mu-col" style="gap:9px;display:none" data-el="h-matches">'+
+        hround(1, [0,1], [2,3], SC(16), SC(8))+hround(2, [4,6], [5,7], SC(13), SC(11))+hround(3, [0,5], [2,7], '', PLUS())+
+        '<div class="mu-btns"><span class="mu-btn mu-btn--line">End Session</span><span class="mu-btn">+ More Rounds</span></div></div>');
+  }
+
   /* ---------- Cards: pages (first = static frame), scroll target, flow ---------- */
   var CARDS = {
+    hero: {pages:[heroPage()], flow:'hero'},
     f01: {pages:[setup({fmt:'Americano'})], to:'formats', flow:'f01'},
     f02: {pages:[setup({fmt:'Mexicano'})], to:'formats', flow:'f02'},
     f03: {pages:[setup({fmt:'Custom'})], to:'formats', flow:'f03'},
@@ -310,7 +343,7 @@
     function scr(){ return stage.querySelector('.mu-screen'); }
     function alive(){ if(player.run !== id) throw STOP; }
     function point(t){
-      var s = scaleOf(stage), a = t.getBoundingClientRect(), b = scr().getBoundingClientRect();
+      var b = scr().getBoundingClientRect(), s = b.width / scr().offsetWidth, a = t.getBoundingClientRect();
       return {x:(a.left + a.width/2 - b.left)/s, y:(a.top + a.height/2 - b.top)/s};
     }
     var api = {
@@ -361,7 +394,7 @@
       scroll: function(y, dur){
         alive();
         var sc = scr().querySelector('.mu-page.is-active .mu-scroll');
-        setY(sc, Math.max(0, y), false, dur || 900);
+        setY(sc, Math.max(0, Math.min(y, api.maxY())), false, dur || 900);   // never past the end of the content
         return api.wait((dur || 900) + 150);
       },
       scrollTo: function(n, margin, dur){ var t = api.el(n); return api.scroll(t.offsetTop - (margin == null ? 6 : margin), dur); },
@@ -572,6 +605,38 @@
         .then(function(){ return a.tap('pdf'); }).then(function(){ on(a.el('pdf'), 'is-busy'); a.el('pdf-label').textContent = 'Downloading…'; return a.wait(1100); })
         .then(function(){ a.el('pdf').classList.remove('is-busy'); a.el('pdf-label').innerHTML = I.download.replace('<svg','<svg class="mu-inline"')+' Downloaded'; on(a.el('toast'), 'is-on'); return a.wait(1800); })
         .then(function(){ a.el('toast').classList.remove('is-on'); return a.wait(300); });
+    },
+    // Hero: scroll the standings, switch to Matches (the toast pops and the
+    // PadelLevels rating ticks up as the score lands), scroll the rounds,
+    // then back to Standings.
+    hero: function(a){
+      var art = a.stage.closest('[data-hero-art]');
+      var toast = art && art.querySelector('[data-hf="toast"]'), pl = art && art.querySelector('[data-hf="pl-val"]'), plUp = art && art.querySelector('[data-hf="pl-up"]');
+      function tab(matches){
+        var seg = a.el('h-seg'); seg.dataset.on = matches ? '0' : '1';
+        a.el('h-matches-tab').classList.toggle('is-on', matches); a.el('h-standings-tab').classList.toggle('is-on', !matches);
+        a.el('h-matches').style.display = matches ? '' : 'none'; a.el('h-standings').style.display = matches ? 'none' : '';
+        var c = a.el(matches ? 'h-matches' : 'h-standings'); c.classList.remove('mu-new'); c.offsetHeight; c.classList.add('mu-new');
+      }
+      function tick(from, to, ms){
+        if(!pl) return a.wait(0);
+        var t0 = performance.now();
+        return new Promise(function(res){ (function f(now){ var k = Math.min(1, (now - t0) / ms); pl.textContent = (from + (to - from) * (1 - Math.pow(1 - k, 3))).toFixed(2); k < 1 ? requestAnimationFrame(f) : res(); })(t0); });
+      }
+      if(pl) pl.textContent = '3.30'; if(plUp) plUp.classList.remove('is-in'); if(toast) toast.classList.remove('is-pop', 'is-in');
+      return a.wait(500)
+        .then(function(){ return a.scroll(a.maxY(), 1600); })       // down the standings to 8th place
+        .then(function(){ return a.wait(800); })
+        .then(function(){ return a.tap('h-matches-tab'); })
+        .then(function(){ tab(true); return a.wait(450); })
+        .then(function(){ if(toast){ toast.classList.add('is-in', 'is-pop'); } if(plUp) plUp.classList.add('is-in'); return tick(3.30, 3.42, 900); })
+        .then(function(){ return a.wait(400); })
+        .then(function(){ return a.scroll(a.maxY(), 1500); })
+        .then(function(){ return a.wait(900); })
+        .then(function(){ return a.scrollTo('h-tabs-row', 6, 1000); })
+        .then(function(){ return a.tap('h-standings-tab'); })
+        .then(function(){ tab(false); return a.wait(300); })
+        .then(function(){ return a.scroll(0, 900); });
     },
     // B03 · Banner juara: scroll to the banner, the trophy rises and sparkles.
     b03: function(a){
