@@ -46,32 +46,13 @@
   sec.style.setProperty('--sc-marquee-dur', Math.round(set.scrollWidth / 45) + 's');
 })();
 
-/* Format 05 price: the currency of the selected country (chrome.js sets
-   <html data-country>). The count-down starts from a typical session fee in
-   that currency. Countries not listed fall back to US dollars. */
-var FREE_PRICE = {
-  ID: {label:'IDR', locale:'id-ID', from:500000, step:1000},
-  MY: {label:'RM',  locale:'ms-MY', from:150,    step:1},
-  SG: {label:'S$',  locale:'en-SG', from:50,     step:1},
-  AU: {label:'A$',  locale:'en-AU', from:50,     step:1},
-  TH: {label:'฿',   locale:'th-TH', from:1000,   step:10}
-};
-function freePrice(){
-  var p = FREE_PRICE[document.documentElement.dataset.country] || {label:'$', locale:'en-US', from:30, step:1};
-  p.nf = p.nf || new Intl.NumberFormat(p.locale, {maximumFractionDigits:0});
-  return p;
-}
-(function(){
-  'use strict';
-  var cur = document.querySelector('[data-free-cur]');
-  if(!cur) return;
-  function sync(){ cur.textContent = freePrice().label; }
-  sync();
-  new MutationObserver(sync).observe(document.documentElement, {attributes:true, attributeFilter:['data-country']});
-})();
+/* Format 05 price: one currency for every market, "$", counting down from
+   25,00 to 0,00 (two decimals, comma as the decimal mark). */
+var FREE_PRICE = {label:'$', from:25, step:.01, nf:new Intl.NumberFormat('id-ID', {minimumFractionDigits:2, maximumFractionDigits:2})};
+function freePrice(){ return FREE_PRICE; }
 
 /* Format 05 price card: while the card is in view, loop: the price counts down
-   from the country's starting fee (IDR 500.000) to 0, the six features appear one by one, then the +more
+   from $25,00 to $0,00, the six features appear one by one, then the +more
    pill pops in; hold, fade out, repeat. Out of view (or reduced motion) it
    rests on the end state in the markup. */
 (function(){
@@ -88,7 +69,7 @@ function freePrice(){
       if(id !== run) return;
       var k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3);
       num.textContent = fmt(Math.round(from * (1 - e) / step) * step);
-      if(k < 1) raf = requestAnimationFrame(tick); else { num.textContent = '0'; done(); }
+      if(k < 1) raf = requestAnimationFrame(tick); else { num.textContent = fmt(0); done(); }
     })(t0);
   }
   function play(id){
@@ -109,12 +90,10 @@ function freePrice(){
       });
     });
   }
-  function rest(){ run++; cancelAnimationFrame(raf); card.classList.remove('is-hide'); num.textContent = '0'; items.concat(more).forEach(function(el){ el.classList.remove('is-in'); }); }
+  function rest(){ run++; cancelAnimationFrame(raf); card.classList.remove('is-hide'); num.textContent = fmt(0); items.concat(more).forEach(function(el){ el.classList.remove('is-in'); }); }
   var inView = false;
   new IntersectionObserver(function(es){
     es.forEach(function(e){ inView = e.isIntersecting; if(inView){ rest(); play(run); } else rest(); });
   }, {threshold:.5}).observe(card);
-  // A new country restarts the count-down in its own currency.
-  new MutationObserver(function(){ if(inView){ rest(); play(run); } })
-    .observe(document.documentElement, {attributes:true, attributeFilter:['data-country']});
+
 })();
