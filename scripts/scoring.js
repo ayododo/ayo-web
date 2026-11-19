@@ -45,3 +45,14 @@
   // Constant speed (~45px/s) whatever the number of tiles.
   sec.style.setProperty('--sc-marquee-dur', Math.round(set.scrollWidth / 45) + 's');
 })();
+
+/* Format 05 "IDR0 +more": roll the 0 and pop the pill while the card is in
+   view; rest on IDR0 +more otherwise (and with reduced motion, via CSS). */
+(function(){
+  'use strict';
+  var card = document.querySelector('[data-free]');
+  if(!card || !('IntersectionObserver' in window)) return;
+  new IntersectionObserver(function(es){
+    es.forEach(function(e){ card.classList.toggle('is-play', e.isIntersecting); });
+  }, {threshold:.5}).observe(card);
+})();

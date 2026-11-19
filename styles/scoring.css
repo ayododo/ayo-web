@@ -77,7 +77,21 @@
 .sc-card{width:528px;max-width:100%;height:300px;border-radius:16px;background:#fff;border:1px solid #e8e6e3}
 .sc-card .mu-phone{--mu-scale:1.15;top:28px}
 .sc-card--free{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;color:var(--sc-body);font-size:14px}
-.sc-card--free b{font-size:56px;line-height:1;font-weight:var(--fw-extrabold);letter-spacing:-.03em;color:var(--sc-ink);margin-bottom:8px}
+/* "IDR0 +more": IDR in ink, the 0 subtle. The 0 is a 9→0 digit column in a
+   1em window, resting on 0; .is-play rolls it down and pops the pill, on a
+   loop while the card is in view (scoring.js). */
+.sc-free__price{display:flex;align-items:flex-start;margin:0 0 8px;font-size:56px;line-height:1;font-weight:var(--fw-extrabold);letter-spacing:-.03em}
+.sc-free__cur{color:var(--sc-ink)}
+.sc-free__zero{display:inline-block;height:1em;overflow:hidden;color:var(--text-placeholder)}
+.sc-free__roll{display:flex;flex-direction:column;transform:translateY(-9em)}
+.sc-free__roll span{height:1em;line-height:1}
+.sc-free__more{align-self:flex-start;margin:2px 0 0 8px;padding:5px 10px;border-radius:var(--radius-pill);background:var(--bg-dark-soft);color:#fff;
+  font-size:13px;line-height:16px;font-weight:var(--fw-bold);letter-spacing:0}
+.sc-card--free.is-play .sc-free__roll{animation:sc-roll 4.8s cubic-bezier(.2,.8,.2,1) infinite}
+.sc-card--free.is-play .sc-free__more{animation:sc-pop 4.8s cubic-bezier(.34,1.56,.64,1) infinite}
+@keyframes sc-roll{0%{transform:translateY(0)}32%,100%{transform:translateY(-9em)}}
+@keyframes sc-pop{0%,30%{opacity:0;transform:scale(.6) translateY(4px)}40%,100%{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.sc-card--free.is-play .sc-free__roll,.sc-card--free.is-play .sc-free__more{animation:none}}
 
 /* ---- 6. Closing ---- */
 .sc-close{padding:96px 0;background:var(--sc-cream);text-align:center}
