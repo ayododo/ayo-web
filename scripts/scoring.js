@@ -16,7 +16,7 @@
     });
     if(focus) tab.focus();
   }
-  // Deep link: scoring.html#setup (or #match, #klasemen, #bagikan) opens that tab.
+  // Deep link: scoring-id.html#setup (or #match, #klasemen, #bagikan) opens that tab.
   var fromHash = document.getElementById('tab-' + location.hash.slice(1));
   if(fromHash && tabs.indexOf(fromHash) > 0) select(fromHash);
   tabs.forEach(function(t, i){

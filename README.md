@@ -36,7 +36,8 @@ framework preset, no build command, and serve the repository root.
 | File | Purpose |
 | --- | --- |
 | `index.html` | Homepage |
-| `scoring.html` | Scoring (GameTime) — Figma 28109:21824, mobile 28109:22535. Deep links `#setup`, `#match`, `#klasemen`, `#bagikan` open a key-feature tab. |
+| `scoring-id.html` | Scoring (GameTime) — Figma 28109:21824, mobile 28109:22535. Deep links `#setup`, `#match`, `#klasemen`, `#bagikan` open a key-feature tab. |
+| `scoring-en.html` | English twin of `scoring-id.html` (Figma 26877:7465), same markup. The top-nav language switch moves between the two and keeps the tab hash. `/scoring.html` redirects to `scoring-id.html` (vercel.json). |
 
 The repository focused on the homepage only (decision 2026-11-18); the Scoring
 page is the first page rebuilt since.

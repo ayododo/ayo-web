@@ -86,7 +86,7 @@
     var menu = document.querySelector('.submenu[data-mega="activities"]');
     if(!menu) return;
     var I = 'assets/icons/mega/';
-    var SCORING = document.documentElement.lang === 'id' ? 'scoring.html' : 'scoring-en.html';
+    var SCORING = document.documentElement.lang === 'id' ? 'scoring-id.html' : 'scoring-en.html';
     var ARROW = '<img src="'+I+'arrow-brand.svg" alt="" width="16" height="16">';
     /* Exported from Figma (26813:15605, 26813:15612) with the Oxanium
        lettering outlined, so the marks match the design exactly. */

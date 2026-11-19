@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/scoring.html", "destination": "/scoring-id.html", "permanent": true },
+    { "source": "/scoring", "destination": "/scoring-id.html", "permanent": true }
+  ]
+}

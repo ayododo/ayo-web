@@ -199,7 +199,7 @@
      The activity's GameTime tab with its own players (photos from the hero
      design, assets/scoring/hero-faces/p0–p7). Standings first; the motion
      switches to Matches and back. The floating cards around the phone live
-     in scoring.html; the hero flow below drives them too. */
+     in scoring-id.html; the hero flow below drives them too. */
   var HF = 'assets/scoring/hero-faces/p';
   var HN = ['Bayu G.','Gabriella T.','Budi S.','Fredy R.','Gilberta L.','Lagerta R.','Gilang K.','Leo V.'];
   var HS_ROWS = [['Bayu G.','4','4-0-0','+24','52'],['Budi S.','4','3-0-1','+12','49'],['Fredy R.','4','2-1-1','+5','46'],['Gabriella T.','4','2-0-2','+2','42'],
