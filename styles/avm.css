@@ -46,6 +46,7 @@
 .avm-avail__item{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:var(--fw-semibold);color:var(--avm-text)}
 .avm-avail__ico{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;background:#f7f7f7}
 .avm-avail__ico svg{width:20px;height:20px}
+.avm-avail__tag{padding:3px 8px;border-radius:var(--radius-pill);background:var(--bg-dark-soft);color:#fff;font-size:11px;line-height:14px;font-weight:var(--fw-semibold);white-space:nowrap}
 /* Illustration slot, filled by components/avm-hero (Figma 28126:11219, 660 × 560). */
 .avm-hero__visual{position:relative;width:100%;max-width:660px;height:auto;justify-self:end}
 .avm-hero__visual [data-avm-hero]{display:block;width:100%}   /* height set inline by avm-hero.js (560 × scale) */
