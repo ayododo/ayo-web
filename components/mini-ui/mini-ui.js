@@ -459,9 +459,9 @@
         .then(function(){ return a.scrollTo('courts', 40, 600); })
         .then(function(){ return a.tap('court-2'); })
         .then(function(){ return a.sheet('court-sheet', true); })
-        .then(function(){ return a.type('court-input', 'VIP Lounge', 110); })
+        .then(function(){ return a.type('court-input', 'Blue Court', 110); })
         .then(function(){ return a.tap('court-done'); })
-        .then(function(){ a.el('court-2').textContent = 'VIP Lounge'; return a.sheet('court-sheet', false); });
+        .then(function(){ a.el('court-2').textContent = 'Blue Court'; return a.sheet('court-sheet', false); });
     },
     // S03 · Pemain & tim: + → Add Participants (pick 3) → 4 players, Create on.
     s03: function(a){

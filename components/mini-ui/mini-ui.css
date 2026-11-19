@@ -133,7 +133,7 @@
    mini-ui.js sets --mu-vis-h (visible screen height) and --mu-sheet-bottom
    (the hidden strip below it) on each .mu-screen. A sheet ends at the
    visible bottom edge, so it is seen whole rather than cut by the card. */
-.mu-sheet{position:absolute;left:0;right:0;bottom:var(--mu-sheet-bottom,0px);z-index:6;background:#fff;border-radius:16px;padding:8px 14px 14px;
+.mu-sheet{position:absolute;left:0;right:0;bottom:var(--mu-sheet-bottom,0px);z-index:6;background:#fff;border-radius:16px 16px 0 0;padding:8px 14px 14px;
   display:flex;flex-direction:column;gap:10px;transform:translateY(calc(100% + var(--mu-sheet-bottom,0px) + 4px));transition:transform .45s cubic-bezier(.32,.72,0,1)}
 .mu-sheet.no-anim{transition:none}
 .mu-sheet.is-on{transform:none}
