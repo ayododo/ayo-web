@@ -31,7 +31,8 @@
   var I = {
     back: S+'<path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg>',
     close: S+'<path d="M6 6l12 12"/><path d="M18 6 6 18"/></svg>',
-    share: S+'<circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="m8.3 10.7 7.4-4.3"/><path d="m8.3 13.3 7.4 4.3"/></svg>',
+    // Share-new (Figma 28321:61464): a forward arrow, as in the app's nav bar.
+    share: '<svg viewBox="284 16 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M297 24.5H297.5V20.7c0-.14.04-.28.12-.39.08-.12.19-.2.32-.26.13-.05.27-.06.41-.03.14.03.26.1.35.21l5.95 6.41c.22.24.34.55.34.87 0 .32-.12.63-.34.87l-5.95 6.41c-.1.1-.22.17-.36.21-.14.03-.28.02-.41-.03-.13-.05-.24-.14-.32-.26-.08-.12-.12-.25-.12-.39V30.5c-5.55 0-8.55 4.02-9.31 5.19-.06.1-.14.17-.24.23-.1.05-.21.08-.32.08-.08 0-.16-.02-.24-.05-.08-.03-.15-.08-.2-.14-.06-.06-.1-.13-.14-.2-.03-.08-.05-.16-.05-.24v-.87c0-5.52 4.48-10 10-10z"/></svg>',
     more: S+'<circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>',
     plus: S+'<path d="M12 5v14"/><path d="M5 12h14"/></svg>',
     chev: S+'<path d="m9 6 6 6-6 6"/></svg>',
