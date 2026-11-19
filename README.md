@@ -65,7 +65,7 @@ navigation, buttons, footer styles, and account demo behavior.
 Homepage-specific code lives in `styles/home.css` / `scripts/home.js`; the
 Scoring page in `styles/scoring.css` / `scripts/scoring.js`; the About page in
 `styles/about.css` / `scripts/about.js` (story timeline; hero pills that scatter and
-bounce on hover, or on tap on touch screens; the Moments strip's auto-scroll), with
+bounce on hover, or on tap on touch screens, then coast to a stop where they are; the Moments strip's auto-scroll), with
 assets in `assets/about/`. Motion is off with reduced motion.
 
 ### Mini UI
