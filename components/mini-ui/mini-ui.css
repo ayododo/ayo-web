@@ -22,6 +22,9 @@
   -webkit-font-smoothing:antialiased;
 }
 .mu-screen{position:relative;height:100%;overflow:hidden;background:#fff;border-radius:26px 26px 0 0;isolation:isolate}
+/* White cover over the screen, faded in and out between motion loops. */
+.mu-cover{position:absolute;left:10px;right:10px;top:10px;bottom:0;border-radius:26px 26px 0 0;background:#fff;opacity:0;pointer-events:none;transition:opacity .3s}
+.mu-cover.is-on{opacity:1}
 
 /* ---- Pages: one per screen of a flow; the active one sits at 0 ----------- */
 .mu-page{position:absolute;inset:0;display:flex;flex-direction:column;background:#fff;

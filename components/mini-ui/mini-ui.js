@@ -221,12 +221,13 @@
   function build(stage){
     var c = CARDS[stage.dataset.mu]; if(!c) return;
     var inner = c.html ? c.html() : c.pages.join('') + (c.extra ? c.extra() : '');
-    stage.innerHTML = '<div class="mu-phone" aria-hidden="true"><div class="mu-screen">'+inner+'<div class="mu-dim" data-el="dim"></div><span class="mu-tap"></span></div></div>';
+    stage.innerHTML = '<div class="mu-phone" aria-hidden="true"><div class="mu-screen">'+inner+'<div class="mu-dim" data-el="dim"></div><span class="mu-tap"></span></div><span class="mu-cover"></span></div>';
     var first = stage.querySelector('.mu-page'); if(first) first.classList.add('is-active');
     // A card that is about a sheet shows it open in its static frame.
     if(c.open){ stage.querySelector('[data-el="'+c.open+'"]').classList.add('is-on'); stage.querySelector('[data-el="dim"]').classList.add('is-on'); }
     stage._mu = {card:c, initial: stage.querySelector('.mu-screen').innerHTML};
     place(stage, true);
+    prep(stage);
   }
   function scaleOf(stage){ var p = stage.querySelector('.mu-phone'); return parseFloat(getComputedStyle(p).getPropertyValue('--mu-scale')) || 1; }
   function visibleBody(stage, pg){
@@ -272,22 +273,35 @@
   Player.prototype.start = function(){
     var self = this, id = ++this.run, flow = FLOWS[this.stage._mu.card.flow];
     var api = makeApi(this, id);
+    // Between loops the screen fades out under a white cover, resets to its
+    // opening state and fades back in, so the end of one run never jumps
+    // straight into the start of the next.
+    var cover = this.stage.querySelector('.mu-cover');
     (function loop(){
       api.wait(700).then(function(){ return flow(api); })
-        .then(function(){ return api.wait(2600); })
-        .then(function(){ self.reset(); return api.wait(500); })
+        .then(function(){ return api.wait(2200); })
+        .then(function(){ cover.classList.add('is-on'); return api.wait(320); })
+        .then(function(){ self.reset(); return api.wait(150); })
+        .then(function(){ cover.classList.remove('is-on'); return api.wait(450); })
         .then(loop, function(e){ if(e !== STOP) throw e; });
     })();
   };
-  Player.prototype.stop = function(){ this.run++; this.reset(); };
+  Player.prototype.stop = function(){ this.run++; this.reset(); this.stage.querySelector('.mu-cover').classList.remove('is-on'); };
   Player.prototype.reset = function(){
     var scr = this.stage.querySelector('.mu-screen');
     scr.innerHTML = this.stage._mu.initial;
     scr.querySelectorAll('.mu-page').forEach(function(p){ p.classList.add('no-anim'); });
     place(this.stage, true);
+    prep(this.stage);
     scr.offsetHeight;
     scr.querySelectorAll('.mu-page').forEach(function(p){ p.classList.remove('no-anim'); });
   };
+  // Opening state of a flow (when it differs from the static Figma frame),
+  // applied as soon as the card is built and after every reset.
+  function prep(stage){
+    var f = PREP[stage._mu.card.flow];
+    if(MOTION && f) f(makeApi({stage:stage, run:0}, 0));
+  }
 
   function makeApi(player, id){
     var stage = player.stage;
@@ -376,20 +390,26 @@
   }
 
   function on(el, cls, v){ el.classList.toggle(cls, v !== false); }
+  // Opening state: scrolled to the formats, which are not shown yet.
+  function formatPrep(a){
+    [].forEach.call(a.el('formats').children, function(t){ t.classList.remove('is-on'); t.style.opacity = '0'; t.style.transform = 'translateY(6px)'; });
+    a.el('partners').style.opacity = '0';
+    a.jump(targetY(a.stage));
+  }
   function formatFlow(a, fmt, partner){
     var tiles = [].slice.call(a.el('formats').children), parts = a.el('partners');
-    tiles.forEach(function(t){ t.classList.remove('is-on'); t.style.opacity = '0'; t.style.transform = 'translateY(6px)'; });
-    parts.style.opacity = '0';
-    a.jump(targetY(a.stage));
-    var p = a.wait(500);
+    var p = a.wait(300);
     tiles.forEach(function(t){ p = p.then(function(){ t.style.opacity = ''; t.style.transform = ''; return a.wait(140); }); });
     return p.then(function(){ return a.wait(350); })
       .then(function(){ return a.tap('tile-'+fmt); })
       .then(function(){ a.select('formats', 'tile-'+fmt); parts.innerHTML = partnerRows(fmt, null); return a.wait(250); })
       .then(function(){ parts.style.opacity = ''; return a.wait(700); })
       .then(function(){ return a.tap(partner); })
-      .then(function(){ a.radio(partner); return a.wait(300); });
+      .then(function(){ a.radio(partner); return a.wait(600); })
+      // Close by scrolling on down the screen to Continue, and stop there.
+      .then(function(){ return a.scroll(a.maxY(), 1600); });
   }
+  var PREP = {f01: formatPrep, f02: formatPrep, f03: formatPrep};
   var FLOWS = {
     // Format cards (Americano, Mexicano, Custom): the format area starts
     // empty, the three formats appear, one is picked, then its pairing
@@ -529,6 +549,6 @@
   stages.forEach(function(st){ if(io && st._mu && st._mu.card.flow) io.observe(st); });
 
   var rt;
-  window.addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(function(){ stages.forEach(function(st){ if(!st._player || !st._player.playing) place(st, true); }); }, 150); });
-  window.AyoMiniUI = { refresh: function(root){ (root || document).querySelectorAll('[data-mu]').forEach(function(st){ if(!st._player || !st._player.playing) place(st, true); }); } };
+  window.addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(function(){ stages.forEach(function(st){ if(!st._player || !st._player.playing){ place(st, true); prep(st); } }); }, 150); });
+  window.AyoMiniUI = { refresh: function(root){ (root || document).querySelectorAll('[data-mu]').forEach(function(st){ if(!st._player || !st._player.playing){ place(st, true); prep(st); } }); } };
 })();
