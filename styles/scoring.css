@@ -45,10 +45,11 @@
     linear-gradient(#fff,#fff) 30px 135px/360px 3px no-repeat,
     #eaf1fa}
 .hx-box .mu-phone{top:28px}
-.hx-float{position:absolute;z-index:2;background:#fff;border-radius:16px;box-shadow:0 10px 28px rgba(0,0,0,.12)}
+.hx-float{position:absolute;z-index:2;background:#fff;border-radius:16px;border:1px solid #eee;
+  box-shadow:0 1px 2px rgba(0,0,0,.06),0 6px 16px rgba(0,0,0,.08)}   /* light two-layer lift, Mini UI-style border */
 .hx-float small{display:block;font-size:9px;line-height:12px;font-weight:700;letter-spacing:.04em;color:#787373}
 /* Toast */
-.hx-toast{left:236px;top:2px;display:flex;align-items:center;gap:10px;padding:10px 14px 10px 12px;border-radius:14px;background:#2c2c2c;color:#fff}
+.hx-toast{left:236px;top:2px;display:flex;align-items:center;gap:10px;padding:10px 14px 10px 12px;border-radius:14px;background:#2c2c2c;color:#fff;border-color:#2c2c2c;box-shadow:0 6px 16px rgba(0,0,0,.08)}
 .hx-toast b{display:block;font-size:11.5px;line-height:15px}
 .hx-toast small{font-weight:400;letter-spacing:0;font-size:9.5px;color:#c7c7c7}
 .hx-check{display:flex;width:20px;height:20px;border-radius:50%;background:#33c773;flex:0 0 auto}
@@ -68,7 +69,7 @@
 .hx-row{position:relative;display:flex;align-items:center;gap:8px;font-size:11px;font-weight:500;white-space:nowrap}
 .hx-row b{margin-left:auto;font-size:14px;font-weight:800}
 .hx-pair{display:flex}.hx-pair img{width:20px;height:20px;border-radius:50%;border:1.5px solid #fff;object-fit:cover}.hx-pair img+img{margin-left:-7px}
-.hx-row em{position:absolute;right:-27px;top:50%;transform:translateY(-50%);padding:3px 6px;border-radius:8px;font-style:normal;font-size:10px;font-weight:700;box-shadow:0 4px 10px rgba(0,0,0,.1)}
+.hx-row em{position:absolute;right:-27px;top:50%;transform:translateY(-50%);padding:3px 6px;border-radius:8px;font-style:normal;font-size:10px;font-weight:700}
 .hx-row em.up{background:#e6f6ee;color:#1b7a4b}.hx-row em.down{background:#fdeced;color:#ec2435}
 /* With motion the ▲/▼ badges wait for the score: the hero flow adds .is-in
    to the card when "Skor tersimpan" pops; ▲ rises in, ▼ drops in. */
