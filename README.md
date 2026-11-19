@@ -38,6 +38,8 @@ framework preset, no build command, and serve the repository root.
 | `index.html` | Homepage |
 | `scoring-id.html` | Scoring (GameTime) — Figma 28109:21824, mobile 28109:22535. Deep links `#setup`, `#match`, `#klasemen`, `#bagikan` open a key-feature tab. |
 | `scoring-en.html` | English twin of `scoring-id.html` (Figma 26877:7465), same markup. The top-nav language switch moves between the two and keeps the tab hash. `/scoring.html` redirects to `scoring-id.html` (vercel.json). |
+| `about-en.html` | About Us — Figma 27980:18323 (desktop 27987:7997, mobile 27990:8081, story states 28014:8166 …). Entry point: "About Us" in the footer. |
+| `about-id.html` | Indonesian twin ("Tentang Kami", Figma 28095:25789), same markup. The language switch moves between the two. On the homepage the footer link follows the chosen language (`data-href-id`, handled in `chrome.js`). |
 
 The repository focused on the homepage only (decision 2026-11-18); the Scoring
 page is the first page rebuilt since.
@@ -61,7 +63,8 @@ and the type scale. `styles/chrome.css` and `scripts/chrome.js` provide shared
 navigation, buttons, footer styles, and account demo behavior.
 
 Homepage-specific code lives in `styles/home.css` / `scripts/home.js`; the
-Scoring page in `styles/scoring.css` / `scripts/scoring.js`.
+Scoring page in `styles/scoring.css` / `scripts/scoring.js`; the About page in
+`styles/about.css` / `scripts/about.js` (story timeline), with assets in `assets/about/`.
 
 ### Mini UI
 

@@ -1,0 +1,137 @@
+/* ==========================================================================
+   AYO — AVM Mini UI: Add-ons, Activities, Additional Features (mu-am-*)
+   Figma Mini UIs are drawn at 1.15× the Mini UI base (phone 299 → 260), so
+   every size here is the Figma value / 1.15. Built by addons-more.js.
+   ========================================================================== */
+
+/* Screen spacing of these Figma screens: title 16px from the top, 10px gaps. */
+.mu-am .mu-head{padding:16px 12px 10px;gap:4px}
+.mu-am .mu-scroll{gap:10px}
+.mu-am-back{font-size:14px;line-height:1.25;font-weight:700}
+.mu-am-addpill{padding:2px 6px;border-radius:999px;background:#2c2c2c;color:#fff;font-size:9px;line-height:1.25;font-weight:700;white-space:nowrap}
+
+/* Text */
+.mu-am-lbl{font-size:10px;line-height:1.25;color:#787373}
+.mu-am-lbl--sm{font-size:8.7px}
+.mu-am-sec{font-size:12px;line-height:1.25;font-weight:700}
+.mu-am-vn{font-size:11px;line-height:1.25;font-weight:700;white-space:nowrap}
+.mu-am-vd{font-size:10px;line-height:1.25;color:#787373;white-space:nowrap}
+.is-ph{color:#9b9797;font-weight:400}
+
+/* Fields */
+.mu-am-fld{display:flex;flex-direction:column;gap:4px}
+.mu-am-in{display:flex;align-items:center;gap:3px;min-height:30px;padding:7px 10px;border:1px solid #eee;border-radius:10px;font-size:11px;line-height:1.25;font-weight:600;white-space:nowrap;overflow:hidden;transition:border-color .15s}
+.mu-am-in.is-focus{border-color:#2c2c2c}
+.mu-am-pre{color:#787373;font-weight:600}
+
+/* Chips (pill). Selected = 1.2 stroke Dark-soft, per the Mini UI rules. */
+.mu-am-chips{display:flex;gap:6px;flex-wrap:nowrap;overflow:hidden}
+.mu-am-chip{flex:0 0 auto;padding:4px 10px;border:1px solid #eee;border-radius:999px;font-size:10px;line-height:1.25;font-weight:600;color:#787373;white-space:nowrap;transition:border-color .12s,color .12s}
+.mu-am-chip.is-on{border-color:#2c2c2c;box-shadow:inset 0 0 0 .2px #2c2c2c;color:#17171a;font-weight:700}
+.mu-am-chips--sm .mu-am-chip{padding:3px 9px;font-size:8.7px}
+
+/* Grid of two cards, stat cards */
+.mu-am-grid{display:flex;gap:6px;align-items:flex-start}
+.mu-am-grid>*{flex:1;min-width:0}
+.mu-am-stat{display:flex;flex-direction:column;gap:4px;padding:8px 10px}
+.mu-am-stat .mu-am-lbl{white-space:nowrap}
+.mu-am-stat b{font-size:12px;line-height:1.25;font-weight:700;white-space:nowrap}
+.mu-am-stat--lg b{font-size:14px}
+
+/* Icon tiles, avatars */
+.mu-am-ic{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;font-size:10px;font-weight:700;transition:background .2s,color .2s}
+.mu-am-ic--date{background:#fdeced;color:#ec2435}
+.mu-am-ic.is-empty{background:#f4f4f5;color:#9b9797}
+.mu-am-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 auto;font-size:11px;font-weight:700}
+.mu-am-avatar .mu-ico{width:16px;height:16px}
+.mu-am-avatar--sm{width:32px;height:32px}
+.mu-am-pop{animation:mu-am-pop .4s cubic-bezier(.32,.72,0,1)}
+@keyframes mu-am-pop{from{transform:scale(.7);opacity:.3}to{transform:none;opacity:1}}
+
+/* Buttons */
+.mu-am-cta{padding:8px 10px;font-size:11px;flex:0 0 auto}
+.mu-am-linebtn{padding:8px 10px;font-size:11px;border-color:#eee}
+.mu-am-btn-sm{padding:7px 12px;font-size:10.5px;flex:0 0 auto}
+
+/* AD01 · products */
+.mu-am-prod{display:flex;flex-direction:column;gap:6px;padding:10px 11px}
+.mu-am-pn{font-size:11px;line-height:1.25;font-weight:700;white-space:nowrap}
+.mu-am-pb{display:flex;align-items:center;justify-content:space-between;min-height:14px;font-size:10px;line-height:1.25}
+.mu-am-price{color:#787373}
+.mu-am-step{display:inline-flex;align-items:center;gap:6px;padding:1px 6px;border-radius:999px;background:#f4f4f5;font-weight:700}
+.mu-am-step[hidden]{display:none}
+.mu-am-step i{font-style:normal;color:#787373}
+.mu-am-step i.is-dark{color:#17171a}
+.mu-am-step b{min-width:6px;text-align:center}
+/* Total bar: slides up at the visible bottom once a quantity changes. */
+.mu-am-bar{position:absolute;left:0;right:0;bottom:var(--mu-sheet-bottom,0px);z-index:3;display:flex;align-items:center;gap:10px;padding:8px 12px 10px;background:#fff;border-top:1px solid #eee;
+  transform:translateY(calc(100% + var(--mu-sheet-bottom,0px) + 4px));transition:transform .45s cubic-bezier(.32,.72,0,1)}
+.mu-am-bar.is-on{transform:none}
+.mu-am-sum{font-size:13px;line-height:1.25;font-weight:800}
+.mu-am-spacer{height:0;flex:0 0 auto}
+.mu-am-spacer.is-on{height:40px}
+
+/* AD02 · variants */
+.mu-am-var{display:flex;align-items:center;gap:8px;padding:8px 10px;transition:border-color .3s}
+.mu-am-var .mu-col{gap:2px}
+.mu-am-var.is-on{border-color:#2c2c2c;box-shadow:inset 0 0 0 .2px #2c2c2c}
+.mu-am-vp{font-size:11px;font-weight:700;white-space:nowrap}
+
+/* Sheets */
+.mu-am-sheet{gap:8px}
+.mu-am-sheet .mu-btn{padding:8px 10px;font-size:11px}
+.mu-am-sheet .mu-li{padding:8px 10px}
+.mu-am-bigstep{display:flex;align-items:center;justify-content:center;gap:22px;padding:4px 0}
+.mu-am-bigstep i{width:28px;height:28px;border-radius:50%;border:1px solid #d9d9d9;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:15px;font-weight:700;color:#17171a}
+.mu-am-bigstep b{min-width:30px;text-align:center;font-size:22px;font-weight:800}
+
+/* Toast tick */
+.mu-am-ok{flex:0 0 auto;width:18px;height:18px;border-radius:50%;background:#fff;color:#2c2c2c;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800}
+
+/* AC01 · activity */
+.mu-am-sched{display:flex;align-items:center;gap:8px;padding:10px 11px}
+.mu-am-sched .mu-col{gap:2px}
+.mu-am-flash{animation:mu-am-flash 1s ease}
+@keyframes mu-am-flash{0%,60%{border-color:#2c2c2c}100%{border-color:#eee}}
+.mu-am-tag{display:inline-flex;align-items:center;padding:2px 6px;border-radius:999px;background:#f4f4f5;color:#17171a;font-size:9px;line-height:1.25;font-weight:700;white-space:nowrap}
+.mu-am-tag.is-empty{color:#787373}
+.mu-am-tag--blue{background:#e8f1fd;color:#1f5fbf}
+
+/* FT01 · permissions */
+.mu-am-perms{display:flex;flex-direction:column;gap:8px;padding:10px 11px}
+.mu-am-perm{display:flex;align-items:center;gap:8px;font-size:11px;line-height:1.25;font-weight:600;color:#787373;white-space:nowrap;transition:color .15s}
+.mu-am-perm.is-on{color:#17171a}
+.mu-am-box{width:14px;height:14px;border-radius:4px;border:1.2px solid #d9d9d9;background:#fff;flex:0 0 auto;display:flex;align-items:center;justify-content:center;transition:background .12s,border-color .12s}
+.mu-am-perm.is-on .mu-am-box{background:#17171a;border-color:#17171a}
+.mu-am-perm.is-on .mu-am-box::after{content:'';width:6px;height:3px;border:solid #fff;border-width:0 0 1.6px 1.6px;transform:translateY(-1px) rotate(-45deg)}
+
+/* FT03 · coaches */
+.mu-am-coach{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px;text-align:center;transition:opacity .3s}
+.mu-am-sess{margin-top:1px;padding:2px 6px;border-radius:999px;background:#f4f4f5;font-size:8px;line-height:1.25;font-weight:700;white-space:nowrap}
+
+/* FT04 · reviews */
+.mu-am-score{display:flex;align-items:center;gap:10px;padding:10px}
+.mu-am-big{display:flex;align-items:baseline;gap:2px;white-space:nowrap}
+.mu-am-big b{font-size:22px;line-height:1.2;font-weight:800;min-width:34px}
+.mu-am-big span{font-size:10px;color:#787373}
+.mu-am-stars{display:block;width:63px;height:11px}
+.mu-am-stars path{fill:#d9d9d9;transition:fill .2s}
+.mu-am-stars path.is-on{fill:#f5a524}
+.mu-am-rev{display:flex;flex-direction:column;gap:6px;padding:10px}
+.mu-am-rn{font-size:12px;line-height:1.2;font-weight:700;white-space:nowrap}
+.mu-am-rate{display:inline-flex;align-items:center;gap:3px;padding:2px 6px;border-radius:999px;background:#fff1de;color:#b4610e;font-size:9px;line-height:1.2;font-weight:700}
+.mu-am-star1{width:8px;height:8px;fill:#f5a524}
+.mu-am-rt{font-size:10px;line-height:1.3;color:#4a4a4a;white-space:nowrap}
+.mu-am-meta{font-size:9px;color:#787373;white-space:nowrap}
+.mu-am-reply{padding:4px 10px;border-radius:999px;background:#2c2c2c;color:#fff;font-size:10px;line-height:1.2;font-weight:700;white-space:nowrap;transition:background .25s,color .25s}
+.mu-am-reply.is-done{background:#f4f4f5;color:#787373}
+[data-el^="slot-"]:empty{display:none}
+.mu-am-replybox{display:flex;align-items:center;gap:6px}
+.mu-am-replybox .mu-am-in{font-weight:500;font-size:10px;min-height:28px;padding:6px 8px;white-space:normal;line-height:1.3}
+.mu-am-replied{display:flex;flex-direction:column;gap:2px;padding:7px 9px;border-radius:10px;background:#f4f4f5;font-size:10px;line-height:1.3}
+.mu-am-replied b{font-size:9px;color:#787373}
+
+@media (prefers-reduced-motion:reduce){
+  .mu-am-bar{transition:none}
+  .mu-am-pop,.mu-am-flash{animation:none}
+}

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="id" data-page-lang="ID" data-lang-en="about-en.html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tentang Kami — AYO</title>
+<meta name="description" content="AYO adalah platform olahraga tempat pemain, komunitas, dan venue bertemu. Cerita, misi, dan ekosistem AYO.">
+
+<link rel="alternate" hreflang="id" href="about-id.html">
+<link rel="alternate" hreflang="en" href="about-en.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#ec2435">
+
+<link rel="stylesheet" href="vendor/bootstrap-4.3.1/bootstrap.min.css">
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="styles/bootstrap-compat.css">
+<link rel="stylesheet" href="styles/chrome.css">
+<link rel="stylesheet" href="components/site-footer/site-footer.css?v=20261118b">
+<link rel="stylesheet" href="styles/about.css?v=20261119a">
+</head>
+<body class="ayo-web">
+
+<!-- Tentang Kami page, Indonesian — Figma "Tentang AYO" 28095:25789 (desktop 28095:25790, mobile 28095:26176).
+     Entry point: "Tentang Kami" in the footer. English twin: about-en.html (same markup,
+     translated copy). Keep the two in step. -->
+
+<!-- 1. NAV (same markup as index.html, Indonesian labels, light page) -->
+<nav class="ayo-nav on-light">
+  <div class="nav-in container-fluid">
+    <a class="brand" href="index.html" aria-label="AYO"><img src="assets/logo.svg" alt="AYO"></a>
+    <div class="nav-links" id="navlinks">
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Booking</a></div>
+      <div class="ayo-nav-item has-sub">
+        <button class="nav-top" aria-expanded="false" aria-haspopup="true">Aktivitas <span class="chev" aria-hidden="true"></span></button>
+        <div class="submenu" data-mega="activities">
+          <a href="#">Ikut aktivitas</a>
+          <a href="#">Buat aktivitas</a>
+          <a href="scoring-id.html">Scoring</a>
+        </div>
+      </div>
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Untuk Pemilik Venue</a></div>
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Jadi Mitra</a></div>
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Blog</a></div>
+    </div>
+    <div class="nav-actions">
+    <div class="lang" id="lang">
+      <button class="lang-btn" aria-haspopup="true" aria-expanded="false" aria-label="Pilih bahasa">
+        <span class="flag cur-flag" aria-hidden="true">🇮🇩</span>
+        <span class="cur">ID</span>
+        <span class="chev" aria-hidden="true"></span>
+      </button>
+      <div class="lang-menu" role="menu">
+        <button role="menuitemradio" aria-selected="false" data-code="EN" data-flag="🇬🇧"><span class="flag" aria-hidden="true">🇬🇧</span><span class="lname">English</span><span class="code">EN</span></button>
+        <button role="menuitemradio" aria-selected="true" data-code="ID" data-flag="🇮🇩"><span class="flag" aria-hidden="true">🇮🇩</span><span class="lname">Bahasa Indonesia</span><span class="code">ID</span></button>
+      </div>
+    </div>
+    <a class="nav-icon" href="#" aria-label="Cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3h2.2l2.1 12.4a1.5 1.5 0 0 0 1.5 1.25h8.3a1.5 1.5 0 0 0 1.48-1.2L21 7H6"/></svg>
+    </a>
+    <a class="ayo-btn primary" href="#" data-login>Masuk</a>
+    <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navlinks">
+      <svg class="ico-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
+      <svg class="ico-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>
+    </button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<!-- 1. HERO (Figma 27987:8032, mobile 27990:8095) -->
+<section class="ab-hero" aria-labelledby="ab-title">
+  <div class="ab-wrap ab-hero__in">
+    <div class="ab-hero__copy">
+      <nav class="ab-crumb" aria-label="Breadcrumb">
+        <ol><li><a href="index.html">Beranda</a></li><li><span aria-current="page">Tentang Kami</span></li></ol>
+      </nav>
+      <div class="ab-hero__head">
+        <p class="ab-eyebrow">Tentang Kami</p>
+        <h1 class="ab-hero__title" id="ab-title">Mulai game-mu di sini.</h1>
+        <p class="ab-hero__lead">AYO adalah platform olahraga tempat pemain, komunitas, dan venue bertemu.</p>
+        <p class="ab-hero__sub">Kami ada untuk mengajak lebih banyak orang berolahraga, lebih sering. Lewat AYO, pemain bisa mencari teman main, booking lapangan, ikut kompetisi, dan mencatat skor secara live, sementara venue mengelola bisnisnya dengan AYO Venue Management.</p>
+      </div>
+    </div>
+    <!-- Photo + sport pills (Figma 28057:8203, mobile 28060:8203). -->
+    <div class="ab-hero__visual">
+      <div class="ab-art">
+        <div class="ab-art__photo ab-shot">
+          <div class="ab-shot__in"><img src="assets/about/hero-photo.webp" alt="Komunitas AYO di lapangan padel" width="1200" height="683" fetchpriority="high"><img class="ab-shot__logo" src="assets/about/icons/logo-banner-hero.svg" alt="" width="50" height="27"></div>
+        </div>
+        <ul class="ab-art__pills" aria-label="Olahraga di AYO" style="list-style:none;margin:0;padding:0">
+          <li class="ab-pill" style="--x:78.96;--y:61.61;--r:6deg"><img src="assets/about/ball-padel.webp" alt="" width="30" height="30">Padel</li>
+          <li class="ab-pill" style="--x:416.5;--y:25.19;--r:-4deg"><img src="assets/about/ball-pickleball.webp" alt="" width="30" height="30">Pickleball</li>
+          <li class="ab-pill" style="--x:469.33;--y:190.64;--r:5deg"><img src="assets/about/ball-basketball.webp" alt="" width="30" height="30">Basket</li>
+          <li class="ab-pill" style="--x:106.39;--y:236.81;--r:-5deg"><img src="assets/about/ball-badminton.webp" alt="" width="30" height="30">Badminton</li>
+          <li class="ab-pill" style="--x:461.54;--y:356.38;--r:-4deg"><img src="assets/about/ball-tennis.webp" alt="" width="30" height="30">Tenis</li>
+          <li class="ab-pill" style="--x:187.2;--y:428.61;--r:3deg"><img src="assets/about/ball-football.webp" alt="" width="30" height="30">Sepak Bola</li>
+          <li class="ab-pill" style="--x:107.54;--y:336.62;--r:4deg"><span class="ab-pill__plus" aria-hidden="true">+</span>dan lainnya</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. AYO AT A GLANCE (Figma 27987:8057). "xxxx"/"xxx" are placeholders in Figma too. -->
+<section class="ab-stats" aria-labelledby="ab-stats-title">
+  <div class="ab-wrap">
+    <div class="ab-stats__band">
+      <h2 class="ab-eyebrow" id="ab-stats-title">AYO dalam angka</h2>
+      <dl class="ab-stats__grid">
+        <div class="ab-stat"><dt>Pengguna</dt><dd>1,5 juta<span>+</span></dd></div>
+        <div class="ab-stat"><dt>Venue</dt><dd>xxxx<span>+</span></dd></div>
+        <div class="ab-stat"><dt>Lapangan</dt><dd>6.800<span>+</span></dd></div>
+        <div class="ab-stat"><dt>Kota</dt><dd>xxx<span>+</span></dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- 3. THE AYO STORY (Figma 27987:8085; states 2021 28014:8166, 2022 28014:8243, 2025 28014:8320, 2026 28014:8397) -->
+<section class="ab-story" aria-labelledby="ab-story-title" data-story>
+  <div class="ab-wrap">
+    <div class="ab-story__head">
+      <div>
+        <p class="ab-eyebrow">Cerita AYO</p>
+        <h2 class="ab-h2" id="ab-story-title">AYO dimulai pada 2016 sebagai komunitas yang membantu tim amatir mencari lawan main.</h2>
+      </div>
+      <p class="ab-lede">Sekarang, dengan AYO orang mencari teman main padel, badminton, tenis, dan cabor lainnya, booking lapangan, ikut kompetisi, dan mencatat skor secara live. Tujuan kami tetap sama sejak hari pertama: membuat olahraga lebih mudah dimulai dan lebih seru untuk terus dimainkan.</p>
+    </div>
+    <ol class="ab-tl" aria-label="Milestone">
+      <li class="is-on"><button type="button" aria-current="step" data-img="assets/about/story-2016.webp" data-alt="Tim sepak bola amatir merayakan gol" data-title="Komunitas untuk mencari lawan sparring">2016</button></li>
+      <li><button type="button" data-img="assets/about/story-2021.webp" data-alt="Pemain dengan raket padel di sesi Main Bareng AYO" data-title="Aplikasi AYO hadir di Android &amp; iOS, dengan fitur Main Bareng untuk cari teman main">2021</button></li>
+      <li><button type="button" data-img="assets/about/story-2022.webp" data-alt="Venue padel indoor dengan beberapa lapangan" data-title="AYO Venue Management untuk pemilik venue">2022</button></li>
+      <li><button type="button" data-img="assets/about/story-2025.webp" data-alt="Pertandingan padel di lapangan indoor" data-title="Racket sports memimpin: dengan padel jadi cabang olahraga terbesar kami">2025</button></li>
+      <li><button type="button" data-img="assets/about/story-2026.webp" data-alt="Pemain padel memukul forehand" data-title="Skor live Gametime · Padel Player Rating System · Google Play Best of 2026">2026</button></li>
+    </ol>
+    <article class="ab-card" aria-live="polite">
+      <div class="ab-card__photo"><img src="assets/about/story-2016.webp" alt="Tim sepak bola amatir merayakan gol" width="1200" height="800" loading="lazy"></div>
+      <div class="ab-card__body">
+        <div class="ab-card__text">
+          <p class="ab-eyebrow">Milestone <span data-count>01 / 05</span></p>
+          <p class="ab-card__year">2016</p>
+          <h3 class="ab-card__title">Komunitas untuk mencari lawan sparring</h3>
+        </div>
+        <div class="ab-arrows">
+          <button class="ab-arrow" type="button" data-prev aria-label="Milestone sebelumnya" disabled><img src="assets/about/icons/prev.svg" alt="" width="44" height="44"></button>
+          <button class="ab-arrow" type="button" data-next aria-label="Milestone berikutnya"><img src="assets/about/icons/next.svg" alt="" width="44" height="44"></button>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- 4. MISSION & VISION (Figma 27988:7997) -->
+<section class="ab-mv" aria-label="Misi dan visi">
+  <div class="ab-wrap ab-mv__grid">
+    <div class="ab-mv__card ab-mv__card--dark">
+      <h2 class="ab-eyebrow">Misi</h2>
+      <p>Mengajak lebih banyak orang berolahraga, lebih sering — karena makin banyak yang bermain, makin sehat komunitasnya, dan pada waktunya, makin kuat atletnya.</p>
+    </div>
+    <div class="ab-mv__card">
+      <h2 class="ab-eyebrow">Visi</h2>
+      <p>Ekosistem olahraga berkelanjutan yang meningkatkan nilai sosial dan ekonomi olahraga akar rumput lewat teknologi.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5. THE AYO ECOSYSTEM (Figma 28041:8191, mobile 28042:8203) -->
+<section class="ab-eco" aria-labelledby="ab-eco-title">
+  <div class="ab-wrap">
+    <div class="ab-eco__head">
+      <div>
+        <p class="ab-eyebrow">Ekosistem AYO</p>
+        <h2 class="ab-h2" id="ab-eco-title">Dua aplikasi, satu goal untuk komunitas.</h2>
+      </div>
+      <p class="ab-lede">Pemain dan venue memakai aplikasi yang berbeda, tapi setiap booking tercatat di tempat yang sama — jadi mencari teman main dan mengisi lapangan terjadi bersamaan.</p>
+    </div>
+    <div class="ab-stage">
+      <div class="ab-side">
+        <div class="ab-who">
+          <p>Untuk pemain &amp; komunitas</p>
+          <ul class="ab-chips" style="list-style:none;margin:0;padding:0">
+            <li class="ab-chip"><i><img src="assets/about/icons/ic-user.svg" alt="" width="11" height="13"></i>Pemain</li>
+            <li class="ab-chip"><i><img src="assets/about/icons/ic-users.svg" alt="" width="16" height="16"></i>Host &amp; tim</li>
+            <li class="ab-chip"><i><img src="assets/about/icons/ic-user-plus.svg" alt="" width="15" height="12"></i>Komunitas</li>
+          </ul>
+        </div>
+        <div class="ab-app">
+          <div class="ab-app__text">
+            <span class="ab-app__pill">Aplikasi AYO</span>
+            <h3>Aplikasi AYO</h3>
+            <div class="ab-app__item"><p>Cari teman main, booking lapangan, dan catat skor.</p><a href="#">Lihat Main Bareng →</a></div>
+            <div class="ab-app__item"><p>Jadi host sesi, cari lawan, dan kembangkan komunitasmu.</p><a href="#">Jadi host di AYO →</a></div>
+          </div>
+          <div class="ab-app__mock" aria-hidden="true">
+            <div class="ab-phone"><div class="ab-scr">
+              <div class="ab-scr__hd"><b>Profil Saya</b><span class="ab-tag">Superhost</span></div>
+              <div class="ab-mbox">
+                <div class="ab-mid"><span class="ab-av">RA</span><span><b>Raka Aditya</b><small>@raka.plays · Padel</small></span></div>
+                <hr>
+                <div class="ab-mstats"><span class="ab-mstat"><b>20</b><small>Aktivitas</small></span><span class="ab-mstat"><b>40</b><small>Match</small></span><span class="ab-mstat"><b>10</b><small>Lencana</small></span></div>
+              </div>
+              <div>
+                <div class="ab-mtitle"><b>Komunitasku</b><small>Kelola</small></div>
+                <div class="ab-tiles">
+                  <span class="ab-tile is-on"><i style="background:#ec2435">SP</i><b>Senayan Padel</b><small>Padel · 48</small></span>
+                  <span class="ab-tile"><i style="background:#cef249;color:#1a1919">KT</i><b>Kemang Tennis</b><small>Tenis · 32</small></span>
+                  <span class="ab-tile"><i style="background:#1a1919">SB</i><b>Sunday Smash</b><small>Badminton · 26</small></span>
+                  <span class="ab-tile"><i style="background:rgba(236,36,53,.1);color:#ec2435">PP</i><b>Pickleball Pals</b><small>Pickleball · 18</small></span>
+                </div>
+              </div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+      <div class="ab-bridge" aria-hidden="true"><span class="ab-hub"><img src="assets/about/icons/hub-logo.svg" alt="" width="55" height="30"></span></div>
+      <div class="ab-side">
+        <div class="ab-who">
+          <p>Untuk venue</p>
+          <ul class="ab-chips" style="list-style:none;margin:0;padding:0">
+            <li class="ab-chip"><i><img src="assets/about/icons/ic-building.svg" alt="" width="14" height="13"></i>Pemilik &amp; staf venue</li>
+          </ul>
+        </div>
+        <div class="ab-app ab-app--dark">
+          <div class="ab-app__text">
+            <span class="ab-app__pill">Aplikasi AVM</span>
+            <h3>AVM</h3>
+            <div class="ab-app__item"><p>Kelola booking, pembayaran, dan laporan di satu tempat.</p><a href="#">Tentang AVM →</a></div>
+          </div>
+          <div class="ab-app__mock" aria-hidden="true">
+            <div class="ab-phone"><div class="ab-scr ab-scr--avm">
+              <div class="ab-scr__hd"><span class="ab-venue"><b>Venue Kamu</b><img src="assets/about/icons/ic-chev.svg" alt="" width="7" height="7"></span><span class="ab-tag ab-tag--ok">Buka</span></div>
+              <div class="ab-vstats">
+                <span class="ab-vstat ab-vstat--on"><small>Pendapatan</small><b>Rp106.785.000</b></span>
+                <span class="ab-vstat"><small>Reservasi</small><b>256<img src="assets/about/icons/ic-arrow-up.svg" alt="" width="5" height="4"></b></span>
+              </div>
+              <div class="ab-chart">
+                <div class="ab-mtitle"><b>Ringkasan pendapatan</b><small>Tahun ini</small></div>
+                <div class="ab-chart__plot"><img src="assets/about/icons/revenue-line.svg" alt="" width="115" height="62"><span class="ab-chart__tip"><small>Mei 2026</small><b>Rp10.000.000</b></span></div>
+                <div class="ab-axis"><span>Jan</span><span>Mar</span><span>Mei</span><span>Jul</span><span>Sep</span><span>Nov</span></div>
+              </div>
+              <div>
+                <div class="ab-mtitle" style="margin-bottom:3.6px"><b>Mendatang</b></div>
+                <div class="ab-book"><span><b>19:00 · Court 2</b><small>Booking via aplikasi AYO</small></span><em>Baru</em></div>
+              </div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. MOMENTS (Figma 27988:8045). Auto-scroll comes with the motion pass. -->
+<section class="ab-moments" aria-labelledby="ab-moments-title">
+  <div class="ab-wrap">
+    <p class="ab-eyebrow">Momen</p>
+    <h2 class="ab-h2" id="ab-moments-title">Momen dari komunitas AYO.</h2>
+  </div>
+  <div class="ab-strip" tabindex="0" aria-label="Foto dari komunitas AYO">
+    <img class="is-wide" src="assets/about/moment-1.webp" alt="Anggota komunitas AYO memamerkan sepatu baru" width="1000" height="666" loading="lazy">
+    <img class="is-narrow" src="assets/about/moment-2.webp" alt="Pemain dengan banner HEAD di lapangan tenis" width="1000" height="563" loading="lazy">
+    <div class="is-wide ab-shot"><div class="ab-shot__in"><img src="assets/about/hero-photo.webp" alt="Komunitas AYO di lapangan padel" width="1200" height="683" loading="lazy"><img class="ab-shot__logo" src="assets/about/icons/logo-banner-hero.svg" alt="" width="50" height="27"></div></div>
+    <img class="is-narrow" src="assets/about/moment-4.webp" alt="Pemain padel di lapangan indoor" width="1000" height="563" loading="lazy">
+    <img class="is-wide" src="assets/about/moment-5.webp" alt="Komunitas badminton di lapangan" width="1000" height="563" loading="lazy">
+    <img class="is-narrow" src="assets/about/moment-6.webp" alt="Komunitas tenis setelah sesi malam" width="1000" height="667" loading="lazy">
+  </div>
+</section>
+
+<!-- 7. CTA (Figma 27988:8056) -->
+<section class="ab-cta" aria-labelledby="ab-cta-title">
+  <h2 id="ab-cta-title">Siap jadi host Main Bareng pertamamu?</h2>
+  <p>Unduh aplikasi AYO, buat sesi dalam hitungan menit, dan bagikan ke komunitasmu.</p>
+  <a class="ab-btn" href="#">Download AYO</a>
+</section>
+</main>
+
+
+<!-- 8. FOOTER — components/site-footer, Indonesian copy (Figma "Footer · ID" 28109:22262) -->
+<footer class="sft">
+  <div class="sft__in">
+    <div class="sft__top">
+      <a class="sft__logo" href="index.html" aria-label="Beranda AYO"><img src="assets/icons/footer/logo.svg" alt="AYO" width="48" height="26"></a>
+      <div class="sft__cta">
+        <p class="sft__cta-label">Punya venue olahraga?</p>
+        <a class="sft__btn" href="#">Jadi Mitra Venue <img src="assets/icons/footer/arrow-up-right.svg" alt="" width="16" height="16"></a>
+      </div>
+    </div>
+
+    <div class="sft__cols">
+      <nav class="sft__col sft__col--company" aria-labelledby="sft-company">
+        <p class="sft__h" id="sft-company">Perusahaan</p>
+        <div class="sft__links"><a href="about-id.html" aria-current="page">Tentang Kami</a><a href="#">Kebijakan &amp; Privasi</a><a href="#">Syarat &amp; Ketentuan</a></div>
+      </nav>
+      <nav class="sft__col sft__col--eco" aria-labelledby="sft-eco">
+        <p class="sft__h" id="sft-eco">Ekosistem</p>
+        <div class="sft__links"><a href="#">Aktivitas</a><a href="#">PadelLevels</a><a href="#">Booking</a><a href="#">Pemilik Venue</a><a href="#">Kemitraan</a><a href="#">Direktori Lapangan</a><a href="#">Direktori Komunitas</a></div>
+      </nav>
+      <nav class="sft__col sft__col--support" aria-labelledby="sft-support">
+        <p class="sft__h" id="sft-support">Bantuan</p>
+        <div class="sft__links"><a href="#">Hubungi Kami</a></div>
+      </nav>
+      <div class="sft__col sft__col--follow">
+        <p class="sft__h">Follow Kami</p>
+        <div class="sft__social">
+          <a href="#" aria-label="AYO di Instagram"><img src="assets/icons/footer/instagram.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO di TikTok"><img src="assets/icons/footer/tiktok.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO di YouTube"><img src="assets/icons/footer/youtube.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO di Threads"><img src="assets/icons/footer/threads.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO di LinkedIn"><img src="assets/icons/footer/linkedin.svg" alt="" width="18" height="18"></a>
+        </div>
+        <div class="sft__apps">
+          <p class="sft__apps-label">Tersedia di</p>
+          <div class="sft__stores">
+            <a class="sft__store" href="#" aria-label="Download di App Store"><img src="assets/icons/footer/app-store.svg" alt="" width="27" height="27"><span><small>Download on the</small><b>App Store</b></span></a>
+            <a class="sft__store" href="#" aria-label="Dapatkan di Google Play"><img src="assets/icons/footer/google-play.svg" alt="" width="25" height="27"><span><small>Get it on</small><b>Google Play</b></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sft__bottom">
+      <p class="sft__copy">© 2026 AYO All Right Reserved</p>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Kembali ke atas">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V4.5"/><path d="M7.5 9.5 12 5 16.5 9.5"/></svg>
+</button>
+
+<script src="vendor/jquery-3.5.1/jquery.min.js"></script>
+<script src="vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
+<script src="scripts/chrome.js?v=20261119c"></script>
+<script src="scripts/about.js?v=20261119a"></script>
+</body>
+</html>

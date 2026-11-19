@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="id" data-page-lang="ID" data-lang-en="avm-en.html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AYO Venue Management (AVM) — AYO</title>
+<meta name="description" content="Kelola booking online dan reservasi langsung, hubungkan lapangan terkait untuk mencegah bentrok booking, serta atur ketersediaan lapangan dalam satu sistem terpusat.">
+
+<link rel="alternate" hreflang="id" href="avm-id.html">
+<link rel="alternate" hreflang="en" href="avm-en.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#ec2435">
+
+<link rel="stylesheet" href="vendor/bootstrap-4.3.1/bootstrap.min.css">
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="styles/bootstrap-compat.css">
+<link rel="stylesheet" href="styles/chrome.css">
+<link rel="stylesheet" href="components/mini-ui/mini-ui.css?v=20261119g">
+<link rel="stylesheet" href="components/mini-ui/avm/booking-payments.css?v=20261119a">
+<link rel="stylesheet" href="components/mini-ui/avm/reports-promo.css?v=20261119a">
+<link rel="stylesheet" href="components/mini-ui/avm/addons-more.css?v=20261119a">
+<link rel="stylesheet" href="components/avm-hero/avm-hero.css?v=20261119a">
+<link rel="stylesheet" href="components/site-footer/site-footer.css?v=20261118b">
+<link rel="stylesheet" href="styles/avm.css?v=20261119a">
+</head>
+<body class="ayo-web">
+
+<!-- AVM (AYO Venue Management) landing page — Indonesian.
+     Figma: desktop 27882:40312, mobile 27882:41018, FAQ 27882:41680, tabs 27882:41760 / 41827 / 41883 / 41972 / 42028 / 42075.
+     Twin page: avm-en.html (same structure, same tab slugs). -->
+
+<!-- 1. NAV (same markup as the Scoring page) -->
+<nav class="ayo-nav on-light">
+  <div class="nav-in container-fluid">
+    <a class="brand" href="index.html" aria-label="AYO"><img src="assets/logo.svg" alt="AYO"></a>
+    <div class="nav-links" id="navlinks">
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Booking</a></div>
+      <div class="ayo-nav-item has-sub">
+        <button class="nav-top" aria-expanded="false" aria-haspopup="true">Aktivitas <span class="chev" aria-hidden="true"></span></button>
+        <div class="submenu" data-mega="activities">
+          <a href="#">Ikut aktivitas</a>
+          <a href="#">Buat aktivitas</a>
+          <a href="scoring-id.html">Scoring</a>
+        </div>
+      </div>
+      <div class="ayo-nav-item"><a class="nav-top" href="avm-id.html" aria-current="page">Untuk Pemilik Venue</a></div>
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Jadi Mitra</a></div>
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Blog</a></div>
+    </div>
+    <div class="nav-actions">
+    <div class="lang" id="lang">
+      <button class="lang-btn" aria-haspopup="true" aria-expanded="false" aria-label="Pilih bahasa">
+        <span class="flag cur-flag" aria-hidden="true">🇮🇩</span>
+        <span class="cur">ID</span>
+        <span class="chev" aria-hidden="true"></span>
+      </button>
+      <div class="lang-menu" role="menu">
+        <button role="menuitemradio" aria-selected="false" data-code="EN" data-flag="🇬🇧"><span class="flag" aria-hidden="true">🇬🇧</span><span class="lname">English</span><span class="code">EN</span></button>
+        <button role="menuitemradio" aria-selected="true" data-code="ID" data-flag="🇮🇩"><span class="flag" aria-hidden="true">🇮🇩</span><span class="lname">Bahasa Indonesia</span><span class="code">ID</span></button>
+      </div>
+    </div>
+    <a class="nav-icon" href="#" aria-label="Cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3h2.2l2.1 12.4a1.5 1.5 0 0 0 1.5 1.25h8.3a1.5 1.5 0 0 0 1.48-1.2L21 7H6"/></svg>
+    </a>
+    <a class="ayo-btn primary" href="#" data-login>Masuk</a>
+    <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navlinks">
+      <svg class="ico-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
+      <svg class="ico-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>
+    </button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<!-- 2. HERO -->
+<section class="avm-top" aria-labelledby="avm-title">
+  <div class="avm-wrap avm-top__in">
+    <div class="avm-top__copy">
+      <div class="avm-crumbs">
+        <nav class="avm-crumb" aria-label="Breadcrumb"><ol><li><a href="index.html">AYO</a></li><li><span aria-current="page">AYO Venue Management</span></li></ol></nav>
+        <span class="avm-chip">Aplikasi untuk pemilik venue</span>
+      </div>
+      <h1 class="avm-top__title" id="avm-title">Semua Kebutuhan Venue, dalam Satu Platform.</h1>
+      <p class="avm-top__lead">Kelola booking online dan reservasi langsung, hubungkan lapangan terkait untuk membantu mencegah bentrok booking, serta atur ketersediaan lapangan dalam satu sistem terpusat.</p>
+      <div class="avm-avail">
+        <span class="avm-avail__lbl">Tersedia di</span>
+        <span class="avm-avail__div" aria-hidden="true"></span>
+        <span class="avm-avail__item"><span class="avm-avail__ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="2" width="9" height="16" rx="2"/><path d="M9 15h2"/></svg></span>Mobile</span>
+        <span class="avm-avail__div" aria-hidden="true"></span>
+        <span class="avm-avail__item"><span class="avm-avail__ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3.5" width="16" height="10.5" rx="1.5"/><path d="M7 17.5h6"/><path d="M10 14v3.5"/></svg></span>Desktop</span>
+      </div>
+    </div>
+    <!-- Illustration slot (Figma 28126:11219, 660 × 560; mobile full width × 560),
+         filled by components/avm-hero. -->
+    <div class="avm-hero__visual"><div data-avm-hero></div></div>
+  </div>
+</section>
+
+<!-- 3. STATS -->
+<section class="avm-stats" aria-label="AVM dalam angka">
+  <div class="avm-wrap">
+    <div class="avm-stats__row" data-reveal>
+      <div class="avm-stat"><span class="avm-stat__num" data-count="900000" data-suffix="+">900.000+</span><span class="avm-stat__lbl">Total Pengguna AYO</span></div>
+      <div class="avm-stat"><span class="avm-stat__num">xxx</span><span class="avm-stat__lbl">Total Venue</span></div>
+      <div class="avm-stat"><span class="avm-stat__num" data-count="2000" data-suffix="+">2.000+</span><span class="avm-stat__lbl">Total Lapangan</span></div>
+      <div class="avm-stat"><span class="avm-stat__num">xxx</span><span class="avm-stat__lbl">Kota Tersedia</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. WHY AVM -->
+<section class="avm-why" aria-labelledby="avm-why-title">
+  <div class="avm-wrap">
+    <div class="avm-why__head" data-reveal>
+      <p class="avm-eyebrow">Kenapa AVM</p>
+      <h2 class="avm-h2" id="avm-why-title">Kenapa Venue Memilih AVM</h2>
+    </div>
+    <div class="avm-why__grid">
+      <div class="avm-why__card" data-reveal="0">
+        <span class="avm-why__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M8 3v4"/><path d="M16 3v4"/><path d="M3.5 10h17"/><path d="M14 16l2 2 3.5-3.5"/></svg></span>
+        <h3>Kelola Venue Dengan Praktis</h3>
+        <ul class="avm-why__list">
+          <li><span class="avm-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Jalankan Operasional Venue lebih Efisien</li>
+          <li><span class="avm-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Konfirmasi Booking Instan</li>
+          <li><span class="avm-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Atur Jadwal Lapangan dengan Mudah</li>
+        </ul>
+      </div>
+      <div class="avm-why__card avm-why__card--dark" data-reveal="2">
+        <span class="avm-why__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span>
+        <h3>Tumbuhkan Bisnismu</h3>
+        <ul class="avm-why__list">
+          <li><span class="avm-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Kembangkan Peluang Bisnis Venue</li>
+          <li><span class="avm-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Jangkau Komunitas Pemain Lebih Luas</li>
+          <li><span class="avm-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Tarik Lebih Banyak Booking dan Pelanggan Baru</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. KEY FEATURES — seven tabs (scripts/avm.js). Each visual slot is a
+     Mini UI card (components/mini-ui/avm/*) keyed by data-mu; features without
+     a source screen yet show a plain stand-in card. Deep links: #payments, #reports, #promotions, #add-ons, #activities, #additional. -->
+<section class="avm-kf" id="fitur" aria-labelledby="avm-kf-title">
+  <div class="avm-wrap avm-kf__head">
+    <h2 class="avm-h2" id="avm-kf-title" data-reveal>Semua yang kamu butuhkan<br>untuk mengelola venue.</h2>
+    <div class="avm-tabs" role="tablist" aria-label="Fitur AVM">
+      <button class="avm-tab is-on" type="button" role="tab" aria-selected="true" aria-controls="kf-booking" id="tab-booking">Booking &amp; Jadwal</button>
+      <button class="avm-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-payments" id="tab-payments" tabindex="-1">Pembayaran</button>
+      <button class="avm-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-reports" id="tab-reports" tabindex="-1">Laporan</button>
+      <button class="avm-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-promotions" id="tab-promotions" tabindex="-1">Promo &amp; Pelanggan</button>
+      <button class="avm-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-add-ons" id="tab-add-ons" tabindex="-1">Add-on</button>
+      <button class="avm-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-activities" id="tab-activities" tabindex="-1">Aktivitas</button>
+      <button class="avm-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-additional" id="tab-additional" tabindex="-1">Fitur Tambahan</button>
+    </div>
+  </div>
+
+  <div class="avm-panel" id="kf-booking" role="tabpanel" aria-labelledby="tab-booking">
+    <div class="avm-wrap avm-intro"><h3>Semua booking, online maupun ditempat, dalam satu jadwal.</h3><p>Kelola jadwal booking venue-mu, pantau detail pembayaran, serta atur ketersediaan lapangan dalam satu sistem terpusat.</p></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">01</span><h4>Booking Online Tercatat Otomatis</h4><p>Setiap booking melalui aplikasi AYO otomatis tercatat dalam jadwal venue-mu.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-bk01"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">02</span><h4>Semua Detail Booking dalam Sekali Lihat</h4><p>Lihat lapangan yang dipesan, slot waktu, dan status pembayaran untuk setiap reservasi.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-bk02"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">03</span><h4>Pantau Status Setiap Booking</h4><p>Lihat lapangan yang dipesan, slot waktu, dan status pembayaran untuk setiap reservasi.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-bk03"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">04</span><h4>Kendalikan Ketersediaan Lapangan</h4><p>Buka atau tutup lapangan, serta beralih antara tampilan kalender harian dan bulanan untuk mengelola jadwal.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-bk04"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">05</span><h4>Kelola Lapangan Multifungsi Tanpa Bentrok Jadwal</h4><p>Atur satu lapangan untuk beberapa jenis olahraga, seperti basket dan futsal. Saat satu jadwal dipesan untuk salah satunya, jadwal yang sama otomatis tidak tersedia untuk olahraga lainnya.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-bk05"></div></div></div>
+  </div>
+
+  <div class="avm-panel" id="kf-payments" role="tabpanel" aria-labelledby="tab-payments" hidden>
+    <div class="avm-wrap avm-intro"><h3>Terima Pembayaran dengan Mudah, Kelola Semuanya dalam Satu Tempat.</h3><p>Sediakan berbagai pilihan pembayaran dan cairkan pendapatan venue melalui AVM.</p></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">01</span><h4>Terima Beragam Opsi Pembayaran</h4><p>Terima pembayaran dengan mudah melalui berbagai metode pembayaran populer, mulai dari kartu kredit, QRIS, e-wallet, gerai pembayaran offline, dan lainnya.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-py01"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">02</span><h4>Pencairan Dana dengan Mudah</h4><p>Cairkan pendapatan venue ke rekening bank terdaftar hanya dalam beberapa langkah.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-py02"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">03</span><h4>Kebijakan Refund yang Fleksibel</h4><p>Tentukan kebijakan pengembalian dana yang berlaku jika pelanggan membatalkan booking.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-py03"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">04</span><h4>Pembayaran Penuh atau DP</h4><p>Berikan pilihan kepada pelanggan untuk membayar penuh saat booking atau membayar DP terlebih dahulu.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-py04"></div></div></div>
+  </div>
+
+  <div class="avm-panel" id="kf-reports" role="tabpanel" aria-labelledby="tab-reports" hidden>
+    <div class="avm-wrap avm-intro"><h3>Semua Transaksi, dari Berbagai Sumber, dalam Satu Tampilan.</h3><p>Pantau transaksi dari booking, aktivitas, dan berbagai jenis pembayaran, lalu ekspor laporan untuk memudahkan pengelolaan bisnis.</p></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">01</span><h4>Akses Laporan Transaksi &amp; Mutasi dalam Satu Dashboard</h4><p>Pantau laporan dan mutasi transaksi online, manual, kredit, add-on, serta jenis transaksi lainnya dalam satu dashboard.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-rp01"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">02</span><h4>Pantau Pendapatan Booking &amp; Aktivitas</h4><p>Lihat seluruh transaksi yang berasal dari booking lapangan dan aktivitas dalam satu tempat.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-rp02"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">03</span><h4>Ekspor Laporan ke Excel</h4><p>Unduh laporan transaksi dalam format Excel kapan saja. Seluruh riwayat transaksi tetap tersimpan dan dapat diakses kembali, termasuk data dari periode sebelumnya.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-rp03"></div></div></div>
+  </div>
+
+  <div class="avm-panel" id="kf-promotions" role="tabpanel" aria-labelledby="tab-promotions" hidden>
+    <div class="avm-wrap avm-intro"><h3>Tarik Pelanggan Baru dan Jadikan Mereka Pelanggan Setia.</h3><p>Buat voucher, pantau performa promosi, dan kenali pelangganmu, semuanya dalam satu tempat.</p></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">01</span><h4>Buat Promo untuk Menumbuhkan Pelangganmu</h4><p>Buat voucher secara publik maupun privat sesuai kebutuhanmu untuk mendapatkan pelanggan baru, meningkatkan loyalitas atau memberikan voucher eksklusif ke pelanggan terpilih.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-pr01"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">02</span><h4>Pastikan Pelanggan Setiamu Terus Kembali</h4><p>Jaga pelanggan setiamu dengan membership yang memudahkan booking secara rutin, bantu pelangganmu mengamankan jadwal lapangan dengan lebih praktis.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-pr02"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">03</span><h4>Tawarkan Paket Kredit di Muka</h4><p>Pelanggan dapat membeli paket kredit terlebih dahulu dan menggunakannya untuk booking atau aktivitas berikutnya.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-pr03"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">04</span><h4>Tawarkan Membership Bundling</h4><p>Buat paket beberapa slot jadwal dengan harga khusus yang lebih hemat. Berikan penawaran menarik bagi pelanggan sekaligus dorong lebih banyak booking untuk venue-mu.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-pr04"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">05</span><h4>Pantau Performa Promosi</h4><p>Ambil keputusan melalui data dari setiap program promosi yang sedang berjalan.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-pr05"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">06</span><h4>Kenali Basis Pelangganmu</h4><p>Gunakan menu Daftar Pelanggan untuk melihat siapa saja yang booking di venue dan mengunduh datanya untuk mendukung aktivitas pemasaran.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-pr06"></div></div></div>
+  </div>
+
+  <div class="avm-panel" id="kf-add-ons" role="tabpanel" aria-labelledby="tab-add-ons" hidden>
+    <div class="avm-wrap avm-intro"><h3>Tingkatkan Pendapatan dari Setiap Booking.</h3><p>Tawarkan produk dan layanan tambahan, atur pilihan produk, serta kelola coaching dan layanan lainnya bersama booking lapangan.</p></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">01</span><h4>Jual Lebih dari Sekadar Sewa Lapangan</h4><p>Tingkatkan peluang pendapatan dengan menawarkan produk dan layanan tambahan saat pelanggan melakukan booking lapangan, seperti penyewaan raket dan layanan lainnya.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-ad01"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">02</span><h4>Atur Produk dan Variannya</h4><p>Buat produk dengan berbagai pilihan dan varian sesuai ketersediaan di venue-mu.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-ad02"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">03</span><h4>Tawarkan Coaching &amp; Layanan Tambahan</h4><p>Sediakan coaching dan layanan lainnya dengan jadwal dan opsi penjadwalan ulang.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-ad03"></div></div></div>
+  </div>
+
+  <div class="avm-panel" id="kf-activities" role="tabpanel" aria-labelledby="tab-activities" hidden>
+    <div class="avm-wrap avm-intro"><h3>Bikin Lapanganmu Makin Aktif</h3><p>Buat lebih banyak aktivitas untuk mempertemukan pemain dan menghidupkan venue-mu.</p></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">01</span><h4>Jual Lebih dari Sekadar Sewa Lapangan</h4><p>Ajak lebih banyak pemain untuk bergabung dengan membuat social games, kelas atau sesi coaching di venue-mu.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-ac01"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><div class="avm-feat__top"><span class="avm-num">02</span><span class="avm-soon">Segera hadir</span></div><h4>Adakan Pertandingan Publik</h4><p>Buat pertandingan publik agar lebih banyak pemain bisa bertanding dan terhubung di venue-mu.</p></div><div class="avm-feat__vis"><div class="sc-card avm-standin" aria-hidden="true"><span class="avm-standin__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4v1.5A3.5 3.5 0 0 0 7.5 11"/><path d="M17 6h3v1.5a3.5 3.5 0 0 1-3.5 3.5"/><path d="M12 14v4"/><path d="M8.5 20h7"/></svg></span><span class="avm-standin__lbl">Pertandingan publik</span></div></div></div>
+  </div>
+
+  <div class="avm-panel" id="kf-additional" role="tabpanel" aria-labelledby="tab-additional" hidden>
+    <div class="avm-wrap avm-intro"><h3>Lebih Fleksibel Mengelola Venue.</h3><p>Tawarkan paket kredit di muka, sediakan akses privat bagi pelanggan terpilih, atur hak akses, dan pantau ulasan melalui AVM.</p></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">01</span><h4>Atur Hak Akses dan Peran Karyawan</h4><p>Tentukan fitur dan informasi yang dapat diakses setiap karyawan, termasuk akses khusus untuk melihat saja.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-ft01"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">02</span><h4>Buat Venue Privat untuk Pelanggan Terpilih</h4><p>Atur akses venue privat bagi pelanggan yang terdaftar dalam whitelist, sehingga booking atau layanan tertentu hanya dapat diakses pelanggan yang disetujui.</p></div><div class="avm-feat__vis"><div class="sc-card avm-standin" aria-hidden="true"><span class="avm-standin__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.3"/></svg></span><span class="avm-standin__lbl">Venue privat</span></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">03</span><h4>Sistem Manajemen Coach</h4><p>Berikan akses AVM khusus kepada coach agar mereka dapat melihat dan memantau booking coaching yang masuk secara mandiri.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-ft03"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">04</span><h4>Pantau Ulasan Pelanggan</h4><p>Lihat rating dan ulasan yang diberikan pelanggan untuk venue-mu agar lebih mudah memantau masukan dan mengetahui hal yang perlu ditingkatkan.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-ft04"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">05</span><h4>Prioritas Akses Booking Lebih Awal</h4><p>Berikan akses booking lebih awal bagi tier membership tertentu, sehingga member dapat memesan lapangan hingga 2–3 bulan sebelumnya.</p></div><div class="avm-feat__vis"><div class="sc-card avm-standin" aria-hidden="true"><span class="avm-standin__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M8 3v4"/><path d="M16 3v4"/><path d="M3.5 10h17"/><path d="M12 13v3l2 1.5"/></svg></span><span class="avm-standin__lbl">Akses lebih awal</span></div></div></div>
+  </div>
+
+  <div class="avm-wrap avm-kf__more"><a class="avm-pill" href="#">Jelajahi Lebih Banyak <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5l7-7"/><path d="M5.5 4.5h6v6"/></svg></a></div>
+</section>
+
+<!-- 6. JOIN IN 4 STEPS -->
+<section class="avm-join" aria-labelledby="avm-join-title">
+  <div class="avm-wrap">
+    <h2 class="avm-h2" id="avm-join-title" data-reveal>Bergabung dalam 4 langkah</h2>
+    <ol class="avm-steps">
+      <li class="avm-step" data-reveal="0"><div class="avm-step__track"><span class="avm-step__mark" aria-hidden="true">01</span><span class="avm-step__line"></span></div><div class="avm-step__txt"><h3>Daftar</h3><p>Lengkapi data venue dan bisnis-mu.</p></div></li>
+      <li class="avm-step" data-reveal="1"><div class="avm-step__track"><span class="avm-step__mark" aria-hidden="true">02</span><span class="avm-step__line"></span></div><div class="avm-step__txt"><h3>Verifikasi</h3><p>Tim AYO akan memverifikasi data kamu.</p></div></li>
+      <li class="avm-step" data-reveal="2"><div class="avm-step__track"><span class="avm-step__mark" aria-hidden="true">03</span><span class="avm-step__line"></span></div><div class="avm-step__txt"><h3>Atur Venue</h3><p>Lengkapi informasi venue, lapangan, jadwal, dan harga.</p></div></li>
+      <li class="avm-step avm-step--go" data-reveal="3"><div class="avm-step__track"><span class="avm-step__mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div><div class="avm-step__txt"><h3>Mulai Beroperasi</h3><p>Mulai kelola venue dan terima booking melalui AYO.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 7. CTA BANNER + CONTACT FORM — the form posts nowhere; scripts/avm.js
+     shows the inline sent state on a valid submit. -->
+<section class="avm-contact" aria-labelledby="avm-contact-title">
+  <div class="avm-wrap">
+    <div class="avm-cta" data-reveal><p>Bergabung dengan 2.730+ venue yang berkembang bersama AYO Venue Management. Ceritakan tentang kebutuhan venue-mu dan tim kami akan membantu setup.</p></div>
+    <div class="avm-dialog" id="daftar" data-reveal>
+      <div class="avm-dialog__intro">
+        <div class="avm-dialog__head">
+          <p class="avm-dialog__kicker">AYO Venue Management</p>
+          <h2 id="avm-contact-title">Siap kelola venue bersama AYO?</h2>
+          <p>Ceritakan sedikit tentang venue kamu. Tim AYO akan menghubungi kamu untuk mendiskusikan kebutuhan pengelolaan venue.</p>
+        </div>
+      </div>
+      <form class="avm-form" data-avm-form aria-labelledby="avm-form-title">
+        <div class="avm-form__head"><h3 id="avm-form-title">Hubungi tim AYO Venue Management</h3><p>Kolom bertanda * wajib diisi.</p></div>
+        <div class="avm-field"><span class="avm-field__box"><label class="avm-field__lab" for="avm-f-subject">Subject<i aria-hidden="true">*</i></label><select id="avm-f-subject" name="subject" required><option>AYO Venue Management</option></select></span><svg class="avm-field__chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7.5l5 5 5-5"/></svg></div>
+        <div class="avm-field"><span class="avm-field__box"><label class="avm-field__lab" for="avm-f-name">Nama<i aria-hidden="true">*</i></label><input id="avm-f-name" name="name" type="text" autocomplete="name" required></span></div>
+        <div class="avm-field"><span class="avm-field__box"><label class="avm-field__lab" for="avm-f-email">Email<i aria-hidden="true">*</i></label><input id="avm-f-email" name="email" type="email" autocomplete="email" required></span></div>
+        <div class="avm-field avm-field--phone"><span class="avm-cc"><span class="avm-cc__flag" aria-hidden="true">🇮🇩</span><span class="avm-cc__code" aria-hidden="true">+62</span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7.5l5 5 5-5"/></svg><select name="country_code" aria-label="Kode negara"><option value="+62" data-flag="🇮🇩" selected>🇮🇩 Indonesia (+62)</option><option value="+65" data-flag="🇸🇬">🇸🇬 Singapore (+65)</option><option value="+60" data-flag="🇲🇾">🇲🇾 Malaysia (+60)</option><option value="+61" data-flag="🇦🇺">🇦🇺 Australia (+61)</option><option value="+44" data-flag="🇬🇧">🇬🇧 United Kingdom (+44)</option><option value="+1" data-flag="🇺🇸">🇺🇸 United States (+1)</option></select></span><span class="avm-field__sep" aria-hidden="true"></span><span class="avm-field__box"><label class="avm-field__lab" for="avm-f-phone">Nomor HP<i aria-hidden="true">*</i></label><input id="avm-f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" pattern="[0-9 \-]{6,15}" required></span></div>
+        <div class="avm-field"><span class="avm-field__box"><label class="avm-field__lab" for="avm-f-sport">Kategori Olahraga<i aria-hidden="true">*</i></label><select id="avm-f-sport" name="sport" required><option value=""></option><option>Padel</option><option>Tenis</option><option>Badminton</option><option>Pickleball</option><option>Mini Soccer</option><option>Sepak Bola</option><option>Futsal</option><option>Basket</option><option>Tenis Meja</option><option>Squash</option><option>Voli</option><option>Lainnya</option></select></span><svg class="avm-field__chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7.5l5 5 5-5"/></svg></div>
+        <div class="avm-field"><span class="avm-field__box"><label class="avm-field__lab" for="avm-f-venue">Nama Venue<i aria-hidden="true">*</i></label><input id="avm-f-venue" name="venue" type="text" autocomplete="organization" required></span></div>
+        <div class="avm-field"><span class="avm-field__box"><label class="avm-field__lab" for="avm-f-loc">Lokasi Venue<i aria-hidden="true">*</i></label><input id="avm-f-loc" name="location" type="text" autocomplete="address-level2" required></span></div>
+        <div class="avm-field avm-field--area"><span class="avm-field__box"><label class="avm-field__lab" for="avm-f-msg">Pertanyaan<i aria-hidden="true">*</i></label><textarea id="avm-f-msg" name="message" rows="4" required></textarea></span></div>
+        <p class="avm-form__legal">Dengan mengirim formulir ini, kamu menyetujui <a href="#">Syarat &amp; Ketentuan</a> serta <a href="#">Kebijakan Privasi</a> AYO.</p>
+        <button class="avm-form__btn" type="submit">Kirim Pesan</button>
+      </form>
+      <div class="avm-sent" data-avm-sent role="status" hidden>
+        <span class="avm-sent__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+        <h3>Terima kasih, pesanmu sudah terkirim!</h3>
+        <p>Tim AYO Venue Management akan menghubungimu dalam satu hari kerja untuk membahas kebutuhan venue-mu.</p>
+        <button class="avm-pill" type="button" data-avm-again>Kirim pesan lain</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. FAQ — accordion, first question open (scripts/avm.js) -->
+<section class="avm-faq" aria-labelledby="avm-faq-title">
+  <div class="avm-wrap avm-faq__in">
+    <div class="avm-faq__side" data-reveal>
+      <p class="avm-faq__kicker">FAQ</p>
+      <h2 id="avm-faq-title">Pertanyaan yang<br>sering diajukan.</h2>
+      <p>Masih ada pertanyaan? Tim venue kami membalas dalam satu hari kerja.</p>
+      <a class="avm-pill" href="#daftar">Hubungi Kami <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5l7-7"/><path d="M5.5 4.5h6v6"/></svg></a>
+    </div>
+    <div class="avm-faq__list" data-reveal="2">
+      <div class="avm-faq__item is-open"><h3><button class="avm-faq__q" type="button" aria-expanded="true" aria-controls="faq-a1" id="faq-q1">Apakah AYO Venue Management (AVM) gratis digunakan?<span class="avm-faq__ico" aria-hidden="true"></span></button></h3><div class="avm-faq__a" id="faq-a1" role="region" aria-labelledby="faq-q1"><div><p>AVM membantumu mengelola operasional venue dalam satu tempat. Informasi mengenai biaya penggunaan platform atau biaya transaksi yang berlaku akan dijelaskan oleh tim AYO sebelum kamu mulai menggunakan layanan.</p></div></div></div>
+      <div class="avm-faq__item"><h3><button class="avm-faq__q" type="button" aria-expanded="false" aria-controls="faq-a2" id="faq-q2">Bagaimana cara mendaftarkan venue saya di AYO?<span class="avm-faq__ico" aria-hidden="true"></span></button></h3><div class="avm-faq__a" id="faq-a2" role="region" aria-labelledby="faq-q2"><div><p>Daftarkan informasi venue-mu melalui proses pendaftaran <a href="#daftar">di sini</a>. Tim AYO akan memandu kamu melalui tahapan selanjutnya hingga akun AVM siap digunakan.</p></div></div></div>
+      <div class="avm-faq__item"><h3><button class="avm-faq__q" type="button" aria-expanded="false" aria-controls="faq-a3" id="faq-q3">Berapa lama proses pendaftaran lapangan hingga muncul di aplikasi AYO?<span class="avm-faq__ico" aria-hidden="true"></span></button></h3><div class="avm-faq__a" id="faq-a3" role="region" aria-labelledby="faq-q3"><div><p>Proses registrasi tergantung dari kelengkapan data yang diisi oleh Pemilik Venue, jika proses langsung dikerjakan, proses ini bisa kurang dari 1 jam.</p></div></div></div>
+      <div class="avm-faq__item"><h3><button class="avm-faq__q" type="button" aria-expanded="false" aria-controls="faq-a4" id="faq-q4">Apakah saya bisa mengelola beberapa venue dalam satu akun?<span class="avm-faq__ico" aria-hidden="true"></span></button></h3><div class="avm-faq__a" id="faq-a4" role="region" aria-labelledby="faq-q4"><div><p>Ya, bisa, kamu dapat mengelola beberapa lokasi venue dalam satu akun AVM-mu.</p></div></div></div>
+      <div class="avm-faq__item"><h3><button class="avm-faq__q" type="button" aria-expanded="false" aria-controls="faq-a5" id="faq-q5">Bagaimana booking online dan reservasi langsung dikelola?<span class="avm-faq__ico" aria-hidden="true"></span></button></h3><div class="avm-faq__a" id="faq-a5" role="region" aria-labelledby="faq-q5"><div><p>Booking melalui aplikasi AYO otomatis tercatat dalam jadwal AVM. Kamu juga dapat mencatat reservasi pelanggan yang datang langsung, sehingga seluruh booking tersimpan dalam satu tempat.</p></div></div></div>
+      <div class="avm-faq__item"><h3><button class="avm-faq__q" type="button" aria-expanded="false" aria-controls="faq-a6" id="faq-q6">Bagaimana cara menerima pembayaran dari booking online?<span class="avm-faq__ico" aria-hidden="true"></span></button></h3><div class="avm-faq__a" id="faq-a6" role="region" aria-labelledby="faq-q6"><div><p>Pembayaran online tercatat di AVM dan ditampilkan dalam laporan transaksi. Saldo yang tersedia dapat dicairkan ke rekening bank terdaftar melalui fitur pencairan dana.</p></div></div></div>
+      <div class="avm-faq__item"><h3><button class="avm-faq__q" type="button" aria-expanded="false" aria-controls="faq-a7" id="faq-q7">Apakah saya bisa mengelola karyawan dan mengatur hak aksesnya?<span class="avm-faq__ico" aria-hidden="true"></span></button></h3><div class="avm-faq__a" id="faq-a7" role="region" aria-labelledby="faq-q7"><div><p>Ya. Tambahkan karyawan dan atur hak akses sesuai peran masing-masing, tanpa batasan jumlah akses per satu lokasi venue, termasuk akses hanya untuk melihat informasi tertentu.</p></div></div></div>
+      <div class="avm-faq__item"><h3><button class="avm-faq__q" type="button" aria-expanded="false" aria-controls="faq-a8" id="faq-q8">Bisakah saya memantau dan mengekspor transaksi venue?<span class="avm-faq__ico" aria-hidden="true"></span></button></h3><div class="avm-faq__a" id="faq-a8" role="region" aria-labelledby="faq-q8"><div><p>Ya. Laporan AVM mencakup transaksi dari booking dan aktivitas, termasuk transaksi pendapatan dan mutasi, manual, kredit, dan add-on. Unduh laporan dalam format Excel untuk memudahkan pembukuan dan rekonsiliasi transaksi.</p></div></div></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- 9. FOOTER — components/site-footer (Indonesian copy, same as the Scoring page) -->
+<footer class="sft">
+  <div class="sft__in">
+    <div class="sft__top">
+      <a class="sft__logo" href="index.html" aria-label="Beranda AYO"><img src="assets/icons/footer/logo.svg" alt="AYO" width="48" height="26"></a>
+      <div class="sft__cta">
+        <p class="sft__cta-label">Punya venue olahraga?</p>
+        <a class="sft__btn" href="#">Jadi Mitra Venue <img src="assets/icons/footer/arrow-up-right.svg" alt="" width="16" height="16"></a>
+      </div>
+    </div>
+
+    <div class="sft__cols">
+      <nav class="sft__col sft__col--company" aria-labelledby="sft-company">
+        <p class="sft__h" id="sft-company">Perusahaan</p>
+        <div class="sft__links"><a href="about-id.html">Tentang Kami</a><a href="#">Kebijakan &amp; Privasi</a><a href="#">Syarat &amp; Ketentuan</a></div>
+      </nav>
+      <nav class="sft__col sft__col--eco" aria-labelledby="sft-eco">
+        <p class="sft__h" id="sft-eco">Ekosistem</p>
+        <div class="sft__links"><a href="#">Aktivitas</a><a href="#">PadelLevels</a><a href="#">Booking</a><a href="#">Pemilik Venue</a><a href="#">Kemitraan</a><a href="#">Direktori Lapangan</a><a href="#">Direktori Komunitas</a></div>
+      </nav>
+      <nav class="sft__col sft__col--support" aria-labelledby="sft-support">
+        <p class="sft__h" id="sft-support">Bantuan</p>
+        <div class="sft__links"><a href="#">Hubungi Kami</a></div>
+      </nav>
+      <div class="sft__col sft__col--follow">
+        <p class="sft__h">Follow Kami</p>
+        <div class="sft__social">
+          <a href="#" aria-label="AYO di Instagram"><img src="assets/icons/footer/instagram.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO di TikTok"><img src="assets/icons/footer/tiktok.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO di YouTube"><img src="assets/icons/footer/youtube.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO di Threads"><img src="assets/icons/footer/threads.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO di LinkedIn"><img src="assets/icons/footer/linkedin.svg" alt="" width="18" height="18"></a>
+        </div>
+        <div class="sft__apps">
+          <p class="sft__apps-label">Tersedia di</p>
+          <div class="sft__stores">
+            <a class="sft__store" href="#" aria-label="Download di App Store"><img src="assets/icons/footer/app-store.svg" alt="" width="27" height="27"><span><small>Download on the</small><b>App Store</b></span></a>
+            <a class="sft__store" href="#" aria-label="Dapatkan di Google Play"><img src="assets/icons/footer/google-play.svg" alt="" width="25" height="27"><span><small>Get it on</small><b>Google Play</b></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sft__bottom">
+      <p class="sft__copy">© 2026 AYO All Right Reserved</p>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Kembali ke atas">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V4.5"/><path d="M7.5 9.5 12 5 16.5 9.5"/></svg>
+</button>
+
+<script src="vendor/jquery-3.5.1/jquery.min.js"></script>
+<script src="vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
+<script src="scripts/chrome.js?v=20261119b"></script>
+<script src="components/mini-ui/mini-ui.js?v=20261119n"></script>
+<script src="components/mini-ui/avm/booking-payments.js?v=20261119a"></script>
+<script src="components/mini-ui/avm/reports-promo.js?v=20261119a"></script>
+<script src="components/mini-ui/avm/addons-more.js?v=20261119a"></script>
+<script src="components/avm-hero/avm-hero.js?v=20261119a"></script>
+<script src="scripts/avm.js?v=20261119a"></script>
+</body>
+</html>

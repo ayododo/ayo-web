@@ -1,0 +1,18 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="115.2" height="62.4" viewBox="0 0 115.2 62.4" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Revenue line" clip-path="url(#clip0_0_42)">
+<path id="Vector" d="M4.88281e-05 14.7031H115.2M4.88281e-05 31.5031H115.2M4.88281e-05 48.3031H115.2" stroke-width="0.6" stroke="#EDEDED"/>
+<path id="Vector_2" d="M4.88281e-05 43.2031L28.8 36.0031L57.6 38.4031L86.4 27.6031L115.2 19.2031V62.4031H4.88281e-05V43.2031Z" fill="url(#paint0_linear_0_42)"/>
+<path id="Vector_3" d="M4.88281e-05 43.2031L28.8 36.0031L57.6 38.4031L86.4 27.6031L115.2 19.2031" stroke-width="1.2" stroke-linecap="square" stroke="#EC2435"/>
+<path id="Vector_4" d="M57.6 40.8031V41.7031M57.6 58.8031V57.9031M57.6 43.5031V45.3031M57.6 47.1031V48.9031M57.6 50.7031V52.5031M57.6 54.3031V56.1031" stroke-width="0.6" stroke="#EC2435"/>
+<path id="Vector_5" d="M57.6 41.1031C59.0912 41.1031 60.3 39.8943 60.3 38.4031C60.3 36.912 59.0912 35.7031 57.6 35.7031C56.1089 35.7031 54.9 36.912 54.9 38.4031C54.9 39.8943 56.1089 41.1031 57.6 41.1031Z" fill="white" stroke-width="1.2" stroke="#EC2435"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_42" x1="57.6" y1="19.2031" x2="57.6" y2="62.4031" gradientUnits="userSpaceOnUse">
+<stop stop-color="#EC2435" stop-opacity="0.2"/>
+<stop offset="1" stop-color="#EC2435" stop-opacity="0"/>
+</linearGradient>
+<clipPath id="clip0_0_42">
+<rect width="115.2" height="62.4" fill="white"/>
+</clipPath>
+</defs>
+</svg>

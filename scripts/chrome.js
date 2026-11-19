@@ -352,6 +352,17 @@
     if(twin){ location.href = twin + location.hash; return; }
     syncCountryLanguage();
   }
+  /* Links to a page that exists in both languages (the footer's About Us)
+     point at the English page and carry the Indonesian one in data-href-id.
+     On a page without a twin (the homepage) they follow the chosen language,
+     so the visitor lands on about-id.html after picking Bahasa Indonesia. */
+  function syncLangLinks(code){
+    document.querySelectorAll('a[data-href-id]').forEach(function(a){
+      if(!a.dataset.hrefEn) a.dataset.hrefEn = a.getAttribute('href');
+      a.setAttribute('href', code === 'ID' ? a.dataset.hrefId : a.dataset.hrefEn);
+    });
+  }
+  syncLangLinks(storedLanguage());
   function syncCountryLanguage(){
     if(!lang || !languagePopup) return;
     var isIndonesia = countryCode === 'ID';
@@ -369,6 +380,7 @@
       }
     });
     document.documentElement.dataset.language = code;
+    syncLangLinks(code);
     syncDrawerLang(code, isIndonesia);
   }
   if(lang){

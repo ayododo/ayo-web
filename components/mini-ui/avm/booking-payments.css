@@ -1,0 +1,162 @@
+/* ==========================================================================
+   AYO Venue Management — Mini UI parts for the Booking + Payments cards
+   (components/mini-ui/avm/booking-payments.js). Drawn at the Mini UI base
+   size (Figma values ÷ 1.15). Neutral look; colour only in the small status
+   badges and slot bars, as in the Figma Mini UIs.
+   ========================================================================== */
+
+.mu-bp-still,.mu-bp-still *{transition:none!important}
+
+/* ---- Text + blocks ---- */
+.mu-bp-k{font-size:10px;line-height:1.25;color:#787373}
+.mu-bp-v{font-size:11px;line-height:1.25;font-weight:700;color:#1a1919}
+.mu-bp-v--lg{font-size:14px}
+.mu-bp-v--xl{font-size:17px}
+.mu-bp-v--xxl{font-size:18px}
+.mu-bp-v--green{color:#1b7a4b;font-size:12px}
+.mu-bp-sub{font-size:9px;line-height:1.25;color:#9b9797}
+.mu-bp-num{font-size:11px;line-height:1.25;font-weight:600;color:#1a1919}
+.mu-bp-num--muted{color:#787373}
+.mu-bp-link{font-size:10px;line-height:1.25;font-weight:700;color:#1a1919}
+.mu-bp-kv{display:flex;flex-direction:column;gap:2px;min-width:0}
+.mu-bp-div{display:block;height:1px;background:#eee;flex:0 0 auto}
+.mu-bp-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.mu-bp-card{display:flex;flex-direction:column;gap:6px;padding:10px;border:1px solid #eee;border-radius:12px;background:#fff}
+.mu-bp-card--detail{gap:8px}
+.mu-bp-card--detail .mu-bp-v{font-size:12px}
+.mu-bp-card--row{padding:8px 10px}
+.mu-bp-card--row .mu-bp-v{font-size:12px}
+.mu-bp-card--tight{padding:8px 10px;gap:4px}
+.mu-bp-card--tight .mu-bp-v{font-size:12px}
+.mu-bp-card--bal{padding:12px}
+.mu-bp-card--sched{flex-direction:row;align-items:center;gap:8px;padding:8px 10px}
+.mu-bp-card--calc .mu-bp-v{font-size:11px}
+.mu-bp-card--calc>.mu-bp-v:first-child{font-size:12px}
+.mu-bp-arrow{font-size:12px;font-weight:700;color:#9b9797;flex:0 0 auto}
+.mu-bp-newbox{border-radius:8px;transition:box-shadow .15s}
+.mu-bp-newbox.is-focus{box-shadow:0 0 0 1.2px #2c2c2c,0 0 0 4px #fff}
+.mu-bp-v.is-ph{color:#9b9797;font-weight:600}
+
+/* ---- Status badges (small; Figma colours) ---- */
+.mu-bp-pill{display:inline-flex;align-items:center;flex:0 0 auto;align-self:flex-start;padding:2px 6px;border-radius:999px;font-size:9px;line-height:1.25;font-weight:700;white-space:nowrap}
+.mu-head .mu-bp-pill,.mu-bp-row .mu-bp-pill,.mu-bp-amt .mu-bp-pill,.mu-row .mu-bp-pill{align-self:center}
+.mu-bp-pill--date{background:#fff;border:1px solid #eee;font-size:10px;color:#1a1919}
+.mu-bp-pill--green{background:#e6f6ee;color:#1b7a4b}
+.mu-bp-pill--orange{background:#fff1de;color:#b4610e}
+.mu-bp-pill--red{background:#fdeced;color:#ec2435;font-size:8px}
+.mu-bp-pill--brand{background:#ec2435;color:#fff;font-size:8px;margin-top:2px}
+.mu-bp-pill--blue{background:#e8f1fd;color:#1f5fbf;font-size:8px}
+.mu-bp-pill--grey{background:#f4f4f5;color:#787373}
+.mu-bp-amt .mu-bp-pill{font-size:8px}
+.mu-bp-pill.is-hl{box-shadow:0 0 0 1.2px #2c2c2c}
+.mu-bp-pop{animation:mu-bp-pop .45s cubic-bezier(.32,.72,0,1)}
+@keyframes mu-bp-pop{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+
+/* ---- Day grid (Jadwal) ---- */
+.mu-bp-grid{display:flex;gap:4px}
+.mu-bp-times{display:flex;flex-direction:column;width:28px;flex:0 0 auto}
+.mu-bp-times>span{height:44px;flex:0 0 auto;font-size:9px;line-height:1.25;color:#9b9797}
+.mu-bp-times>.mu-bp-sp{height:18px}
+.mu-bp-col{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.mu-bp-colh{height:14px;font-size:10px;line-height:1.25;font-weight:700;color:#787373;text-align:center;white-space:nowrap}
+.mu-bp-cell{position:relative;display:flex;flex-direction:column;gap:4px;flex:0 0 auto}
+.mu-bp-slot{display:block;height:40px;flex:0 0 auto;border:1px dashed #e6e3e3;border-radius:10px}
+.mu-bp-bk{position:absolute;inset:0;display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:6px 8px;border-radius:10px;background:#fff;border:1px solid #eee;
+  transition:opacity .4s,transform .45s cubic-bezier(.32,.72,0,1),border-color .2s,box-shadow .2s}
+.mu-bp-bk b{font-size:11px;line-height:1.25;font-weight:700;color:#1a1919;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.mu-bp-bk>span:not(.mu-bp-pill){font-size:9px;line-height:1.25;color:#787373;white-space:nowrap}
+.mu-bp-bk--green{background:#e6f6ee;border-color:#e6f6ee}
+.mu-bp-bk--link{background:#f4f4f5;border-color:#f4f4f5;align-items:center;justify-content:center;text-align:center;gap:1px}
+.mu-bp-bk--link>.mu-bp-l1{font-size:9px;font-weight:600;color:#9b9797}
+.mu-bp-bk--link>.mu-bp-l2{font-size:8px;color:#9b9797}
+.mu-bp-bk.is-out{opacity:0;transform:translateY(-14px)}
+.mu-bp-bk--link.is-out{transform:none}
+.mu-bp-bk.is-hl{border-color:#2c2c2c;box-shadow:0 0 0 .2px #2c2c2c}
+.mu-bp-info{padding:4px 8px;border-radius:8px;background:#f4f4f5;font-size:9px;line-height:1.25;font-weight:600;color:#787373}
+
+/* ---- Toast with a round icon ---- */
+.mu-bp-toast .mu-col{gap:1px;min-width:0}
+.mu-bp-toast .mu-col span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mu-bp-tick{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:#fff;color:#2c2c2c;display:flex;align-items:center;justify-content:center}
+.mu-bp-tick svg{width:12px;height:12px}
+
+/* ---- Ringkas / Detail (calendar) ---- */
+.mu-bp-caret{font-size:10px;font-weight:700;color:#787373;margin-left:3px;vertical-align:1px}
+.mu-bp-seg{display:inline-flex;gap:2px;padding:2px;border-radius:999px;background:#f4f4f5;flex:0 0 auto}
+.mu-bp-seg>span{padding:4px 10px;border-radius:999px;font-size:10px;line-height:1.25;font-weight:600;color:#787373;transition:background .2s,color .2s}
+.mu-bp-seg>.is-on{background:#fff;color:#1a1919;font-weight:700}
+.mu-bp-cal{display:flex;flex-direction:column;gap:6px;padding:8px;border:1px solid #eee;border-radius:12px}
+.mu-bp-wk{display:flex;gap:3px}
+.mu-bp-wk--head>span{flex:1;text-align:center;font-size:9px;line-height:1.25;font-weight:700;color:#9b9797}
+.mu-bp-day{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px}
+.mu-bp-day>b{width:14px;height:14px;display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:9px;line-height:1;font-weight:400;color:#1a1919;transition:box-shadow .15s}
+.mu-bp-day.is-today>b{background:#ec2435;color:#fff;font-weight:700;font-size:8px}
+.mu-bp-day.is-on>b{box-shadow:0 0 0 1.2px #2c2c2c;font-weight:700}
+.mu-bp-day>i,.mu-bp-legend i{display:block;width:100%;height:5px;border-radius:2px}
+.mu-bp-cal .g,.mu-bp-legend .g{background:#3bb273}
+.mu-bp-cal .o,.mu-bp-legend .o{background:#f5a623}
+.mu-bp-cal .x,.mu-bp-legend .x{background:#d9d9d9}
+.mu-bp-legend{display:flex;gap:10px;font-size:9px;line-height:1.25;color:#787373}
+.mu-bp-legend span{display:flex;align-items:center;gap:4px}
+.mu-bp-legend i{width:10px}
+.mu-bp-strip{display:flex;gap:3px}
+.mu-bp-sd{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:9px;font-weight:700;color:#9b9797}
+.mu-bp-sd>b{width:22px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:10px;color:#1a1919;font-weight:600}
+.mu-bp-sd.is-today>b{background:#ec2435;color:#fff}
+.mu-bp-sd.is-on>b{box-shadow:0 0 0 1.2px #2c2c2c;font-weight:800}
+.mu-bp-list{border:1px solid #eee;border-radius:12px;overflow:hidden}
+.mu-bp-li{display:flex;align-items:center;gap:8px;padding:7px 10px;border-bottom:1px solid #eee;transition:background .25s}
+.mu-bp-li:last-child{border-bottom:0}
+.mu-bp-li.is-off{background:#fafafa}
+.mu-bp-li.is-off .mu-bp-v{color:#9b9797}
+
+/* ---- Payment options ---- */
+.mu-bp-opt{display:flex;align-items:center;gap:8px;padding:10px;border:1px solid #eee;border-radius:12px;background:#fff;transition:border-color .1s,box-shadow .1s}
+.mu-bp-opt .mu-bp-v{font-size:12px}
+.mu-bp-opt.is-on{border-color:#2c2c2c;box-shadow:0 0 0 .2px #2c2c2c}
+.mu-bp-meths{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.mu-bp-meth{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px;border:1px solid #eee;border-radius:12px;font-size:9px;line-height:1.25;font-weight:600;color:#1a1919;white-space:nowrap;
+  transition:opacity .3s,border-color .15s,box-shadow .15s}
+.mu-bp-meth.is-dim{opacity:.35}
+.mu-bp-meth.is-hl{border-color:#2c2c2c;box-shadow:0 0 0 .2px #2c2c2c}
+.mu-bp-mi{flex:0 0 auto;width:24px;height:24px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#1a1919;background:#f4f4f5}
+.mu-bp-mi--b{background:#e8f1fd;color:#1f5fbf}
+.mu-bp-mi--o{background:#fff1de;color:#b4610e}
+.mu-bp-mi--g{background:#e6f6ee;color:#1b7a4b}
+.mu-bp-mi--r{background:#fdeced;color:#ec2435}
+.mu-bp-mi--l{background:#cef249}
+.mu-bp-opt .mu-bp-mi{width:28px;font-size:8px}
+.mu-bp-ready{align-items:center;text-align:center;gap:4px;padding:12px 10px}
+.mu-bp-ok{width:26px;height:26px;border-radius:50%;background:#e6f6ee;color:#1b7a4b;display:flex;align-items:center;justify-content:center;margin-bottom:2px}
+.mu-bp-ok svg{width:14px;height:14px}
+.mu-bp-url{display:flex;align-items:center;gap:6px;padding:8px 10px;border:1px solid #eee;border-radius:10px;font-size:10px;font-weight:600;color:#1a1919;white-space:nowrap}
+.mu-bp-urli{width:14px;height:14px;color:#787373;flex:0 0 auto}
+.mu-bp-urli svg{width:100%;height:100%;display:block}
+.mu-bp-copy{flex:0 0 auto;padding:3px 8px;border-radius:999px;border:1px solid #d9d9d9;font-size:9px;font-weight:700;transition:background .2s,color .2s,border-color .2s}
+.mu-bp-copy.is-done{background:#2c2c2c;border-color:#2c2c2c;color:#fff}
+.mu-bp-mchips{display:flex;flex-wrap:wrap;gap:4px}
+.mu-bp-mchip{padding:2px 7px;border-radius:999px;background:#f4f4f5;font-size:9px;font-weight:600;color:#787373}
+
+/* ---- Balance + history ---- */
+.mu-bp-card--bal{gap:6px}
+.mu-bp-card--bal .mu-btn{margin-top:2px}
+.mu-bp-tx{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid #eee;border-radius:12px;background:#fff}
+.mu-bp-amt{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex:0 0 auto}
+.mu-bp-amtf{font-size:11px;font-weight:600;padding:8px 10px}
+.mu-bp-ph{color:#9b9797}
+
+/* ---- Chips (dates, times, DP share) ---- */
+.mu-bp-chips{display:flex;flex-wrap:wrap;gap:6px}
+.mu-bp-chip{padding:4px 10px;border:1px solid #eee;border-radius:999px;font-size:10px;line-height:1.25;font-weight:600;color:#787373;white-space:nowrap;transition:border-color .1s,color .1s}
+.mu-bp-chip.is-on{border-color:#2c2c2c;box-shadow:0 0 0 .2px #2c2c2c;color:#1a1919;font-weight:700}
+.mu-bp-sum{gap:4px}
+.mu-bp-sum .mu-bp-v{font-size:12px}
+
+@media (prefers-reduced-motion:reduce){
+  .mu-bp-bk,.mu-bp-meth,.mu-bp-opt{transition:none}
+  .mu-bp-pop{animation:none}
+}
+
+/* BK02 opens on the schedule (the later page) and pushes Booking Details,
+   the earlier page in the markup: keep the active page on top. */
+.mu-stage[data-mu="avm-bk02"] .mu-page.is-active{z-index:1}

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en" data-page-lang="EN" data-lang-id="avm-id.html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AYO Venue Management (AVM) — AYO</title>
+<meta name="description" content="Manage online and walk-in reservations, link connected courts to help prevent booking conflicts, and control availability from one centralized schedule.">
+
+<link rel="alternate" hreflang="id" href="avm-id.html">
+<link rel="alternate" hreflang="en" href="avm-en.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#ec2435">
+
+<link rel="stylesheet" href="vendor/bootstrap-4.3.1/bootstrap.min.css">
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="styles/bootstrap-compat.css">
+<link rel="stylesheet" href="styles/chrome.css">
+<link rel="stylesheet" href="components/mini-ui/mini-ui.css?v=20261119g">
+<link rel="stylesheet" href="components/mini-ui/avm/booking-payments.css?v=20261119a">
+<link rel="stylesheet" href="components/mini-ui/avm/reports-promo.css?v=20261119a">
+<link rel="stylesheet" href="components/mini-ui/avm/addons-more.css?v=20261119a">
+<link rel="stylesheet" href="components/avm-hero/avm-hero.css?v=20261119a">
+<link rel="stylesheet" href="components/site-footer/site-footer.css?v=20261118b">
+<link rel="stylesheet" href="styles/avm.css?v=20261119a">
+</head>
+<body class="ayo-web">
+
+<!-- AVM (AYO Venue Management) landing page — English.
+     Figma: desktop 27093:65, mobile 27093:936, FAQ 27093:1786, tabs 27093:1874 / 1968 / 2038 / 2144 / 2214 / 2273.
+     Twin page: avm-id.html (same structure, same tab slugs). -->
+
+<!-- 1. NAV (same markup as the Scoring page) -->
+<nav class="ayo-nav on-light">
+  <div class="nav-in container-fluid">
+    <a class="brand" href="index.html" aria-label="AYO"><img src="assets/logo.svg" alt="AYO"></a>
+    <div class="nav-links" id="navlinks">
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Booking</a></div>
+      <div class="ayo-nav-item has-sub">
+        <button class="nav-top" aria-expanded="false" aria-haspopup="true">Activities <span class="chev" aria-hidden="true"></span></button>
+        <div class="submenu" data-mega="activities">
+          <a href="#">Join activity</a>
+          <a href="#">Hosting activity</a>
+          <a href="scoring-en.html">Scoring</a>
+        </div>
+      </div>
+      <div class="ayo-nav-item"><a class="nav-top" href="avm-en.html" aria-current="page">For Venue Owners</a></div>
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Partner with Us</a></div>
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Blog</a></div>
+    </div>
+    <div class="nav-actions">
+    <div class="lang" id="lang">
+      <button class="lang-btn" aria-haspopup="true" aria-expanded="false" aria-label="Select language">
+        <span class="flag cur-flag" aria-hidden="true">🇬🇧</span>
+        <span class="cur">EN</span>
+        <span class="chev" aria-hidden="true"></span>
+      </button>
+      <div class="lang-menu" role="menu">
+        <button role="menuitemradio" aria-selected="true" data-code="EN" data-flag="🇬🇧"><span class="flag" aria-hidden="true">🇬🇧</span><span class="lname">English</span><span class="code">EN</span></button>
+        <button role="menuitemradio" aria-selected="false" data-code="ID" data-flag="🇮🇩"><span class="flag" aria-hidden="true">🇮🇩</span><span class="lname">Bahasa Indonesia</span><span class="code">ID</span></button>
+      </div>
+    </div>
+    <a class="nav-icon" href="#" aria-label="Cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3h2.2l2.1 12.4a1.5 1.5 0 0 0 1.5 1.25h8.3a1.5 1.5 0 0 0 1.48-1.2L21 7H6"/></svg>
+    </a>
+    <a class="ayo-btn primary" href="#" data-login>Login</a>
+    <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navlinks">
+      <svg class="ico-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
+      <svg class="ico-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>
+    </button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<!-- 2. HERO -->
+<section class="avm-top" aria-labelledby="avm-title">
+  <div class="avm-wrap avm-top__in">
+    <div class="avm-top__copy">
+      <div class="avm-crumbs">
+        <nav class="avm-crumb" aria-label="Breadcrumb"><ol><li><a href="index.html">AYO</a></li><li><span aria-current="page">AYO Venue Management</span></li></ol></nav>
+        <span class="avm-chip">The app for venue owners</span>
+      </div>
+      <h1 class="avm-top__title" id="avm-title">Everything Your Venue Needs, in One Platform.</h1>
+      <p class="avm-top__lead">Manage online and walk-in reservations, link connected courts to help prevent booking conflicts, and control availability from one centralized schedule.</p>
+      <div class="avm-avail">
+        <span class="avm-avail__lbl">Available in</span>
+        <span class="avm-avail__div" aria-hidden="true"></span>
+        <span class="avm-avail__item"><span class="avm-avail__ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5.5" y="2" width="9" height="16" rx="2"/><path d="M9 15h2"/></svg></span>Mobile</span>
+        <span class="avm-avail__div" aria-hidden="true"></span>
+        <span class="avm-avail__item"><span class="avm-avail__ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3.5" width="16" height="10.5" rx="1.5"/><path d="M7 17.5h6"/><path d="M10 14v3.5"/></svg></span>Desktop</span>
+      </div>
+    </div>
+    <!-- Illustration slot (Figma 28378:17893, 660 × 560; mobile full width × 560),
+         filled by components/avm-hero. -->
+    <div class="avm-hero__visual"><div data-avm-hero></div></div>
+  </div>
+</section>
+
+<!-- 3. STATS -->
+<section class="avm-stats" aria-label="AVM in numbers">
+  <div class="avm-wrap">
+    <div class="avm-stats__row" data-reveal>
+      <div class="avm-stat"><span class="avm-stat__num" data-count="900000" data-suffix="+">900,000+</span><span class="avm-stat__lbl">Total AYO Users</span></div>
+      <div class="avm-stat"><span class="avm-stat__num">xxx</span><span class="avm-stat__lbl">Total Venues</span></div>
+      <div class="avm-stat"><span class="avm-stat__num" data-count="2000" data-suffix="+">2,000+</span><span class="avm-stat__lbl">Total Courts</span></div>
+      <div class="avm-stat"><span class="avm-stat__num">xxx</span><span class="avm-stat__lbl">Cities Available</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. WHY AVM -->
+<section class="avm-why" aria-labelledby="avm-why-title">
+  <div class="avm-wrap">
+    <div class="avm-why__head" data-reveal>
+      <p class="avm-eyebrow">Why AVM</p>
+      <h2 class="avm-h2" id="avm-why-title">Why Venues Choose AVM</h2>
+    </div>
+    <div class="avm-why__grid">
+      <div class="avm-why__card" data-reveal="0">
+        <span class="avm-why__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M8 3v4"/><path d="M16 3v4"/><path d="M3.5 10h17"/><path d="M14 16l2 2 3.5-3.5"/></svg></span>
+        <h3>Run Venue with Ease</h3>
+        <ul class="avm-why__list">
+          <li><span class="avm-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Simplify Your Venue Operations</li>
+          <li><span class="avm-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Instant Booking Confirmation</li>
+          <li><span class="avm-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Effortless Schedule Management</li>
+        </ul>
+      </div>
+      <div class="avm-why__card avm-why__card--dark" data-reveal="2">
+        <span class="avm-why__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span>
+        <h3>Grow Your Business</h3>
+        <ul class="avm-why__list">
+          <li><span class="avm-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Grow Your Venue Business</li>
+          <li><span class="avm-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Reach a Larger Community of Players</li>
+          <li><span class="avm-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Attract More Bookings &amp; New Customers</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. KEY FEATURES — seven tabs (scripts/avm.js). Each visual slot is a
+     Mini UI card (components/mini-ui/avm/*) keyed by data-mu; features without
+     a source screen yet show a plain stand-in card. Deep links: #payments, #reports, #promotions, #add-ons, #activities, #additional. -->
+<section class="avm-kf" id="fitur" aria-labelledby="avm-kf-title">
+  <div class="avm-wrap avm-kf__head">
+    <h2 class="avm-h2" id="avm-kf-title" data-reveal>Everything you need to run<br>your venue.</h2>
+    <div class="avm-tabs" role="tablist" aria-label="AVM features">
+      <button class="avm-tab is-on" type="button" role="tab" aria-selected="true" aria-controls="kf-booking" id="tab-booking">Booking</button>
+      <button class="avm-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-payments" id="tab-payments" tabindex="-1">Payments</button>
+      <button class="avm-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-reports" id="tab-reports" tabindex="-1">Reports</button>
+      <button class="avm-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-promotions" id="tab-promotions" tabindex="-1">Promotions &amp; Customers</button>
+      <button class="avm-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-add-ons" id="tab-add-ons" tabindex="-1">Add-Ons</button>
+      <button class="avm-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-activities" id="tab-activities" tabindex="-1">Activities</button>
+      <button class="avm-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-additional" id="tab-additional" tabindex="-1">Additional Features</button>
+    </div>
+  </div>
+
+  <div class="avm-panel" id="kf-booking" role="tabpanel" aria-labelledby="tab-booking">
+    <div class="avm-wrap avm-intro"><h3>All your bookings, online or on-site, in one schedule.</h3><p>Manage online bookings, track payment details, and control court availability from one centralized schedule.</p></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">01</span><h4>Online bookings, automatically recorded.</h4><p>Every booking made through the AYO app is automatically added to your venue schedule.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-bk01"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">02</span><h4>Every booking detail at a glance.</h4><p>Check the reserved court, time slot, and payment status to keep track of every reservation.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-bk02"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">03</span><h4>Stay in control of court availability.</h4><p>Open or close courts and switch between daily and monthly calendar views to manage your schedule.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-bk04"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">04</span><h4>Manage Multi-Purpose Courts Without Booking Conflicts</h4><p>Configure one court for multiple sports, such as basketball and futsal. When a time slot is booked for one sport, the same slot is automatically made unavailable for the other.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-bk05"></div></div></div>
+  </div>
+
+  <div class="avm-panel" id="kf-payments" role="tabpanel" aria-labelledby="tab-payments" hidden>
+    <div class="avm-wrap avm-intro"><h3>Get paid your way. Manage every payment with ease.</h3><p>Offer flexible payment options and withdraw your venue earnings through AVM.</p></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">01</span><h4>Multiple Payment Options</h4><p>Accept payments through the most popular payment methods in your location, such as credit cards, QR codes, e-wallets, offline merchants, and more.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-py01"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">02</span><h4>Easy Fund Disbursement</h4><p>Withdraw your venue earnings to your registered bank accounts in just a few steps.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-py02"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">03</span><h4>Flexible Refund Policy</h4><p>Set the refund policy that applies when customers cancel a booking.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-py03"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">04</span><h4>Full Payment or Down Payment</h4><p>Let customers pay in full when booking, or secure their reservation with a down payment.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-py04"></div></div></div>
+  </div>
+
+  <div class="avm-panel" id="kf-reports" role="tabpanel" aria-labelledby="tab-reports" hidden>
+    <div class="avm-wrap avm-intro"><h3>Every transaction. Every source. One clear view.</h3><p>Track transactions across bookings, activities, and multiple payment types, then export your reports for easier business tracking.</p></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">01</span><h4>Transaction Reports &amp; Mutations in One Dashboard</h4><p>Access reports and mutation records for online, manual, credit, add-on, and other transactions—all in one dashboard.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-rp01"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">02</span><h4>Track Booking &amp; Activity Revenue</h4><p>See transactions generated from court bookings and activities in one place.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-rp02"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">03</span><h4>Export Reports to Excel</h4><p>Export transaction reports to Excel whenever you need them. Your historical records remain stored and accessible, so you can retrieve past transaction data without losing your history.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-rp03"></div></div></div>
+  </div>
+
+  <div class="avm-panel" id="kf-promotions" role="tabpanel" aria-labelledby="tab-promotions" hidden>
+    <div class="avm-wrap avm-intro"><h3>Attract new customers. Turn them into regulars.</h3><p>Create vouchers, track promotion performance, and understand your customers, all in one place.</p></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">01</span><h4>Create Promotions That Drive Customer Growth</h4><p>Create public or private vouchers that suit your needs to acquire new customers, reward loyal ones, or offer exclusive vouchers to selected customers.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-pr01"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">02</span><h4>Turn Loyal Players into Regulars</h4><p>Keep your loyal customers coming back with memberships that offer convenient recurring bookings, making it easier for them to secure their favorite courts.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-pr02"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">03</span><h4>Sell Prepaid Credit Packages</h4><p>Offer credit packages that customers can purchase upfront and redeem for future bookings or activities.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-pr03"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">04</span><h4>Offer Membership Bundling</h4><p>Create discounted packages that let customers purchase multiple court slots at once, encouraging more bookings while offering better value.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-pr04"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">05</span><h4>Measure Promotion Performance</h4><p>Track the performance of your active promotions and use the data to make better marketing decisions.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-pr05"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">06</span><h4>Understand Your Customer Base</h4><p>Use the Customer List menu to see who books at your venue and export customer data for your marketing activities.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-pr06"></div></div></div>
+  </div>
+
+  <div class="avm-panel" id="kf-add-ons" role="tabpanel" aria-labelledby="tab-add-ons" hidden>
+    <div class="avm-wrap avm-intro"><h3>Earn more from every booking.</h3><p>Offer additional products and services, customize product options, and manage coaching schedules.</p></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">01</span><h4>Sell More Than Just Court Time</h4><p>Offer additional products and services alongside court bookings to unlock new revenue opportunities, such as racket rentals or other services.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-ad01"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">02</span><h4>Customize Products &amp; Variants</h4><p>Create products with different options and variants based on your venue availability.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-ad02"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">03</span><h4>Add Coaching &amp; Extra Services</h4><p>Offer coaching and other services with their own schedules and rescheduling options.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-ad03"></div></div></div>
+  </div>
+
+  <div class="avm-panel" id="kf-activities" role="tabpanel" aria-labelledby="tab-activities" hidden>
+    <div class="avm-wrap avm-intro"><h3>Keep Your Courts Active</h3><p>Create more activities to invite and connect more players, and turn your venue into a hub.</p></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">01</span><h4>Host Open Play Sessions</h4><p>Bring players together by hosting social games, group classes, or coaching sessions at your venue.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-ac01"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><div class="avm-feat__top"><span class="avm-num">02</span><span class="avm-soon">Coming soon</span></div><h4>Host Public Matches</h4><p>Create public matches and give players more opportunities to compete and connect at your venue.</p></div><div class="avm-feat__vis"><div class="sc-card avm-standin" aria-hidden="true"><span class="avm-standin__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4v1.5A3.5 3.5 0 0 0 7.5 11"/><path d="M17 6h3v1.5a3.5 3.5 0 0 1-3.5 3.5"/><path d="M12 14v4"/><path d="M8.5 20h7"/></svg></span><span class="avm-standin__lbl">Public matches</span></div></div></div>
+  </div>
+
+  <div class="avm-panel" id="kf-additional" role="tabpanel" aria-labelledby="tab-additional" hidden>
+    <div class="avm-wrap avm-intro"><h3>More flexibility for your venue.</h3><p>Offer prepaid credit packages, create private access for selected customers, manage access control and monitor customer reviews—all in AVM.</p></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">01</span><h4>Manage Staff Access &amp; Permissions</h4><p>Control what each employee can view and manage, including view-only access.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-ft01"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">02</span><h4>Create a Private Venue for Selected Customers</h4><p>Set up private venue access for customers on your whitelist, keeping designated bookings or services exclusive to approved customers.</p></div><div class="avm-feat__vis"><div class="sc-card avm-standin" aria-hidden="true"><span class="avm-standin__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.3"/></svg></span><span class="avm-standin__lbl">Private venue</span></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">03</span><h4>Coach Management System</h4><p>Provide dedicated AVM access to your coaches so they can independently view and track incoming coaching bookings.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-ft03"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">04</span><h4>Track Customer Reviews</h4><p>See the ratings and reviews customers leave for your venue, so you can monitor feedback and identify areas to improve.</p></div><div class="avm-feat__vis"><div class="sc-card mu-stage" data-mu="avm-ft04"></div></div></div>
+    <div class="avm-feat"><div class="avm-feat__txt"><span class="avm-num">05</span><h4>Exclusive Early Booking Access</h4><p>Give selected membership tiers priority access to court schedules, allowing members to book up to 2–3 months in advance.</p></div><div class="avm-feat__vis"><div class="sc-card avm-standin" aria-hidden="true"><span class="avm-standin__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M8 3v4"/><path d="M16 3v4"/><path d="M3.5 10h17"/><path d="M12 13v3l2 1.5"/></svg></span><span class="avm-standin__lbl">Early access</span></div></div></div>
+  </div>
+
+  <div class="avm-wrap avm-kf__more"><a class="avm-pill" href="#">Discover more <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5l7-7"/><path d="M5.5 4.5h6v6"/></svg></a></div>
+</section>
+
+<!-- 6. JOIN IN 4 STEPS -->
+<section class="avm-join" aria-labelledby="avm-join-title">
+  <div class="avm-wrap">
+    <h2 class="avm-h2" id="avm-join-title" data-reveal>Join in 4 steps</h2>
+    <ol class="avm-steps">
+      <li class="avm-step" data-reveal="0"><div class="avm-step__track"><span class="avm-step__mark" aria-hidden="true">01</span><span class="avm-step__line"></span></div><div class="avm-step__txt"><h3>Register</h3><p>Submit your venue and business details.</p></div></li>
+      <li class="avm-step" data-reveal="1"><div class="avm-step__track"><span class="avm-step__mark" aria-hidden="true">02</span><span class="avm-step__line"></span></div><div class="avm-step__txt"><h3>Get Verified</h3><p>The AYO team reviews your information.</p></div></li>
+      <li class="avm-step" data-reveal="2"><div class="avm-step__track"><span class="avm-step__mark" aria-hidden="true">03</span><span class="avm-step__line"></span></div><div class="avm-step__txt"><h3>Set up your venue</h3><p>Complete your venue details, courts, schedules, and pricing.</p></div></li>
+      <li class="avm-step avm-step--go" data-reveal="3"><div class="avm-step__track"><span class="avm-step__mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div><div class="avm-step__txt"><h3>Go live</h3><p>Start managing your venue and receiving bookings through AYO.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 7. CTA BANNER + CONTACT FORM — the form posts nowhere; scripts/avm.js
+     shows the inline sent state on a valid submit. -->
+<section class="avm-contact" aria-labelledby="avm-contact-title">
+  <div class="avm-wrap">
+    <div class="avm-cta" data-reveal><p>Join 2,730+ venues growing with AYO Venue Management. Tell us about your venue and our team helps you set up.</p></div>
+    <div class="avm-dialog" id="daftar" data-reveal>
+      <div class="avm-dialog__intro">
+        <div class="avm-dialog__head">
+          <p class="avm-dialog__kicker">AYO Venue Management</p>
+          <h2 id="avm-contact-title">Ready to manage your venue with AYO?</h2>
+          <p>Tell us a bit about your venue. The AYO team will reach out to discuss your venue management needs.</p>
+        </div>
+      <ul class="avm-points"><li><b>Schedules &amp; bookings</b><span>Manage court availability and bookings in one place.</span></li><li><b>Payments</b><span>Keep track of venue transactions with ease.</span></li><li><b>Player reach</b><span>Get your venue listed on the AYO app and website.</span></li></ul>
+      </div>
+      <form class="avm-form" data-avm-form aria-labelledby="avm-form-title">
+        <div class="avm-form__head"><h3 id="avm-form-title">Contact the AYO Venue Management team</h3><p>Fields marked * are required.</p></div>
+        <div class="avm-field"><span class="avm-field__box"><label class="avm-field__lab" for="avm-f-subject">Subject<i aria-hidden="true">*</i></label><select id="avm-f-subject" name="subject" required><option>AYO Venue Management</option></select></span><svg class="avm-field__chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7.5l5 5 5-5"/></svg></div>
+        <div class="avm-field"><span class="avm-field__box"><label class="avm-field__lab" for="avm-f-name">Name<i aria-hidden="true">*</i></label><input id="avm-f-name" name="name" type="text" autocomplete="name" required></span></div>
+        <div class="avm-field"><span class="avm-field__box"><label class="avm-field__lab" for="avm-f-email">Email<i aria-hidden="true">*</i></label><input id="avm-f-email" name="email" type="email" autocomplete="email" required></span></div>
+        <div class="avm-field avm-field--phone"><span class="avm-cc"><span class="avm-cc__flag" aria-hidden="true">🇮🇩</span><span class="avm-cc__code" aria-hidden="true">+62</span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7.5l5 5 5-5"/></svg><select name="country_code" aria-label="Country code"><option value="+62" data-flag="🇮🇩" selected>🇮🇩 Indonesia (+62)</option><option value="+65" data-flag="🇸🇬">🇸🇬 Singapore (+65)</option><option value="+60" data-flag="🇲🇾">🇲🇾 Malaysia (+60)</option><option value="+61" data-flag="🇦🇺">🇦🇺 Australia (+61)</option><option value="+44" data-flag="🇬🇧">🇬🇧 United Kingdom (+44)</option><option value="+1" data-flag="🇺🇸">🇺🇸 United States (+1)</option></select></span><span class="avm-field__sep" aria-hidden="true"></span><span class="avm-field__box"><label class="avm-field__lab" for="avm-f-phone">Phone Number<i aria-hidden="true">*</i></label><input id="avm-f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" pattern="[0-9 \-]{6,15}" required></span></div>
+        <div class="avm-field"><span class="avm-field__box"><label class="avm-field__lab" for="avm-f-sport">Sport Category<i aria-hidden="true">*</i></label><select id="avm-f-sport" name="sport" required><option value=""></option><option>Padel</option><option>Tennis</option><option>Badminton</option><option>Pickleball</option><option>Mini Soccer</option><option>Football</option><option>Futsal</option><option>Basketball</option><option>Table Tennis</option><option>Squash</option><option>Volleyball</option><option>Other</option></select></span><svg class="avm-field__chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7.5l5 5 5-5"/></svg></div>
+        <div class="avm-field"><span class="avm-field__box"><label class="avm-field__lab" for="avm-f-venue">Venue Name<i aria-hidden="true">*</i></label><input id="avm-f-venue" name="venue" type="text" autocomplete="organization" required></span></div>
+        <div class="avm-field"><span class="avm-field__box"><label class="avm-field__lab" for="avm-f-loc">Venue Location<i aria-hidden="true">*</i></label><input id="avm-f-loc" name="location" type="text" autocomplete="address-level2" required></span></div>
+        <div class="avm-field avm-field--area"><span class="avm-field__box"><label class="avm-field__lab" for="avm-f-msg">Message<i aria-hidden="true">*</i></label><textarea id="avm-f-msg" name="message" rows="4" required></textarea></span></div>
+        <p class="avm-form__legal">By submitting this form, you agree to AYO's <a href="#">Terms &amp; Conditions</a> and <a href="#">Privacy Policy</a>.</p>
+        <button class="avm-form__btn" type="submit">Send Message</button>
+      </form>
+      <div class="avm-sent" data-avm-sent role="status" hidden>
+        <span class="avm-sent__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+        <h3>Thanks, your message is on its way!</h3>
+        <p>The AYO Venue Management team will get back to you within one working day to talk about your venue.</p>
+        <button class="avm-pill" type="button" data-avm-again>Send another message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. FAQ — accordion, first question open (scripts/avm.js) -->
+<section class="avm-faq" aria-labelledby="avm-faq-title">
+  <div class="avm-wrap avm-faq__in">
+    <div class="avm-faq__side" data-reveal>
+      <p class="avm-faq__kicker">FAQ</p>
+      <h2 id="avm-faq-title">Questions,<br>answered.</h2>
+      <p>Still stuck? Our venue team replies within one working day.</p>
+      <a class="avm-pill" href="#daftar">Talk to us <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5l7-7"/><path d="M5.5 4.5h6v6"/></svg></a>
+    </div>
+    <div class="avm-faq__list" data-reveal="2">
+      <div class="avm-faq__item is-open"><h3><button class="avm-faq__q" type="button" aria-expanded="true" aria-controls="faq-a1" id="faq-q1">Is AYO Venue Management (AVM) free to use?<span class="avm-faq__ico" aria-hidden="true"></span></button></h3><div class="avm-faq__a" id="faq-a1" role="region" aria-labelledby="faq-q1"><div><p>AVM helps you manage your venue in one place. Any applicable platform or transaction fees will be explained by our team before you get started.</p></div></div></div>
+      <div class="avm-faq__item"><h3><button class="avm-faq__q" type="button" aria-expanded="false" aria-controls="faq-a2" id="faq-q2">How do I register my venue on AYO?<span class="avm-faq__ico" aria-hidden="true"></span></button></h3><div class="avm-faq__a" id="faq-a2" role="region" aria-labelledby="faq-q2"><div><p>Submit your venue details through the registration process <a href="#daftar">here</a>. Our team will guide you through the next steps to get your AVM account set up.</p></div></div></div>
+      <div class="avm-faq__item"><h3><button class="avm-faq__q" type="button" aria-expanded="false" aria-controls="faq-a3" id="faq-q3">How long does it take for my venue to appear on the AYO app?<span class="avm-faq__ico" aria-hidden="true"></span></button></h3><div class="avm-faq__a" id="faq-a3" role="region" aria-labelledby="faq-q3"><div><p>The registration time depends on how complete the information submitted by the venue owner is. If all required details are provided, your venue can be listed on the AYO app in less than an hour.</p></div></div></div>
+      <div class="avm-faq__item"><h3><button class="avm-faq__q" type="button" aria-expanded="false" aria-controls="faq-a4" id="faq-q4">Can I manage multiple venues from one account?<span class="avm-faq__ico" aria-hidden="true"></span></button></h3><div class="avm-faq__a" id="faq-a4" role="region" aria-labelledby="faq-q4"><div><p>If you operate multiple venue locations, contact our team to find the right account setup for managing your business.</p></div></div></div>
+      <div class="avm-faq__item"><h3><button class="avm-faq__q" type="button" aria-expanded="false" aria-controls="faq-a5" id="faq-q5">How do online and walk-in bookings work together?<span class="avm-faq__ico" aria-hidden="true"></span></button></h3><div class="avm-faq__a" id="faq-a5" role="region" aria-labelledby="faq-q5"><div><p>Bookings made through the AYO app are automatically added to your AVM schedule. You can also record walk-in reservations manually, keeping all bookings in one place.</p></div></div></div>
+      <div class="avm-faq__item"><h3><button class="avm-faq__q" type="button" aria-expanded="false" aria-controls="faq-a6" id="faq-q6">How do I receive payments from online bookings?<span class="avm-faq__ico" aria-hidden="true"></span></button></h3><div class="avm-faq__a" id="faq-a6" role="region" aria-labelledby="faq-q6"><div><p>Online payments are recorded in AVM and reflected in your transaction reports. You can withdraw your available balance to your registered bank account through the payout feature.</p></div></div></div>
+      <div class="avm-faq__item"><h3><button class="avm-faq__q" type="button" aria-expanded="false" aria-controls="faq-a7" id="faq-q7">Can I manage staff and control their access?<span class="avm-faq__ico" aria-hidden="true"></span></button></h3><div class="avm-faq__a" id="faq-a7" role="region" aria-labelledby="faq-q7"><div><p>Yes. Add staff members and assign permissions based on their roles, including view-only access, to control which features and information they can access.</p></div></div></div>
+      <div class="avm-faq__item"><h3><button class="avm-faq__q" type="button" aria-expanded="false" aria-controls="faq-a8" id="faq-q8">Can I track and export my venue transactions?<span class="avm-faq__ico" aria-hidden="true"></span></button></h3><div class="avm-faq__a" id="faq-a8" role="region" aria-labelledby="faq-q8"><div><p>Yes. AVM reports cover transactions from bookings and activities, including online, manual, credit, and add-on transactions. Export your reports to Excel for easier bookkeeping and reconciliation.</p></div></div></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- 9. FOOTER — components/site-footer (English copy, same as the Scoring page) -->
+<footer class="sft">
+  <div class="sft__in">
+    <div class="sft__top">
+      <a class="sft__logo" href="index.html" aria-label="AYO home"><img src="assets/icons/footer/logo.svg" alt="AYO" width="48" height="26"></a>
+      <div class="sft__cta">
+        <p class="sft__cta-label">Own a sports venue?</p>
+        <a class="sft__btn" href="#">Become a Venue Partner <img src="assets/icons/footer/arrow-up-right.svg" alt="" width="16" height="16"></a>
+      </div>
+    </div>
+
+    <div class="sft__cols">
+      <nav class="sft__col sft__col--company" aria-labelledby="sft-company">
+        <p class="sft__h" id="sft-company">Company</p>
+        <div class="sft__links"><a href="about-en.html">About Us</a><a href="#">Policies &amp; Privacy</a><a href="#">Terms &amp; Conditions</a></div>
+      </nav>
+      <nav class="sft__col sft__col--eco" aria-labelledby="sft-eco">
+        <p class="sft__h" id="sft-eco">Ecosystem</p>
+        <div class="sft__links"><a href="#">Activity</a><a href="#">PadelLevels</a><a href="#">Booking</a><a href="#">Venue Owner</a><a href="#">Partnership</a><a href="#">Court Directory</a><a href="#">Community Directory</a></div>
+      </nav>
+      <nav class="sft__col sft__col--support" aria-labelledby="sft-support">
+        <p class="sft__h" id="sft-support">Support</p>
+        <div class="sft__links"><a href="#">Contact us</a></div>
+      </nav>
+      <div class="sft__col sft__col--follow">
+        <p class="sft__h">Follow us</p>
+        <div class="sft__social">
+          <a href="#" aria-label="AYO on Instagram"><img src="assets/icons/footer/instagram.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO on TikTok"><img src="assets/icons/footer/tiktok.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO on YouTube"><img src="assets/icons/footer/youtube.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO on Threads"><img src="assets/icons/footer/threads.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO on LinkedIn"><img src="assets/icons/footer/linkedin.svg" alt="" width="18" height="18"></a>
+        </div>
+        <div class="sft__apps">
+          <p class="sft__apps-label">Available on</p>
+          <div class="sft__stores">
+            <a class="sft__store" href="#" aria-label="Download on the App Store"><img src="assets/icons/footer/app-store.svg" alt="" width="27" height="27"><span><small>Download on the</small><b>App Store</b></span></a>
+            <a class="sft__store" href="#" aria-label="Get it on Google Play"><img src="assets/icons/footer/google-play.svg" alt="" width="25" height="27"><span><small>Get it on</small><b>Google Play</b></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sft__bottom">
+      <p class="sft__copy">© 2026 AYO All Right Reserved</p>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V4.5"/><path d="M7.5 9.5 12 5 16.5 9.5"/></svg>
+</button>
+
+<script src="vendor/jquery-3.5.1/jquery.min.js"></script>
+<script src="vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
+<script src="scripts/chrome.js?v=20261119b"></script>
+<script src="components/mini-ui/mini-ui.js?v=20261119n"></script>
+<script src="components/mini-ui/avm/booking-payments.js?v=20261119a"></script>
+<script src="components/mini-ui/avm/reports-promo.js?v=20261119a"></script>
+<script src="components/mini-ui/avm/addons-more.js?v=20261119a"></script>
+<script src="components/avm-hero/avm-hero.js?v=20261119a"></script>
+<script src="scripts/avm.js?v=20261119a"></script>
+</body>
+</html>

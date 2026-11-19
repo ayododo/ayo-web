@@ -1,0 +1,301 @@
+/* ==========================================================================
+   AYO — AVM (AYO Venue Management) landing page
+   Figma: ID desktop 27882:40312, ID mobile 27882:41018, ID FAQ 27882:41680;
+          EN desktop 27093:65, EN mobile 27093:936, EN FAQ 27093:1786.
+   Depends on: tokens.css, chrome.css, components/mini-ui (+ avm/*),
+   components/avm-hero, components/site-footer. Shares the Mini UI card
+   size (.sc-card, 528 × 300 desktop / 328 × 200 mobile) with the Scoring page,
+   copied here so scoring.css is not needed.
+   ========================================================================== */
+
+.ayo-web{background:#fff}
+:root{
+  --avm-ink:#1a1a1a; --avm-text:#25282b; --avm-body:#616161; --avm-sub:#52575c;
+  --avm-cream:#f8f7f6; --avm-red:#ec2435; --avm-red-text:#d31223;
+  --avm-line:#eee; --avm-hair:rgba(26,25,25,.14);
+  --avm-edge:clamp(16px,3.9vw,56px);   /* 56px at 1440 (Figma), 16px at 360 */
+}
+.avm-wrap{max-width:var(--container);margin:0 auto;padding-inline:var(--avm-edge)}
+
+/* ---- Shared type + pill button ---- */
+.avm-h2{font-size:46px;line-height:1.06;font-weight:var(--fw-extrabold);letter-spacing:-.03em;color:var(--avm-ink)}
+.avm-eyebrow{font-size:12px;line-height:16px;font-weight:var(--fw-medium);letter-spacing:.08em;text-transform:uppercase;color:var(--avm-red-text)}
+.avm-pill{display:inline-flex;align-items:center;gap:10px;padding:11px 19px;border:1px solid rgba(26,25,25,.22);border-radius:999px;background:#fff;
+  font-size:14px;line-height:17px;font-weight:var(--fw-bold);color:var(--avm-ink);transition:border-color .2s,background .2s}
+.avm-pill:hover{border-color:var(--avm-ink);color:var(--avm-ink)}
+.avm-pill svg{width:16px;height:16px;color:var(--avm-red);transition:transform .2s}
+.avm-pill:hover svg{transform:translate(2px,-2px)}
+
+/* ---- 2. Hero (Figma 27882:40350) ---- */
+.avm-top{padding:164px 0 65px}
+.avm-top__in{display:grid;grid-template-columns:minmax(0,620fr) minmax(0,660fr);gap:48px;align-items:center}
+.avm-top__copy{display:flex;flex-direction:column;align-items:flex-start;gap:24px}
+.avm-crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;font-family:var(--font-mono);font-size:12px;line-height:16px;letter-spacing:.06em;text-transform:uppercase}
+.avm-crumb ol{display:flex;align-items:center;gap:12px;list-style:none;margin:0;padding:0}
+.avm-crumb li{display:flex;align-items:center;gap:12px;color:#707070}
+.avm-crumb li+li::before{content:'';width:5px;height:5px;margin-right:2px;border-right:1.2px solid #707070;border-top:1.2px solid #707070;transform:rotate(45deg)}
+.avm-crumb a:hover{color:var(--avm-ink)}
+.avm-crumb [aria-current]{color:var(--avm-ink);font-weight:600}
+.avm-chip{display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border-radius:999px;background:rgba(236,36,53,.08);color:var(--avm-red);font-weight:600;letter-spacing:.08em}
+.avm-chip::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor}
+.avm-top__title{font-size:var(--fs-hero);line-height:1.12;font-weight:var(--fw-extrabold);letter-spacing:-.02em;color:var(--avm-ink)}
+.avm-top__lead{max-width:490px;font-size:18px;line-height:1.6;color:var(--avm-body)}
+.avm-avail{display:flex;flex-wrap:wrap;align-items:center;gap:16px}
+.avm-avail__lbl{font-size:14px;line-height:20px;font-weight:var(--fw-medium);color:var(--avm-body)}
+.avm-avail__div{width:1px;height:16px;background:#cacccf}
+.avm-avail__item{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:var(--fw-semibold);color:var(--avm-text)}
+.avm-avail__ico{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;background:#f7f7f7}
+.avm-avail__ico svg{width:20px;height:20px}
+/* Illustration slot, filled by components/avm-hero (Figma 28126:11219, 660 × 560). */
+.avm-hero__visual{position:relative;width:100%;max-width:660px;height:auto;justify-self:end}
+.avm-hero__visual [data-avm-hero]{display:block;width:100%}   /* height set inline by avm-hero.js (560 × scale) */
+
+/* ---- 3. Stats (Figma 27882:40691) ---- */
+.avm-stats{padding-bottom:56px}
+.avm-stats__row{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid #e6e6e6;border-bottom:1px solid #e6e6e6}
+.avm-stat{display:flex;flex-direction:column;gap:6px;padding:28px 32px;min-width:0}
+.avm-stat:first-child{padding-left:0}
+.avm-stat+.avm-stat{border-left:1px solid #e6e6e6}
+.avm-stat__num{font-family:var(--font-num);font-size:40px;line-height:44px;font-weight:700;letter-spacing:-.02em;color:var(--avm-ink);font-variant-numeric:tabular-nums}
+.avm-stat__lbl{font-family:var(--font-mono);font-size:11px;line-height:14px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#8c8c8c}
+
+/* ---- 4. Why AVM (Figma 27882:40705) ---- */
+.avm-why{padding:24px 0}
+.avm-why__head{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.avm-why__grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:56px}
+.avm-why__card{display:flex;flex-direction:column;gap:24px;padding:40px;border-radius:24px;background:var(--avm-cream);color:var(--avm-ink)}
+.avm-why__card--dark{background:#191919;color:#fff}
+.avm-why__ico{display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:12px;background:#fff;color:var(--avm-red-text)}
+.avm-why__card--dark .avm-why__ico{background:var(--avm-red-text);color:#fff}
+.avm-why__ico svg{width:24px;height:24px}
+.avm-why__card h3{font-size:32px;line-height:40px;font-weight:var(--fw-bold);color:inherit}
+.avm-why__list{list-style:none;margin:0;padding:0}
+.avm-why__list li{display:flex;align-items:center;gap:16px;padding:20px 0;border-top:1px solid rgba(26,26,26,.08);font-size:18px;line-height:26px;color:#333}
+.avm-why__card--dark .avm-why__list li{border-top-color:rgba(255,255,255,.12);color:#fff}
+.avm-check{flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--avm-red-text);color:#fff}
+.avm-why__card--dark .avm-check{background:#fff;color:#191919}
+.avm-check svg{width:14px;height:14px}
+
+/* ---- 5. Key features (Figma 27882:40757; tabs 27882:41760 …) ---- */
+.avm-kf{padding-top:88px;border-bottom:1px solid #e6e6e6}
+.avm-kf__head .avm-h2{max-width:620px}
+.avm-tabs{display:flex;gap:8px;margin-top:32px;padding-bottom:4px;overflow-x:auto;scrollbar-width:none}
+.avm-tabs::-webkit-scrollbar{display:none}
+.avm-tab{flex:0 0 auto;height:32px;padding:0 15px;border-radius:999px;border:1px solid #ededed;background:#fff;color:#787373;
+  font:var(--fw-medium) 14px/16px var(--font-sans);white-space:nowrap;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.avm-tab:hover{border-color:#2c2c2c;color:#2c2c2c}
+.avm-tab:focus-visible{outline:2px solid #2c2c2c;outline-offset:2px}
+.avm-tab.is-on{background:#2c2c2c;border-color:#2c2c2c;color:#fff;font-weight:var(--fw-bold)}
+.avm-panel[hidden]{display:none}
+.avm-panel.is-enter{animation:avm-panel-in .45s cubic-bezier(.2,.7,.2,1)}
+@keyframes avm-panel-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.avm-intro{display:flex;flex-direction:column;gap:8px;padding-top:40px;padding-bottom:44px}
+.avm-intro h3{font-size:24px;line-height:30px;font-weight:var(--fw-bold);letter-spacing:-.01em;color:var(--avm-ink)}
+.avm-intro p{max-width:720px;font-size:16px;line-height:25.6px;color:var(--avm-body)}
+.avm-feat{display:grid;grid-template-columns:minmax(0,820fr) minmax(0,620fr);border-top:1px solid var(--avm-line)}
+.avm-feat__txt{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:16px;
+  padding:36px 56px 36px max(var(--avm-edge),calc((100vw - var(--container))/2 + var(--avm-edge)))}
+.avm-feat__top{display:flex;align-items:center;gap:12px}
+.avm-num{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:var(--avm-ink);color:#fff;
+  font-family:var(--font-mono);font-size:12px;font-weight:600}
+.avm-soon{font-size:11px;line-height:14px;font-weight:var(--fw-bold);letter-spacing:.06em;text-transform:uppercase;color:var(--avm-red)}
+.avm-feat__txt h4{max-width:708px;font-size:32px;line-height:1.1;font-weight:var(--fw-extrabold);letter-spacing:-.025em;color:var(--avm-ink)}
+.avm-feat__txt p{max-width:460px;font-size:16px;line-height:25.6px;color:var(--avm-body)}
+.avm-feat__vis{display:flex;align-items:center;padding:36px 56px 36px 36px;background:var(--avm-cream)}
+.avm-kf .sc-card{width:528px;max-width:100%;height:300px;border-radius:16px;background:#fff;border:1px solid #e8e6e3}
+.avm-kf .sc-card .mu-phone{--mu-scale:1.15;top:28px}
+/* Stand-in for features without a source screen yet (ac02, ft02, ft05). */
+.avm-standin{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center}
+.avm-standin__ico{display:flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:18px;background:#f5f5f5;color:#2c2c2c}
+.avm-standin__ico svg{width:30px;height:30px}
+.avm-standin__lbl{font-size:14px;line-height:20px;font-weight:var(--fw-semibold);color:#8c8c8c}
+.avm-kf__more{padding-top:44px;padding-bottom:64px}
+
+/* ---- 6. Join in 4 steps (Figma 27882:40835) ---- */
+.avm-join{padding:96px 0}
+.avm-join .avm-h2{line-height:54px;color:var(--avm-text)}
+.avm-steps{display:grid;grid-template-columns:repeat(4,1fr);list-style:none;margin:56px 0 0;padding:0}
+.avm-step{display:flex;flex-direction:column;gap:24px;min-width:0}
+.avm-step__track{display:flex;align-items:center;gap:12px;padding-right:12px}
+.avm-step__mark{flex:0 0 auto;display:flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;border:1.5px solid var(--avm-text);
+  font-size:16px;font-weight:var(--fw-bold);color:var(--avm-text);background:#fff}
+.avm-step__line{flex:1;height:2px;border-radius:1px;background:#ededed}
+.avm-step--go .avm-step__mark{border:0;background:var(--avm-red);color:#fff}
+.avm-step__mark svg{width:18px;height:18px}
+.avm-step__txt{display:flex;flex-direction:column;gap:8px;padding-right:40px}
+.avm-step h3{font-size:20px;line-height:24px;font-weight:var(--fw-bold);color:var(--avm-text)}
+.avm-step--go h3{color:var(--avm-red-text)}
+.avm-step p{font-size:16px;line-height:22px;color:var(--avm-sub)}
+
+/* ---- 7. CTA banner + contact form (Figma 27882:40870) ---- */
+.avm-contact{padding:40px 0}
+.avm-cta{padding:48px 24px;border-radius:24px;background:#f7f7f7;text-align:center}
+.avm-cta p{max-width:640px;margin:0 auto;font-size:20px;line-height:24px;font-weight:var(--fw-bold);color:var(--avm-text)}
+.avm-dialog{display:flex;justify-content:space-between;gap:48px;margin-top:64px;padding:48px 64px;border-radius:16px;background:#f9f9f9;scroll-margin-top:96px}
+.avm-dialog__intro{display:flex;flex-direction:column;gap:32px;flex:0 1 480px;min-width:0}
+.avm-dialog__head{display:flex;flex-direction:column;gap:12px}
+.avm-dialog__kicker{font-size:14px;line-height:16px;font-weight:var(--fw-medium);color:var(--avm-sub);text-transform:uppercase}
+.avm-dialog__head h2{font-size:42px;line-height:56px;font-weight:var(--fw-extrabold);letter-spacing:-.03em;color:var(--avm-text)}
+.avm-dialog__head p{font-size:16px;line-height:22px;color:var(--avm-sub)}
+.avm-points{list-style:none;margin:0;padding:0;border:1px solid #dcdbdb;border-radius:12px;background:#fff;overflow:hidden}
+.avm-points li{display:flex;flex-direction:column;gap:4px;padding:16px 20px}
+.avm-points li+li{border-top:1px solid #dcdbdb}
+.avm-points b{font-size:16px;line-height:18px;font-weight:var(--fw-medium);color:var(--avm-text)}
+.avm-points span{font-size:14px;line-height:20px;color:var(--avm-sub)}
+.avm-form{flex:0 1 640px;min-width:0;display:flex;flex-direction:column;gap:20px;padding:32px;border:1px solid #dcdbdb;border-radius:12px;background:#fff}
+.avm-form[hidden]{display:none}
+.avm-form__head h3{font-size:18px;line-height:22px;font-weight:var(--fw-semibold);letter-spacing:-.02em;color:var(--avm-text)}
+.avm-form__head p{margin-top:4px;font-size:14px;line-height:20px;color:var(--avm-sub)}
+/* Fields: the label sits inside the box like a placeholder and moves up
+   (12px) once the field has focus or a value — the "Subject" state in Figma. */
+.avm-field{position:relative;display:flex;align-items:center;gap:8px;height:56px;padding:0 12px;border:1px solid #cacccf;border-radius:8px;background:#fff;cursor:text;transition:border-color .2s,box-shadow .2s}
+.avm-field:hover{border-color:#a0a4a8}
+.avm-field:focus-within,.avm-field.is-filled{border-color:var(--avm-text)}
+.avm-field:focus-within{box-shadow:0 0 0 3px rgba(37,40,43,.08)}
+.avm-field.is-invalid{border-color:#ec221f}
+.avm-field__box{position:relative;flex:1;min-width:0;align-self:stretch}
+.avm-field__lab{position:absolute;left:0;top:50%;transform:translateY(-50%);font-size:14px;line-height:20px;color:var(--avm-sub);pointer-events:none;white-space:nowrap;
+  transition:top .18s ease,font-size .18s ease,transform .18s ease}
+.avm-field__lab i{font-style:normal;color:#ec221f;margin-left:2px}
+.avm-field input,.avm-field select,.avm-field textarea{position:absolute;inset:0;width:100%;padding:24px 0 8px;border:0;outline:0;background:transparent;
+  font:400 14px/20px var(--font-sans);color:var(--avm-text);appearance:none;-webkit-appearance:none}
+.avm-field select{padding-right:28px;cursor:pointer;margin-right:-28px;width:calc(100% + 28px)}
+.avm-field:focus-within .avm-field__lab,.avm-field.is-filled .avm-field__lab{top:9px;transform:none;font-size:12px;line-height:16px;font-weight:var(--fw-medium)}
+.avm-field__chev{flex:0 0 auto;width:20px;height:20px;color:var(--avm-text);pointer-events:none;position:relative;z-index:1}
+.avm-field select:not(.is-chosen){color:transparent}
+.avm-field select option{color:var(--avm-text)}
+.avm-field--area{height:128px;align-items:flex-start}
+.avm-field--area .avm-field__lab{top:10px;transform:none}
+.avm-field--area textarea{position:static;height:100%;padding:30px 0 10px;resize:none}
+.avm-field--area:focus-within .avm-field__lab,.avm-field--area.is-filled .avm-field__lab{top:9px}
+.avm-field--phone{gap:8px}
+.avm-cc{position:relative;display:flex;align-items:center;gap:4px;flex:0 0 auto;font-size:14px;color:var(--avm-text)}
+.avm-cc__flag{font-size:16px;line-height:20px;margin-right:2px}
+.avm-cc select{position:absolute;inset:0;opacity:0;cursor:pointer;padding:0}
+.avm-cc svg{width:20px;height:20px}
+.avm-field__sep{flex:0 0 auto;width:1px;height:20px;margin:0 4px;background:#cacccf}
+.avm-form__legal{font-size:12px;line-height:18px;color:#a0a4a8}
+.avm-form__legal a{text-decoration:underline}
+.avm-form__btn{height:48px;border:0;border-radius:8px;background:var(--avm-text);color:#fff;font:var(--fw-bold) 14px/20px var(--font-sans);cursor:pointer;transition:filter .15s}
+.avm-form__btn:hover{filter:brightness(1.25)}
+.avm-form__btn:focus-visible{outline:2px solid var(--avm-text);outline-offset:3px}
+/* Sent state (scripts/avm.js) */
+.avm-sent{flex:0 1 640px;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:56px 32px;border:1px solid #dcdbdb;border-radius:12px;background:#fff;text-align:center}
+.avm-sent[hidden]{display:none}
+.avm-sent__ico{display:flex;align-items:center;justify-content:center;width:56px;height:56px;margin-bottom:8px;border-radius:50%;background:#33c773;color:#fff;animation:avm-pop .5s cubic-bezier(.34,1.56,.64,1)}
+.avm-sent__ico svg{width:26px;height:26px}
+.avm-sent h3{font-size:22px;line-height:28px;font-weight:var(--fw-bold);color:var(--avm-text)}
+.avm-sent p{max-width:400px;font-size:16px;line-height:22px;color:var(--avm-sub)}
+.avm-sent .avm-pill{margin-top:12px}
+@keyframes avm-pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+
+/* ---- 8. FAQ (Figma 27882:41680) ---- */
+.avm-faq{padding:88px 0 89px;border-bottom:1px solid var(--avm-hair)}
+.avm-faq__in{display:flex;gap:64px;align-items:flex-start}
+.avm-faq__side{flex:0 0 380px;display:flex;flex-direction:column;align-items:flex-start;gap:16.8px}
+.avm-faq__kicker{font-family:var(--font-mono);font-size:12px;font-weight:600;letter-spacing:.14em;color:#8c8c8c}
+.avm-faq__side h2{font-size:42px;line-height:1.06;font-weight:var(--fw-extrabold);letter-spacing:-.03em;color:var(--avm-ink)}
+.avm-faq__side p{font-size:16px;line-height:25.6px;color:var(--avm-body)}
+.avm-faq__list{flex:1;min-width:0;border-bottom:1px solid var(--avm-hair)}
+.avm-faq__item{border-top:1px solid var(--avm-hair)}
+.avm-faq__item h3{margin:0}
+.avm-faq__q{display:flex;align-items:center;justify-content:space-between;gap:24px;width:100%;padding:26px 0;border:0;background:none;text-align:left;cursor:pointer;
+  font:var(--fw-bold) 20px/1.25 var(--font-sans);letter-spacing:-.01em;color:#373737}
+.avm-faq__q:hover,.avm-faq__q[aria-expanded="true"]{color:var(--avm-ink)}
+.avm-faq__q:focus-visible{outline:2px solid var(--avm-ink);outline-offset:4px;border-radius:4px}
+.avm-faq__ico{position:relative;flex:0 0 auto;width:34px;height:34px;border:1px solid rgba(26,25,25,.22);border-radius:50%;transition:background .2s,border-color .2s}
+.avm-faq__ico::before,.avm-faq__ico::after{content:'';position:absolute;left:50%;top:50%;width:10px;height:1.6px;margin:-.8px 0 0 -5px;border-radius:1px;background:var(--avm-ink);transition:transform .3s ease}
+.avm-faq__ico::after{transform:rotate(90deg)}
+.avm-faq__q[aria-expanded="true"] .avm-faq__ico::after{transform:rotate(0)}
+.avm-faq__q:hover .avm-faq__ico{border-color:var(--avm-ink)}
+.avm-faq__a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease}
+.avm-faq__a>div{overflow:hidden}
+.avm-faq__a p{padding:0 60px 28px 0;font-size:16px;line-height:26.4px;color:var(--avm-body);opacity:0;transition:opacity .3s ease}
+.avm-faq__a a{color:var(--avm-ink);text-decoration:underline;text-underline-offset:2px}
+.avm-faq__item.is-open .avm-faq__a{grid-template-rows:1fr}
+.avm-faq__item.is-open .avm-faq__a p{opacity:1}
+
+/* ---- Section reveal (scripts/avm.js adds .avm-motion to <html>) ---- */
+.avm-motion [data-reveal]{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:var(--rd,0s)}
+.avm-motion [data-reveal].is-in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .avm-panel.is-enter,.avm-sent__ico{animation:none}
+  .avm-faq__a,.avm-faq__a p,.avm-faq__ico::after{transition:none}
+}
+
+/* ---- Tablet ---- */
+@media (max-width:1200px){
+  .avm-feat__vis{padding:28px}
+  .avm-kf .sc-card{width:100%}
+  .avm-dialog{padding:40px}
+}
+@media (max-width:1100px){
+  .avm-top{padding-top:136px}
+  .avm-top__in{grid-template-columns:1fr;gap:40px}
+  .avm-top__lead{max-width:600px}
+  .avm-hero__visual{max-width:none;justify-self:stretch}
+  .avm-dialog{flex-direction:column;gap:32px}
+  .avm-dialog__intro,.avm-form,.avm-sent{flex:none;width:100%}
+  .avm-faq__in{flex-direction:column;gap:40px}
+  .avm-faq__side{flex:none}
+}
+
+/* ---- Mobile (Figma 360 frames 27882:41018 / 27093:936) ---- */
+@media (max-width:900px){
+  .avm-top{padding:104px 0 32px}
+  .avm-top__in{gap:32px}
+  .avm-top__copy{gap:20px}
+  .avm-top__lead{font-size:16px;line-height:26px}
+  .avm-hero__visual{margin-inline:calc(-1 * var(--avm-edge));width:auto}
+  .avm-h2{font-size:28px;line-height:32px}
+  .avm-stats{padding-bottom:48px}
+  .avm-stats__row{grid-template-columns:1fr 1fr}
+  .avm-stat,.avm-stat:first-child{padding:24px 16px 24px 0}
+  .avm-stat:nth-child(2n){padding-left:16px}
+  .avm-stat:nth-child(n+3){border-top:1px solid #e6e6e6}
+  .avm-stat:nth-child(3){border-left:0}
+  .avm-stat__num{font-size:28px;line-height:34px}
+  .avm-why{padding:8px 0}
+  .avm-why__grid{grid-template-columns:1fr;gap:16px;margin-top:32px}
+  .avm-why__card{padding:28px 24px;gap:20px}
+  .avm-why__ico{width:48px;height:48px}
+  .avm-why__card h3{font-size:22px;line-height:28px}
+  .avm-why__list li{font-size:16px;line-height:22px;padding:16px 0}
+  .avm-kf{padding-top:72px}
+  .avm-tabs{margin:24px calc(-1 * var(--avm-edge)) 0;padding-inline:var(--avm-edge);scroll-padding-inline:var(--avm-edge)}
+  .avm-intro{padding-top:28px;padding-bottom:24px}
+  .avm-intro h3{font-size:18px;line-height:24px}
+  .avm-intro p{font-size:15px;line-height:24px}
+  .avm-feat{grid-template-columns:1fr;border-top:0}
+  .avm-feat__txt{padding:40px var(--avm-edge) 24px;gap:12px}
+  .avm-feat__txt h4{font-size:22px;line-height:28px}
+  .avm-feat__vis{justify-content:center;padding:16px var(--avm-edge)}
+  .avm-kf .sc-card{height:200px;max-width:528px}
+  .avm-kf .sc-card .mu-phone{--mu-scale:.75;top:18px}
+  .avm-standin__ico{width:52px;height:52px;border-radius:14px}
+  .avm-kf__more{padding-top:56px;padding-bottom:48px}
+  .avm-join{padding:56px 0 48px}
+  .avm-join .avm-h2{line-height:34px}
+  .avm-steps{grid-template-columns:1fr;margin-top:32px}
+  .avm-step{flex-direction:row;gap:16px}
+  .avm-step__track{flex-direction:column;gap:4px;padding:0}
+  .avm-step__mark{width:40px;height:40px;font-size:14px}
+  .avm-step__line{flex:1;width:2px;height:auto;min-height:28px}
+  .avm-step__txt{padding:8px 0 20px}
+  .avm-step h3{font-size:18px;line-height:22px}
+  .avm-step p{font-size:14px;line-height:20px}
+  .avm-contact{padding:24px 0}
+  .avm-cta{padding:32px 24px}
+  .avm-cta p{font-size:18px;line-height:26px}
+  .avm-dialog{margin-top:32px;padding:24px 16px;gap:24px}
+  .avm-dialog__intro{gap:24px}
+  .avm-dialog__head h2{font-size:24px;line-height:30px;letter-spacing:-.02em}
+  .avm-form{padding:20px}
+  .avm-sent{padding:40px 20px}
+  .avm-faq{padding:48px 0 56px}
+  .avm-faq__in{gap:24px}
+  .avm-faq__side{gap:12px}
+  .avm-faq__side h2{font-size:28px;line-height:32px}
+  .avm-faq__q{padding:20px 0;font-size:16px;line-height:22px;gap:12px}
+  .avm-faq__a p{padding:0 0 24px;font-size:14px;line-height:22px}
+}

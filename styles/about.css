@@ -1,0 +1,288 @@
+/* ==========================================================================
+   AYO — About Us page (about-en.html / about-id.html)
+   Figma: EN section 27980:18323 (desktop 27987:7997, mobile 27990:8081,
+   story states 28014:8166 …), ID section 28095:25789 (desktop 28095:25790,
+   mobile 28095:26176). Entry point: "About Us" / "Tentang Kami" in the footer.
+   Depends on: tokens.css, chrome.css, components/site-footer.
+   Motion (photo strip auto-scroll, pill drop & float) comes later.
+   ========================================================================== */
+
+:root{--ab-ink:#25282b;--ab-body:#52575c;--ab-mute:#a0a4a8;--ab-dim:#707070;--ab-line:#dcdbdb;--ab-tint:#f9f9f9;--ab-dark:#2c2c2c}
+.ayo-web{background:var(--bg-white)}
+
+/* Content column: 1200px at 1440 (Figma pads 120px each side). */
+.ab-wrap{max-width:calc(1200px + 2 * var(--edge));margin:0 auto;padding:0 var(--edge)}
+
+/* ---- Shared type ---- */
+.ab-eyebrow{font-size:14px;line-height:20px;font-weight:var(--fw-semibold);letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
+.ab-h2{font-size:40px;line-height:48px;font-weight:var(--fw-extrabold);letter-spacing:-.01em;color:var(--ab-ink)}
+.ab-lede{font-size:18px;line-height:28px;color:var(--ab-body)}
+
+/* ---- 1. Hero (Figma 27987:8032 / mobile 27990:8095) ---- */
+.ab-hero{padding:145px 0 96px}            /* 81px nav + 64px */
+.ab-hero__in{display:flex;align-items:center;gap:64px}
+.ab-hero__copy{flex:1 1 0;min-width:0}
+.ab-crumb ol{display:flex;align-items:center;gap:10px;list-style:none;margin:0;padding:0;font-size:12px;line-height:16px;letter-spacing:.06em;text-transform:uppercase;color:var(--ab-mute)}
+.ab-crumb li{display:flex;align-items:center;gap:10px}
+.ab-crumb li+li::before{content:'›';letter-spacing:0}
+.ab-crumb a:hover{color:var(--ab-ink)}
+.ab-crumb [aria-current]{font-weight:var(--fw-semibold);color:var(--ab-ink)}
+.ab-hero__head{display:flex;flex-direction:column;gap:16px;padding-top:40px}
+.ab-hero__title{font-size:64px;line-height:72px;font-weight:var(--fw-extrabold);letter-spacing:-.02em;color:var(--ab-ink)}
+.ab-hero__lead{font-size:24px;line-height:34px;font-weight:var(--fw-semibold);color:var(--ab-ink)}
+.ab-hero__sub{font-size:18px;line-height:28px;color:var(--ab-body)}
+
+/* Hero visual: a 560×460 composition that scales with its column. Every size
+   inside is in --u (1/560 of the box width), so the mobile frame (328px wide)
+   is the same art at 0.586×, as in Figma. Pills are placed by their centre. */
+.ab-hero__visual{flex:0 0 560px;width:560px;container-type:inline-size}
+.ab-art{--u:calc(100cqw / 560);position:relative;width:100%;aspect-ratio:560/460}
+.ab-art__photo{position:absolute;left:calc(var(--u) * 60);top:calc(var(--u) * 40);width:calc(var(--u) * 440);height:calc(var(--u) * 380);border-radius:calc(var(--u) * 28);overflow:hidden}
+.ab-pill{position:absolute;left:calc(var(--u) * var(--x));top:calc(var(--u) * var(--y));transform:translate(-50%,-50%) rotate(var(--r));
+  display:flex;align-items:center;gap:calc(var(--u) * 10);padding:calc(var(--u) * 16) calc(var(--u) * 28) calc(var(--u) * 16) calc(var(--u) * 18);
+  background:#fff;border:max(.5px,calc(var(--u) * 1)) solid var(--ab-line);border-radius:999px;white-space:nowrap;
+  font-size:calc(var(--u) * 24);line-height:calc(var(--u) * 30);font-weight:var(--fw-bold);color:var(--ab-ink)}
+.ab-pill img,.ab-pill__plus{width:calc(var(--u) * 30);height:calc(var(--u) * 30);flex:0 0 auto}
+.ab-pill__plus{display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--ab-tint);font-size:calc(var(--u) * 22);line-height:1}
+
+/* Group photo with the AYO banner logo laid over it (mix-blend multiply), as
+   in Figma. The inner box keeps the photo's own 1600×911 ratio and fills the
+   frame's height, so the logo stays on the banner at any crop. */
+.ab-shot{position:relative;overflow:hidden}
+.ab-shot__in{position:absolute;top:0;left:50%;height:100%;aspect-ratio:1600/911;transform:translateX(-50%)}
+.ab-shot__in img{width:100%;height:100%;object-fit:cover}
+.ab-shot__logo{position:absolute;left:46.1%;top:37.35%;width:7.5%!important;height:auto!important;mix-blend-mode:multiply}
+
+/* ---- 2. At a glance (Figma 27987:8057) ---- */
+.ab-stats{padding-bottom:96px}
+.ab-stats__band{display:flex;flex-direction:column;gap:32px;padding:48px 56px;border-radius:24px;background:var(--ab-tint)}
+.ab-stats__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:40px;margin:0}
+.ab-stat{display:flex;flex-direction:column;gap:16px}
+.ab-stat dd{order:-1;display:flex;align-items:flex-start;gap:2px;margin:0;padding-bottom:16px;border-bottom:1px solid var(--ab-line);white-space:nowrap;
+  font-size:56px;line-height:60px;font-weight:var(--fw-extrabold);letter-spacing:-.02em;color:var(--ab-ink)}
+.ab-stat dd span{font-size:24px;line-height:30px;font-weight:var(--fw-bold);letter-spacing:0;color:var(--brand)}
+.ab-stat dt{font-size:16px;line-height:24px;font-weight:var(--fw-semibold);color:var(--ab-body)}
+
+/* ---- 3. The AYO story (Figma 27987:8085, states 28014:8166 / 8243 / 8320 / 8397) ---- */
+.ab-story{padding:24px 0 120px}
+.ab-story__head{display:flex;gap:80px}
+.ab-story__head>div{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:16px}
+.ab-story__head>.ab-lede{flex:1 1 0;padding-top:36px}
+/* Timeline: five equal slots; the track runs from the first centre to the
+   last, the red progress up to the chosen year. --w is one slot's width. */
+.ab-tl{--w:240px;position:relative;display:flex;justify-content:space-between;margin:56px 0;padding:0;list-style:none}
+.ab-tl::before,.ab-tl::after{content:'';position:absolute;top:11px;left:calc(var(--w) / 2);height:2px;background:var(--ab-line)}
+.ab-tl::before{right:calc(var(--w) / 2)}
+.ab-tl::after{width:calc((100% - var(--w)) * var(--p,0) / 4);background:var(--brand);transition:width .35s ease}
+.ab-tl li{position:relative;z-index:1;width:var(--w)}
+.ab-tl button{display:flex;flex-direction:column;align-items:center;gap:16px;width:100%;padding:0;border:0;background:none;cursor:pointer;font:inherit;
+  font-size:18px;line-height:28px;font-weight:var(--fw-medium);color:var(--ab-dim)}
+.ab-tl button::before{content:'';width:12px;height:12px;margin:6px 0;border-radius:50%;border:2px solid #cacccf;background:#fff;box-sizing:border-box;transition:all .25s}
+.ab-tl .is-past button::before{border:0;background:var(--brand)}
+.ab-tl .is-on button{font-size:20px;font-weight:var(--fw-bold);color:var(--ab-ink)}
+.ab-tl .is-on button::before{width:24px;height:24px;margin:0;border:0;background:var(--brand)}
+.ab-tl button:hover{color:var(--ab-ink)}
+
+.ab-card{display:flex;border-radius:24px;overflow:hidden;background:var(--ab-tint)}
+.ab-card__photo{position:relative;flex:0 0 50%;min-height:400px}
+.ab-card__photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ab-card__body{flex:1 1 0;display:flex;flex-direction:column;justify-content:space-between;gap:32px;padding:56px}
+.ab-card__text{display:flex;flex-direction:column;gap:16px}
+.ab-card__year{font-size:72px;line-height:76px;font-weight:var(--fw-extrabold);letter-spacing:-.02em;color:var(--ab-ink)}
+.ab-card__title{font-size:28px;line-height:36px;font-weight:var(--fw-bold);color:var(--ab-ink)}
+.ab-arrows{display:flex;gap:12px}
+.ab-arrow{width:44px;height:44px;padding:0;border:0;border-radius:50%;background:none;cursor:pointer;transition:opacity .2s,transform .15s}
+.ab-arrow img{width:100%;height:100%}
+.ab-arrow:hover:not(:disabled){transform:translateY(-1px)}
+.ab-arrow:disabled{cursor:default}   /* Figma keeps the first/last arrow at full strength */
+
+/* ---- 4. Mission & vision (Figma 27988:7997) ---- */
+.ab-mv{padding-bottom:120px}
+.ab-mv__grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.ab-mv__card{display:flex;flex-direction:column;gap:96px;padding:48px 56px 56px;border-radius:24px;background:var(--ab-tint);color:var(--ab-ink)}
+.ab-mv__card--dark{background:var(--ab-dark);color:#fff}
+.ab-mv__card--dark .ab-eyebrow{color:#fff}
+.ab-mv__card p:last-child{font-size:30px;line-height:40px;font-weight:var(--fw-bold);letter-spacing:-.005em}
+
+/* ---- 5. The AYO ecosystem (Figma 28041:8191 / mobile 28042:8203) ---- */
+.ab-eco__head{display:flex;align-items:flex-end;gap:80px}
+.ab-eco__head>div{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:16px}
+.ab-eco__head>.ab-lede{flex:1 1 0}
+.ab-stage{display:flex;align-items:center;margin-top:56px;padding:40px;border-radius:32px;background:var(--ab-tint)}
+.ab-side{flex:0 0 452px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.ab-who{display:flex;flex-direction:column;gap:10px}
+.ab-who>p{font-size:12px;line-height:16px;font-weight:var(--fw-semibold);letter-spacing:.08em;text-transform:uppercase;color:var(--ab-mute)}
+.ab-chips{display:flex;flex-wrap:wrap;gap:8px}
+.ab-chip{display:flex;align-items:center;gap:8px;padding:6px 14px 6px 6px;border:1px solid var(--ab-line);border-radius:999px;background:#fff;
+  font-size:14px;line-height:20px;font-weight:var(--fw-semibold);color:var(--ab-ink);white-space:nowrap}
+.ab-chip i{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--ab-tint)}
+.ab-app{display:flex;gap:16px;height:296px;padding:28px 28px 0;border:1px solid var(--ab-line);border-radius:24px;background:#fff;overflow:hidden}
+.ab-app--dark{border-color:var(--ab-dark);background:var(--ab-dark);color:#fff}
+.ab-app__text{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding-bottom:28px}
+.ab-app__pill{padding:6px 12px;border-radius:999px;background:var(--brand);color:#fff;font-size:12px;line-height:16px;font-weight:var(--fw-bold);letter-spacing:.08em;text-transform:uppercase}
+.ab-app--dark .ab-app__pill{background:#fff;color:var(--ab-ink)}
+.ab-app h3{font-size:26px;line-height:32px;font-weight:var(--fw-extrabold);letter-spacing:-.01em;color:inherit}
+.ab-app__item{display:flex;flex-direction:column;gap:6px}
+.ab-app__item p{font-size:15px;line-height:22px;font-weight:var(--fw-medium);color:var(--ab-body)}
+.ab-app--dark .ab-app__item p{color:#fff}
+.ab-app__item a{font-size:14px;line-height:20px;font-weight:var(--fw-semibold);color:var(--brand)}
+.ab-app--dark .ab-app__item a{color:#fff}
+.ab-app__item a:hover{text-decoration:underline;text-underline-offset:3px}
+.ab-app__mock{flex:0 0 156px;display:flex;flex-direction:column;justify-content:flex-end}
+.ab-bridge{flex:1 1 0;min-width:0;display:flex;align-items:center;padding:36px 12px 0}
+.ab-bridge::before,.ab-bridge::after{content:'';flex:1 1 0;height:2px;background:repeating-linear-gradient(90deg,var(--brand) 0 6.5px,transparent 6.5px 13px)}
+.ab-hub{display:flex;align-items:center;justify-content:center;flex:0 0 88px;height:88px;border:1px solid var(--ab-line);border-radius:50%;background:#fff}
+.ab-hub img{width:55px;height:30px}
+
+/* Phone mockups (Mini UI look: #ececec bezel, white screen, Figtree, 1.2px brand outline on the picked item). */
+.ab-phone{display:flex;flex-direction:column;width:156px;height:235.2px;padding:6px 6px 0;border-radius:20.4px 20.4px 0 0;background:#ececec;font-family:var(--font-sans);color:#1a1919}
+.ab-scr{flex:1 1 0;display:flex;flex-direction:column;gap:6px;padding:9.6px 7.2px 0;border-radius:15.6px 15.6px 0 0;background:#fff;overflow:hidden;line-height:1.3;white-space:nowrap}
+.ab-scr__hd{display:flex;align-items:center;justify-content:space-between;padding:0 1.2px}
+.ab-scr__hd b{font-size:8.4px;font-weight:800}
+.ab-tag{padding:1.2px 4.8px;border-radius:3.6px;font-size:6px;font-weight:700;background:rgba(236,36,53,.1);color:var(--brand)}
+.ab-tag--ok{background:#e6f6ee;color:#1b7a4b}
+.ab-mbox{display:flex;flex-direction:column;gap:5px;padding:5px 6px;border:.6px solid #eee;border-radius:7.2px;background:#fff}
+.ab-mid{display:flex;align-items:center;gap:6px}
+.ab-av{display:flex;align-items:center;justify-content:center;flex:0 0 auto;width:24px;height:24px;border-radius:50%;background:rgba(236,36,53,.1);color:var(--brand);font-size:9.12px;font-weight:800}
+.ab-mid b{display:block;font-size:8.4px;font-weight:700}
+.ab-mid small,.ab-mstat small,.ab-tile small{display:block;font-size:6px;color:#787373}
+.ab-mbox hr{height:.6px;margin:0;border:0;background:#ededed}
+.ab-mstats{display:flex;gap:3.6px}
+.ab-mstat{flex:1 1 0}
+.ab-mstat b{display:block;font-size:8.4px;font-weight:700}
+.ab-mtitle{display:flex;align-items:center;justify-content:space-between}
+.ab-mtitle b{font-size:7.2px;font-weight:700}
+.ab-mtitle small{font-size:6px;color:#9b9797}
+.ab-tiles{display:grid;grid-template-columns:1fr 1fr;gap:3.6px;margin-top:3.6px}
+.ab-tile{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;padding:5px 6px;border:.6px solid #eee;border-radius:7.2px;text-align:center}
+.ab-tile.is-on{border-color:#ec221f}
+.ab-tile i{display:flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;font-style:normal;font-size:7.6px;font-weight:800;color:#fff}
+.ab-tile b,.ab-tile small{width:100%;overflow:hidden;text-overflow:ellipsis}
+.ab-tile b{font-size:7.2px;font-weight:700}
+/* AVM screen */
+.ab-venue{display:flex;align-items:center;gap:2.4px}
+.ab-venue img{width:7.2px;height:7.2px}
+.ab-vstats{display:flex;gap:3.6px}
+.ab-vstat{width:72.6px;display:flex;flex-direction:column;gap:1.2px;padding:4.8px;border-radius:6px;background:#fff}
+.ab-vstat--on{border-top:1.2px solid var(--brand)}
+.ab-vstat small{font-size:6px;line-height:8.4px;color:#787373}
+.ab-vstat b{display:flex;align-items:center;gap:1.2px;font-size:8.4px;line-height:10.8px;font-weight:700}
+.ab-vstat b img{width:4.8px;height:4px;margin:0 2.4px}
+.ab-chart{display:flex;flex-direction:column;gap:3.6px;padding:6px 6px 4.8px;border-radius:7.2px;background:#fff}
+.ab-chart__plot{position:relative;width:115.2px;height:62.4px}
+.ab-chart__plot>img{width:115.2px;height:62.4px}
+.ab-chart__tip{position:absolute;left:62.4px;top:42px;display:flex;flex-direction:column;padding:3px 4.2px;border-radius:3.6px;background:#1a1919;font-size:6px;line-height:7.2px}
+.ab-chart__tip small{color:#bebbbb}.ab-chart__tip b{color:#fff;font-weight:700}
+.ab-axis{display:flex;justify-content:space-between;font-size:6px;line-height:8.4px;color:#9b9797}
+.ab-book{display:flex;align-items:center;justify-content:space-between;padding:4.8px 6px;border:.9px solid #ec221f;border-radius:7.2px}
+.ab-book b{display:block;font-size:7.2px;line-height:9.6px;font-weight:700}
+.ab-book small{display:block;font-size:6px;line-height:8.4px;color:#787373}
+.ab-book em{padding:1.2px 4.8px;border-radius:999px;background:var(--brand);color:#fff;font-style:normal;font-size:6px;line-height:8.4px;font-weight:700}
+/* The AVM screen sits on a light card inside the phone. */
+.ab-scr--avm{background:#fff}
+.ab-scr--avm .ab-vstat,.ab-scr--avm .ab-chart{box-shadow:0 0 0 .6px #eee}
+
+/* ---- 6. Moments (Figma 27988:8045) ---- */
+.ab-moments{padding:120px 0}
+.ab-moments .ab-h2{margin-top:16px}
+/* Sideways strip, lined up with the content column. Auto-scroll comes with the motion pass. */
+.ab-strip{--in:max(var(--edge),calc((100vw - 1200px) / 2));display:flex;gap:16px;margin-top:40px;padding:0 var(--in);scroll-padding:0 var(--in);overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none}
+.ab-strip::-webkit-scrollbar{display:none}
+.ab-strip>*{flex:0 0 auto;height:400px;border-radius:20px;overflow:hidden;scroll-snap-align:start}
+.ab-strip>img{object-fit:cover}
+.ab-strip .is-wide{width:440px}.ab-strip .is-narrow{width:320px}
+
+/* ---- 7. Closing CTA (Figma 27988:8056) ---- */
+.ab-cta{padding:96px var(--edge);background:var(--ab-dark);color:#fff;text-align:center}
+.ab-cta h2{max-width:760px;margin:0 auto;font-size:60px;line-height:1.04;font-weight:var(--fw-extrabold);letter-spacing:-.02em;color:#fff}
+.ab-cta p{max-width:430px;margin:16px auto 0;font-size:16px;line-height:1.6;color:rgba(255,255,255,.85)}
+.ab-btn{display:inline-flex;margin-top:48px;padding:16px 32px;border-radius:12px;background:var(--brand);color:#fff;font-size:16px;line-height:22px;font-weight:var(--fw-semibold);transition:filter .15s,transform .15s}
+.ab-btn:hover{color:#fff;filter:brightness(.93);transform:translateY(-2px)}
+
+/* ---- Narrower desktops ---- */
+@media (max-width:1240px){
+  .ab-side{flex-basis:calc(50% - 60px)}
+  .ab-bridge{padding-left:8px;padding-right:8px}
+  .ab-hub{flex-basis:72px;height:72px}
+  .ab-hub img{width:45px;height:auto}
+}
+@media (max-width:1100px){
+  .ab-hero__visual{flex-basis:44%;width:44%}
+  .ab-hero__title{font-size:52px;line-height:58px}
+  .ab-tl{--w:160px}
+  .ab-mv__card{gap:64px;padding:40px}
+  .ab-mv__card p:last-child{font-size:26px;line-height:36px}
+}
+
+/* ---- Mobile (Figma 360 frame 27990:8081) ---- */
+@media (max-width:900px){
+  .ab-wrap{padding:0 16px}
+  .ab-eyebrow{font-size:12px;line-height:16px}
+  .ab-h2{font-size:28px;line-height:34px}
+  .ab-lede{font-size:15px;line-height:24px}
+
+  .ab-hero{padding:95px 0 48px}             /* 71px nav + 24px */
+  .ab-hero__in{flex-direction:column;align-items:stretch;gap:32px}
+  .ab-crumb ol{gap:8px;font-size:11px}
+  .ab-crumb li{gap:8px}
+  .ab-hero__head{gap:12px;padding-top:24px}
+  .ab-hero__title{font-size:40px;line-height:44px}
+  .ab-hero__lead{font-size:18px;line-height:26px}
+  .ab-hero__sub{font-size:15px;line-height:24px}
+  .ab-hero__visual{flex:none;width:100%;max-width:440px;margin:0 auto}
+
+  .ab-stats{padding-bottom:56px}
+  .ab-stats__band{gap:24px;padding:28px 24px;border-radius:20px}
+  .ab-stats__grid{grid-template-columns:1fr 1fr;gap:24px 20px}
+  .ab-stat{gap:10px}
+  .ab-stat dd{padding-bottom:10px;font-size:36px;line-height:40px}
+  .ab-stat dd span{font-size:18px;line-height:22px}
+  .ab-stat dt{font-size:14px;line-height:20px}
+
+  .ab-story{padding:8px 0 64px}
+  .ab-story__head{flex-direction:column;gap:12px}
+  .ab-story__head>div{gap:12px}
+  .ab-story__head .ab-h2{font-size:26px;line-height:32px}
+  .ab-story__head>.ab-lede{padding-top:0}
+  .ab-tl{--w:48px;margin:32px 0}
+  .ab-tl button{gap:12px;font-size:14px;line-height:20px}
+  .ab-tl button::before{width:10px;height:10px;margin:7px 0}
+  .ab-tl .is-past button::before{width:12px;height:12px;margin:6px 0}
+  .ab-tl .is-on button{font-size:14px}
+  .ab-card{flex-direction:column;border-radius:20px}
+  .ab-card__photo{flex:none;min-height:0;height:220px}
+  .ab-card__body{gap:12px;padding:24px}
+  .ab-card__text{gap:12px}
+  .ab-card__year{font-size:48px;line-height:52px}
+  .ab-card__title{font-size:22px;line-height:30px}
+  .ab-arrow{width:40px;height:40px}
+
+  .ab-mv{padding-bottom:64px}
+  .ab-mv__grid{grid-template-columns:1fr;gap:16px}
+  .ab-mv__card{gap:40px;padding:28px 24px;border-radius:20px}
+  .ab-mv__card p:last-child{font-size:22px;line-height:30px}
+
+  .ab-eco{padding-bottom:64px}
+  .ab-eco__head{flex-direction:column;align-items:stretch;gap:12px}
+  .ab-eco__head>div{gap:12px}
+  .ab-stage{flex-direction:column;align-items:stretch;margin-top:24px;padding:20px 16px;border-radius:24px}
+  .ab-side{flex:none}
+  .ab-app{flex-direction:column;align-items:stretch;gap:20px;height:auto;padding:24px 24px 0;border-radius:20px}
+  .ab-app__text{padding-bottom:0}
+  .ab-app__mock{flex:none;align-items:center}
+  .ab-bridge{flex-direction:column;padding:0;margin-bottom:12px}
+  .ab-bridge::before,.ab-bridge::after{flex:0 0 12px;width:2px;height:12px;background:repeating-linear-gradient(180deg,var(--brand) 0 3px,transparent 3px 6px)}
+  .ab-hub{flex:0 0 64px;width:64px;height:64px}
+  .ab-hub img{width:41.25px;height:22.5px}
+
+  .ab-moments{padding:64px 0}
+  .ab-moments .ab-h2{margin-top:12px}
+  .ab-strip{--in:16px;gap:12px;margin-top:24px}
+  .ab-strip>*{height:300px;border-radius:16px}
+  .ab-strip .is-wide{width:260px}.ab-strip .is-narrow{width:200px}
+
+  .ab-cta{padding:56px 16px}
+  .ab-cta h2{font-size:32px;line-height:40px;font-weight:var(--fw-bold);letter-spacing:0}
+  .ab-cta p{max-width:none;font-size:14px;line-height:20px}
+  .ab-btn{margin-top:36px}
+}

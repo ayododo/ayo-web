@@ -1,0 +1,231 @@
+/* ==========================================================================
+   AYO — AVM landing page: hero illustration
+   Figma: ID desktop 28126:11219 (660×560), ID mobile 28135:11988 (360×560),
+          EN 28378:17893 / 28378:18973. Built by avm-hero.js into
+          [data-avm-hero]; this file only styles that markup.
+
+   The art is laid out at the Figma size and scaled to the container with
+   --hs (avm-hero.js), like the Scoring hero. Inside the phone and the cards
+   everything is in "app px" (the AVM app's 360px-wide units) and scaled to
+   the Figma size: phone .690104, fund + report .72, schedule + staff .62.
+   The phone keeps the AVM app's own colours (red header, badges): it is the
+   hero, drawn as in Figma.
+   ========================================================================== */
+
+.avm-hero{position:relative;width:100%;height:560px;font-family:var(--font-sans);color:#25282b;-webkit-font-smoothing:antialiased}
+.ah-art{--hs:1;position:absolute;left:0;top:0;width:660px;height:560px;transform:scale(var(--hs));transform-origin:0 0;text-align:left}
+.ah-art *,.ah-art *::before,.ah-art *::after{box-sizing:border-box}
+.ah-art p{margin:0}
+.ah-art b{font-weight:500}
+.ah-art em{font-style:normal}
+.ah-i{display:block;flex:0 0 auto}
+.ah-rot{transform:rotate(-90deg)}
+.ah-art.no-anim,.ah-art.no-anim *{transition:none!important}
+
+/* ---- Phone (Figma 28126:11220: 265 × 542.72) ---- */
+.ah-phone{position:absolute;z-index:1;left:198px;top:8px;width:265px;height:542.72px;padding:8.28px;border-radius:36.44px;background:#f2f2f2;
+  box-shadow:0 24px 24px rgba(0,0,0,.12)}
+.ah-screen{position:relative;height:528.28px;border-radius:29.81px;overflow:hidden;background:#e8e6e3;isolation:isolate}
+.ah-app{position:absolute;left:-.86px;top:-11.46px;width:362.5px;height:792.6px;overflow:hidden;background:#fff;transform:scale(.690104);transform-origin:0 0}
+.ah-cover{position:absolute;inset:0;z-index:5;background:#fff;opacity:0;pointer-events:none;transition:opacity .3s}
+.ah-cover.is-on{opacity:1}
+.ah-swoosh{display:block;position:absolute;left:0;top:0}
+
+/* Scrolling home screen (moved with transform by the motion). */
+.ah-scroll{position:absolute;left:0;top:0;width:100%;transition:transform 1s cubic-bezier(.45,.05,.25,1)}
+.ah-back{position:absolute;left:0;top:0;width:362.5px;height:142.85px;overflow:hidden}
+.ah-back::before{content:'';position:absolute;inset:1.54px 0 0 0;background:#9e0620}
+.ah-back .ah-swoosh{left:1.54px;width:359.4px;height:139.8px}
+.ah-main{position:absolute;left:1.26px;top:102.46px;width:360px;padding-bottom:24px;display:flex;flex-direction:column;align-items:center;gap:16px}
+
+.ah-card{width:328px;padding:14px 16px;border-radius:8px;background:#fff;display:flex;flex-direction:column;gap:12px}
+.ah-card__h{display:flex;align-items:center;justify-content:space-between;width:100%;font-size:14px;line-height:20px;font-weight:500}
+.ah-badge{padding:2px 6px;border-radius:2px;background:#e3f6f1;color:#00c48c;font-size:10px;line-height:12px;font-weight:500;letter-spacing:.1px}
+.ah-dash{display:block;width:100%;height:1px;background:repeating-linear-gradient(90deg,#e8e8e8 0 4px,transparent 4px 8px)}
+.ah-link{display:flex;align-items:center;font-size:12px;line-height:18px;font-weight:500;color:#9e0620;white-space:nowrap}
+
+/* Venue status + balance */
+.ah-info{box-shadow:0 1px 3px rgba(37,40,43,.16)}
+.ah-info__r{display:flex;align-items:flex-start;justify-content:space-between}
+.ah-info__bal{display:flex;align-items:center;gap:8px}
+.ah-info__ic{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:#9e0620}
+.ah-info__bal small{display:block;font-size:12px;line-height:18px;color:#a0a4a8;letter-spacing:.1px}
+.ah-info__bal b{display:block;font-size:16px;line-height:22px}
+
+/* Statistics summary */
+.ah-stats{align-items:flex-end;overflow:hidden;box-shadow:0 1px 6px rgba(37,40,43,.16)}
+.ah-stats__row{display:flex;gap:8px;width:100%}
+.ah-stat{flex:0 0 142px;display:flex;flex-direction:column;gap:6px;padding-bottom:8px;border-radius:4px;background:#fff;box-shadow:0 1px 3px rgba(37,40,43,.08)}
+.ah-stat>i{display:block;height:4px;border-radius:4px 4px 0 0}
+.ah-stat__b{display:flex;flex-direction:column;gap:2px;padding:0 8px}
+.ah-stat__l{font-size:12px;line-height:16px;letter-spacing:.1px}
+.ah-stat__v{display:flex;align-items:center;white-space:nowrap}
+.ah-stat__v small{align-self:flex-start;margin-right:2px;font-size:10px;line-height:14px;color:#a0a4a8}
+.ah-stat__v b{font-size:14px;line-height:20px;letter-spacing:.1px;font-variant-numeric:tabular-nums}
+.ah-stat__a{display:flex;align-items:center;justify-content:center;width:16px;height:16px}
+.ah-stat__a.is-down svg{transform:rotate(180deg)}
+.ah-stat__s{font-size:10px;line-height:14px;color:#a0a4a8;letter-spacing:.1px}
+
+/* Line chart (296 × 169 app px). data-s: 0 = empty, 1 = line drawn,
+   2 (or none) = fill + the July point shown. */
+.ah-ch{position:relative;align-self:flex-start;width:296px;height:169px}
+.ah-ch__gl{position:absolute;left:30px;width:266px;height:1px;background:#eee}
+.ah-ch__yl{position:absolute;left:0;width:22px;margin-top:-7.5px;font-size:10px;line-height:16px;text-align:right;color:#52575c;letter-spacing:.1px}
+.ah-ch__xl{position:absolute;top:159px;width:24px;font-size:10px;line-height:10px;text-align:center;color:#52575c;letter-spacing:.1px}
+.ah-ch__ax{position:absolute;left:30px;top:3px;width:1px;height:148px;background:#eee}
+.ah-ch__base{position:absolute;left:30px;top:150px;width:266px;height:1px;background:#e8e8e8}
+.ah-ch__svg{position:absolute;left:0;top:0;width:296px;height:169px;overflow:visible}
+.ah-ch__line{stroke-dasharray:1;stroke-dashoffset:0;transition:stroke-dashoffset 1.3s cubic-bezier(.4,0,.2,1)}
+.ah-ch__fill,.ah-ch__sel{transition:opacity .5s ease}
+.ah-ch[data-s="0"] .ah-ch__line{stroke-dashoffset:1}
+.ah-ch[data-s="0"] .ah-ch__fill,.ah-ch[data-s="0"] .ah-ch__sel,
+.ah-ch[data-s="1"] .ah-ch__fill,.ah-ch[data-s="1"] .ah-ch__sel{opacity:0}
+.ah-ch__t1,.ah-ch__t2{font-size:12px;fill:#fff;dominant-baseline:central;letter-spacing:.1px}
+.ah-ch__t2{font-weight:500}
+
+.ah-band{padding:4px 0}
+.ah-band i{display:block;width:360px;height:6px;background:#e8e8e8}
+
+/* Upcoming schedule */
+.ah-list{display:flex;flex-direction:column;gap:12px;width:328px}
+.ah-list__h{display:flex;align-items:center;gap:4px;font-size:16px;line-height:22px;font-weight:500}
+.ah-row{position:relative;display:flex;align-items:center;gap:8px;padding:16px 12px 16px 0;border-radius:8px;background:#fff;box-shadow:0 1px 3px rgba(37,40,43,.16)}
+.ah-row__acc{align-self:stretch;width:4px;border-radius:4px 0 0 4px}
+.ah-row__in{flex:1;display:flex;align-items:center;gap:12px;min-width:0}
+.ah-row__t{display:flex;flex-direction:column;align-items:center;gap:2px;width:48px}
+.ah-row__t span,.ah-row__t em{display:flex;align-items:center;justify-content:center;height:11px;font-size:14px;line-height:20px;letter-spacing:.15px}
+.ah-row__t em{font-size:16px;color:#cacccf}
+.ah-row__div{align-self:stretch;width:1px;border-radius:2px;background:#e8e8e8}
+.ah-row__b{flex:1;display:flex;flex-direction:column;gap:2px;min-width:0}
+.ah-row__top{display:flex;align-items:center;justify-content:space-between;font-size:14px;line-height:20px;letter-spacing:.15px}
+.ah-row__ics{display:flex;gap:4px}
+.ah-row__s{font-size:12px;line-height:16px;color:#a0a4a8;letter-spacing:.1px}
+.ah-row__dot{position:absolute;left:314px;top:6px;width:8px;height:8px;border-radius:50%;background:#00c48c}
+
+/* Fixed red navbar */
+.ah-nav{position:absolute;z-index:2;left:0;top:0;width:359.4px;height:98.3px;overflow:hidden;background:#9e0620;box-shadow:0 2px 4px rgba(37,40,43,.05)}
+.ah-nav .ah-swoosh{width:359.4px;height:139.8px}
+.ah-nav__bar{position:absolute;left:-.28px;top:42.46px;display:flex;align-items:center;width:360px;height:56px;padding:0 16px 0 8px}
+.ah-nav__t{flex:1;display:flex;align-items:center;gap:3px;padding:0 16px 0 8px;color:#fff;font-size:16px;line-height:22px;font-weight:500;white-space:nowrap}
+.ah-nav__t b{display:flex;align-items:center;height:14px;margin-left:1px;padding:0 4px;border-radius:4px;background:#f44335;font-size:9px;line-height:8px;letter-spacing:.1px}
+.ah-nav__a{display:flex;gap:12px}
+
+/* ---- Floating feature cards ---- */
+.ah-f{position:absolute;z-index:2}
+.ah-f__in{position:relative;width:100%;height:100%}
+.ah-tag{position:absolute;z-index:2;left:14px;top:0;padding:5px 10px;border-radius:999px;background:#1a1919;color:#fff;font-size:11px;line-height:13px;font-weight:700;white-space:nowrap}
+.ah-win{position:absolute;left:0;top:14px;overflow:hidden;background:#fff;border:.72px solid #ebebeb;border-radius:11.52px;box-shadow:0 16px 20px rgba(0,0,0,.1)}
+.ah-ui{position:absolute;transform-origin:0 0}
+
+/* Fund withdrawal (balance card at .72) */
+.ah-f--fund{left:0;top:40px;width:236px;height:103px}
+.ah-f--fund .ah-win{width:236px;height:89px}
+.ah-f--fund .ah-ui{left:-.72px;top:-.72px;width:328px;height:124px;transform:scale(.72)}
+.ah-dots{position:absolute;left:221px;top:-36px;width:155px;height:155px;
+  background:radial-gradient(circle,#9e0620 1.7px,transparent 2.1px) 0 0/13.76px 13.76px;
+  -webkit-mask:radial-gradient(closest-side,#000,rgba(0,0,0,.5) 25%,transparent);mask:radial-gradient(closest-side,#000,rgba(0,0,0,.5) 25%,transparent)}
+.ah-fund{position:absolute;left:16px;top:18px;width:212px;display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.ah-fund__l{font-size:12px;line-height:18px;color:#a0a4a8;letter-spacing:.1px}
+.ah-fund__v{display:block;margin-top:-10px;font-size:20px;line-height:24px;font-variant-numeric:tabular-nums}
+/* Both labels share one grid cell, so the button keeps its width when it
+   switches to the success state. */
+.ah-btn{display:inline-grid;padding:6px 16px;border-radius:8px;background:#9e0620;color:#fff;font-size:12px;line-height:18px;font-weight:500;white-space:nowrap;
+  transition:background-color .3s ease,filter .15s ease}
+.ah-btn>span{grid-area:1/1;display:flex;align-items:center;justify-content:center;gap:4px;transition:opacity .25s ease}
+.ah-btn svg{width:14px;height:14px}
+.ah-btn__b{opacity:0}
+.ah-btn.is-press{filter:brightness(.82)}
+.ah-btn.is-done{background:#00c48c}
+.ah-btn.is-done .ah-btn__a{opacity:0}
+.ah-btn.is-done .ah-btn__b{opacity:1}
+
+/* Revenue report (red card at .72) */
+.ah-f--rep{left:412px;top:110px;width:247.68px;height:111.92px}
+.ah-f--rep .ah-win{width:247.68px;height:97.92px}
+.ah-f--rep .ah-ui{left:5.04px;top:5.04px;width:328px;height:118px;transform:scale(.72)}
+.ah-rep{display:flex;flex-direction:column;gap:12px;width:328px;height:118px;padding:16px;border-radius:12px;background:#9e0620;color:#fff}
+.ah-rep__h{display:flex;align-items:center;justify-content:space-between}
+.ah-rep__h small{display:block;font-size:12px;line-height:18px;letter-spacing:.1px}
+.ah-rep__h b{display:block;margin-top:2px;font-size:24px;line-height:28px}
+.ah-rep__cta{display:flex;gap:8px}
+.ah-chip{display:inline-flex;align-items:center;gap:4px;padding:3px 14px;border-radius:24px;background:#fff;color:#9e0620;font-size:14px;line-height:18px;font-weight:500;transition:filter .15s ease}
+.ah-chip__ic{position:relative;display:flex;align-items:center;justify-content:center;width:16px;height:16px}
+.ah-chip__ic>*{position:absolute;transition:opacity .2s ease}
+.ah-chip__ic>svg:last-child,.ah-spin{opacity:0}
+.ah-spin{width:12px;height:12px;border-radius:50%;border:1.6px solid rgba(158,6,32,.22);border-top-color:#9e0620}
+.ah-chip.is-busy{filter:brightness(.96)}
+.ah-chip.is-busy .ah-spin{opacity:1;animation:ah-spin .7s linear infinite}
+.ah-chip.is-busy .ah-chip__dl,.ah-chip.is-done .ah-chip__dl{opacity:0}
+.ah-chip.is-done .ah-chip__ic>svg:last-child{opacity:1}
+@keyframes ah-spin{to{transform:rotate(360deg)}}
+
+/* Schedule & connected courts (day view at .62) */
+.ah-f--sch{left:10px;top:330px;width:223.2px;height:150.4px}
+.ah-f--sch .ah-tag{top:-4px}
+.ah-f--sch .ah-win,.ah-f--stf .ah-win{border-width:.62px;border-radius:9.92px;background:#fcfcfc}
+.ah-f--sch .ah-win{width:223.2px;height:136.4px}
+.ah-f--sch .ah-ui{left:-.62px;top:-.62px;width:360px;height:220px;transform:scale(.62)}
+.ah-day__tbg{position:absolute;left:0;top:0;width:72px;height:698px;background:rgba(232,232,232,.3)}
+.ah-v{position:absolute;top:0;width:1px;height:698px;background:#e8e8e8}
+.ah-h{position:absolute;height:1px;background:#e8e8e8}
+.ah-day__info{position:absolute;left:24px;top:8px}
+.ah-day__c{position:absolute;top:20px;transform:translate(-50%,-50%);font-size:14px;line-height:20px;letter-spacing:.15px;white-space:nowrap}
+.ah-day__t{position:absolute;left:36px;transform:translate(-50%,-50%);font-size:12px;line-height:16px;color:#52575c;letter-spacing:.1px}
+.ah-day__cell{position:absolute;left:202px;top:187px;width:128px;height:30px}
+.ah-bk{position:absolute;display:flex;flex-direction:column;align-items:flex-start;gap:8px;width:124px;padding:8px 0 0 12px;border-radius:2px;box-shadow:0 0 2px rgba(37,40,43,.12)}
+.ah-bk>i{position:absolute;left:0;top:4px;bottom:4px;width:4px;border-radius:4px 0 0 4px}
+.ah-bk b{height:10px;font-size:12px;line-height:10px;letter-spacing:.1px;white-space:nowrap}
+.ah-bk span{height:10px;font-size:12px;line-height:10px;color:#a0a4a8;letter-spacing:.1px;white-space:nowrap}
+.ah-bk--dipo{left:75px;top:43px;height:141px}
+.ah-bk--yogi{left:204px;top:189px;height:68px;transition:opacity .45s ease,transform .45s cubic-bezier(.22,.61,.36,1)}
+.ah-bk--yogi.is-pre{opacity:0;transform:translateY(8px)}
+.ah-x{position:absolute}
+.ah-x svg{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible}
+.ah-x span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#fcfcfc;font-size:12px;line-height:16px;color:#cacccf;text-align:center;white-space:nowrap;letter-spacing:.1px}
+.ah-x--m6{left:210px;top:49px;width:112px;height:56px}
+.ah-x--m7{left:210px;top:122px;width:112px;height:56px}
+.ah-x--s8{left:81px;top:195px;width:112px;height:129px;transition:opacity .5s ease}
+.ah-x--s8.is-pre{opacity:0}
+
+/* Staff access rights (role picker at .62) */
+.ah-f--stf{left:440px;top:330px;width:213px;height:163px}
+.ah-f--stf .ah-win{width:213px;height:134px}
+.ah-f--stf .ah-ui{left:4.34px;top:13.02px;width:328px;transform:scale(.62)}
+.ah-stf{display:flex;flex-direction:column;gap:16px}
+.ah-stf__h{display:flex;align-items:center;height:16px;font-size:18px;line-height:22px;letter-spacing:.15px}
+.ah-role{display:flex;flex-direction:column;align-items:flex-end;gap:4px;padding:18px 16px;border-radius:8px;background:#fff;box-shadow:0 2px 3px rgba(37,40,43,.06)}
+.ah-role__t{display:flex;align-items:center;gap:12px;width:296px}
+.ah-role__t b{font-size:16px;line-height:20px}
+.ah-role p{width:264px;margin-bottom:4px;font-size:14px;line-height:20px;color:#52575c;letter-spacing:.15px}
+.ah-role__more{display:flex;align-items:center;gap:2px;width:264px;font-size:14px;line-height:1.4;font-weight:500;color:#9e0620;letter-spacing:.1px}
+.ah-radio{position:relative;flex:0 0 auto;width:20px;height:20px}
+.ah-radio::before{content:'';position:absolute;inset:1.67px;border-radius:50%;border:1.67px solid #a0a4a8;transition:border-color .2s ease}
+.ah-radio::after{content:'';position:absolute;inset:5.83px;border-radius:50%;background:#9e0620;transform:scale(0);transition:transform .2s ease}
+.ah-radio.is-on::before{border-color:#9e0620}
+.ah-radio.is-on::after{transform:scale(1)}
+
+/* ---- Motion (avm-hero.js adds .is-motion, and .is-live while in view) ----
+   Cards enter one by one (fade + short rise, no overshoot), then drift. */
+.avm-hero.is-motion .ah-f__in{opacity:0;transform:translateY(12px);transition:opacity .55s ease,transform .6s cubic-bezier(.22,.61,.36,1)}
+.avm-hero.is-motion .ah-f__in.is-in{opacity:1;transform:none}
+.avm-hero.is-live .ah-f{animation:ah-drift 5.5s ease-in-out infinite}
+.avm-hero.is-live .ah-f--rep{animation-delay:-1.4s}
+.avm-hero.is-live .ah-f--sch{animation-delay:-2.8s}
+.avm-hero.is-live .ah-f--stf{animation-delay:-4.1s}
+@keyframes ah-drift{0%,100%{translate:0 0}50%{translate:0 -6px}}
+/* Touch marker: placed on the element touched, never travels, no bounce. */
+.ah-tap{position:absolute;z-index:9;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:rgba(23,23,26,.12);border:1.5px solid rgba(23,23,26,.45);
+  opacity:0;pointer-events:none;transition:opacity .16s,background-color .14s}
+.ah-tap.is-on{opacity:1}
+.ah-tap.is-down{background:rgba(23,23,26,.3)}
+
+/* ---- Mobile composition (Figma 28135:11988, 360×560): the phone and the
+   two upper cards at .92; schedule + staff cards are not in this frame. ---- */
+.avm-hero.is-m .ah-art{width:360px}
+.avm-hero.is-m .ah-phone{left:58px;top:30px;transform:scale(.92128);transform-origin:0 0}
+.avm-hero.is-m .ah-f{transform:scale(.92);transform-origin:0 0}
+.avm-hero.is-m .ah-f--fund{left:8px;top:96px}
+.avm-hero.is-m .ah-f--rep{left:124.13px;top:330px}
+.avm-hero.is-m .ah-f--sch,.avm-hero.is-m .ah-f--stf{display:none}
+
+@media (prefers-reduced-motion:reduce){.avm-hero .ah-f{animation:none!important}}

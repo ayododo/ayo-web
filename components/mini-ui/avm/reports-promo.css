@@ -1,0 +1,161 @@
+/* ==========================================================================
+   AYO — AVM Mini UI · Reports + Promotions & Customers tabs
+   Cards avm-rp01…rp03, avm-pr01…pr06 (markup + motion in reports-promo.js).
+   Figma: ID 28092:11864 … 28222:12301, EN 28378:17294 … 28378:17615.
+   Sizes are the Figma Mini UI values ÷ 1.15 (Figma draws the phone at the
+   desktop card's 1.15 scale; .mu-phone is built at 260 × 392).
+   Prefix: mu-rpp- (Reports / Promo group) so other AVM files never collide.
+   ========================================================================== */
+
+/* ---- Header with a fixed strip under the title (tabs, segmented control,
+   search). It is one .mu-head so the engine's visible-height maths counts it. */
+.mu-head.mu-rpp-head{flex-direction:column;align-items:stretch;gap:10px}
+.mu-rpp-head>.mu-row{gap:7px}
+.mu-btn.mu-rpp-busy{color:rgba(255,255,255,.75)}
+.mu-btn.mu-rpp-busy::before{content:'';width:10px;height:10px;margin-right:6px;border-radius:50%;border:1.5px solid rgba(255,255,255,.3);border-top-color:#fff;animation:mu-spin .8s linear infinite}
+
+/* ---- Small pills / badges ------------------------------------------------ */
+.mu-rpp-pill{display:inline-flex;align-items:center;flex:0 0 auto;padding:2px 6px;border-radius:999px;font-size:8px;line-height:1.25;font-weight:700;white-space:nowrap;transition:background .3s,color .3s}
+.mu-rpp-pill--md{font-size:9px}
+.mu-rpp-pill--ok{background:#e6f6ee;color:#1b7a4b}
+.mu-rpp-pill--warn{background:#fff1de;color:#b4610e}
+.mu-rpp-pill--mute{background:#f4f4f5;color:#787373}
+.mu-rpp-pill--red{background:#ec2435;color:#fff}
+.mu-rpp-pill--line{background:#fff;border:1px solid #eee;color:#17171a;font-size:10px;padding:2px 6px}
+.mu-rpp-pill--tag{background:#f4f4f5;color:#17171a;font-size:9px}
+
+/* ---- Initials avatars (Figma: light tint, coloured letters) -------------- */
+.mu-rpp-ini{width:24px;height:24px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;background:#e8f1fd;color:#1f5fbf;font-size:9px;font-weight:700;letter-spacing:-.01em}
+.mu-rpp-ini--32{width:32px;height:32px;font-size:10px}
+.mu-rpp-ini--36{width:36px;height:36px;font-size:11px}
+.mu-rpp-ini--red{background:#fdeced;color:#ec2435}
+.mu-rpp-ini--org{background:#fff1de;color:#b4610e}
+.mu-rpp-ini--grn{background:#e6f6ee;color:#1b7a4b}
+.mu-rpp-ini--gry{background:#f4f4f5;color:#787373}
+.mu-rpp-ini svg{width:11px;height:11px}
+
+/* ---- Rows (transaction / customer cards) --------------------------------- */
+.mu-rpp-tx{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid #eee;border-radius:12px;background:#fff;flex:0 0 auto;
+  max-height:80px;overflow:hidden;transition:max-height .4s cubic-bezier(.32,.72,0,1),opacity .3s,margin .4s,padding .4s,border-color .3s}
+.mu-rpp-tx--lg{padding:10px}
+.mu-rpp-tx.is-gone{max-height:0;opacity:0;padding-top:0;padding-bottom:0;margin-top:-9px;border-color:transparent}
+.mu-rpp-name{font-size:11px;line-height:1.25;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mu-rpp-name--lg{font-size:12px}
+.mu-rpp-sub{font-size:10px;line-height:1.25;color:#787373;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mu-rpp-amt{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex:0 0 auto;font-size:11px;line-height:1.25;font-weight:700;white-space:nowrap}
+.mu-rpp-plus{color:#1b7a4b}
+.mu-rpp-list{display:flex;flex-direction:column;gap:9px}
+
+/* ---- Chips (Transaksi / Mutasi): dark when on --------------------------- */
+.mu-rpp-chips{display:flex;gap:6px}
+.mu-rpp-chip{padding:4px 10px;border:1px solid #eee;border-radius:999px;font-size:10px;line-height:1.25;font-weight:600;color:#787373;background:#fff;transition:background .25s,color .25s,border-color .25s}
+.mu-rpp-chip.is-on{background:#2c2c2c;border-color:#2c2c2c;color:#fff;font-weight:700}
+
+/* ---- Rounded segmented control (Booking / Main Bareng) ------------------- */
+.mu-rpp-seg.mu-seg{border-radius:999px;padding:2px}
+.mu-rpp-seg .mu-seg__i{padding:5px 8px;border-radius:999px;font-size:10px;font-weight:600;white-space:nowrap}
+.mu-rpp-seg .mu-seg__i.is-on{font-weight:700}
+.mu-rpp-seg .mu-seg__knob{top:2px;bottom:2px;left:2px;width:calc(50% - 3px);border-radius:999px}
+
+/* ---- Stat tiles + weekly bars -------------------------------------------- */
+.mu-rpp-stats{display:flex;gap:6px}
+.mu-rpp-stat{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:8px 10px;border:1px solid #eee;border-radius:12px;background:#fff}
+.mu-rpp-stat__l{font-size:10px;line-height:1.25;color:#787373;white-space:nowrap}
+.mu-rpp-stat__v{font-size:14px;line-height:1.25;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.mu-rpp-stat__v--13{font-size:13px}
+.mu-rpp-chart{display:flex;flex-direction:column;gap:6px;padding:10px;border:1px solid #eee;border-radius:12px}
+.mu-rpp-bars{display:flex;align-items:flex-end;justify-content:space-between;height:66px}
+.mu-rpp-bar{width:18px;border-radius:4px;background:#d9d9d9;transition:height .7s cubic-bezier(.32,.72,0,1),background .3s}
+.mu-rpp-bar.is-hi{background:#2c2c2c}
+.mu-rpp-days{display:flex;justify-content:space-between;font-size:7.5px;line-height:1;font-weight:600;color:#787373}
+.mu-rpp-days span{width:18px;text-align:center}
+
+/* ---- Report table (Ekspor Excel) ----------------------------------------- */
+.mu-rpp-tbl{display:flex;flex-direction:column;gap:6px;padding:10px;border:1px solid #eee;border-radius:12px}
+.mu-rpp-tr{display:flex;align-items:center;justify-content:space-between;font-size:10px;line-height:1.25;white-space:nowrap}
+.mu-rpp-tr>span{width:33%}.mu-rpp-tr>span:nth-child(2){text-align:center;font-weight:600}.mu-rpp-tr>span:last-child{text-align:right;font-weight:700}
+.mu-rpp-tr--head{font-size:9px;font-weight:700;color:#787373}
+.mu-rpp-tr--head>span:nth-child(2),.mu-rpp-tr--head>span:last-child{font-weight:700}
+.mu-rpp-hr{height:1px;background:#eee;flex:0 0 auto}
+.mu-rpp-xl{display:inline-flex;align-items:center;gap:3px;flex:0 0 auto;padding:2px 6px;border-radius:999px;background:#e6f6ee;color:#1b7a4b;font-size:10px;line-height:1.25;font-weight:700;transition:background .25s,color .25s}
+.mu-rpp-xl svg{width:10px;height:10px}
+.mu-rpp-xl.is-busy{background:#f4f4f5;color:#787373}
+.mu-rpp-xl.is-busy svg{display:none}
+.mu-rpp-xl.is-busy::before{content:'';width:8px;height:8px;border-radius:50%;border:1.5px solid #d9d9d9;border-top-color:#2c2c2c;animation:mu-spin .8s linear infinite}
+/* The "downloaded" card sits in the page flow, under the table (as drawn). */
+.mu-rpp-file{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;background:#2c2c2c;color:#fff;flex:0 0 auto}
+.mu-rpp-file__ico{width:22px;height:22px;border-radius:8px;background:#e6f6ee;color:#1b7a4b;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex:0 0 auto}
+.mu-rpp-file b{font-size:10px;line-height:1.25;font-weight:700}
+.mu-rpp-file .mu-col span{font-size:9px;line-height:1.25;color:#d9d9d9}
+
+/* ---- Voucher type tiles -------------------------------------------------- */
+.mu-rpp-types{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.mu-rpp-type{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:10px;border:1px solid #eee;border-radius:12px;background:#fff;transition:border-color .1s,box-shadow .1s}
+.mu-rpp-type.is-on{border-color:#2c2c2c;box-shadow:inset 0 0 0 .2px #2c2c2c}   /* 1.2 stroke */
+.mu-rpp-type__top{display:flex;align-items:center;justify-content:space-between;width:100%}
+.mu-rpp-type .mu-radio.is-on{border-color:#2c2c2c}
+.mu-rpp-ico{width:24px;height:24px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex:0 0 auto}
+.mu-rpp-ico--red{background:#fdeced;color:#ec2435}
+.mu-rpp-ico--grn{background:#e6f6ee;color:#1b7a4b}
+.mu-rpp-ico--blu{background:#e8f1fd;color:#1f5fbf}
+.mu-rpp-ico--org{background:#fff1de;color:#b4610e}
+.mu-rpp-ico--solid{width:28px;height:28px;background:#ec2435;color:#fff}
+.mu-rpp-ico--mute{width:19px;height:16px;border-radius:6px;background:#f4f4f5;color:#787373}
+
+/* ---- Form fields ---------------------------------------------------------- */
+.mu-rpp-field{display:flex;flex-direction:column;gap:4px}
+.mu-rpp-lbl{font-size:10px;line-height:1.25;color:#787373}
+.mu-rpp-in{display:flex;align-items:center;justify-content:space-between;gap:6px;min-height:30px;padding:7px 10px;border:1px solid #eee;border-radius:10px;background:#fff;font-size:11px;line-height:1.25;font-weight:600;white-space:nowrap;transition:border-color .1s}
+.mu-rpp-in.is-focus{border-color:#2c2c2c}
+.mu-rpp-in .is-ph{color:#a3a3a3;font-weight:400}
+.mu-rpp-in i{font-style:normal;font-size:10px;font-weight:700;color:#787373}
+.mu-rpp-in--search{font-weight:400;justify-content:flex-start}
+.mu-rpp-in--search svg{width:12px;height:12px;color:#a3a3a3;flex:0 0 auto}
+
+/* ---- Voucher summary card (tint) ------------------------------------------ */
+.mu-rpp-vc{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:12px;background:#f4f4f5}
+.mu-rpp-switch{display:flex;align-items:center;gap:8px;padding:10px;border:1px solid #eee;border-radius:12px}
+.mu-rpp-switch .mu-toggle{width:28px;height:16px}
+.mu-rpp-switch .mu-toggle.is-on{background:#2c2c2c}
+.mu-rpp-switch .mu-toggle.is-on::after{transform:translateX(12px)}
+
+/* ---- Credit package card (dark) ------------------------------------------- */
+.mu-rpp-credit{display:flex;flex-direction:column;gap:6px;padding:12px;border-radius:12px;background:#2c2c2c;color:#fff}
+.mu-rpp-credit__t{font-size:12px;line-height:1.25;font-weight:700}
+.mu-rpp-credit__p{font-size:18px;line-height:1.25;font-weight:700;letter-spacing:-.01em}
+.mu-rpp-credit__d{font-size:9px;line-height:1.25;color:#d9d9d9;white-space:nowrap}
+
+/* ---- Member / bundling ------------------------------------------------------ */
+.mu-rpp-member{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid #eee;border-radius:12px}
+.mu-rpp-bundle{display:flex;flex-direction:column;gap:7px;padding:10px;border:1px solid #eee;border-radius:12px}
+.mu-rpp-tags{display:flex;gap:4px;flex-wrap:wrap}
+.mu-rpp-pop{transition:opacity .3s,transform .35s cubic-bezier(.32,.72,0,1)}
+.mu-rpp-pop.is-out{opacity:0;transform:scale(.7)}
+.mu-rpp-prog{height:5px;border-radius:999px;background:#f4f4f5;overflow:hidden}
+.mu-rpp-prog>i{display:block;height:100%;width:0;border-radius:999px;background:#2c2c2c;transition:width .6s cubic-bezier(.32,.72,0,1)}
+.mu-rpp-btn-sm{padding:7px 10px;font-size:11px}
+.mu-rpp-tick{display:inline-block;transition:transform .18s,color .18s}
+.mu-rpp-tick.is-bump{transform:scale(1.18)}
+
+/* ---- Promo details ---------------------------------------------------------- */
+.mu-rpp-info{display:flex;flex-direction:column;gap:8px;padding:10px;border:1px solid #eee;border-radius:12px}
+.mu-rpp-kv{display:flex;align-items:center;justify-content:space-between;font-size:10px;line-height:1.25;white-space:nowrap}
+.mu-rpp-kv>span:first-child{color:#787373}
+.mu-rpp-code{font-size:14px;line-height:1.2;font-weight:800;letter-spacing:-.01em}
+.mu-rpp-sched{display:flex;flex-direction:column;gap:6px;padding:8px;border-radius:10px;background:#f4f4f5}
+.mu-rpp-more{font-size:10px;line-height:1.25;font-weight:700}
+.mu-rpp-big{display:flex;align-items:center;gap:4px;font-size:17px;line-height:1.2;font-weight:800;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.mu-rpp-up{font-size:8px;color:#1b7a4b;transition:opacity .3s}
+.mu-rpp-up.is-out{opacity:0}
+.mu-rpp-stop{border-radius:999px}
+.mu-rpp-toast-ico{width:22px;height:22px;border-radius:8px;background:#e6f6ee;color:#1b7a4b;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.mu-rpp-toast-ico svg{width:12px;height:12px}
+
+/* Sheet: duration chips + two date boxes (Atur Periode). */
+.mu-rpp-dates{display:flex;gap:6px}
+.mu-rpp-dates>.mu-rpp-in{flex:1;flex-direction:column;align-items:flex-start;gap:1px;padding:6px 9px}
+.mu-rpp-dates small{font-size:8.5px;font-weight:400;color:#787373}
+
+@media (prefers-reduced-motion:reduce){
+  .mu-rpp-tx,.mu-rpp-bar,.mu-rpp-pop,.mu-rpp-prog>i,.mu-rpp-tick{transition:none}
+}

@@ -646,9 +646,12 @@
   };
   function targetYOf(a){ return targetY(a.el('table').closest('.mu-stage')); }
 
-  /* ---------- Init ---------- */
-  var stages = [].slice.call(document.querySelectorAll('[data-mu]'));
-  stages.forEach(build);
+  /* ---------- Init ----------
+     Cards from other files (e.g. the AVM page, components/mini-ui/avm/*.js)
+     are added with AyoMiniUI.add({cards, flows, prep}) after this script; any
+     stage whose card exists is built then. AyoMiniUI.h exposes the templates
+     and icons above so those files draw with the same parts. */
+  var stages = [];
   var io = MOTION ? new IntersectionObserver(function(es){
     es.forEach(function(e){
       var st = e.target, p = st._player || (st._player = new Player(st));
@@ -656,9 +659,26 @@
       else if(!e.isIntersecting && p.playing){ p.playing = false; p.stop(); }
     });
   }, {threshold:.5}) : null;
-  stages.forEach(function(st){ if(io && st._mu && st._mu.card.flow) io.observe(st); });
+  function init(){
+    [].forEach.call(document.querySelectorAll('[data-mu]'), function(st){
+      if(st._mu || !CARDS[st.dataset.mu]) return;
+      build(st); stages.push(st);
+      if(io && st._mu.card.flow) io.observe(st);
+    });
+  }
+  init();
 
   var rt;
   window.addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(function(){ stages.forEach(function(st){ if(!st._player || !st._player.playing){ place(st, true); prep(st); } }); }, 150); });
-  window.AyoMiniUI = { refresh: function(root){ (root || document).querySelectorAll('[data-mu]').forEach(function(st){ if(!st._player || !st._player.playing){ place(st, true); prep(st); } }); } };
+  window.AyoMiniUI = {
+    refresh: function(root){ (root || document).querySelectorAll('[data-mu]').forEach(function(st){ if(st._mu && (!st._player || !st._player.playing)){ place(st, true); prep(st); } }); },
+    add: function(defs){
+      Object.keys(defs.cards || {}).forEach(function(k){ CARDS[k] = defs.cards[k]; });
+      Object.keys(defs.flows || {}).forEach(function(k){ FLOWS[k] = defs.flows[k]; });
+      Object.keys(defs.prep || {}).forEach(function(k){ PREP[k] = defs.prep[k]; });
+      init();
+    },
+    h: {I:I, ico:ico, av:av, pair:pair, head:head, page:page, on:on, partnerRows:partnerRows, SC:SC, PLUS:PLUS, targetY:targetY},
+    motion: MOTION
+  };
 })();
