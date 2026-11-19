@@ -73,10 +73,14 @@
     num.textContent = fmt(500000);
     later(id, 500, function(){
       count(id, function(){
-        items.forEach(function(el, i){ later(id, 200 + i * 140, function(){ el.classList.add('is-in'); }); });
-        later(id, 200 + items.length * 140 + 200, function(){ more.classList.add('is-in'); });
-        later(id, 200 + items.length * 140 + 3000, function(){ items.concat(more).forEach(function(el){ el.classList.remove('is-in'); }); });
-        later(id, 200 + items.length * 140 + 3500, function(){ play(id); });
+        // Each feature appears together with the · in front of it.
+        var feats = items.filter(function(el){ return !el.classList.contains('sc-free__sep'); }), n = feats.length;
+        feats.forEach(function(el, i){ later(id, 200 + i * 140, function(){
+          var sep = el.previousElementSibling; if(sep && sep.classList.contains('sc-free__sep')) sep.classList.add('is-in');
+          el.classList.add('is-in'); }); });
+        later(id, 200 + n * 140 + 200, function(){ more.classList.add('is-in'); });
+        later(id, 200 + n * 140 + 3000, function(){ items.concat(more).forEach(function(el){ el.classList.remove('is-in'); }); });
+        later(id, 200 + n * 140 + 3500, function(){ play(id); });
       });
     });
   }

@@ -85,6 +85,7 @@
 .sc-free__num{color:var(--text-placeholder);font-variant-numeric:tabular-nums}
 .sc-free__feats{display:flex;flex-direction:column;gap:6px;margin:0 0 18px;color:var(--sc-body);font-size:14px;line-height:20px}
 .sc-free__item{display:inline-block;transition:opacity .35s ease,transform .35s ease}
+.sc-free__sep{margin:0 6px}   /* the · between features; it appears with the feature after it */
 .sc-free__more{padding:5px 12px;border-radius:var(--radius-pill);background:var(--bg-dark-soft);color:#fff;font-size:13px;line-height:16px;font-weight:var(--fw-bold);
   transition:opacity .3s ease,transform .4s cubic-bezier(.34,1.56,.64,1)}
 .sc-card--free.is-hide .sc-free__item{opacity:0;transform:translateY(6px)}
