@@ -16,7 +16,7 @@
 (function(){
   'use strict';
   var M = window.AyoMiniUI; if(!M) return;
-  var h = M.h, on = h.on, I = h.I;
+  var h = M.h, on = h.on;
   var lang = document.documentElement.lang === 'id' ? 'id' : 'en';
 
   /* ---------- Strings ---------- */

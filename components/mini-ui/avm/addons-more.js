@@ -137,7 +137,6 @@
   }
   function busy(a, btn, ms){ on(a.el(btn), 'is-busy'); return a.wait(ms || 900).then(function(){ a.el(btn).classList.remove('is-busy'); }); }
   function showToast(a, ms){ on(a.el('toast'), 'is-on'); return a.wait(ms || 1800).then(function(){ a.el('toast').classList.remove('is-on'); return a.wait(300); }); }
-  function closeSheetNow(a, n){ var s = a.el(n); s.classList.add('no-anim'); s.classList.remove('is-on'); a.el('dim').classList.remove('is-on'); s.offsetHeight; s.classList.remove('no-anim'); }
 
   /* ---------- AD01 · Pilihan produk ---------- */
   var PROD = [['am','AM',5000,'#e8f1fd','#1f5fbf',2],['sr','SR',20000,'#fdeced','#ec2435',0],['hd','HD',10000,'#fff1de','#b4610e',0],['bl','BL',30000,'#cef249','#1a1919',0]];

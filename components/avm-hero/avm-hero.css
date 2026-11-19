@@ -54,7 +54,7 @@
 
 /* Statistics summary */
 .ah-stats{align-items:flex-end;overflow:hidden;box-shadow:0 1px 6px rgba(37,40,43,.16)}
-.ah-stats__row{display:flex;gap:8px;width:100%}
+.ah-stats__row{display:flex;gap:8px;width:100%;transition:transform 0ms cubic-bezier(.4,0,.2,1)}
 .ah-stat{flex:0 0 142px;display:flex;flex-direction:column;gap:6px;padding-bottom:8px;border-radius:4px;background:#fff;box-shadow:0 1px 3px rgba(37,40,43,.08)}
 .ah-stat>i{display:block;height:4px;border-radius:4px 4px 0 0}
 .ah-stat__b{display:flex;flex-direction:column;gap:2px;padding:0 8px}

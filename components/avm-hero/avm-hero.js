@@ -101,8 +101,16 @@
       '<span class="ah-stat__s">'+sub+S.last+'</span></div></div>';
   }
   function chart(){
-    var P = [[30,76],[82,99.5],[122,58.5],[162,80],[202,40],[242,71],[296,35.5]];
-    var line = P.map(function(p, i){ return (i ? 'L' : 'M')+p[0]+' '+p[1]; }).join('');
+    // A steady climb (7.5 → 15 jt; 7.5px per jt, 0 at y 150) drawn as a
+    // smooth curve: each segment's handles follow its neighbours (Catmull-Rom).
+    var P = [[30,93.8],[82,87],[122,81],[162,75],[202,63],[242,52.5],[296,37.5]];
+    var line = 'M' + P[0][0] + ' ' + P[0][1];
+    for(var j = 0; j < P.length - 1; j++){
+      var a = P[j - 1] || P[j], b = P[j], c = P[j + 1], d = P[j + 2] || c;
+      line += 'C' + [b[0] + (c[0] - a[0]) / 6, b[1] + (c[1] - a[1]) / 6,
+                     c[0] - (d[0] - b[0]) / 6, c[1] - (d[1] - b[1]) / 6, c[0], c[1]]
+        .map(function(v){ return +v.toFixed(2); }).join(' ');
+    }
     var grid = '', i;
     for(i = 0; i < 5; i++){
       var y = 3 + 30 * i;
@@ -115,11 +123,11 @@
         '<path class="ah-ch__fill" d="'+line+'L296 150L30 150Z" fill="url(#ah-g3)"/>'+
         '<path class="ah-ch__line" d="'+line+'" pathLength="1" fill="none" stroke="#9E0620" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'+
         '<g class="ah-ch__sel">'+
-          '<path d="M162 80V150" stroke="#9E0620" stroke-dasharray="2 2"/>'+
-          '<circle cx="162" cy="80" r="12" fill="none" stroke="#9E0620" stroke-opacity=".15"/>'+
-          '<circle cx="162" cy="80" r="6.5" fill="#fff" stroke="#9E0620" stroke-width="2"/>'+
-          '<path transform="translate(169 55) scale(1.449)" opacity=".85" fill="#25282B" d="M70.392 0C72.678 0 74.532 1.854 74.532 4.141V30.364C74.532 32.651 72.678 34.505 70.392 34.505H6.902C4.616 34.505 2.762 32.651 2.762 30.364V19.651C1.993 19.259.886 18.521.397 18.003C.392 17.998.234 17.844.165 17.748C.055 17.607 0 17.433 0 17.259C0 17.064.062 16.883.179 16.735C.206 16.709.308 16.594.404 16.5C.872 16.01 1.965 15.262 2.762 14.854V4.141C2.762 1.854 4.616 0 6.902 0H70.392Z"/>'+
-          '<text x="183" y="73" class="ah-ch__t1">July 2021</text><text x="183" y="89" class="ah-ch__t2">Rp10.000.000</text>'+
+          '<path d="M162 75V150" stroke="#9E0620" stroke-dasharray="2 2"/>'+
+          '<circle cx="162" cy="75" r="12" fill="none" stroke="#9E0620" stroke-opacity=".15"/>'+
+          '<circle cx="162" cy="75" r="6.5" fill="#fff" stroke="#9E0620" stroke-width="2"/>'+
+          '<path transform="translate(169 50) scale(1.449)" opacity=".85" fill="#25282B" d="M70.392 0C72.678 0 74.532 1.854 74.532 4.141V30.364C74.532 32.651 72.678 34.505 70.392 34.505H6.902C4.616 34.505 2.762 32.651 2.762 30.364V19.651C1.993 19.259.886 18.521.397 18.003C.392 17.998.234 17.844.165 17.748C.055 17.607 0 17.433 0 17.259C0 17.064.062 16.883.179 16.735C.206 16.709.308 16.594.404 16.5C.872 16.01 1.965 15.262 2.762 14.854V4.141C2.762 1.854 4.616 0 6.902 0H70.392Z"/>'+
+          '<text x="183" y="68" class="ah-ch__t1">July 2021</text><text x="183" y="84" class="ah-ch__t2">Rp10.000.000</text>'+
         '</g></svg></div>';
   }
   // [accent, from, to, name, court, day, icons, dot]
@@ -147,7 +155,7 @@
             '<div class="ah-info__r"><div class="ah-info__bal"><span class="ah-info__ic">'+ic('money', 20)+'</span><span><small>'+S.balance+'</small><b>Rp56.000.000</b></span></div>'+
             '<span class="ah-link">'+S.detail+ic('arrowR', 20)+'</span></div></div>'+
           '<div class="ah-card ah-stats"><div class="ah-card__h"><span>'+S.stats+'</span></div><i class="ah-dash"></i>'+
-            '<div class="ah-stats__row">'+
+            '<div class="ah-stats__row" data-el="stats">'+
               stat('#9e0620', S.rev, 'Rp', '106.785.000', 'rev', 'down', '-7%')+
               stat('#f18701', S.res, '', '243', 'res', 'up', '+24%')+
               stat('#009fb7', S.occ, '', '88%', 'occ', 'up', '+14%')+
@@ -300,6 +308,7 @@
     floats.forEach(function(f){ f.firstChild.classList.remove('is-in'); });
     scroller.style.transitionDuration = '0ms'; scroller.style.transform = 'translateY(0)';
     el('chart').setAttribute('data-s', '0');
+    el('stats').style.transitionDuration = '0ms'; el('stats').style.transform = '';
     num('rev').textContent = '0'; num('res').textContent = '0'; num('occ').textContent = '0%';
     num('fund').textContent = '19.250.000';
     el('withdraw').classList.remove('is-done', 'is-press');
@@ -324,7 +333,15 @@
       return wait(id, 1300);
     }).then(function(){
       el('chart').setAttribute('data-s', '2');
-      return wait(id, 900);
+      return wait(id, 700);
+    }).then(function(){
+      // Statistics row: swipe left to the tiles past the card's edge, then back.
+      var row = el('stats'), dx = row.scrollWidth - row.clientWidth;
+      row.style.transitionDuration = '900ms'; row.style.transform = 'translateX(' + (-dx) + 'px)';
+      return wait(id, 900 + 1100).then(function(){
+        row.style.transform = 'translateX(0)';
+        return wait(id, 900 + 300);
+      });
     }).then(function(){
       // Fund withdrawal: tap → success, balance runs down to 0.
       var b = el('withdraw');
