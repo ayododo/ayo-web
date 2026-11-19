@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini UI preview — Open Match — AYO</title>
+<meta name="robots" content="noindex">
+<!-- Review page for Mini UI cards before their page exists (not linked from
+     the site). ?lang=en switches the strings. Each card shows at the desktop
+     card size (528 × 300, scale 1.15) and the mobile one (328 × 200, .75). -->
+<script>
+  (function(){ var l = new URLSearchParams(location.search).get('lang'); if(l === 'en' || l === 'id') document.documentElement.lang = l; })();
+</script>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="components/mini-ui/mini-ui.css?v=20261119g">
+<link rel="stylesheet" href="components/mini-ui/open-match/host.css?v=20261119f">
+<style>
+  *{box-sizing:border-box;margin:0}
+  body{font-family:var(--font-sans);background:#f9f8f6;color:#25282b;padding:40px 24px 80px}
+  .pv{max-width:1000px;margin:0 auto}
+  .pv h1{font-size:28px;line-height:1.2;font-weight:800}
+  .pv__sub{margin-top:8px;font-size:15px;color:#52575c}
+  .pv__lang{display:inline-flex;gap:4px;margin-top:16px;padding:3px;border-radius:10px;background:#efeeec}
+  .pv__lang a{padding:6px 12px;border-radius:8px;font-size:13px;font-weight:600;color:#52575c;text-decoration:none}
+  .pv__lang a[aria-current]{background:#fff;color:#25282b}
+  .pv__item{margin-top:40px;padding-top:28px;border-top:1px solid #e3e1de}
+  .pv__item h2{font-size:18px;font-weight:700}
+  .pv__item p{margin-top:4px;font-size:14px;color:#52575c}
+  .pv__row{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start;margin-top:16px}
+  .pv__cell small{display:block;margin-bottom:8px;font-size:12px;font-weight:600;color:#a0a4a8;text-transform:uppercase;letter-spacing:.06em}
+  .pv-card{width:528px;max-width:100%;height:300px;border-radius:16px;background:#fff;border:1px solid #e8e6e3}
+  .pv-card .mu-phone{--mu-scale:1.15;top:28px}
+  .pv-card--m{width:328px;height:200px}
+  .pv-card--m .mu-phone{--mu-scale:.75;top:18px}
+</style>
+</head>
+<body>
+<main class="pv">
+  <h1>Mini UI · Open Match</h1>
+  <p class="pv__sub">Preview kartu Mini UI sebelum halaman Open Match dibuat. Kartu bergerak saat terlihat di layar.</p>
+  <nav class="pv__lang" aria-label="Bahasa"><a href="?lang=id" data-l="id">ID</a><a href="?lang=en" data-l="en">EN</a></nav>
+
+  <section class="pv__item">
+    <h2>H01 · Atur Pertandingan</h2>
+    <p>Untuk host 01 — Create Match: memilih Individu / Komunitas dan mode (Figma 26953:69003, staging H01).</p>
+    <div class="pv__row">
+      <div class="pv__cell"><small>Desktop · 528 × 300</small><div class="pv-card mu-stage" data-mu="om-h01"></div></div>
+      <div class="pv__cell"><small>Mobile · 328 × 200</small><div class="pv-card pv-card--m mu-stage" data-mu="om-h01"></div></div>
+    </div>
+  </section>
+
+  <section class="pv__item">
+    <h2>H02 · Undang Pemain atau Buka Slot</h2>
+    <p>Untuk host 02 — reserve dan undang pemain ke slot, terima permintaan bergabung (Figma 26953:69015, staging H02).</p>
+    <div class="pv__row">
+      <div class="pv__cell"><small>Desktop · 528 × 300</small><div class="pv-card mu-stage" data-mu="om-h02"></div></div>
+      <div class="pv__cell"><small>Mobile · 328 × 200</small><div class="pv-card pv-card--m mu-stage" data-mu="om-h02"></div></div>
+    </div>
+  </section>
+  <section class="pv__item">
+    <h2>H03 · Tentukan Biaya dan Metode Pembayaran</h2>
+    <p>Untuk host 03 — sheet Match Fee: Online / Tunai / Online &amp; Tunai / Gratis (Figma 26953:69027, staging H03).</p>
+    <div class="pv__row">
+      <div class="pv__cell"><small>Desktop · 528 × 300</small><div class="pv-card mu-stage" data-mu="om-h03"></div></div>
+      <div class="pv__cell"><small>Mobile · 328 × 200</small><div class="pv-card pv-card--m mu-stage" data-mu="om-h03"></div></div>
+    </div>
+  </section>
+  <section class="pv__item">
+    <h2>H04 · Hubungkan Pertandingan dengan Booking Lapangan</h2>
+    <p>Untuk host 04 — pakai jadwal booking AYO, label "Booked via AYO" (Figma 26953:69039, staging H04; visual di desain masih TBD).</p>
+    <div class="pv__row">
+      <div class="pv__cell"><small>Desktop · 528 × 300</small><div class="pv-card mu-stage" data-mu="om-h04"></div></div>
+      <div class="pv__cell"><small>Mobile · 328 × 200</small><div class="pv-card pv-card--m mu-stage" data-mu="om-h04"></div></div>
+    </div>
+  </section>
+  <section class="pv__item">
+    <h2>H05 · Catat Skor dan Bagikan Hasil</h2>
+    <p>Untuk host 05 — host mengisi skor, hasil match, banner untuk dibagikan (Figma 26953:69051, staging H05).</p>
+    <div class="pv__row">
+      <div class="pv__cell"><small>Desktop · 528 × 300</small><div class="pv-card mu-stage" data-mu="om-h05"></div></div>
+      <div class="pv__cell"><small>Mobile · 328 × 200</small><div class="pv-card pv-card--m mu-stage" data-mu="om-h05"></div></div>
+    </div>
+  </section>
+</main>
+<script>
+  document.querySelectorAll('.pv__lang a').forEach(function(a){ if(a.dataset.l === document.documentElement.lang) a.setAttribute('aria-current', 'true'); });
+  // ?only=om-h03 shows a single card (handy for review links).
+  (function(){ var only = new URLSearchParams(location.search).get('only'); if(!only) return;
+    document.querySelectorAll('.pv__item').forEach(function(s){ if(!s.querySelector('[data-mu="'+only+'"]')) s.remove(); });
+    document.querySelectorAll('.pv__lang a').forEach(function(a){ a.href += '&only=' + only; }); })();
+</script>
+<script src="components/mini-ui/mini-ui.js?v=20261119n"></script>
+<script src="components/mini-ui/open-match/host.js?v=20261119f"></script>
+</body>
+</html>

@@ -84,7 +84,12 @@ feature cards (Figma "Phone · Mini UI · …"). `mini-ui.js` renders each
 Scoring staging board (Figma 28125:11094): Setup 01–03, Match & Skor 02 and
 04, and Bagikan 01. The AVM page adds its own cards from `components/mini-ui/avm/`
 (Booking & Payments, Reports & Promo, Add-ons & more), registered through
-`AyoMiniUI.add()`, with one string table per language. Flows run while the
+`AyoMiniUI.add()`, with one string table per language. Open Match cards
+(in progress, staging board Figma 28427:17089) live in
+`components/mini-ui/open-match/` (icons taken from the PRD — Zap, Hand-peace,
+the PadelLevels mark and wordmark — are in `assets/open-match/`); until the Open Match page exists they are
+reviewed on `mini-ui-preview.html` (`?lang=en` for English, not linked from
+the site). Flows run while the
 card is in view and loop. With reduced
 motion they stay on the first screen. The player photos in
 `assets/scoring/avatars/` are AI-generated, fictional people.
