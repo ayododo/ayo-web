@@ -46,13 +46,42 @@
   sec.style.setProperty('--sc-marquee-dur', Math.round(set.scrollWidth / 45) + 's');
 })();
 
-/* Format 05 "IDR0 +more": roll the 0 and pop the pill while the card is in
-   view; rest on IDR0 +more otherwise (and with reduced motion, via CSS). */
+/* Format 05 "IDR0": while the card is in view, loop: the price counts down
+   from 500.000 to 0, the six features appear one by one, then the +more
+   pill pops in; hold, fade out, repeat. Out of view (or reduced motion) it
+   rests on the end state in the markup. */
 (function(){
   'use strict';
   var card = document.querySelector('[data-free]');
-  if(!card || !('IntersectionObserver' in window)) return;
+  if(!card || !('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var num = card.querySelector('[data-free-num]'), items = [].slice.call(card.querySelectorAll('.sc-free__item')),
+      more = card.querySelector('.sc-free__more'), run = 0, raf;
+  var fmt = function(n){ return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); };
+  function later(id, ms, fn){ setTimeout(function(){ if(id === run) fn(); }, ms); }
+  function count(id, done){
+    var from = 500000, dur = 1600, t0 = performance.now();
+    (function tick(now){
+      if(id !== run) return;
+      var k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      num.textContent = fmt(Math.round(from * (1 - e) / 1000) * 1000);
+      if(k < 1) raf = requestAnimationFrame(tick); else { num.textContent = '0'; done(); }
+    })(t0);
+  }
+  function play(id){
+    items.concat(more).forEach(function(el){ el.classList.remove('is-in'); });
+    card.classList.add('is-hide');
+    num.textContent = fmt(500000);
+    later(id, 500, function(){
+      count(id, function(){
+        items.forEach(function(el, i){ later(id, 200 + i * 140, function(){ el.classList.add('is-in'); }); });
+        later(id, 200 + items.length * 140 + 200, function(){ more.classList.add('is-in'); });
+        later(id, 200 + items.length * 140 + 3000, function(){ items.concat(more).forEach(function(el){ el.classList.remove('is-in'); }); });
+        later(id, 200 + items.length * 140 + 3500, function(){ play(id); });
+      });
+    });
+  }
+  function rest(){ run++; cancelAnimationFrame(raf); card.classList.remove('is-hide'); num.textContent = '0'; items.concat(more).forEach(function(el){ el.classList.remove('is-in'); }); }
   new IntersectionObserver(function(es){
-    es.forEach(function(e){ card.classList.toggle('is-play', e.isIntersecting); });
+    es.forEach(function(e){ if(e.isIntersecting){ rest(); play(run); } else rest(); });
   }, {threshold:.5}).observe(card);
 })();

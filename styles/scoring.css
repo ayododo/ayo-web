@@ -77,21 +77,19 @@
 .sc-card{width:528px;max-width:100%;height:300px;border-radius:16px;background:#fff;border:1px solid #e8e6e3}
 .sc-card .mu-phone{--mu-scale:1.15;top:28px}
 .sc-card--free{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;color:var(--sc-body);font-size:14px}
-/* "IDR0 +more": IDR in ink, the 0 subtle. The 0 is a 9→0 digit column in a
-   1em window, resting on 0; .is-play rolls it down and pops the pill, on a
-   loop while the card is in view (scoring.js). */
-.sc-free__price{display:flex;align-items:flex-start;margin:0 0 8px;font-size:56px;line-height:1;font-weight:var(--fw-extrabold);letter-spacing:-.03em}
+/* "IDR0" (IDR in ink, the number subtle), the feature list, and a Dark-soft
+   "+more" pill at the bottom. scoring.js plays the count-down and reveals. */
+.sc-card--free{gap:0}
+.sc-free__price{display:flex;align-items:baseline;justify-content:center;margin:0 0 14px;font-size:56px;line-height:1;font-weight:var(--fw-extrabold);letter-spacing:-.03em}
 .sc-free__cur{color:var(--sc-ink)}
-.sc-free__zero{display:inline-block;height:1em;overflow:hidden;color:var(--text-placeholder)}
-.sc-free__roll{display:flex;flex-direction:column;transform:translateY(-9em)}
-.sc-free__roll span{height:1em;line-height:1}
-.sc-free__more{align-self:flex-start;margin:2px 0 0 8px;padding:5px 10px;border-radius:var(--radius-pill);background:var(--bg-dark-soft);color:#fff;
-  font-size:13px;line-height:16px;font-weight:var(--fw-bold);letter-spacing:0}
-.sc-card--free.is-play .sc-free__roll{animation:sc-roll 4.8s cubic-bezier(.2,.8,.2,1) infinite}
-.sc-card--free.is-play .sc-free__more{animation:sc-pop 4.8s cubic-bezier(.34,1.56,.64,1) infinite}
-@keyframes sc-roll{0%{transform:translateY(0)}32%,100%{transform:translateY(-9em)}}
-@keyframes sc-pop{0%,30%{opacity:0;transform:scale(.6) translateY(4px)}40%,100%{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){.sc-card--free.is-play .sc-free__roll,.sc-card--free.is-play .sc-free__more{animation:none}}
+.sc-free__num{color:var(--text-placeholder);font-variant-numeric:tabular-nums}
+.sc-free__feats{display:flex;flex-direction:column;gap:6px;margin:0 0 18px;color:var(--sc-body);font-size:14px;line-height:20px}
+.sc-free__item{display:inline-block;transition:opacity .35s ease,transform .35s ease}
+.sc-free__more{padding:5px 12px;border-radius:var(--radius-pill);background:var(--bg-dark-soft);color:#fff;font-size:13px;line-height:16px;font-weight:var(--fw-bold);
+  transition:opacity .3s ease,transform .4s cubic-bezier(.34,1.56,.64,1)}
+.sc-card--free.is-hide .sc-free__item{opacity:0;transform:translateY(6px)}
+.sc-card--free.is-hide .sc-free__more{opacity:0;transform:scale(.6)}
+.sc-card--free .sc-free__item.is-in,.sc-card--free .sc-free__more.is-in{opacity:1;transform:none}
 
 /* ---- 6. Closing ---- */
 .sc-close{padding:96px 0;background:var(--sc-cream);text-align:center}
@@ -120,6 +118,8 @@
   .sc-feat__vis{padding:16px var(--edge) 32px;justify-content:center}
   .sc-card{height:200px;max-width:528px}
   .sc-card .mu-phone{--mu-scale:.75;top:18px}
+  .sc-free__price{font-size:40px;margin-bottom:10px}   /* "IDR500.000" fits the 328px card */
+  .sc-free__feats{font-size:13px;line-height:18px;gap:4px;margin-bottom:12px}
   .sc-intro{padding-top:32px;padding-bottom:8px}
   .sc-close{padding:64px 0}
 }
