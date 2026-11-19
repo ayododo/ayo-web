@@ -55,7 +55,7 @@
 .hx-check{display:flex;width:20px;height:20px;border-radius:50%;background:#33c773;flex:0 0 auto}
 .hx-check svg{width:20px;height:20px}
 /* Format */
-.hx-format{left:-41px;top:119px;width:132px;padding:10px;display:flex;flex-direction:column;gap:6px}
+.hx-format{left:-30px;top:112px;transform:scale(.8);transform-origin:0 0;width:132px;padding:10px;display:flex;flex-direction:column;gap:6px}
 .hx-format span{padding:7px 12px;border:1px solid #eee;border-radius:10px;font-size:11.5px;font-weight:500;color:#787373}
 .hx-format span.is-on{border:1.2px solid #2c2c2c;color:#25282b;font-weight:700}
 /* PadelLevels */
@@ -64,7 +64,7 @@
 .hx-pl b{white-space:nowrap;display:flex;align-items:baseline;gap:6px;font-size:14px;font-weight:800;font-variant-numeric:tabular-nums}
 .hx-pl em{font-style:normal;font-size:10px;font-weight:700;color:#1b7a4b;transition:opacity .3s,transform .3s}
 /* Live score card */
-.hx-score{left:-70px;top:330px;width:178px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.hx-score{left:-80px;top:352px;width:178px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
 .hx-score small i{display:inline-block;width:6px;height:6px;margin-right:6px;border-radius:50%;background:#ec2435;vertical-align:1px}
 .hx-row{position:relative;display:flex;align-items:center;gap:8px;font-size:11px;font-weight:500;white-space:nowrap}
 .hx-row b{margin-left:auto;font-size:14px;font-weight:800}
@@ -167,7 +167,7 @@
   /* Mobile: the art is scaled to the column (scoring.js sets --hs, --hx and
      the height); the left cards pull in as in the mobile frame 28337:511. */
   .sc-hero__visual{width:100%;max-width:458px;margin:0 auto}
-  .hx-format,.hx-score{left:-10px}
+  .hx-format,.hx-score{left:-10px}   /* layout: Figma "Varian 1 · Ringkas" 28355:93 */
   .sc-hero__visual:not(.is-ready){height:auto;margin:0 calc(-1 * var(--edge));max-width:none}
   .sc-hero__fallback img{position:static;display:block;width:100%;max-width:480px;margin:0 auto}
   .sc-hero__lead{font-size:22px;line-height:28px}
