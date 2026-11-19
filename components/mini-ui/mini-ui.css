@@ -201,6 +201,8 @@
 .mu-fab{position:absolute;right:14px;bottom:calc(var(--mu-sheet-bottom,0px) + 62px);z-index:3;width:34px;height:34px;border-radius:50%;background:#17171a;color:#fff;display:flex;align-items:center;justify-content:center}
 .mu-fab svg{width:16px;height:16px}
 .mu-grid{display:flex;flex-wrap:wrap;gap:10px 12px}
+.mu-addtile{width:40px;height:40px;border-radius:50%;border:1.5px dashed #d9d9d9;display:flex;align-items:center;justify-content:center;color:#787373}
+.mu-addtile svg{width:16px;height:16px}
 .mu-person{display:flex;flex-direction:column;align-items:center;gap:4px;width:44px;font-size:10px;font-weight:500;text-align:center;white-space:nowrap}
 .mu-check{width:16px;height:16px;border-radius:50%;border:1.5px solid #d9d9d9;flex:0 0 auto;display:flex;align-items:center;justify-content:center;transition:background .1s,border-color .1s}
 .mu-check.is-on{background:#17171a;border-color:#17171a}

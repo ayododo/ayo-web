@@ -99,8 +99,9 @@
     return page('participants', head(ico('back')+'<span class="mu-head__title">Set Participants<span class="mu-head__sub">Americano · Rotating Partner</span></span>'),
       '<div class="mu-row mu-row--between"><span class="mu-h">Participants · <span data-el="count">1</span></span><span class="mu-link">Reset</span></div>'+
       '<div class="mu-s">A minimum of 4 players is required to create a match.</div>'+
-      '<div class="mu-grid" data-el="grid"><span class="mu-person">'+av('fajar',40)+'Fajar R.</span></div>',
-      '<span class="mu-fab" data-el="fab">'+I.plus+'</span><div class="mu-foot"><div class="mu-btn mu-btn--off" data-el="create">Create GameTime</div></div>');
+      // No FAB or Create button here; an "Add" tile in the grid opens Add Participants.
+      '<div class="mu-grid" data-el="grid"><span class="mu-person">'+av('fajar',40)+'Fajar R.</span>'+
+      '<span class="mu-person" data-el="add-tile"><span class="mu-addtile">'+I.plus+'</span>Add</span></div>');
   }
   function addParticipants(){
     var rows = ['maya','bayu','tari','raka'].map(function(k){
@@ -467,7 +468,7 @@
     s03: function(a){
       var picks = ['maya','bayu','tari'], n = 0;
       function pick(k){ return a.tap('pick-'+k).then(function(){ on(a.el('pick-'+k).querySelector('.mu-check'), 'is-on'); a.el('add-n').textContent = String(++n); return a.wait(200); }); }
-      return a.tap('fab').then(function(){ return a.go('add'); })
+      return a.tap('add-tile').then(function(){ return a.go('add'); })
         // Maya is in view; scroll the list down a little so Bayu and Tari clear the Add button.
         .then(function(){ return pick(picks[0]); })
         .then(function(){ return a.scrollTo('pick-bayu', 6, 700); })
@@ -475,8 +476,9 @@
         .then(function(){ return a.tap('add-btn'); })
         .then(function(){
           var g = a.el('grid');
-          picks.forEach(function(k){ var s = document.createElement('span'); s.className = 'mu-person mu-new'; s.innerHTML = av(k,40)+NAME[k]; g.appendChild(s); });
-          a.el('count').textContent = '4'; a.el('create').classList.remove('mu-btn--off'); return a.back('participants'); });
+          var addTile = a.el('add-tile');
+          picks.forEach(function(k){ var s = document.createElement('span'); s.className = 'mu-person mu-new'; s.innerHTML = av(k,40)+NAME[k]; g.insertBefore(s, addTile); });
+          a.el('count').textContent = '4'; return a.back('participants'); });
     },
     // S04 · Aturan peringkat: drag Number of Wins above Total Points.
     s04: function(a){ return a.scrollTo('crit', 30, 800).then(function(){ return a.drag('crit', 1, 1); }); },
