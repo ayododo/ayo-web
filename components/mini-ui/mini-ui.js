@@ -468,7 +468,10 @@
       var picks = ['maya','bayu','tari'], n = 0;
       function pick(k){ return a.tap('pick-'+k).then(function(){ on(a.el('pick-'+k).querySelector('.mu-check'), 'is-on'); a.el('add-n').textContent = String(++n); return a.wait(200); }); }
       return a.tap('fab').then(function(){ return a.go('add'); })
-        .then(function(){ return pick(picks[0]); }).then(function(){ return pick(picks[1]); }).then(function(){ return pick(picks[2]); })
+        // Maya is in view; scroll the list down a little so Bayu and Tari clear the Add button.
+        .then(function(){ return pick(picks[0]); })
+        .then(function(){ return a.scrollTo('pick-bayu', 6, 700); })
+        .then(function(){ return pick(picks[1]); }).then(function(){ return pick(picks[2]); })
         .then(function(){ return a.tap('add-btn'); })
         .then(function(){
           var g = a.el('grid');

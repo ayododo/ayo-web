@@ -197,8 +197,8 @@
 .mu-toast.is-on{opacity:1;transform:none}
 .mu-toast b{font-size:11px}.mu-toast .mu-col span{color:rgba(255,255,255,.7)}
 .mu-toast__pdf{flex:0 0 auto;padding:5px 4px;border-radius:5px;background:#ec2435;font-size:8px;font-weight:800}
-.mu-foot{position:absolute;left:12px;right:12px;bottom:14px;z-index:3}
-.mu-fab{position:absolute;right:14px;bottom:62px;z-index:3;width:34px;height:34px;border-radius:50%;background:#17171a;color:#fff;display:flex;align-items:center;justify-content:center}
+.mu-foot{position:absolute;left:12px;right:12px;bottom:calc(var(--mu-sheet-bottom,0px) + 12px);z-index:3}   /* inside the part the card shows */
+.mu-fab{position:absolute;right:14px;bottom:calc(var(--mu-sheet-bottom,0px) + 62px);z-index:3;width:34px;height:34px;border-radius:50%;background:#17171a;color:#fff;display:flex;align-items:center;justify-content:center}
 .mu-fab svg{width:16px;height:16px}
 .mu-grid{display:flex;flex-wrap:wrap;gap:10px 12px}
 .mu-person{display:flex;flex-direction:column;align-items:center;gap:4px;width:44px;font-size:10px;font-weight:500;text-align:center;white-space:nowrap}
