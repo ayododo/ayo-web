@@ -170,6 +170,11 @@
      Language and Log Out — or a Login button when signed out. */
   var syncDrawerLang = function(){};
   var drawerNav = document.querySelector('.ayo-nav');
+  /* For Venue Owners opens the AVM page in the page's language; on a page
+     without a twin (the homepage) syncLangLinks follows the chosen language. */
+  var mAvm = document.documentElement.dataset.pageLang
+    ? '<a class="m-link" href="' + (document.documentElement.lang === 'id' ? 'avm-id.html' : 'avm-en.html') + '">For Venue Owners</a>'
+    : '<a class="m-link" href="avm-en.html" data-href-id="avm-id.html">For Venue Owners</a>';
   if(drawerNav && burger){
     var cartLink = drawerNav.querySelector('.nav-icon[aria-label="Cart"]');
     if(cartLink){
@@ -191,7 +196,7 @@
             '<button class="m-link m-acc__btn" type="button" aria-expanded="false" aria-controls="m-acc-activities">Activities'+CHEV+'</button>' +
             '<div class="m-acc__panel m-acts" id="m-acc-activities" hidden>' + mActs + '</div>' +
           '</div>' +
-          '<a class="m-link" href="#">For Venue Owners</a>' +
+          mAvm +
           '<a class="m-link" href="#">Partner with Us</a>' +
           '<a class="m-link" href="#">Blog</a>' +
         '</div>' +
