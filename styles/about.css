@@ -4,7 +4,8 @@
    story states 28014:8166 …), ID section 28095:25789 (desktop 28095:25790,
    mobile 28095:26176). Entry point: "About Us" / "Tentang Kami" in the footer.
    Depends on: tokens.css, chrome.css, components/site-footer.
-   Motion (photo strip auto-scroll, pill drop & float) comes later.
+   Motion (scripts/about.js): hero pills scatter and bounce on hover; the
+   Moments strip scrolls on its own.
    ========================================================================== */
 
 :root{--ab-ink:#25282b;--ab-body:#52575c;--ab-mute:#a0a4a8;--ab-dim:#707070;--ab-line:#dcdbdb;--ab-tint:#f9f9f9;--ab-dark:#2c2c2c}
@@ -42,6 +43,8 @@
   display:flex;align-items:center;gap:calc(var(--u) * 10);padding:calc(var(--u) * 16) calc(var(--u) * 28) calc(var(--u) * 16) calc(var(--u) * 18);
   background:#fff;border:max(.5px,calc(var(--u) * 1)) solid var(--ab-line);border-radius:999px;white-space:nowrap;
   font-size:calc(var(--u) * 24);line-height:calc(var(--u) * 30);font-weight:var(--fw-bold);color:var(--ab-ink)}
+.ab-art.is-playing{cursor:pointer}
+.ab-art.is-playing .ab-pill{will-change:transform;user-select:none}
 .ab-pill img,.ab-pill__plus{width:calc(var(--u) * 30);height:calc(var(--u) * 30);flex:0 0 auto}
 .ab-pill__plus{display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--ab-tint);font-size:calc(var(--u) * 22);line-height:1}
 
@@ -185,9 +188,10 @@
 /* ---- 6. Moments (Figma 27988:8045) ---- */
 .ab-moments{padding:120px 0}
 .ab-moments .ab-h2{margin-top:16px}
-/* Sideways strip, lined up with the content column. Auto-scroll comes with the motion pass. */
+/* Sideways strip, lined up with the content column. about.js makes it drift (.is-auto). */
 .ab-strip{--in:max(var(--edge),calc((100vw - 1200px) / 2));display:flex;gap:16px;margin-top:40px;padding:0 var(--in);scroll-padding:0 var(--in);overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none}
 .ab-strip::-webkit-scrollbar{display:none}
+.ab-strip.is-auto{scroll-snap-type:none}
 .ab-strip>*{flex:0 0 auto;height:400px;border-radius:20px;overflow:hidden;scroll-snap-align:start}
 .ab-strip>img{object-fit:cover}
 .ab-strip .is-wide{width:440px}.ab-strip .is-narrow{width:320px}
