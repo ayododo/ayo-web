@@ -3,7 +3,11 @@
    Each year button carries its milestone in data-* (title, photo, alt); the
    card shows the chosen one. Years before it turn red ("passed") and the red
    progress line runs up to it. Prev/next arrows, the year buttons, arrow keys
-   on the timeline and a sideways swipe on the card all move between years. */
+   on the timeline and a sideways swipe on the card all move between years.
+   The card keeps one height for every year: all five texts are laid in the
+   same grid cell (only the chosen one visible), so the card is as tall as
+   the longest title in this language and width, the photo fills that same
+   box, and the arrows never move. */
 (function(){
   'use strict';
   var story = document.querySelector('[data-story]');
@@ -13,13 +17,26 @@
   var buttons = items.map(function(li){ return li.querySelector('button'); });
   var card = story.querySelector('.ab-card');
   var img = card.querySelector('.ab-card__photo img');
-  var count = card.querySelector('[data-count]');
-  var year = card.querySelector('.ab-card__year');
-  var title = card.querySelector('.ab-card__title');
   var prev = card.querySelector('[data-prev]');
   var next = card.querySelector('[data-next]');
   var total = buttons.length, current = 0;
   function pad(n){ return (n < 10 ? '0' : '') + n; }
+
+  // One text block per milestone, built from the markup's first block.
+  var tpl = card.querySelector('.ab-card__text');
+  var stack = document.createElement('div');
+  stack.className = 'ab-card__texts';
+  stack.setAttribute('aria-live', 'polite');
+  tpl.parentNode.insertBefore(stack, tpl);
+  var texts = buttons.map(function(b, i){
+    var t = i ? tpl.cloneNode(true) : tpl;
+    t.querySelector('[data-count]').textContent = pad(i + 1) + ' / ' + pad(total);
+    t.querySelector('.ab-card__year').textContent = b.textContent.trim();
+    t.querySelector('.ab-card__title').textContent = b.dataset.title;
+    stack.appendChild(t);
+    return t;
+  });
+  card.removeAttribute('aria-live');
 
   // Warm the cache so switching years doesn't flash an empty photo.
   buttons.forEach(function(b){ var i = new Image(); i.src = b.dataset.img; });
@@ -33,10 +50,11 @@
       li.classList.toggle('is-past', k < i);
       if(k === i) buttons[k].setAttribute('aria-current', 'step'); else buttons[k].removeAttribute('aria-current');
     });
+    texts.forEach(function(t, k){
+      t.classList.toggle('is-on', k === i);
+      if(k === i) t.removeAttribute('aria-hidden'); else t.setAttribute('aria-hidden', 'true');
+    });
     tl.style.setProperty('--p', i);
-    count.textContent = pad(i + 1) + ' / ' + pad(total);
-    year.textContent = b.textContent.trim();
-    title.textContent = b.dataset.title;
     img.src = b.dataset.img;
     img.alt = b.dataset.alt || '';
     prev.disabled = i === 0;

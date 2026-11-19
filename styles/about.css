@@ -91,6 +91,11 @@
 .ab-card__photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .ab-card__body{flex:1 1 0;display:flex;flex-direction:column;justify-content:space-between;gap:32px;padding:56px}
 .ab-card__text{display:flex;flex-direction:column;gap:16px}
+/* All milestone texts share one cell, so the card takes the tallest one's height
+   and nothing moves between years (about.js builds the stack). */
+.ab-card__texts{display:grid}
+.ab-card__texts>.ab-card__text{grid-area:1/1;transition:opacity .25s ease,visibility .25s}
+.ab-card__texts>.ab-card__text:not(.is-on){opacity:0;visibility:hidden}
 .ab-card__year{font-size:72px;line-height:76px;font-weight:var(--fw-extrabold);letter-spacing:-.02em;color:var(--ab-ink)}
 .ab-card__title{font-size:28px;line-height:36px;font-weight:var(--fw-bold);color:var(--ab-ink)}
 .ab-arrows{display:flex;gap:12px}
