@@ -64,7 +64,7 @@
 .mu-tint{background:#f4f4f5;border-radius:10px;padding:9px 10px}
 
 .mu-chips{display:flex;gap:6px;overflow:hidden}
-.mu-chip{flex:0 0 auto;padding:6px 10px;border:1px solid #eee;border-radius:8px;font-size:11px;font-weight:500;color:#787373;white-space:nowrap;transition:border-color .25s,color .25s}
+.mu-chip{flex:0 0 auto;padding:6px 10px;border:1px solid #eee;border-radius:8px;font-size:11px;font-weight:500;color:#787373;white-space:nowrap;transition:border-color .1s,color .1s}
 .mu-chip.is-on{border-color:#2c2c2c;border-width:1.05px;color:#17171a;font-weight:600}
 
 .mu-seg{display:flex;gap:2px;padding:3px;border-radius:10px;background:#f4f4f5;position:relative}
@@ -78,13 +78,13 @@
 .mu-seg[data-on="1"] .mu-seg__knob{transform:translateX(calc(100% + 2px))}
 
 .mu-tiles{display:flex;gap:5px}
-.mu-tile{flex:1;transition:opacity .35s,transform .35s,border-color .25s,color .25s;min-width:0;text-align:center;padding:9px 2px;border:1px solid #eee;border-radius:10px;font-size:12px;font-weight:700;color:#787373}
+.mu-tile{flex:1;transition:opacity .35s,transform .35s,border-color .1s,color .1s;min-width:0;text-align:center;padding:9px 2px;border:1px solid #eee;border-radius:10px;font-size:12px;font-weight:700;color:#787373}
 .mu-tile.is-on{border-color:#2c2c2c;border-width:1.05px;color:#17171a}
 
 .mu-list{border:1px solid #eee;border-radius:12px;overflow:hidden;transition:opacity .4s}
 .mu-li{display:flex;align-items:center;gap:8px;padding:10px;border-bottom:1px solid #eee}
 .mu-li:last-child{border-bottom:0}
-.mu-radio{width:14px;height:14px;border-radius:50%;border:1.5px solid #d9d9d9;flex:0 0 auto;transition:border .25s}
+.mu-radio{width:14px;height:14px;border-radius:50%;border:1.5px solid #d9d9d9;flex:0 0 auto;transition:border .1s}
 .mu-radio.is-on{border:4.5px solid #17171a}
 
 .mu-btn{display:flex;align-items:center;justify-content:center;padding:10px;border-radius:10px;font-size:12px;font-weight:700;background:#2c2c2c;color:#fff;transition:background .3s,color .3s}
@@ -202,7 +202,7 @@
 .mu-fab svg{width:16px;height:16px}
 .mu-grid{display:flex;flex-wrap:wrap;gap:10px 12px}
 .mu-person{display:flex;flex-direction:column;align-items:center;gap:4px;width:44px;font-size:10px;font-weight:500;text-align:center;white-space:nowrap}
-.mu-check{width:16px;height:16px;border-radius:50%;border:1.5px solid #d9d9d9;flex:0 0 auto;display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s}
+.mu-check{width:16px;height:16px;border-radius:50%;border:1.5px solid #d9d9d9;flex:0 0 auto;display:flex;align-items:center;justify-content:center;transition:background .1s,border-color .1s}
 .mu-check.is-on{background:#17171a;border-color:#17171a}
 .mu-check.is-on::after{content:'';width:6px;height:3px;border:solid #fff;border-width:0 0 1.6px 1.6px;transform:translateY(-1px) rotate(-45deg)}
 .mu-scorebox{flex:1;display:flex;align-items:center;justify-content:space-between;padding:8px 9px;border:1px solid #eee;border-radius:10px;font-size:11px;color:#787373}

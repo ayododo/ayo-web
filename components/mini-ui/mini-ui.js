@@ -323,8 +323,15 @@
         var p = point(t);
         mk.className = 'mu-tap'; mk.style.left = p.x+'px'; mk.style.top = p.y+'px';
         mk.offsetHeight; mk.classList.add('is-on');
-        return api.wait(200).then(function(){ mk.classList.add('is-down'); return api.wait(hold || 220); })
-          .then(function(){ if(hold) return; mk.classList.remove('is-down', 'is-on'); return api.wait(160); });
+        // Resolves at the moment of the press, so whatever the touch does
+        // (select, open, navigate) happens right then, not after the finger
+        // lifts. The marker lifts and fades on its own a moment later.
+        return api.wait(150).then(function(){
+          mk.classList.add('is-down');
+          if(hold) return api.wait(hold);
+          var tok = mk._tok = (mk._tok || 0) + 1;
+          setTimeout(function(){ if(mk._tok === tok) mk.classList.remove('is-down', 'is-on'); }, 240);
+        });
       },
       hideTap: function(){ var mk = scr().querySelector('.mu-tap'); mk.classList.remove('is-down', 'is-on'); },
       go: function(name){
@@ -481,7 +488,7 @@
     m02: function(a){
       function numpadFor(box, label, digits, val){
         return a.tap(box).then(function(){ on(a.el(box), 'is-focus'); a.el('np-label').textContent = label; a.el('np-val').textContent = ''; return a.sheet('numpad', true); })
-          .then(function(){ var p = Promise.resolve(); digits.split('').forEach(function(d){ p = p.then(function(){ return a.tap('key-'+d); }).then(function(){ a.el('np-val').textContent += d; }); }); return p; })
+          .then(function(){ var p = Promise.resolve(); digits.split('').forEach(function(d){ p = p.then(function(){ return a.tap('key-'+d); }).then(function(){ a.el('np-val').textContent += d; return a.wait(260); }); }); return p; })
           .then(function(){ return a.tap('np-done'); })
           .then(function(){ a.el(val).textContent = digits; a.el(box).classList.remove('is-focus'); return a.sheet('numpad', false); });
       }
