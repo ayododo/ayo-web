@@ -68,11 +68,12 @@
 })();
 
 /* Hero sport pills (Figma 28057:8203): hover the illustration and the pills
-   burst apart, bounce off the edges of the box and knock into each other; the
-   cursor pushes any pill it comes near. When the pointer leaves they don't go
-   back: they coast on from wherever they are, slowing down (still bouncing
-   and nudging each other) until they come to rest, and stay there. The next
-   hover starts from that spot. On touch, a tap on the illustration starts it
+   drift apart, bounce off the edges of the box and knock into each other; the
+   cursor pushes any pill it comes near. The first push is gentle and eased
+   in. When the pointer leaves they don't go back: they coast on from
+   wherever they are, slowing down (still bouncing and nudging each other)
+   until they come to rest, and stay there. The next hover starts from that
+   spot. On touch, a tap on the illustration starts it
    and a tap anywhere else (or on it again) lets them coast to a stop.
    Pills are treated as their tilted bounding boxes, equal mass, slightly
    bouncy; tilt stays within 35° of the design so the labels stay readable.
@@ -87,7 +88,7 @@
     return { el: el, gx: parseFloat(el.style.getPropertyValue('--x')), gy: parseFloat(el.style.getPropertyValue('--y')), r0: parseFloat(el.style.getPropertyValue('--r')) || 0 };
   });
   var W = 0, H = 0, u = 0, playing = false, running = false, placed = false, last = 0, ptr = null;
-  var BOUNCE = .86, TILT = 35;
+  var BOUNCE = .86, TILT = 35, BURST = .4, burstLeft = 0;
 
   function measure(){
     var old = u;
@@ -114,14 +115,16 @@
     if(!placed) place();
     playing = true;
     art.classList.add('is-playing');
-    // Burst: each pill flies away from the middle of the box.
+    // Gentle push: each pill drifts away from the middle of the box. The push
+    // is eased in over BURST seconds (see tick) rather than given at once.
     pills.forEach(function(p){
       var dx = p.x - W / 2, dy = p.y - H / 2, d = Math.hypot(dx, dy) || 1;
-      var sp = (420 + Math.random() * 260) * u;
-      p.vx += dx / d * sp + (Math.random() - .5) * 120 * u;
-      p.vy += dy / d * sp + (Math.random() - .5) * 120 * u;
-      p.va += (Math.random() - .5) * 260;
+      var sp = (160 + Math.random() * 90) * u;
+      p.bx = dx / d * sp + (Math.random() - .5) * 40 * u;
+      p.by = dy / d * sp + (Math.random() - .5) * 40 * u;
+      p.ba = (Math.random() - .5) * 70;
     });
+    burstLeft = BURST;
     if(!running){ running = true; last = 0; requestAnimationFrame(tick); }
   }
   function coast(){ playing = false; ptr = null; art.classList.remove('is-playing'); }
@@ -130,7 +133,16 @@
     var dt = last ? Math.min((t - last) / 1000, 1 / 30) : 1 / 60;
     last = t;
     var m = 6 * u, moving = playing;
+    // Ease the hover push in: a share of it every frame, front-loaded and
+    // tapering off (sums to the whole push over BURST seconds).
+    var share = 0;
+    if(burstLeft > 0){
+      var t0 = 1 - burstLeft / BURST, t1 = Math.min(1, t0 + dt / BURST);
+      share = (1 - Math.pow(1 - t1, 2)) - (1 - Math.pow(1 - t0, 2));
+      burstLeft -= dt;
+    }
     pills.forEach(function(p){
+      if(share && p.bx !== undefined){ p.vx += p.bx * share; p.vy += p.by * share; p.va += p.ba * share; }
       if(playing){
         // A little drag, but keep a lazy drift so they never stop dead while hovered.
         var drag = Math.pow(.72, dt), s;
@@ -139,7 +151,7 @@
         if(s < 60 * u){ var k = s ? 60 * u / s : 0; if(k){ p.vx *= k; p.vy *= k; } else { p.vx = 60 * u; } }
         if(ptr){
           var dx = p.x - ptr.x, dy = p.y - ptr.y, d = Math.hypot(dx, dy), R = 120 * u;
-          if(d < R && d > 0){ var f = (1 - d / R) * 3200 * u * dt; p.vx += dx / d * f; p.vy += dy / d * f; }
+          if(d < R && d > 0){ var f = (1 - d / R) * 2200 * u * dt; p.vx += dx / d * f; p.vy += dy / d * f; }
         }
         // Tilt wobbles but is pulled back towards the design's angle.
         p.va += (p.r0 - p.a) * 40 * dt; p.va *= Math.pow(.15, dt);
