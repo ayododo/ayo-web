@@ -29,3 +29,19 @@
     });
   });
 })();
+
+/* Sports list (Figma 28109:22053): auto-scrolling row. The tiles are wrapped
+   in a set and the set is copied once (hidden from assistive tech), so the
+   track can slide by exactly half its width and loop without a seam. */
+(function(){
+  'use strict';
+  var sec = document.querySelector('.sc-sports'), track = sec && sec.querySelector('.sc-sports__track');
+  if(!track || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var set = document.createElement('div'); set.className = 'sc-sports__set';
+  while(track.firstChild) set.appendChild(track.firstChild);
+  var copy = set.cloneNode(true); copy.setAttribute('aria-hidden', 'true');
+  track.appendChild(set); track.appendChild(copy);
+  sec.classList.add('is-marquee');
+  // Constant speed (~45px/s) whatever the number of tiles.
+  sec.style.setProperty('--sc-marquee-dur', Math.round(set.scrollWidth / 45) + 's');
+})();

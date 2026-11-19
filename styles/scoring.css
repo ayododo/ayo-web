@@ -35,6 +35,14 @@
 .sc-sports{background:#f7f7f7;padding:20px 0}
 .sc-sports__track{display:flex;gap:12px;overflow-x:auto;padding:0 var(--edge);scrollbar-width:none;max-width:var(--container);margin:0 auto}
 .sc-sports__track::-webkit-scrollbar{display:none}
+/* Auto-scroll (scoring.js adds .is-marquee and a hidden copy of the tiles):
+   the row drifts left forever, pauses on hover/focus, and stays a manual
+   scroller with reduced motion or without JS. */
+.sc-sports.is-marquee{overflow:hidden}
+.sc-sports.is-marquee .sc-sports__track{width:max-content;max-width:none;margin:0;padding:0;overflow:visible;animation:sc-marquee var(--sc-marquee-dur,40s) linear infinite}
+.sc-sports.is-marquee .sc-sports__set{display:flex;gap:12px;padding-right:12px}
+.sc-sports.is-marquee:hover .sc-sports__track,.sc-sports.is-marquee:focus-within .sc-sports__track{animation-play-state:paused}
+@keyframes sc-marquee{to{transform:translateX(-50%)}}
 .sc-sport{position:relative;flex:0 0 156px;height:56px;padding:0 16px;display:flex;align-items:center;overflow:hidden;border-radius:12px;background:#fff;
   font-size:16px;line-height:22px;font-weight:var(--fw-bold);color:var(--sc-ink);white-space:nowrap}
 .sc-sport img{position:absolute;right:-8px;top:6px;width:56px;height:56px;object-fit:contain}
