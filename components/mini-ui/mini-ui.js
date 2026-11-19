@@ -409,7 +409,9 @@
       // Close by scrolling on down the screen to Continue, and stop there.
       .then(function(){ return a.scroll(a.maxY(), 1600); });
   }
-  var PREP = {f01: formatPrep, f02: formatPrep, f03: formatPrep};
+  var PREP = {f01: formatPrep, f02: formatPrep, f03: formatPrep,
+    // F04 opens scrolled to the formats, Americano chosen, no pairing yet.
+    f04: function(a){ a.select('formats', 'tile-Americano'); a.el('partners').innerHTML = partnerRows('Americano', null); a.jump(a.el('formats').offsetTop - 6); }};
   var FLOWS = {
     // Format cards (Americano, Mexicano, Custom): the format area starts
     // empty, the three formats appear, one is picked, then its pairing
@@ -417,11 +419,19 @@
     f01: function(a){ return formatFlow(a, 'Americano', 'p-RotatingPartner'); },
     f02: function(a){ return formatFlow(a, 'Mexicano', 'p-FixedPartner'); },
     f03: function(a){ return formatFlow(a, 'Custom', 'p-Doubles2vs2'); },
+    // F04 · Tipe pasangan: opens on Americano with no pairing chosen; taps
+    // through Rotating, Fixed and Mixed, scrolls a little so Singles is fully
+    // in view before it is picked, then scrolls on down to Continue.
     f04: function(a){
-      a.radio('p-RotatingPartner');
-      return a.toTarget().then(function(){ return a.tap('p-FixedPartner'); }).then(function(){ a.radio('p-FixedPartner'); return a.wait(500); })
-        .then(function(){ return a.tap('p-MixedPartner'); }).then(function(){ a.radio('p-MixedPartner'); return a.wait(500); })
-        .then(function(){ return a.tap('p-Singles'); }).then(function(){ a.radio('p-Singles'); return a.wait(300); });
+      function pick(id){ return a.tap(id).then(function(){ a.radio(id); return a.wait(450); }); }
+      return a.wait(300)
+        .then(function(){ return pick('p-RotatingPartner'); })
+        .then(function(){ return pick('p-FixedPartner'); })
+        .then(function(){ return pick('p-MixedPartner'); })
+        .then(function(){ return a.scrollBottom('p-Singles', 700); })
+        .then(function(){ return pick('p-Singles'); })
+        .then(function(){ return a.wait(300); })
+        .then(function(){ return a.scroll(a.maxY(), 1500); });
     },
     // S01 · Cabor & mode: Setup → Select Sport → back with Squash → Casual.
     s01: function(a){
