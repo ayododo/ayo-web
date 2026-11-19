@@ -70,6 +70,13 @@
 .hx-pair{display:flex}.hx-pair img{width:20px;height:20px;border-radius:50%;border:1.5px solid #fff;object-fit:cover}.hx-pair img+img{margin-left:-7px}
 .hx-row em{position:absolute;right:-27px;top:50%;transform:translateY(-50%);padding:3px 6px;border-radius:8px;font-style:normal;font-size:10px;font-weight:700;box-shadow:0 4px 10px rgba(0,0,0,.1)}
 .hx-row em.up{background:#e6f6ee;color:#1b7a4b}.hx-row em.down{background:#fdeced;color:#ec2435}
+/* With motion the ▲/▼ badges wait for the score: the hero flow adds .is-in
+   to the card when "Skor tersimpan" pops; ▲ rises in, ▼ drops in. */
+.hx-row em{transition:opacity .35s ease,translate .45s cubic-bezier(.34,1.56,.64,1)}
+.sc-hero__visual.is-motion .hx-score:not(.is-in) em{opacity:0}
+.sc-hero__visual.is-motion .hx-score:not(.is-in) em.up{translate:0 6px}
+.sc-hero__visual.is-motion .hx-score:not(.is-in) em.down{translate:0 -6px}
+.hx-score.is-in em.down{transition-delay:.08s}
 /* Motion (scoring.js adds .is-live while in view): the cards drift gently;
    the toast and the PadelLevels gain are played by the hero flow. */
 .sc-hero__visual.is-motion .hx-toast:not(.is-in){opacity:0;transform:translateY(-8px)}

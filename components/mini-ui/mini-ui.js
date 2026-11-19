@@ -611,7 +611,7 @@
     // then back to Standings.
     hero: function(a){
       var art = a.stage.closest('[data-hero-art]');
-      var toast = art && art.querySelector('[data-hf="toast"]'), pl = art && art.querySelector('[data-hf="pl-val"]'), plUp = art && art.querySelector('[data-hf="pl-up"]');
+      var toast = art && art.querySelector('[data-hf="toast"]'), pl = art && art.querySelector('[data-hf="pl-val"]'), plUp = art && art.querySelector('[data-hf="pl-up"]'), score = art && art.querySelector('.hx-score');
       function tab(matches){
         var seg = a.el('h-seg'); seg.dataset.on = matches ? '0' : '1';
         a.el('h-matches-tab').classList.toggle('is-on', matches); a.el('h-standings-tab').classList.toggle('is-on', !matches);
@@ -623,13 +623,13 @@
         var t0 = performance.now();
         return new Promise(function(res){ (function f(now){ var k = Math.min(1, (now - t0) / ms); pl.textContent = (from + (to - from) * (1 - Math.pow(1 - k, 3))).toFixed(2); k < 1 ? requestAnimationFrame(f) : res(); })(t0); });
       }
-      if(pl) pl.textContent = '3.30'; if(plUp) plUp.classList.remove('is-in'); if(toast) toast.classList.remove('is-pop', 'is-in');
+      if(pl) pl.textContent = '3.30'; if(plUp) plUp.classList.remove('is-in'); if(toast) toast.classList.remove('is-pop', 'is-in'); if(score) score.classList.remove('is-in');
       return a.wait(500)
         .then(function(){ return a.scroll(a.maxY(), 1600); })       // down the standings to 8th place
         .then(function(){ return a.wait(800); })
         .then(function(){ return a.tap('h-matches-tab'); })
         .then(function(){ tab(true); return a.wait(450); })
-        .then(function(){ if(toast){ toast.classList.add('is-in', 'is-pop'); } if(plUp) plUp.classList.add('is-in'); return tick(3.30, 3.42, 900); })
+        .then(function(){ if(toast){ toast.classList.add('is-in', 'is-pop'); } if(plUp) plUp.classList.add('is-in'); if(score) score.classList.add('is-in'); return tick(3.30, 3.42, 900); })
         .then(function(){ return a.wait(400); })
         .then(function(){ return a.scroll(a.maxY(), 1500); })
         .then(function(){ return a.wait(900); })
