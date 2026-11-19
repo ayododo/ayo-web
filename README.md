@@ -1,3 +1,5 @@
+| `avm-id.html` | AVM (AYO Venue Management) landing page — Figma desktop 27882:40312, mobile 27882:41018, FAQ 27882:41680. Hero, stats, why AVM, seven key-feature tabs, join steps, CTA + contact form, FAQ. Deep links `#booking`, `#payments`, `#reports`, `#promotions`, `#add-ons`, `#activities`, `#additional` open a tab. The nav's "Untuk Pemilik Venue" links here. |
+| `avm-en.html` | English twin of `avm-id.html` (Figma desktop 27093:65, mobile 27093:936), same structure and tab slugs. The language switch moves between the two and keeps the tab hash. |
 # AYO Web
 
 Website design reference and frontend handoff for AYO.
@@ -41,8 +43,9 @@ framework preset, no build command, and serve the repository root.
 | `about-en.html` | About Us — Figma 27980:18323 (desktop 27987:7997, mobile 27990:8081, story states 28014:8166 …). Entry point: "About Us" in the footer. |
 | `about-id.html` | Indonesian twin ("Tentang Kami", Figma 28095:25789), same markup. The language switch moves between the two. On the homepage the footer link follows the chosen language (`data-href-id`, handled in `chrome.js`). |
 
-The repository focused on the homepage only (decision 2026-11-18); the Scoring
-page is the first page rebuilt since.
+The repository focused on the homepage only (decision 2026-11-18); since then
+the Scoring, AVM and About Us pages have been rebuilt, each in Indonesian and
+English.
 The earlier venue, partner, Open Play host, Open Match, court directory, and
 foundations pages were removed and will be rebuilt from scratch. Homepage links
 to those pages point to `#` until the new pages exist.
@@ -62,11 +65,16 @@ to those pages point to `#` until the new pages exist.
 and the type scale. `styles/chrome.css` and `scripts/chrome.js` provide shared
 navigation, buttons, footer styles, and account demo behavior.
 
-Homepage-specific code lives in `styles/home.css` / `scripts/home.js`; the
-Scoring page in `styles/scoring.css` / `scripts/scoring.js`; the About page in
-`styles/about.css` / `scripts/about.js` (story timeline; hero pills that scatter and
-bounce on hover, or on tap on touch screens, then coast to a stop where they are; the Moments strip's auto-scroll), with
-assets in `assets/about/`. Motion is off with reduced motion.
+Page-specific code:
+
+| Page | Files |
+| --- | --- |
+| Homepage | `styles/home.css`, `scripts/home.js` |
+| Scoring | `styles/scoring.css`, `scripts/scoring.js`, `components/mini-ui/`, `assets/scoring/` |
+| AVM | `styles/avm.css`, `scripts/avm.js` (tabs, FAQ accordion, contact form, stat count-up, section reveal), `components/avm-hero/` (animated hero illustration), `components/mini-ui/` + `components/mini-ui/avm/` (25 feature cards) |
+| About Us | `styles/about.css`, `scripts/about.js` (story timeline; hero pills that scatter and bounce on hover or tap, then coast to a stop; Moments strip auto-scroll; milestone photo crossfade), `assets/about/` |
+
+All page motion is vanilla JS/CSS and switches off with reduced motion.
 
 ### Mini UI
 
@@ -74,7 +82,10 @@ assets in `assets/about/`. Motion is off with reduced motion.
 feature cards (Figma "Phone · Mini UI · …"). `mini-ui.js` renders each
 `<div data-mu="…">` from templates and plays the multi-screen flows from the
 Scoring staging board (Figma 28125:11094): Setup 01–03, Match & Skor 02 and
-04, and Bagikan 01. Flows run while the card is in view and loop. With reduced
+04, and Bagikan 01. The AVM page adds its own cards from `components/mini-ui/avm/`
+(Booking & Payments, Reports & Promo, Add-ons & more), registered through
+`AyoMiniUI.add()`, with one string table per language. Flows run while the
+card is in view and loop. With reduced
 motion they stay on the first screen. The player photos in
 `assets/scoring/avatars/` are AI-generated, fictional people.
 `tools/lottie/` regenerates the Booking section animation.
@@ -150,6 +161,8 @@ and [JavaScript dependencies](https://getbootstrap.com/docs/4.3/getting-started/
 - Login/register and Google sign-in simulate a local session. Connect these to
   the application's authentication service before production.
 - Media kit forms and several CTA, store, and blog links are placeholders.
+- The AVM contact form has no backend: `scripts/avm.js` only shows a sent state.
+  About Us stats for Venues and Cities are "xxxx"/"xxx" placeholders, as in Figma.
 - Activity content and statistics include sample data. Links to pages that are
   not rebuilt yet (venue, partner, Open Play, Open Match, court directory) are
   `#` placeholders.
