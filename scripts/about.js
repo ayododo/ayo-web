@@ -41,6 +41,35 @@
   // Warm the cache so switching years doesn't flash an empty photo.
   buttons.forEach(function(b){ var i = new Image(); i.src = b.dataset.img; });
 
+  // Photo change: the new photo is laid over the old one and fades in while
+  // settling from a slight zoom (106% to 100%); the old one is dropped once
+  // it is covered. It waits for the image to decode, so it never fades in
+  // half-loaded. Reduced motion swaps at once (CSS turns the transition off).
+  var photo = img.parentNode;
+  function swapPhoto(src, alt){
+    var top = photo.lastElementChild;
+    if(top.getAttribute('src') === src) return;
+    [].forEach.call(photo.children, function(el){ el.alt = ''; el.setAttribute('aria-hidden', 'true'); });
+    var n = new Image();
+    n.className = 'is-in';
+    n.width = img.width; n.height = img.height;
+    n.src = src; n.alt = alt;
+    photo.appendChild(n);
+    var started = false;
+    var go = function(){
+      if(started) return; started = true;
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){ n.classList.add('is-on'); }); });
+    };
+    (n.decode ? n.decode() : Promise.resolve()).then(go, go);
+    setTimeout(go, 500);   // never wait on a decode that stalls
+    var drop = function(){
+      n.classList.add('is-on');
+      while(photo.firstElementChild !== n && photo.contains(n)) photo.removeChild(photo.firstElementChild);
+    };
+    n.addEventListener('transitionend', function(e){ if(e.propertyName === 'opacity') drop(); });
+    setTimeout(drop, 1800);   // fallback when no transition runs (reduced motion, hidden tab)
+  }
+
   function show(i, focus){
     if(i < 0 || i >= total) return;
     current = i;
@@ -55,8 +84,7 @@
       if(k === i) t.removeAttribute('aria-hidden'); else t.setAttribute('aria-hidden', 'true');
     });
     tl.style.setProperty('--p', i);
-    img.src = b.dataset.img;
-    img.alt = b.dataset.alt || '';
+    swapPhoto(b.dataset.img, b.dataset.alt || '');
     prev.disabled = i === 0;
     next.disabled = i === total - 1;
     if(focus) b.focus();

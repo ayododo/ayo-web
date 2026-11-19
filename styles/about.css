@@ -89,6 +89,11 @@
 .ab-card{display:flex;border-radius:24px;overflow:hidden;background:var(--ab-tint)}
 .ab-card__photo{position:relative;flex:0 0 50%;min-height:400px}
 .ab-card__photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* Year change: the new photo fades in over the old one while settling from a slight zoom. */
+.ab-card__photo{overflow:hidden}
+.ab-card__photo img.is-in{opacity:0;transform:scale(1.06);transition:opacity .6s ease,transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.ab-card__photo img.is-in.is-on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.ab-card__photo img.is-in{transition:none}}
 .ab-card__body{flex:1 1 0;display:flex;flex-direction:column;justify-content:space-between;gap:32px;padding:56px}
 .ab-card__text{display:flex;flex-direction:column;gap:16px}
 /* All milestone texts share one cell, so the card takes the tallest one's height
