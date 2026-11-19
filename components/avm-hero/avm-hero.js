@@ -18,8 +18,9 @@
    the cards enter one by one and then drift; the chart line draws and the
    statistics count up; the withdraw button is tapped and turns into a
    success state; the phone scrolls down to the upcoming schedule; the Excel
-   chip is tapped and downloads; a booking appears in the connected-courts
-   grid and blocks the linked court; a staff role is picked; the phone
+   chip is tapped and downloads; in the connected-courts grid the yellow and
+   then the green booking appear, each blocking its linked court (no touch
+   marker there); a staff role is picked; the phone
    scrolls back up; everything fades and the loop restarts.
    ========================================================================== */
 (function(){
@@ -164,7 +165,7 @@
           '<div class="ah-list" data-el="list"><div class="ah-list__h"><span>'+S.upcoming+'</span>'+ic('info', 16)+'</div>'+ROWS.map(row).join('')+'</div>'+
         '</div>'+
       '</div>'+
-      '<div class="ah-nav">'+NAV_SHAPE+'<div class="ah-nav__bar"><div class="ah-nav__t"><span>AYO Arena Bogor</span>'+ic('chevW', 20)+'<b>12</b></div>'+
+      '<div class="ah-nav">'+NAV_SHAPE+'<div class="ah-nav__bar"><div class="ah-nav__t"><span>AYO Arena Jakarta</span>'+ic('chevW', 20)+'<b>12</b></div>'+
         '<span class="ah-nav__a">'+ic('paper', 20)+ic('bell', 20)+'</span></div></div>'+
     '</div><span class="ah-cover" data-el="cover"></span></div></div>';
   }
@@ -209,7 +210,6 @@
         '<span class="ah-day__t" style="top:54px">06:00</span><span class="ah-day__t" style="top:127px">07:00</span><span class="ah-day__t" style="top:200px">08:00</span>'+
         block('ah-bk--dipo', '#fcb145', 'rgba(252,177,69,.1)', 'Dipo Soputan', '06:00 - 08:00', 'receipt')+
         cross('ah-x--m6', 112, 56, 1.1, true)+cross('ah-x--m7', 112, 56, 1.1, true)+
-        '<span class="ah-day__cell" data-el="cell"></span>'+
         cross('ah-x--s8', 112, 129, 2.2, true)+
         block('ah-bk--yogi', '#00c48c', '#e3f6f1', 'Yogi Rahadian', '08:00 - 09:00', 'link')+
       '</div></div></div></div>';
@@ -231,6 +231,7 @@
   mount.innerHTML = '<div class="ah-art" aria-hidden="true">'+phone()+fund()+report()+schedule()+staff()+'</div>';
   var art = mount.querySelector('.ah-art');
   function el(n){ return art.querySelector('[data-el="'+n+'"]'); }
+  function pre(sel, on){ sel.forEach(function(q){ art.querySelector(q).classList.toggle('is-pre', on); }); }
   function num(n){ return art.querySelector('[data-n="'+n+'"]'); }
   var floats = [].slice.call(art.querySelectorAll('.ah-f'));
 
@@ -313,8 +314,7 @@
     num('fund').textContent = '19.250.000';
     el('withdraw').classList.remove('is-done', 'is-press');
     ['pdf', 'xls'].forEach(function(k){ el(k).classList.remove('is-busy', 'is-done'); });
-    art.querySelector('.ah-bk--yogi').classList.add('is-pre');
-    art.querySelector('.ah-x--s8').classList.add('is-pre');
+    pre(['.ah-bk--dipo', '.ah-x--m6', '.ah-x--m7', '.ah-bk--yogi', '.ah-x--s8'], true);
     el('r-manager').classList.remove('is-on'); el('r-staff').classList.add('is-on');
     art.offsetHeight; art.classList.remove('no-anim');
   }
@@ -365,11 +365,13 @@
       return p;
     }).then(function(){
       if(mobile) return wait(id, 1400);
-      // Connected courts: tap the free Mini Soccer slot → the booking lands
-      // and the linked Football court is blocked for that hour.
-      return wait(id, 300).then(function(){ return tap(id, el('cell')); })
-        .then(function(){ art.querySelector('.ah-bk--yogi').classList.remove('is-pre'); return wait(id, 450); })
-        .then(function(){ art.querySelector('.ah-x--s8').classList.remove('is-pre'); return wait(id, 900); })
+      // Connected courts, no touch: the yellow Football booking lands and
+      // blocks the linked Mini Soccer hours, then the green Mini Soccer
+      // booking lands and blocks the linked Football hour.
+      return wait(id, 300).then(function(){ pre(['.ah-bk--dipo'], false); return wait(id, 450); })
+        .then(function(){ pre(['.ah-x--m6', '.ah-x--m7'], false); return wait(id, 900); })
+        .then(function(){ pre(['.ah-bk--yogi'], false); return wait(id, 450); })
+        .then(function(){ pre(['.ah-x--s8'], false); return wait(id, 900); })
         // Staff access: pick the Manager role.
         .then(function(){ return tap(id, el('r-manager')); })
         .then(function(){ el('r-manager').classList.add('is-on'); el('r-staff').classList.remove('is-on'); return wait(id, 900); });
