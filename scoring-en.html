@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en" data-page-lang="EN" data-lang-id="scoring.html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scoring (GameTime) — AYO</title>
+<meta name="description" content="Run Americano, Mexicano, or your own custom format. Scoring builds rounds and pairings, records scores, and updates the standings live.">
+
+<link rel="alternate" hreflang="id" href="scoring.html">
+<link rel="alternate" hreflang="en" href="scoring-en.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#ec2435">
+
+<link rel="stylesheet" href="vendor/bootstrap-4.3.1/bootstrap.min.css">
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="styles/bootstrap-compat.css">
+<link rel="stylesheet" href="styles/chrome.css">
+<link rel="stylesheet" href="components/mini-ui/mini-ui.css?v=20261119g">
+<link rel="stylesheet" href="components/site-footer/site-footer.css?v=20261118b">
+<link rel="stylesheet" href="styles/scoring.css?v=20261119k">
+</head>
+<body class="ayo-web">
+
+<!-- Scoring (GameTime) page, English — Figma "AYO — GameTime" 26877:7476,
+     key-feature tabs 26891:7710 / 7797 / 7884 / 7971,
+     mobile "AYO — Scoring (Mobile 360)" 26894:7974.
+     Indonesian twin: scoring.html (same markup, translated copy). Keep the two in step. -->
+
+<!-- 1. NAV (same markup as index.html, English labels, light page) -->
+<nav class="ayo-nav on-light">
+  <div class="nav-in container-fluid">
+    <a class="brand" href="index.html" aria-label="AYO"><img src="assets/logo.svg" alt="AYO"></a>
+    <div class="nav-links" id="navlinks">
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Booking</a></div>
+      <div class="ayo-nav-item has-sub">
+        <button class="nav-top" aria-expanded="false" aria-haspopup="true">Activities <span class="chev" aria-hidden="true"></span></button>
+        <div class="submenu" data-mega="activities">
+          <a href="#">Join activity</a>
+          <a href="#">Hosting activity</a>
+          <a href="scoring-en.html" aria-current="page">Scoring</a>
+        </div>
+      </div>
+      <div class="ayo-nav-item"><a class="nav-top" href="#">For Venue Owners</a></div>
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Partner with Us</a></div>
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Blog</a></div>
+    </div>
+    <div class="nav-actions">
+    <div class="lang" id="lang">
+      <button class="lang-btn" aria-haspopup="true" aria-expanded="false" aria-label="Select language">
+        <span class="flag cur-flag" aria-hidden="true">🇬🇧</span>
+        <span class="cur">EN</span>
+        <span class="chev" aria-hidden="true"></span>
+      </button>
+      <div class="lang-menu" role="menu">
+        <button role="menuitemradio" aria-selected="true" data-code="EN" data-flag="🇬🇧"><span class="flag" aria-hidden="true">🇬🇧</span><span class="lname">English</span><span class="code">EN</span></button>
+        <button role="menuitemradio" aria-selected="false" data-code="ID" data-flag="🇮🇩"><span class="flag" aria-hidden="true">🇮🇩</span><span class="lname">Bahasa Indonesia</span><span class="code">ID</span></button>
+      </div>
+    </div>
+    <a class="nav-icon" href="#" aria-label="Cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3h2.2l2.1 12.4a1.5 1.5 0 0 0 1.5 1.25h8.3a1.5 1.5 0 0 0 1.48-1.2L21 7H6"/></svg>
+    </a>
+    <a class="ayo-btn primary" href="#" data-login>Login</a>
+    <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navlinks">
+      <svg class="ico-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
+      <svg class="ico-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>
+    </button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<!-- 2. HERO (Figma 28109:21861) -->
+<section class="sc-hero" aria-labelledby="sc-title">
+  <div class="wrap container-fluid sc-hero__in">
+    <div class="sc-hero__copy">
+      <nav class="sc-crumb" aria-label="Breadcrumb">
+        <ol><li><a href="index.html">Home</a></li><li><a href="#">Activities</a></li><li><span aria-current="page">Scoring</span></li></ol>
+      </nav>
+      <h1 class="sc-hero__title" id="sc-title">Scoring (GameTime)</h1>
+      <p class="sc-hero__lead">Set the game, Let GameTime do the math!</p>
+      <p class="sc-hero__sub">Run Americano, Mexicano, or your own Customized Game format. Add players and courts, and Scoring automatically builds rounds and pairings, records scores, and updates the standing live.</p>
+      <a class="sc-btn" href="#">Create Your Scoring <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a>
+    </div>
+    <!-- Hero illustration (Figma 28337:306 desktop, 28337:511 mobile), built in
+         HTML so it can move: the phone is a Mini UI (components/mini-ui, card
+         "hero") and the floating cards are below. scoring.js scales the whole
+         420px art down to fit narrow screens. Without JS the exported image shows. -->
+    <div class="sc-hero__visual" data-hero>
+      <div class="sc-hero__art" data-hero-art aria-hidden="true">
+        <div class="hx-box mu-stage" data-mu="hero"></div>
+        <div class="hx-float hx-toast" data-hf="toast"><span class="hx-check"><svg viewBox="0 0 20 20" fill="none"><path d="M6 10.4l2.6 2.6L14.2 7.2" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>Score saved</b><small>Round 1 · Court A · 16–8</small></span></div>
+        <div class="hx-float hx-format"><small>FORMAT</small><span>Custom</span><span class="is-on">Americano</span><span>Mexicano</span></div>
+        <div class="hx-float hx-pl"><svg viewBox="0 0 38 38" aria-hidden="true"><rect width="38" height="38" rx="8" fill="#121A31"/><path fill-rule="evenodd" clip-rule="evenodd" d="M19.8407 24.2574L30.7819 9.24996L29.7312 8.52734L19.847 22.063L14.9444 13.874L4.6001 28.9862L14.8899 15.9944L19.8407 24.2574Z" fill="#D83232"/><path fill-rule="evenodd" clip-rule="evenodd" d="M19.84 29.4738L30.6164 14.5976L29.5663 13.875L19.847 27.2801L14.9443 19.0904L7.12329 28.7602L14.8899 21.2108L19.84 29.4738Z" fill="#D83232"/></svg><span><small>PADELLEVELS</small><b><span data-hf="pl-val">3.42</span> <em data-hf="pl-up">▲ 0.12</em></b></span></div>
+        <div class="hx-float hx-score"><small><i></i>LIVE · COURT A</small>
+          <span class="hx-row"><span class="hx-pair"><img src="assets/scoring/hero-faces/p0.webp" alt=""><img src="assets/scoring/hero-faces/p1.webp" alt=""></span>Bayu / Gabriella<b>16</b><em class="up">▲1</em></span>
+          <span class="hx-row"><span class="hx-pair"><img src="assets/scoring/hero-faces/p2.webp" alt=""><img src="assets/scoring/hero-faces/p3.webp" alt=""></span>Budi / Fredy<b>8</b><em class="down">▼1</em></span>
+        </div>
+      </div>
+      <picture class="sc-hero__fallback">
+        <source media="(max-width: 900px)" srcset="assets/scoring/hero-mobile.webp" width="360" height="404">
+        <img src="assets/scoring/hero-desktop.webp" alt="GameTime in the AYO app: standings, the Americano format, a saved score and a PadelLevels rating" width="616" height="507" fetchpriority="high">
+      </picture>
+    </div>
+  </div>
+</section>
+
+<!-- 3. SPORTS LIST (Figma 28109:22053) — scrolls sideways -->
+<section class="sc-sports" aria-label="Supported sports">
+  <div class="sc-sports__track">
+    <span class="sc-sport">Padel<img src="assets/scoring/sports/padel.webp" alt="" width="56" height="56" loading="lazy"></span>
+    <span class="sc-sport">Tennis<img src="assets/scoring/sports/tennis.webp" alt="" width="56" height="56" loading="lazy"></span>
+    <span class="sc-sport">Badminton<img src="assets/scoring/sports/badminton.webp" alt="" width="56" height="56" loading="lazy"></span>
+    <span class="sc-sport">Mini Soccer<img src="assets/scoring/sports/mini-soccer.webp" alt="" width="56" height="56" loading="lazy"></span>
+    <span class="sc-sport">Football<img src="assets/scoring/sports/sepak-bola.webp" alt="" width="56" height="56" loading="lazy"></span>
+    <span class="sc-sport">Basketball<img src="assets/scoring/sports/basketball.webp" alt="" width="56" height="56" loading="lazy"></span>
+    <span class="sc-sport">Pickleball<img src="assets/scoring/sports/pickleball.webp" alt="" width="56" height="56" loading="lazy"></span>
+    <span class="sc-sport">Futsal<img src="assets/scoring/sports/futsal.webp" alt="" width="56" height="56" loading="lazy"></span>
+    <span class="sc-sport">Table Tennis<img src="assets/scoring/sports/tenis-meja.webp" alt="" width="56" height="56" loading="lazy"></span>
+    <span class="sc-sport">Squash<img src="assets/scoring/sports/squash.webp" alt="" width="56" height="56" loading="lazy"></span>
+    <span class="sc-sport">Volley<img src="assets/scoring/sports/volley.webp" alt="" width="56" height="56" loading="lazy"></span>
+  </div>
+</section>
+
+<!-- 4. WHY SCORING (Figma 28109:22109) -->
+<section class="sc-usp" aria-labelledby="sc-usp-title">
+  <div class="wrap container-fluid">
+    <p class="sc-eyebrow">Why Scoring</p>
+    <h2 class="sc-h2" id="sc-usp-title">Why hosts run social games on Scoring</h2>
+    <div class="sc-usp__grid">
+      <div class="sc-usp__item">
+        <span class="sc-usp__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3 6.4 20.2l1.1-6.2L3 9.6l6.2-.9z"/></svg></span>
+        <h3>Run a great game</h3>
+        <p>Choose your players, courts, and format. Scoring generates the rounds and pairings for you—no manual scheduling or complicated calculations.</p>
+      </div>
+      <div class="sc-usp__item">
+        <span class="sc-usp__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><path d="M15.5 4.8a3.5 3.5 0 0 1 0 6.4"/><path d="M18 14.9c2 .7 3.2 2.4 3.5 5.1"/></svg></span>
+        <h3>Play your way</h3>
+        <p>Mix partners, keep teams fixed, or play singles. Choose the format that fits your group and the kind of game you want to run.</p>
+      </div>
+      <div class="sc-usp__item">
+        <span class="sc-usp__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4v1.5A3.5 3.5 0 0 0 7.5 11"/><path d="M17 6h3v1.5a3.5 3.5 0 0 1-3.5 3.5"/><path d="M12 14v4"/><path d="M8.5 20h7"/></svg></span>
+        <h3>Every match counts</h3>
+        <p>Enter scores after each match and watch the leaderboard update live, so everyone can follow the competition as it unfolds.</p>
+      </div>
+      <div class="sc-usp__item">
+        <span class="sc-usp__ico"><!-- Share-new (Figma 28321:61464) --><svg viewBox="284 16 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M297 24.5H297.5V20.7c0-.14.04-.28.12-.39.08-.12.19-.2.32-.26.13-.05.27-.06.41-.03.14.03.26.1.35.21l5.95 6.41c.22.24.34.55.34.87 0 .32-.12.63-.34.87l-5.95 6.41c-.1.1-.22.17-.36.21-.14.03-.28.02-.41-.03-.13-.05-.24-.14-.32-.26-.08-.12-.12-.25-.12-.39V30.5c-5.55 0-8.55 4.02-9.31 5.19-.06.1-.14.17-.24.23-.1.05-.21.08-.32.08-.08 0-.16-.02-.24-.05-.08-.03-.15-.08-.2-.14-.06-.06-.1-.13-.14-.2-.03-.08-.05-.16-.05-.24v-.87c0-5.52 4.48-10 10-10z"/></svg></span>
+        <h3>Make the game worth remembering</h3>
+        <p>Share the final standings and winner banners on WhatsApp or Instagram, or download the results as a PDF.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. KEY FEATURES — five tabs. Each card holds a Mini UI
+     (components/mini-ui). Cards whose flow spans several screens play it
+     when in view: Setup 01–03, Matches & Scores 02 and 04, Share 01.
+     Tab ids match scoring.html so #setup / #match / #klasemen / #bagikan
+     deep links carry over when switching language. -->
+<section class="sc-kf" id="fitur" aria-label="Scoring features">
+  <div class="wrap container-fluid">
+    <div class="sc-tabs" role="tablist" aria-label="Features">
+      <button class="sc-tab is-on" type="button" role="tab" aria-selected="true" aria-controls="kf-format" id="tab-format">Formats</button>
+      <button class="sc-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-setup" id="tab-setup" tabindex="-1">Setup</button>
+      <button class="sc-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-match" id="tab-match" tabindex="-1">Matches &amp; Scores</button>
+      <button class="sc-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-klasemen" id="tab-klasemen" tabindex="-1">Standings</button>
+      <button class="sc-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-bagikan" id="tab-bagikan" tabindex="-1">Share &amp; Winners</button>
+    </div>
+  </div>
+
+  <div class="sc-panel" id="kf-format" role="tabpanel" aria-labelledby="tab-format">
+    <div class="wrap container-fluid sc-intro"><h2 class="sc-h3">Pick the format that fits your community.</h2><p>Three formats, four ways to pair players.</p></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">01</span><h3>Americano</h3><p>Round robin: each pair plays against all other pairs.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="f01"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">02</span><h3>Mexicano</h3><p>Rank-based: players are paired by their current standing, round after round. Choose Classic or Modern pairing.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="f02"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">03</span><h3>Custom</h3><p>Customize the game format to match your community’s playing style.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="f03"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">04</span><h3>Rotating, fixed, mixed or singles</h3><p>Rotate partners every match, keep the same partner, mix pairs from two groups, or play singles.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="f04"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">05</span><h3>All the Tools. Completely Free.</h3><p>Run Americano, Mexicano, and custom games with automatic pairings, live scoring, and standings—all completely free on AYO.</p></div>
+      <!-- Figma: "Visual: TBD". A plain stand-in until the artwork exists. -->
+      <!-- Motion (scoring.js): the price counts down from $25,00 to $0,00, the
+           features appear one by one, then the +more pill. The markup is the
+           end state, which is what shows with reduced motion. -->
+      <div class="sc-feat__vis"><div class="sc-card sc-card--free" data-free>
+        <p class="sc-free__price"><span class="sc-free__cur">$</span><span class="sc-free__num" data-free-num>0,00</span></p>
+        <p class="sc-free__feats">
+          <span class="sc-free__line"><span class="sc-free__item">Americano</span><span class="sc-free__item sc-free__sep" aria-hidden="true">·</span><span class="sc-free__item">Mexicano</span><span class="sc-free__item sc-free__sep" aria-hidden="true">·</span><span class="sc-free__item">Custom</span></span>
+          <span class="sc-free__line"><span class="sc-free__item">Auto pairings</span><span class="sc-free__item sc-free__sep" aria-hidden="true">·</span><span class="sc-free__item">Live scores</span><span class="sc-free__item sc-free__sep" aria-hidden="true">·</span><span class="sc-free__item">Standings</span></span>
+        </p>
+        <span class="sc-free__more">+more</span>
+      </div></div></div>
+  </div>
+
+  <div class="sc-panel" id="kf-setup" role="tabpanel" aria-labelledby="tab-setup" hidden>
+    <div class="wrap container-fluid sc-intro"><h2 class="sc-h3">Ready in one screen.</h2><p>Sport, mode, courts and players, then continue.</p></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">01</span><h3>Sport &amp; mode</h3><p>Pick the sport, then Competitive or Casual. Competitive padel results count toward PadelLevels.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="s01"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">02</span><h3>Courts</h3><p>Set how many courts you play on and name each one.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="s02"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">03</span><h3>Players &amp; teams</h3><p>Add at least 4 players, or name your teams for doubles.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="s03"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">04</span><h3>Ranking rules</h3><p>Choose how the standings are ranked before the first round.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="s04"></div></div></div>
+  </div>
+
+  <div class="sc-panel" id="kf-match" role="tabpanel" aria-labelledby="tab-match" hidden>
+    <div class="wrap container-fluid sc-intro"><h2 class="sc-h3">Keep every round running smoothly.</h2><p>Track court assignments, enter set scores, and adjust the game as it unfolds—all in one place.</p></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">01</span><h3>Every round, organized by court.</h3><p>See every match by court, including who’s playing and who’s on the bench.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="m01"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">02</span><h3>Simple, set-by-set scoring.</h3><p>Enter scores for each set with a dedicated numpad, and add match photos to capture the game.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="m02"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">03</span><h3>Make adjustments when needed.</h3><p>Correct scores and team names, or swap players and reshuffle matchups before the first score is entered.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="m03"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">04</span><h3>Stay in control of your session.</h3><p>Add more rounds while time allows, or end the session to finalize the results.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="m04"></div></div></div>
+  </div>
+
+  <div class="sc-panel" id="kf-klasemen" role="tabpanel" aria-labelledby="tab-klasemen" hidden>
+    <div class="wrap container-fluid sc-intro"><h2 class="sc-h3">Standings everyone can trust.</h2><p>Updated after every score, ranked your way.</p></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">01</span><h3>Live standings</h3><p>See every player’s games, wins, ties, losses, point difference, and total points—all updated as scores come in.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="k01"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">02</span><h3>Custom ranking rules</h3><p>Choose and reorder ranking criteria, from total points and wins to point difference, set difference, and head-to-head.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="k02"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">03</span><h3>Flexible league scoring</h3><p>Set the points awarded for wins, ties, and losses to match your league rules (e.g., 3 / 1 / 0).</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="k03"></div></div></div>
+  </div>
+
+  <div class="sc-panel" id="kf-bagikan" role="tabpanel" aria-labelledby="tab-bagikan" hidden>
+    <div class="wrap container-fluid sc-intro"><h2 class="sc-h3">Celebrate the result.</h2><p>Share the standings, the matches and the winners in one tap.</p></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">01</span><h3>Share standings &amp; matches</h3><p>Send them to WhatsApp, Facebook or Instagram (feed or stories), or copy the link.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="b01"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">02</span><h3>Download as PDF</h3><p>Download the standings as a PDF for your community group.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="b02"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">03</span><h3>Winner banners</h3><p>Winners get a banner for Americano or Mexicano: one player, a pair, a team or a club.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="b03"></div></div></div>
+  </div>
+</section>
+
+<!-- 6. CLOSING (Figma 28109:22249) -->
+<section class="sc-close" aria-labelledby="sc-close-title">
+  <div class="wrap container-fluid">
+    <h2 class="sc-h2" id="sc-close-title">Ready to host your next game?</h2>
+    <p>Create your next Scoring in the AYO app, or add Scoring to your Open Play session.</p>
+    <a class="sc-btn sc-btn--sm" href="#">Try Scoring <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a>
+  </div>
+</section>
+</main>
+
+<!-- 7. FOOTER — components/site-footer, English copy (same as index.html) -->
+<footer class="sft">
+  <div class="sft__in">
+    <div class="sft__top">
+      <a class="sft__logo" href="index.html" aria-label="AYO home"><img src="assets/icons/footer/logo.svg" alt="AYO" width="48" height="26"></a>
+      <div class="sft__cta">
+        <p class="sft__cta-label">Own a sports venue?</p>
+        <a class="sft__btn" href="#">Become a Venue Partner <img src="assets/icons/footer/arrow-up-right.svg" alt="" width="16" height="16"></a>
+      </div>
+    </div>
+
+    <div class="sft__cols">
+      <nav class="sft__col sft__col--company" aria-labelledby="sft-company">
+        <p class="sft__h" id="sft-company">Company</p>
+        <div class="sft__links"><a href="#">About Us</a><a href="#">Policies &amp; Privacy</a><a href="#">Terms &amp; Conditions</a></div>
+      </nav>
+      <nav class="sft__col sft__col--eco" aria-labelledby="sft-eco">
+        <p class="sft__h" id="sft-eco">Ecosystem</p>
+        <div class="sft__links"><a href="#">Activity</a><a href="#">PadelLevels</a><a href="#">Booking</a><a href="#">Venue Owner</a><a href="#">Partnership</a><a href="#">Court Directory</a><a href="#">Community Directory</a></div>
+      </nav>
+      <nav class="sft__col sft__col--support" aria-labelledby="sft-support">
+        <p class="sft__h" id="sft-support">Support</p>
+        <div class="sft__links"><a href="#">Contact us</a></div>
+      </nav>
+      <div class="sft__col sft__col--follow">
+        <p class="sft__h">Follow us</p>
+        <div class="sft__social">
+          <a href="#" aria-label="AYO on Instagram"><img src="assets/icons/footer/instagram.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO on TikTok"><img src="assets/icons/footer/tiktok.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO on YouTube"><img src="assets/icons/footer/youtube.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO on Threads"><img src="assets/icons/footer/threads.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO on LinkedIn"><img src="assets/icons/footer/linkedin.svg" alt="" width="18" height="18"></a>
+        </div>
+        <div class="sft__apps">
+          <p class="sft__apps-label">Available on</p>
+          <div class="sft__stores">
+            <a class="sft__store" href="#" aria-label="Download on the App Store"><img src="assets/icons/footer/app-store.svg" alt="" width="27" height="27"><span><small>Download on the</small><b>App Store</b></span></a>
+            <a class="sft__store" href="#" aria-label="Get it on Google Play"><img src="assets/icons/footer/google-play.svg" alt="" width="25" height="27"><span><small>Get it on</small><b>Google Play</b></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sft__bottom">
+      <p class="sft__copy">© 2026 AYO All Right Reserved</p>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V4.5"/><path d="M7.5 9.5 12 5 16.5 9.5"/></svg>
+</button>
+
+<script src="vendor/jquery-3.5.1/jquery.min.js"></script>
+<script src="vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
+<script src="scripts/chrome.js?v=20261119a"></script>
+<script src="components/mini-ui/mini-ui.js?v=20261119m"></script>
+<script src="scripts/scoring.js?v=20261119h"></script>
+</body>
+</html>

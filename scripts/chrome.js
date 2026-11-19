@@ -86,6 +86,7 @@
     var menu = document.querySelector('.submenu[data-mega="activities"]');
     if(!menu) return;
     var I = 'assets/icons/mega/';
+    var SCORING = document.documentElement.lang === 'id' ? 'scoring.html' : 'scoring-en.html';
     var ARROW = '<img src="'+I+'arrow-brand.svg" alt="" width="16" height="16">';
     /* Exported from Figma (26813:15605, 26813:15612) with the Oxanium
        lettering outlined, so the marks match the design exactly. */
@@ -99,7 +100,7 @@
       match: { icon: VS,    title: 'Open Match', desc: 'Bring your team and play against another squad',
                cta: ['#', 'Explore Open Match'] },
       score: { icon: SCORE, title: 'Scoring',    desc: 'Play Americano, Mexicano, or Custom',
-               links: [['scoring.html', 'Explore Scoring', 'Learn how Scoring works'],
+               links: [[SCORING, 'Explore Scoring', 'Learn how Scoring works'],
                        ['index.html#rating', 'Learn about PadelLevels', 'An international padel rating system']] }
     };
     function txt(t, d){ return '<span class="act-txt"><b>'+t+'</b><small>'+d+'</small></span>'; }
@@ -122,7 +123,7 @@
       play:  [null, [['#', 'Join an activity', 'Find an open game near you'],
                                                 ['#', 'Host an activity', 'See how hosting works']]],
       match: '#',
-      score: 'scoring.html',
+      score: SCORING,
       learn: 'index.html#rating'
     };
     var g = GROUPS;
@@ -336,7 +337,21 @@
   var countryRoot, countryButton, countryPopup;
   var lang = document.getElementById('lang');
   var indonesiaLanguageKey = 'ayo-indonesia-language-v1';
-  var indonesiaLanguage = readPreference(indonesiaLanguageKey) === 'ID' ? 'ID' : 'EN';
+  /* A page with a translated twin declares its own language and the twin's URL
+     on <html>: data-page-lang="ID" data-lang-en="scoring-en.html" (and the
+     reverse on the twin). There the switcher shows the page's language and
+     picking the other one opens the twin, keeping the #tab hash. */
+  var root = document.documentElement;
+  var pageLang = root.dataset.pageLang || '';
+  function storedLanguage(){ return pageLang || (readPreference(indonesiaLanguageKey) === 'ID' ? 'ID' : 'EN'); }
+  var indonesiaLanguage = storedLanguage();
+  function chooseLanguage(code){
+    indonesiaLanguage = code;
+    savePreference(indonesiaLanguageKey, code);
+    var twin = pageLang && code !== pageLang && root.getAttribute('data-lang-' + code.toLowerCase());
+    if(twin){ location.href = twin + location.hash; return; }
+    syncCountryLanguage();
+  }
   function syncCountryLanguage(){
     if(!lang || !languagePopup) return;
     var isIndonesia = countryCode === 'ID';
@@ -404,18 +419,14 @@
     if(drawer) drawer.querySelectorAll('[data-m-lang]').forEach(function(b){
       b.addEventListener('click', function(){
         if(countryCode !== 'ID') return;
-        indonesiaLanguage = b.dataset.mLang;
-        savePreference(indonesiaLanguageKey, indonesiaLanguage);
-        syncCountryLanguage();
+        chooseLanguage(b.dataset.mLang);
       });
     });
     langMenu.querySelectorAll('button').forEach(function(b){
       b.addEventListener('click', function(){
         if(countryCode !== 'ID') return;
-        indonesiaLanguage = b.dataset.code;
-        savePreference(indonesiaLanguageKey, indonesiaLanguage);
-        syncCountryLanguage();
         languagePopup.close(true);
+        chooseLanguage(b.dataset.code);
       });
     });
   }
@@ -472,7 +483,7 @@
   renderSession();
   addEventListener('storage', function(e){
     if(e.key === indonesiaLanguageKey || e.key === null){
-      indonesiaLanguage = readPreference(indonesiaLanguageKey) === 'ID' ? 'ID' : 'EN'; syncCountryLanguage();
+      indonesiaLanguage = storedLanguage(); syncCountryLanguage();
     }
     if(e.key === sessionKey || e.key === null){
       session = readPreference(sessionKey); if(!validSession(session)) session = null; renderSession();
