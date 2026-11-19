@@ -115,5 +115,39 @@ function freePrice(){ return FREE_PRICE; }
   fit(); addEventListener('resize', fit);
   if(matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
   vis.classList.add('is-motion');
-  new IntersectionObserver(function(es){ es.forEach(function(e){ vis.classList.toggle('is-live', e.isIntersecting); }); }).observe(vis);
+
+  /* Format card: a finger picks Americano → Mexicano → Custom → … in turn.
+     The marker appears on the option (it never glides), and the selection
+     moves at the press, like the Mini UI touches. Rests on Americano. */
+  var fmt = art.querySelector('.hx-format'), opts = fmt ? [].slice.call(fmt.querySelectorAll('span')) : [];
+  var tapEl = null, fmtTimer = 0, fmtStep = 0, ORDER = [2, 0, 1];   // Mexicano, Custom, Americano
+  function pick(i){ opts.forEach(function(o, k){ o.classList.toggle('is-on', k === i); }); }
+  function fmtStop(){
+    clearTimeout(fmtTimer); fmtStep = 0; pick(1);
+    if(tapEl) tapEl.classList.remove('is-on', 'is-down');
+  }
+  function fmtTick(){
+    var o = opts[ORDER[fmtStep % ORDER.length]]; fmtStep++;
+    tapEl.style.left = (o.offsetLeft + o.offsetWidth / 2) + 'px';
+    tapEl.style.top = (o.offsetTop + o.offsetHeight / 2) + 'px';
+    tapEl.classList.add('is-on');
+    fmtTimer = setTimeout(function(){
+      tapEl.classList.add('is-down'); pick(opts.indexOf(o));
+      fmtTimer = setTimeout(function(){
+        tapEl.classList.remove('is-down', 'is-on');
+        fmtTimer = setTimeout(fmtTick, 1900);
+      }, 260);
+    }, 160);
+  }
+  if(opts.length === 3){
+    tapEl = document.createElement('i'); tapEl.className = 'hx-tap'; tapEl.setAttribute('aria-hidden', 'true');
+    fmt.appendChild(tapEl);
+  }
+
+  new IntersectionObserver(function(es){ es.forEach(function(e){
+    vis.classList.toggle('is-live', e.isIntersecting);
+    if(!tapEl) return;
+    fmtStop();
+    if(e.isIntersecting) fmtTimer = setTimeout(fmtTick, 1600);
+  }); }).observe(vis);
 })();
