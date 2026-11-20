@@ -157,8 +157,8 @@
 .om-photo .om-ic{color:#9b9797}
 .om-endbtn{margin-top:4px}
 .om-submit-s{font-size:8.5px;text-align:center}
-.om-win{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;border-radius:10px;background:#fdf1c8}
-.om-cup{width:30px;height:auto;flex:0 0 auto}
+.om-win{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px 8px 12px;border-radius:10px;background:#e6f6f2}   /* Figma Banner Result 28490:34216 */
+.om-cup{width:36px;height:36px;flex:0 0 auto;object-fit:contain}
 .om-table{border-radius:8px;overflow:hidden}
 .om-tr{display:flex;align-items:center;padding:6px 8px;font-size:9.5px;border-bottom:1px solid #eee}
 .om-tr>span:first-child{flex:1}

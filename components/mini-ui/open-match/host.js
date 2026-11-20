@@ -229,8 +229,7 @@
     return h.page('reserve', h.head(h.ico('close')+'<span class="mu-head__title">'+t.reserveT+'</span>'),
       '<div class="om-fld om-search">'+ic('search')+'<span class="om-fld__l" style="font-size:10.5px">'+t.search+'</span></div>'+
       '<div class="om-tabs om-tabs--eq"><span class="is-on">'+t.rtabs[0]+'</span><span>'+t.rtabs[1]+'</span><span>'+t.rtabs[2]+'</span></div>'+
-      '<div class="om-reqs">'+rows+'</div>',
-      '<span class="om-filter">'+ic('sliders')+t.filter+'</span>');
+      '<div class="om-reqs">'+rows+'</div>');
   }
 
   /* ---------- H03 · Match Fee sheet ---------- */
@@ -289,7 +288,7 @@
       four('<span class="om-four__k">'+t.final+'</span><b class="om-final">2:0</b>')+
       '<span class="mu-s" style="text-align:center">'+t.when+'<br>'+t.where+'</span>'+
       '<div class="om-win" data-el="win"><div class="mu-col" style="gap:2px"><span class="mu-h">'+t.won+'</span><span class="mu-s" style="font-size:9px">'+t.verified+'</span></div>'+
-        '<img class="om-cup" src="assets/scoring/trophy-cup.svg" alt="" width="34" height="49"></div>'+
+        '<img class="om-cup" src="assets/open-match/trophy.webp" alt="" width="40" height="40"></div>'+
       '<div class="om-table"><div class="om-tr om-tr--h"><span>'+t.playersCol+'</span><b>Set</b><span>1</span><span>2</span></div>'+
         row('Fajar R./Maya L.', 2, 6, 6, true)+row('Raka A./Nina S.', 0, 3, 4, false)+'</div>'+
       conf('maya')+conf('raka')+conf('nina')+
@@ -429,7 +428,10 @@
           .then(function(){
             var v = a.stage.querySelector('[data-page="venue"]');
             a.el('bk').classList.add('is-booked'); pop(a.el('tl'));
-            var p = a.back('form'); v.classList.remove('is-behind'); return p;
+            // Venue sits between Schedules and the form: park it off-screen
+            // without animating, or it would sweep across the form.
+            v.classList.add('no-anim'); v.classList.remove('is-behind'); v.offsetHeight; v.classList.remove('no-anim');
+            return a.back('form');
           })
           .then(function(){ return a.wait(500); })
           .then(function(){ return a.toTarget(); });

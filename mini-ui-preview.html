@@ -14,7 +14,8 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="styles/tokens.css">
 <link rel="stylesheet" href="components/mini-ui/mini-ui.css?v=20261119g">
-<link rel="stylesheet" href="components/mini-ui/open-match/host.css?v=20261119f">
+<link rel="stylesheet" href="components/mini-ui/open-match/host.css?v=20261120a">
+<link rel="stylesheet" href="components/mini-ui/open-match/player.css?v=20261120b">
 <style>
   *{box-sizing:border-box;margin:0}
   body{font-family:var(--font-sans);background:#f9f8f6;color:#25282b;padding:40px 24px 80px}
@@ -33,6 +34,9 @@
   .pv-card .mu-phone{--mu-scale:1.15;top:28px}
   .pv-card--m{width:328px;height:200px}
   .pv-card--m .mu-phone{--mu-scale:.75;top:18px}
+  /* On a phone the review page shows only the mobile card (the size the page uses there). */
+  .pv__cell{min-width:0;max-width:100%}
+  @media (max-width:600px){ body{padding:28px 16px 60px} .pv__cell:first-child{display:none} }
 </style>
 </head>
 <body>
@@ -82,6 +86,46 @@
       <div class="pv__cell"><small>Mobile · 328 × 200</small><div class="pv-card pv-card--m mu-stage" data-mu="om-h05"></div></div>
     </div>
   </section>
+  <section class="pv__item">
+    <h2>P01 · Temukan Pertandingan yang Cocok</h2>
+    <p>Untuk pemain 01 — daftar Find a Match dengan filter (Figma 26953:69104, staging P01).</p>
+    <div class="pv__row">
+      <div class="pv__cell"><small>Desktop · 528 × 300</small><div class="pv-card mu-stage" data-mu="om-p01"></div></div>
+      <div class="pv__cell"><small>Mobile · 328 × 200</small><div class="pv-card pv-card--m mu-stage" data-mu="om-p01"></div></div>
+    </div>
+  </section>
+  <section class="pv__item">
+    <h2>P02 · Pilih Slot dan Bergabung</h2>
+    <p>Untuk pemain 02 — request disetujui → pilih slot → bayar (Figma 26953:69116, staging P02).</p>
+    <div class="pv__row">
+      <div class="pv__cell"><small>Desktop · 528 × 300</small><div class="pv-card mu-stage" data-mu="om-p02"></div></div>
+      <div class="pv__cell"><small>Mobile · 328 × 200</small><div class="pv-card pv-card--m mu-stage" data-mu="om-p02"></div></div>
+    </div>
+  </section>
+  <section class="pv__item">
+    <h2>P03 · Konfirmasi Skor</h2>
+    <p>Untuk pemain 03 — konfirmasi hasil skor (Figma 26953:69128, staging P03).</p>
+    <div class="pv__row">
+      <div class="pv__cell"><small>Desktop · 528 × 300</small><div class="pv-card mu-stage" data-mu="om-p03"></div></div>
+      <div class="pv__cell"><small>Mobile · 328 × 200</small><div class="pv-card pv-card--m mu-stage" data-mu="om-p03"></div></div>
+    </div>
+  </section>
+  <section class="pv__item">
+    <h2>P04 · Beri Penilaian kepada Host</h2>
+    <p>Untuk pemain 04 — host review (Figma 26953:69140, staging P04).</p>
+    <div class="pv__row">
+      <div class="pv__cell"><small>Desktop · 528 × 300</small><div class="pv-card mu-stage" data-mu="om-p04"></div></div>
+      <div class="pv__cell"><small>Mobile · 328 × 200</small><div class="pv-card pv-card--m mu-stage" data-mu="om-p04"></div></div>
+    </div>
+  </section>
+  <section class="pv__item">
+    <h2>P05 · Tingkatkan Level Kamu</h2>
+    <p>Untuk pemain 05 — rating PadelLevels naik setelah match Kompetitif (Figma 27058:7068, staging P05).</p>
+    <div class="pv__row">
+      <div class="pv__cell"><small>Desktop · 528 × 300</small><div class="pv-card mu-stage" data-mu="om-p05"></div></div>
+      <div class="pv__cell"><small>Mobile · 328 × 200</small><div class="pv-card pv-card--m mu-stage" data-mu="om-p05"></div></div>
+    </div>
+  </section>
 </main>
 <script>
   document.querySelectorAll('.pv__lang a').forEach(function(a){ if(a.dataset.l === document.documentElement.lang) a.setAttribute('aria-current', 'true'); });
@@ -91,6 +135,7 @@
     document.querySelectorAll('.pv__lang a').forEach(function(a){ a.href += '&only=' + only; }); })();
 </script>
 <script src="components/mini-ui/mini-ui.js?v=20261119n"></script>
-<script src="components/mini-ui/open-match/host.js?v=20261119f"></script>
+<script src="components/mini-ui/open-match/host.js?v=20261120c"></script>
+<script src="components/mini-ui/open-match/player.js?v=20261120d"></script>
 </body>
 </html>
