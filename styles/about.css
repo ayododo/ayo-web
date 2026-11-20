@@ -145,11 +145,21 @@
 .ab-bridge{flex:1 1 0;min-width:0;display:flex;align-items:center;padding:36px 12px 0}
 .ab-bridge::before,.ab-bridge::after{content:'';flex:1 1 0;height:2px;background:linear-gradient(90deg,var(--brand) 50%,transparent 0) 0 0/13px 2px repeat-x;
   animation:ab-flow-x .5s linear infinite}
-/* The dashes flow left to right: players' side into AYO, AYO out to AVM. */
+/* The dashes flow outward from the AYO hub: left toward the AYO App card, right toward AVM. */
+.ab-bridge::before{animation-name:ab-flow-x-rev}
 @keyframes ab-flow-x{to{background-position:13px 0}}
+@keyframes ab-flow-x-rev{to{background-position:-13px 0}}
 @keyframes ab-flow-y{to{background-position:0 6px}}
-@media (prefers-reduced-motion:reduce){.ab-bridge::before,.ab-bridge::after{animation:none}}
-.ab-hub{display:flex;align-items:center;justify-content:center;flex:0 0 88px;height:88px;border:1px solid var(--ab-line);border-radius:50%;background:#fff}
+@keyframes ab-flow-y-rev{to{background-position:0 -6px}}
+.ab-hub{display:flex;align-items:center;justify-content:center;flex:0 0 88px;height:88px;border:1px solid var(--ab-line);border-radius:50%;background:#fff;
+  animation:ab-pulse 2.4s ease-in-out infinite}
+/* Gentle heartbeat: a small swell plus a faint brand ring that fades out. */
+@keyframes ab-pulse{
+  0%{transform:scale(1);box-shadow:0 0 0 0 rgba(236,36,53,.18)}
+  50%{transform:scale(1.04)}
+  70%{box-shadow:0 0 0 12px rgba(236,36,53,0)}
+  100%{transform:scale(1);box-shadow:0 0 0 0 rgba(236,36,53,0)}}
+@media (prefers-reduced-motion:reduce){.ab-bridge::before,.ab-bridge::after,.ab-hub{animation:none}}
 .ab-hub img{width:55px;height:30px}
 
 /* Phone mockups (Mini UI look: #ececec bezel, white screen, Figtree, 1.2px brand outline on the picked item). */
@@ -290,7 +300,8 @@
   .ab-app__text{padding-bottom:0}
   .ab-app__mock{flex:none;align-items:center}
   .ab-bridge{flex-direction:column;padding:0;margin-bottom:12px}
-  .ab-bridge::before,.ab-bridge::after{flex:0 0 12px;width:2px;height:12px;background:linear-gradient(180deg,var(--brand) 50%,transparent 0) 0 0/2px 6px repeat-y;animation-name:ab-flow-y;animation-duration:.4s}   /* top to bottom: AYO App → AYO → AVM */
+  .ab-bridge::before,.ab-bridge::after{flex:0 0 12px;width:2px;height:12px;background:linear-gradient(180deg,var(--brand) 50%,transparent 0) 0 0/2px 6px repeat-y;animation-name:ab-flow-y;animation-duration:.4s}
+  .ab-bridge::before{animation-name:ab-flow-y-rev}   /* outward from the hub: up toward AYO App, down toward AVM */
   .ab-hub{flex:0 0 64px;width:64px;height:64px}
   .ab-hub img{width:41.25px;height:22.5px}
 
@@ -305,3 +316,6 @@
   .ab-cta p{max-width:none;font-size:14px;line-height:20px}
   .ab-btn{margin-top:36px}
 }
+
+/* Last in the file so it beats the mobile animation-name overrides above. */
+@media (prefers-reduced-motion:reduce){.ab-bridge::before,.ab-bridge::after,.ab-hub{animation:none}}
