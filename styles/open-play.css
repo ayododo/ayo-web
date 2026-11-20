@@ -16,13 +16,16 @@
 .op-page .sc-close .sc-h2{font-size:44px;line-height:52px;font-weight:var(--fw-extrabold)}
 .op-page .sc-btn{font-weight:var(--fw-semibold)}
 
-/* Hero illustration slot (Figma 27055:7122, 420 × 420): a plain box until
-   the host-view illustration lands. */
-.op-hero__box{width:420px;height:420px;border-radius:24px;background:#eaf1fa}
+/* Hero (Figma 27055:7122, 420 × 420): a light box with the host's session
+   detail as a Mini UI phone (components/mini-ui/open-play, card op-hero). */
+.op-hero__box{position:relative;width:420px;height:420px;border-radius:24px;background:#f7f7f7;overflow:hidden}
+.op-hero__box .mu-stage{position:absolute;inset:0}
+.op-hero__box .mu-phone{--mu-scale:1;top:28px}
 
 @media (max-width:900px){
   .op-page .sc-hero__title{font-size:40px;line-height:46px}
   .op-page .sc-feat__txt h3{font-size:22px;line-height:28px;letter-spacing:-.01em}
   .op-page .sc-close .sc-h2{font-size:28px;line-height:34px}
-  .op-hero__box{width:100%;max-width:328px;height:auto;aspect-ratio:1;margin:0 auto;background:#f7f7f7}
+  .op-hero__box{width:100%;max-width:328px;height:auto;aspect-ratio:1;margin:0 auto}
+  .op-hero__box .mu-phone{--mu-scale:.78;top:22px}
 }
