@@ -143,14 +143,22 @@
     }
     var cta = o.host ? '<span class="op-sq">'+ic('chat')+'</span>'+btn('Atur Open Play','atur') : btn(o.cta || 'Gabung Open Play', 'join');
     return h.page(o.page || 'detail', O.headIcons('chev'),
-      '<div class="mu-row" style="gap:4px">'+tag('Open Play','open')+(o.superhost ? tag('Superhost','super', I.crown) : '')+'</div>'+
+      (o.hero
+        // Hero (Figma 28448:20941): the PRD's own pills — dark teal "Open play"
+        // with lime text, pink Superhost with the crown.
+        ? '<div class="mu-row" style="gap:5px"><span class="op-hpill op-hpill--open">Open play</span><span class="op-hpill op-hpill--super">'+I.crown+'Superhost</span></div>'
+        : '<div class="mu-row" style="gap:4px">'+tag('Open Play','open')+(o.superhost ? tag('Superhost','super', I.crown) : '')+'</div>')+
       '<span class="op-dtitle">Fun Padel Kawan AYO Chapter Bogor Area</span>'+
       '<span class="op-meta">'+ic('racket')+'<b>Padel</b> • '+ic('bolt')+'<b>Kompetitif</b> • '+ic('pin')+'<b>Kabupaten Bogor</b></span>'+
       '<div class="op-ppl" style="align-items:flex-start">'+ppl+'</div>'+
       '<div class="op-dtabs"><span class="is-on">Detail</span><span>Diskusi</span><span>Skor</span></div>'+
       irow('level', 'PadelLevels · 2.50 - 3.50', 'Pemain dengan rating 2.50 – 3.50 diutamakan.')+
       '<div data-el="when">'+irow('cal', 'Minggu, 17 Agustus 2026', '09:30 - 11:30')+'</div>'+
-      irow('pin', 'Kawan AYO Arena Bogor', 'Lapangan Utama', tag('Booked via AYO','booked'))+
+      (o.hero
+        // Location as in the PRD: the pin with a green check, venue, court, then
+        // the green "Booked via AYO" tag.
+        ? '<div class="op-hloc"><span class="op-hloc__pin">'+I.pinFill+'<i>'+I.tick+'</i></span><div class="op-hloc__c"><div><b>Kawan AYO Arena Bogor</b><span>Lapangan Utama</span></div><span class="op-hbooked">Booked via AYO</span></div></div>'
+        : irow('pin', 'Kawan AYO Arena Bogor', 'Lapangan Utama', tag('Booked via AYO','booked')))+
       '<div data-el="fee">'+irow('money', 'Rp75.000 · Pembayaran Online')+'</div>'+
       (o.full ? '' : irow('lock', 'Privasi · Publik'))+
       '<span class="op-desc">Main aman, main nyaman, sudah termasuk foto &amp; air mineral. Tanya dahulu ketersediaan slot jadwal ke admin.</span><b style="font-size:9px">Selengkapnya</b>'+
@@ -158,7 +166,7 @@
       '<div class="op-org" data-el="org-row"><span class="op-logo op-logo--kpb">KPB</span><div class="mu-col mu-grow" style="gap:2px"><b style="font-size:10.5px">Komunitas Padel Bogor</b>'+
         '<span class="op-rate" data-el="rate">'+I.star+'<b>4.9</b>(86) · Dimas Pratama'+I.crown+'</span></div></div>'+
       '<span class="op-sp"></span>',
-      foot(cta));
+      o.hero ? '' : foot(cta));
   }
   function checkout(sel){
     function pay(logo, name, fee, el, right){ return '<div class="op-pay" data-el="'+el+'"><span class="op-pay__l">'+logo+'</span><div class="mu-col"><span class="mu-t" style="font-size:10.5px;font-weight:500">'+name+'</span><span class="mu-s" style="font-size:8.5px">'+fee+'</span></div>'+(right||'<span class="mu-radio'+(el===sel?' is-on':'')+'"></span>')+'</div>'; }
@@ -251,7 +259,8 @@
       // B03 · Superhost. Static: the activity list.
       'op-b03': {pages:[activities(), detail({superhost:true})], flow:'op-b03'},
       // Hero (Figma 27055:7122, staging H01): the host's own session detail.
-      'op-hero': {pages:[detail({host:true, superhost:true})], flow:'op-hero'}
+      // No flow: the screen stays put; only the pills and the Booked tag move (CSS).
+      'op-hero': {pages:[detail({host:true, superhost:true, hero:true})]}
     },
     prep: {
       'op-by01': O.feePrep
@@ -325,14 +334,6 @@
       'op-by03': function(a){
         return a.wait(700).then(function(){ return a.scroll(a.maxY(), 1600); })
           .then(function(){ return a.wait(500); });
-      },
-      // Hero: from the top, one scroll down through schedule, venue and fee; the
-      // host's control (Atur Open Play) is lit; back up to the top.
-      'op-hero': function(a){
-        return a.wait(900).then(function(){ return O.scrollAbove(a, 'fee', 1600); })
-          .then(function(){ return a.wait(900); })
-          .then(function(){ on(a.el('atur'), 'is-hl'); return a.wait(2200); })
-          .then(function(){ a.el('atur').classList.remove('is-hl'); return a.scroll(0, 1300); });
       },
       // Down to "Bagikan Open Play" → WhatsApp.
       'op-b01': function(a){
