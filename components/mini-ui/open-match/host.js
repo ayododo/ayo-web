@@ -60,7 +60,8 @@
       submit:'Kirim skor', submitS:'Setelah dikirim, pemain lain bisa melihat dan mengonfirmasi hasilnya.',
       resultT:'Hasil Match', final:'Skor Akhir', when:'Min, 17 Agu 2026 · 09:00 – 11:00', where:'Court A, Arena Padel Senayan',
       won:'Fajar &amp; Maya Menang', verified:'Skor match sudah terverifikasi.', playersCol:'Pemain', confirmed:'mengonfirmasi hasil.',
-      share:'Bagikan', bannerT:'Buat Banner · Feed'
+      share:'Bagikan', bannerT:'Buat Banner · Feed',
+      igStory:'Bagikan ke Instagram Story', yourStory:'Story kamu', closeF:'Teman dekat', storyDone:'Dibagikan ke story', storyDoneS:'Hasil match kamu sudah tayang'
     },
     en: {
       activity:'Activity', upcoming:'Upcoming activities', openMatch:'Open Match', openPlay:'Open Play',
@@ -91,7 +92,8 @@
       submit:'Submit score', submitS:'Once you submit, the other players can view and confirm the results.',
       resultT:'Match Result', final:'Final Score', when:'Sun, 17 Aug 2026 · 09:00 – 11:00', where:'Court A, Arena Padel Senayan',
       won:'Fajar &amp; Maya Won', verified:'The match score has been verified.', playersCol:'Players', confirmed:'confirmed the result.',
-      share:'Share', bannerT:'Create Banner · Feed'
+      share:'Share', bannerT:'Create Banner · Feed',
+      igStory:'Share to Instagram Story', yourStory:'Your story', closeF:'Close friends', storyDone:'Shared to your story', storyDoneS:'Your match result is live'
     }
   };
   var t = T[lang];
@@ -120,6 +122,8 @@
     trash: S+'<path d="M5 7h14"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M6 7l1 13h10l1-13"/><path d="M9 7V4h6v3"/></svg>',
     minus: S+'<path d="M6 12h12"/></svg>',
     cam: S+'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>',
+    ig: S+'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg>',
+    tick: '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M6 10.4l2.6 2.6L14.2 7.2" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     chat: S+'<path d="M5 18.5V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H8.5z"/><path d="M9 10.5h.01"/><path d="M12 10.5h.01"/><path d="M15 10.5h.01"/></svg>',
     pl: '<svg aria-hidden="true" viewBox="0 0 12 12" fill="none"><g> <g> <path d="M7.01212 8.10842L11.4 2.08982L10.9786 1.80002L7.01464 7.22838L5.04848 3.94426L0.900001 10.0049L5.02664 4.79462L7.01212 8.10842Z" fill-rule="evenodd" clip-rule="evenodd" fill="#D83232"/> <path d="M7.01212 10.2L11.3339 4.23407L10.9128 3.94427L7.01492 9.32028L5.04876 6.03588L1.9122 9.91387L5.02692 6.88624L7.01212 10.2Z" fill-rule="evenodd" clip-rule="evenodd" fill="#D83232"/> </g> </g></svg>',
     x: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M7 7l10 10"/><path d="M17 7 7 17"/></svg>'
@@ -295,15 +299,29 @@
       conf('maya')+conf('raka')+conf('nina')+
       '<div class="om-resfoot" data-el="res-foot"><span class="om-sq">'+ic('chat')+'</span><div class="mu-btn mu-btn--line" data-el="share">'+h.I.share.replace('<svg','<svg class="om-share"')+t.share+'</div></div>');
   }
+  function bannerArt(cls){
+    return '<div class="om-banner'+(cls?' '+cls:'')+'"><img class="om-banner__photo" src="assets/open-match/banner-padel.webp" alt="" width="640" height="419"><span class="om-banner__t">MATCH RESULT</span>'+
+      '<div class="om-banner__score"><div><span>Fajar Rahman<br>Maya Lestari</span><b class="w">6</b><b class="w">6</b><i>2</i></div><div><span>Raka Aditya<br>Nina Sari</span><b>3</b><b>4</b><i class="l">0</i></div></div>'+
+      '<img class="om-banner__logo" src="assets/icons/footer/logo.svg" alt="AYO" width="22" height="12"></div>';
+  }
+  // Feed banner, then the next step: share it to an Instagram story.
   function banner(){
-    // Each swatch is a banner theme (accent + photo tint); the flow taps one.
-    var themes = ['blue','green','orange','red'];
     return h.page('banner', h.head(h.ico('back')+'<span class="mu-head__title">'+t.bannerT+'</span>'),
-      '<div class="om-banner" data-el="bn" data-theme="blue"><img class="om-banner__photo" src="assets/open-match/banner-padel.webp" alt="" width="640" height="427"><span class="om-banner__t">MATCH RESULT</span>'+
-        '<div class="om-banner__score"><div><span>Fajar Rahman<br>Maya Lestari</span><b class="w">6</b><b class="w">6</b><i>2</i></div><div><span>Raka Aditya<br>Nina Sari</span><b>3</b><b>4</b><i class="l">0</i></div></div>'+
-        '<img class="om-banner__logo" src="assets/icons/footer/logo.svg" alt="AYO" width="22" height="12"></div>'+
-      '<div class="om-colors" data-el="clrs">'+themes.map(function(c, i){ return '<span class="om-clr--'+c+(i===0?' is-on':'')+'" data-el="clr-'+c+'"></span>'; }).join('')+'</div>'+
-      '<div class="mu-btn">'+t.share+'</div>');
+      bannerArt()+
+      '<div class="mu-btn om-igbtn" data-el="ig">'+ic('ig')+t.igStory+'</div>');
+  }
+  // Story composer (a simple stand-in, not Instagram's own UI): the banner on
+  // a blurred copy of the photo, "Your story" / "Close friends" at the bottom.
+  // It slides up from the bottom and fits the part of the screen the card shows.
+  function story(){
+    return h.page('story', '', '',
+      '<div class="om-st"><img class="om-st__bg" src="assets/open-match/banner-padel.webp" alt="" width="640" height="419">'+
+        '<div class="om-st__top"><span class="om-st__bar"><i></i></span><span class="om-st__me">'+avatar('fajar', 16)+'Fajar R.</span>'+h.ico('close')+'</div>'+
+        bannerArt('om-banner--st')+
+        '<div class="om-st__acts"><span class="om-st__btn" data-el="st-you">'+avatar('fajar', 14)+t.yourStory+'</span><span class="om-st__btn om-st__btn--alt">'+t.closeF+'</span></div>'+
+      '</div>'+
+      '<div class="mu-toast om-toast" data-el="st-toast"><span class="om-tcheck">'+I.tick+'</span><span class="mu-col"><b>'+t.storyDone+'</b><span>'+t.storyDoneS+'</span></span></div>'
+    ).replace('class="mu-page"', 'class="mu-page om-page--up om-page--story"');
   }
 
   /* ---------- Motion helpers ---------- */
@@ -341,7 +359,7 @@
       // H04 · Court booking. Static frame: the form with the booked Time & Location card.
       'om-h04': {pages:[form({booked:true}), venue(), sched()], to:'bk', margin:8, flow:'om-h04'},
       // H05 · Scores and results. Static frame: Match Result with the winner banner.
-      'om-h05': {pages:[result(), input(), banner()], flow:'om-h05'}
+      'om-h05': {pages:[result(), input(), banner(), story()], flow:'om-h05'}
     },
     prep: {
       // Opens on the Activity screen, before anything is created.
@@ -441,7 +459,8 @@
           .then(function(){ return a.toTarget(); });
       },
       // Two taps finish the score (6–3, 6–4) → Submit → Match Result with
-      // the winner banner → Share → the feed banner.
+      // the winner banner → Share → the feed banner → Share to Instagram Story
+      // → the story composer → Your story → shared toast.
       'om-h05': function(a){
         return a.wait(300).then(function(){ return count(a, 's1a', 6); })
           .then(function(){ return count(a, 's2a', 6); })
@@ -455,9 +474,12 @@
           .then(function(){ return a.wait(300); })
           .then(function(){ return a.tap('share'); })
           .then(function(){ return a.go('banner'); })
-          .then(function(){ return a.scrollBottom('clrs', 700); })
-          .then(function(){ return a.tap('clr-green'); })
-          .then(function(){ a.select('clrs', 'clr-green'); a.el('bn').dataset.theme = 'green'; return a.wait(1600); });
+          .then(function(){ return a.scrollBottom('ig', 700); })
+          .then(function(){ return a.tap('ig'); })
+          .then(function(){ return a.go('story'); })
+          .then(function(){ return a.wait(500); })
+          .then(function(){ return a.tap('st-you'); })
+          .then(function(){ a.el('st-toast').classList.add('is-on'); return a.wait(1400); });
       }
     }
   });
