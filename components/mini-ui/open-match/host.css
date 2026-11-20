@@ -212,4 +212,8 @@
 .om-toast{background:#2c2c2c}
 .om-tcheck{flex:0 0 auto;width:18px;height:18px;border-radius:50%;background:#33c773;display:flex;align-items:center;justify-content:center}
 .om-tcheck svg{width:14px;height:14px}
-.om-banner--st .om-banner__score{width:64%}   /* narrower banner: keep the AYO logo clear */
+/* The score sits under the MATCH RESULT tag, on the empty court at the left
+   of the group photo, so it never covers a face. */
+.om-banner .om-banner__score{top:34px;bottom:auto;width:47%}
+.om-banner--st .om-banner__score{top:30px;width:49%}
+.om-banner__score>div span{white-space:nowrap}

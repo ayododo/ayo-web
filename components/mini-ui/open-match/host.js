@@ -300,7 +300,7 @@
       '<div class="om-resfoot" data-el="res-foot"><span class="om-sq">'+ic('chat')+'</span><div class="mu-btn mu-btn--line" data-el="share">'+h.I.share.replace('<svg','<svg class="om-share"')+t.share+'</div></div>');
   }
   function bannerArt(cls){
-    return '<div class="om-banner'+(cls?' '+cls:'')+'"><img class="om-banner__photo" src="assets/open-match/banner-padel.webp" alt="" width="640" height="419"><span class="om-banner__t">MATCH RESULT</span>'+
+    return '<div class="om-banner'+(cls?' '+cls:'')+'"><img class="om-banner__photo" src="assets/open-match/banner-padel.webp?v=2" alt="" width="640" height="418"><span class="om-banner__t">MATCH RESULT</span>'+
       '<div class="om-banner__score"><div><span>Fajar Rahman<br>Maya Lestari</span><b class="w">6</b><b class="w">6</b><i>2</i></div><div><span>Raka Aditya<br>Nina Sari</span><b>3</b><b>4</b><i class="l">0</i></div></div>'+
       '<img class="om-banner__logo" src="assets/icons/footer/logo.svg" alt="AYO" width="22" height="12"></div>';
   }
@@ -315,7 +315,7 @@
   // It slides up from the bottom and fits the part of the screen the card shows.
   function story(){
     return h.page('story', '', '',
-      '<div class="om-st"><img class="om-st__bg" src="assets/open-match/banner-padel.webp" alt="" width="640" height="419">'+
+      '<div class="om-st"><img class="om-st__bg" src="assets/open-match/banner-padel.webp?v=2" alt="" width="640" height="418">'+
         '<div class="om-st__top"><span class="om-st__bar"><i></i></span><span class="om-st__me">'+avatar('fajar', 16)+'Fajar R.</span>'+h.ico('close')+'</div>'+
         bannerArt('om-banner--st')+
         '<div class="om-st__acts"><span class="om-st__btn" data-el="st-you">'+avatar('fajar', 14)+t.yourStory+'</span><span class="om-st__btn om-st__btn--alt">'+t.closeF+'</span></div>'+
