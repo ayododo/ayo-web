@@ -46,10 +46,14 @@
   sec.style.setProperty('--sc-marquee-dur', Math.round(set.scrollWidth / 45) + 's');
 })();
 
-/* Format 05 price: one currency for every market, "$", counting down from
-   25,00 to 0,00 (two decimals, comma as the decimal mark). */
-var FREE_PRICE = {label:'$', from:25, step:.01, nf:new Intl.NumberFormat('id-ID', {minimumFractionDigits:2, maximumFractionDigits:2})};
-function freePrice(){ return FREE_PRICE; }
+/* Format 05 price: "$" counting down from 25,00 to 0,00 (two decimals, comma
+   as the decimal mark). A card marked data-free="idr" (the Indonesian Scoring
+   page) counts down in Rupiah instead, from Rp356.000 to Rp0, in thousands. */
+var FREE_PRICES = {
+  usd: {label:'$', from:25, step:.01, nf:new Intl.NumberFormat('id-ID', {minimumFractionDigits:2, maximumFractionDigits:2})},
+  idr: {label:'Rp', from:356000, step:1000, nf:new Intl.NumberFormat('id-ID', {maximumFractionDigits:0})}
+};
+function freePrice(card){ return FREE_PRICES[card && card.dataset.free === 'idr' ? 'idr' : 'usd']; }
 
 /* Format 05 price card: while the card is in view, loop: the price counts down
    from $25,00 to $0,00, the six features appear one by one, then the +more
@@ -61,7 +65,7 @@ function freePrice(){ return FREE_PRICE; }
   if(!card || !('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   var num = card.querySelector('[data-free-num]'), items = [].slice.call(card.querySelectorAll('.sc-free__item')),
       more = card.querySelector('.sc-free__more'), run = 0, raf;
-  var price = freePrice(), fmt = function(n){ return price.nf.format(n); };
+  var price = freePrice(card), fmt = function(n){ return price.nf.format(n); };
   function later(id, ms, fn){ setTimeout(function(){ if(id === run) fn(); }, ms); }
   function count(id, done){
     var from = price.from, step = price.step, dur = 1600, t0 = performance.now();
@@ -73,7 +77,7 @@ function freePrice(){ return FREE_PRICE; }
     })(t0);
   }
   function play(id){
-    price = freePrice();
+    price = freePrice(card);
     items.concat(more).forEach(function(el){ el.classList.remove('is-in'); });
     card.classList.add('is-hide');
     num.textContent = fmt(price.from);
