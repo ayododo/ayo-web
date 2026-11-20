@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" data-page-lang="EN" data-lang-id="open-play-id.html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open Play — AYO</title>
+<meta name="description" content="Run your Open Play session; AYO handles the operational. Create sessions, invite a co-host, manage participants, track live scores and collect online payments in the AYO app.">
+
+<link rel="alternate" hreflang="id" href="open-play-id.html">
+<link rel="alternate" hreflang="en" href="open-play-en.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#ec2435">
+
+<link rel="stylesheet" href="vendor/bootstrap-4.3.1/bootstrap.min.css">
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="styles/bootstrap-compat.css">
+<link rel="stylesheet" href="styles/chrome.css">
+<link rel="stylesheet" href="components/mini-ui/mini-ui.css?v=20261119g">
+<link rel="stylesheet" href="components/site-footer/site-footer.css?v=20261118b">
+<link rel="stylesheet" href="components/mini-ui/open-play/open-play.css?v=20261120d">
+<link rel="stylesheet" href="styles/scoring.css?v=20261119l">
+<link rel="stylesheet" href="styles/open-play.css?v=20261120d">
+</head>
+<body class="ayo-web op-page">
+
+<!-- Open Play (host) page, English — Figma section "Open Play: Host" 26903:20319 (EN):
+     desktop 26903:20949, key-feature tabs 27184:15162 / 26906:8069 / 8146 /
+     7904 / 8223 / 8300, mobile 26908:7943. Indonesian twin: open-play-id.html
+     (same markup and motion; the Mini UI copy comes from i18n-en.js). -->
+
+<!-- 1. NAV (same markup as index.html, English labels, light page) -->
+<nav class="ayo-nav on-light">
+  <div class="nav-in container-fluid">
+    <a class="brand" href="index.html" aria-label="AYO"><img src="assets/logo.svg" alt="AYO"></a>
+    <div class="nav-links" id="navlinks">
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Booking</a></div>
+      <div class="ayo-nav-item has-sub">
+        <button class="nav-top" aria-expanded="false" aria-haspopup="true">Activities <span class="chev" aria-hidden="true"></span></button>
+        <div class="submenu" data-mega="activities">
+          <a href="#">Join activity</a>
+          <a href="#">Hosting activity</a>
+          <a href="open-play-en.html" aria-current="page">Open Play</a>
+          <a href="open-match-en.html">Open Match</a>
+          <a href="scoring-en.html">Scoring</a>
+        </div>
+      </div>
+      <div class="ayo-nav-item"><a class="nav-top" href="avm-en.html">For Venue Owners</a></div>
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Partner with Us</a></div>
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Blog</a></div>
+    </div>
+    <div class="nav-actions">
+    <div class="lang" id="lang">
+      <button class="lang-btn" aria-haspopup="true" aria-expanded="false" aria-label="Select language">
+        <span class="flag cur-flag" aria-hidden="true">🇬🇧</span>
+        <span class="cur">EN</span>
+        <span class="chev" aria-hidden="true"></span>
+      </button>
+      <div class="lang-menu" role="menu">
+        <button role="menuitemradio" aria-selected="true" data-code="EN" data-flag="🇬🇧"><span class="flag" aria-hidden="true">🇬🇧</span><span class="lname">English</span><span class="code">EN</span></button>
+        <button role="menuitemradio" aria-selected="false" data-code="ID" data-flag="🇮🇩"><span class="flag" aria-hidden="true">🇮🇩</span><span class="lname">Bahasa Indonesia</span><span class="code">ID</span></button>
+      </div>
+    </div>
+    <a class="nav-icon" href="#" aria-label="Cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3h2.2l2.1 12.4a1.5 1.5 0 0 0 1.5 1.25h8.3a1.5 1.5 0 0 0 1.48-1.2L21 7H6"/></svg>
+    </a>
+    <a class="ayo-btn primary" href="#" data-login>Login</a>
+    <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navlinks">
+      <svg class="ico-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
+      <svg class="ico-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>
+    </button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<!-- 2. HERO (Figma 26903:20982): the host's session detail as a Mini UI
+     phone (card op-hero, staging slot H01). -->
+<section class="sc-hero" aria-labelledby="op-title">
+  <div class="wrap container-fluid sc-hero__in">
+    <div class="sc-hero__copy">
+      <nav class="sc-crumb" aria-label="Breadcrumb">
+        <ol><li><a href="index.html">Home</a></li><li><a href="#">Activities</a></li><li><span aria-current="page">Open Play (Host)</span></li></ol>
+      </nav>
+      <h1 class="sc-hero__title" id="op-title">Open Play : Host</h1>
+      <p class="sc-hero__lead">Run your Open Play session. AYO handles the operational.</p>
+      <p class="sc-hero__sub">Create and manage your Open Play session with ease. Set your game details, choose public or private access, and manage participants — all in the AYO app.</p>
+    </div>
+    <div class="op-hero__box" role="img" aria-label="An Open Play session from the host's side in the AYO app"><div class="mu-stage" data-mu="op-hero"></div></div>
+  </div>
+</section>
+
+<!-- 3. KEY FEATURES — six tabs (Figma 27184:15162 default, 26906:8069, 8146,
+     7904, 8223, 8300). Each card is a Mini UI (components/mini-ui/open-play:
+     host.js, more.js, English copy from i18n-en.js) that plays when in view.
+     #sesi, #cohost, #peserta, #skor, #bayar, #bagikan open a tab. -->
+<section class="sc-kf" id="fitur" aria-label="Open Play features for hosts">
+  <div class="wrap container-fluid">
+    <div class="sc-tabs" role="tablist" aria-label="Features for hosts">
+      <button class="sc-tab is-on" type="button" role="tab" aria-selected="true" aria-controls="kf-sesi" id="tab-sesi">Create a Session</button>
+      <button class="sc-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-cohost" id="tab-cohost" tabindex="-1">Invite a Co-host</button>
+      <button class="sc-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-peserta" id="tab-peserta" tabindex="-1">Participants</button>
+      <button class="sc-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-skor" id="tab-skor" tabindex="-1">Live Score (SKOR)</button>
+      <button class="sc-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-bayar" id="tab-bayar" tabindex="-1">Payments</button>
+      <button class="sc-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-bagikan" id="tab-bagikan" tabindex="-1">Share &amp; Superhost</button>
+    </div>
+  </div>
+
+  <div class="sc-panel" id="kf-sesi" role="tabpanel" aria-labelledby="tab-sesi">
+    <div class="wrap container-fluid sc-intro"><h2 class="sc-h3">Set up a session in a few taps.</h2><p>Everything players need to decide is on one screen.</p></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">01</span><h3>Sport Category, court &amp; time</h3><p>Pick the sport category, the court and the slot. Courts booked through AYO show a “Booked via AYO” label.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-s01"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">02</span><h3>Quota &amp; level</h3><p>Set how many players you need and the level range, e.g. Newbie – Intermediate.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-s02"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">03</span><h3>Fee &amp; Online Payment</h3><p>Set the price per participant and use online payment with automatic and real-time confirmation.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-s03"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">04</span><h3>Casual or Competitive</h3><p>Choose between relaxed and social games or a competitive matches that put your skills to the test.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-s04"></div></div></div>
+  </div>
+
+  <div class="sc-panel" id="kf-cohost" role="tabpanel" aria-labelledby="tab-cohost" hidden>
+    <div class="wrap container-fluid sc-intro"><h2 class="sc-h3">Run bigger sessions with a co-host.</h2><p>Share the work on game day with a player you trust.</p></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">01</span><h3>Invite a co-host</h3><p>Add a trusted player to your session as co-host.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-c01"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">02</span><h3>Share game-day tasks</h3><p>Your co-host helps welcome players, manage attendance, and keep the session running smoothly.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-c02"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">03</span><h3>Stay in Control</h3><p>Delegate session tasks while keeping ownership and control of key decisions in your hands.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-c03"></div></div></div>
+  </div>
+
+  <div class="sc-panel" id="kf-peserta" role="tabpanel" aria-labelledby="tab-peserta" hidden>
+    <div class="wrap container-fluid sc-intro"><h2 class="sc-h3">Stay in control of your player lineup.</h2><p>Manage join requests, see player skill levels, and track available spots as your session fills up.</p></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">01</span><h3>Choose Who Plays</h3><p>Review incoming join requests and decide which players can join your session.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-p01"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">02</span><h3>Know Your Players Before Game Day</h3><p>See each player's selected skill level before the session starts, so you know your player mix in advance.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-p02"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">03</span><h3>Fully Book? Manage with Waiting List</h3><p>No spots left? No problem. Let players join the waitlist and give them a chance to play when a spot opens up.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-p03"></div></div></div>
+  </div>
+
+  <div class="sc-panel" id="kf-skor" role="tabpanel" aria-labelledby="tab-skor" hidden>
+    <div class="wrap container-fluid sc-intro"><h2 class="sc-h3">Meet Scoring, your free scoring app for social games.</h2><p>Track scores live, organize Americano, Mexicano, or custom matches, and follow the standings—all in one place.</p></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">01</span><h3>Multiple Formats to Choose From</h3><p>Play Americano, Mexicano, or custom formats to suit your group and playing style.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-sk01"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">02</span><h3>Balanced teams</h3><p>Matchmaker builds balanced teams automatically, so every game stays competitive.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-sk02"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">03</span><h3>Live scoreboard</h3><p>Record scores as you play; every player follows them from their own phone.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-sk03"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">04</span><h3>All the Tools. Completely Free.</h3><p>Run Americano, Mexicano, and custom games with automatic pairings, live scoring, and standings—all completely free on AYO.</p></div>
+      <!-- Same card as the Scoring page's Format 05: "$" counts down to 0,00, then the
+           features and +more appear (scripts/scoring.js). The markup is the end state. -->
+      <div class="sc-feat__vis"><div class="sc-card sc-card--free" data-free>
+        <p class="sc-free__price"><span class="sc-free__cur">$</span><span class="sc-free__num" data-free-num>0,00</span></p>
+        <p class="sc-free__feats">
+          <span class="sc-free__line"><span class="sc-free__item">Americano</span><span class="sc-free__item sc-free__sep" aria-hidden="true">·</span><span class="sc-free__item">Mexicano</span><span class="sc-free__item sc-free__sep" aria-hidden="true">·</span><span class="sc-free__item">Custom</span></span>
+          <span class="sc-free__line"><span class="sc-free__item">Auto pairings</span><span class="sc-free__item sc-free__sep" aria-hidden="true">·</span><span class="sc-free__item">Live scores</span><span class="sc-free__item sc-free__sep" aria-hidden="true">·</span><span class="sc-free__item">Standings</span></span>
+        </p>
+        <span class="sc-free__more">+more</span>
+      </div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">05</span><h3>Live standings</h3><p>See every player's games, wins, ties, losses, point difference, and total points—all updated as scores come in.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-sk05"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">06</span><h3>Set scoring to competitive</h3><p>Let match results contribute to players’ ratings by setting the scoring to competitive, track &amp; improve your progress easily.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-sk06"></div></div></div>
+  </div>
+
+  <div class="sc-panel" id="kf-bayar" role="tabpanel" aria-labelledby="tab-bayar" hidden>
+    <div class="wrap container-fluid sc-intro"><h2 class="sc-h3">Get paid without chasing players.</h2><p>Set each player's fee, collect payments online as they join, and track who's paid—all in one place.</p></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">01</span><h3>Set Your Fee per Player</h3><p>Decide how much each participant pays for your session.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-by01"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">02</span><h3>Pay When You Join</h3><p>Players complete their online payment when securing a spot in your session.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-by02"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">03</span><h3>Track Payments Automatically</h3><p>See each player's payment status in one place, so you always know who's paid and who's still pending.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-by03"></div></div></div>
+  </div>
+
+  <div class="sc-panel" id="kf-bagikan" role="tabpanel" aria-labelledby="tab-bagikan" hidden>
+    <div class="wrap container-fluid sc-intro"><h2 class="sc-h3">Get noticed. Earn trust. Grow your sessions.</h2><p>Share your sessions, showcase player feedback, and stand out with the Superhost badge.</p></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">01</span><h3>Reach More Players</h3><p>Share your sessions to WhatsApp and Instagram in one tap to attract more players to your games.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-b01"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">02</span><h3>Build Trust Through Player Ratings</h3><p>Players rate their experience, and your host rating appears on every session card to help others decide to join.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-b02"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">03</span><h3>Stand Out as a Superhost</h3><p>Top hosts earn the Superhost badge, giving players greater confidence in the sessions they host.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-b03"></div></div></div>
+  </div>
+</section>
+
+<!-- 4. CLOSING (Figma 26903:21019) -->
+<section class="sc-close" aria-labelledby="op-close-title">
+  <div class="wrap container-fluid">
+    <h2 class="sc-h2" id="op-close-title">Ready to host your first session?</h2>
+    <p>Download the AYO app, create a session in minutes and share it with your community.</p>
+    <a class="sc-btn" href="#">Download AYO app</a>
+  </div>
+</section>
+</main>
+
+<!-- 7. FOOTER — components/site-footer (Figma "Footer") -->
+<footer class="sft">
+  <div class="sft__in">
+    <div class="sft__top">
+      <a class="sft__logo" href="index.html" aria-label="AYO home"><img src="assets/icons/footer/logo.svg" alt="AYO" width="48" height="26"></a>
+      <div class="sft__cta">
+        <p class="sft__cta-label">Own a sports venue?</p>
+        <a class="sft__btn" href="#">Become a Venue Partner <img src="assets/icons/footer/arrow-up-right.svg" alt="" width="16" height="16"></a>
+      </div>
+    </div>
+
+    <div class="sft__cols">
+      <nav class="sft__col sft__col--company" aria-labelledby="sft-company">
+        <p class="sft__h" id="sft-company">Company</p>
+        <div class="sft__links"><a href="about-en.html">About Us</a><a href="#">Policies &amp; Privacy</a><a href="#">Terms &amp; Conditions</a></div>
+      </nav>
+      <nav class="sft__col sft__col--eco" aria-labelledby="sft-eco">
+        <p class="sft__h" id="sft-eco">Ecosystem</p>
+        <div class="sft__links"><a href="#">Activity</a><a href="#">PadelLevels</a><a href="#">Booking</a><a href="avm-en.html">Venue Owner</a><a href="#">Partnership</a><a href="#">Court Directory</a><a href="#">Community Directory</a></div>
+      </nav>
+      <nav class="sft__col sft__col--support" aria-labelledby="sft-support">
+        <p class="sft__h" id="sft-support">Support</p>
+        <div class="sft__links"><a href="#">Contact us</a></div>
+      </nav>
+      <div class="sft__col sft__col--follow">
+        <p class="sft__h">Follow us</p>
+        <div class="sft__social">
+          <a href="#" aria-label="AYO on Instagram"><img src="assets/icons/footer/instagram.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO on TikTok"><img src="assets/icons/footer/tiktok.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO on YouTube"><img src="assets/icons/footer/youtube.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO on Threads"><img src="assets/icons/footer/threads.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO on LinkedIn"><img src="assets/icons/footer/linkedin.svg" alt="" width="18" height="18"></a>
+        </div>
+        <div class="sft__apps">
+          <p class="sft__apps-label">Available on</p>
+          <div class="sft__stores">
+            <a class="sft__store" href="#" aria-label="Download on the App Store"><img src="assets/icons/footer/app-store.svg" alt="" width="27" height="27"><span><small>Download on the</small><b>App Store</b></span></a>
+            <a class="sft__store" href="#" aria-label="Get it on Google Play"><img src="assets/icons/footer/google-play.svg" alt="" width="25" height="27"><span><small>Get it on</small><b>Google Play</b></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sft__bottom">
+      <p class="sft__copy">© 2026 AYO All Right Reserved</p>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V4.5"/><path d="M7.5 9.5 12 5 16.5 9.5"/></svg>
+</button>
+
+<script src="vendor/jquery-3.5.1/jquery.min.js"></script>
+<script src="vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
+<script src="scripts/chrome.js?v=20261120b"></script>
+<script src="components/mini-ui/mini-ui.js?v=20261119n"></script>
+<script src="components/mini-ui/open-play/i18n-en.js?v=20261120a"></script>
+<script src="components/mini-ui/open-play/host.js?v=20261120d"></script>
+<script src="components/mini-ui/open-play/more.js?v=20261120d"></script>
+<!-- Key-feature tabs: shared with the Scoring page (its other parts only run when their markup exists). -->
+<script src="scripts/scoring.js?v=20261119i"></script>
+</body>
+</html>

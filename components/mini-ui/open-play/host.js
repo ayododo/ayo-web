@@ -21,6 +21,32 @@
   var M = window.AyoMiniUI; if(!M) return;
   var h = M.h, on = h.on;
 
+  /* ---------- Language ----------
+     Copy is written in Indonesian. On the English page (<html lang="en">)
+     every text node of a card and every string a flow writes is looked up in
+     window.AyoOPen (i18n-en.js); the motion is the same. */
+  var EN = document.documentElement.lang === 'en' ? (window.AyoOPen || {}) : null;
+  function L(s){ return EN && EN[s] != null ? EN[s] : s; }
+  function esc(s){ return s.replace(/&/g, '&amp;'); }
+  function trHTML(html){
+    if(!EN) return html;
+    return html.replace(/>([^<]+)</g, function(m, txt){
+      var k = txt.replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+      if(!k || EN[k] == null) return m;
+      var lead = txt.match(/^\s*/)[0], tail = txt.match(/\s*$/)[0];
+      return '>'+lead+esc(EN[k])+tail+'<';
+    });
+  }
+  // Register cards with their pages and overlays in the page's language.
+  function add(defs){
+    if(EN) Object.keys(defs.cards).forEach(function(k){
+      var c = defs.cards[k], ex = c.extra;
+      c.pages = c.pages.map(trHTML);
+      if(ex) c.extra = function(){ return trHTML(ex()); };
+    });
+    M.add(defs);
+  }
+
   /* ---------- People (fictional) ---------- */
   var P = {dimas:[0,'Dimas Pratama'], laras:[1,'Laras Ayu'], rangga:[2,'Rangga Wijaya'], rara:[3,'Rara Amelia'],
            bima:[4,'Bima Santoso'], sinta:[5,'Sinta Dewi'], yoga:[6,'Yoga Pamungkas'], arif:[7,'Arif Kurniawan']};
@@ -232,8 +258,8 @@
     a.el('mode').dataset.on = cas ? '1' : '0';
     on(a.el('mode-0'), 'is-on', !cas); on(a.el('mode-1'), 'is-on', cas);
     f.classList.toggle('is-casual', cas);
-    a.el('info-t').textContent = cas ? 'Ini untuk main santai dan seru-seruan' : 'Ini untuk pertandingan serius';
-    a.el('info-s').textContent = cas ? 'Skor tidak memengaruhi rating skill kamu.' : 'Segera Hadir - Skor dari game kompetitif akan langsung memengaruhi rating skill kamu.';
+    a.el('info-t').textContent = L(cas ? 'Ini untuk main santai dan seru-seruan' : 'Ini untuk pertandingan serius');
+    a.el('info-s').textContent = L(cas ? 'Skor tidak memengaruhi rating skill kamu.' : 'Segera Hadir - Skor dari game kompetitif akan langsung memengaruhi rating skill kamu.');
     pop(a.el('info'));
   }
   // Fee flow (S03 and Pembayaran 01): Biaya Pendaftaran → sheet → type → Simpan.
@@ -401,7 +427,7 @@
     prow({k:'sinta', req:true, self:'Nilai sendiri · Newbie', lv:['n','1.25']}),
     prow({k:'yoga', req:true, self:'Nilai sendiri · Beginner', lv:['y','3.XX']})]; };
 
-  M.add({
+  add({
     cards: {
       // S01 · Cabang olahraga, lapangan & jam. Static: the form at Olahraga & Komunitas.
       'op-s01': {pages:[form(), sched()], to:'sport-sec', margin:10, extra:function(){ return catSheet()+venueSheet(); }, flow:'op-s01'},
@@ -432,7 +458,7 @@
     },
     prep: {
       // Opens before a sport is picked and before the booking is linked.
-      'op-s01': function(a){ a.el('cat-v').innerHTML = '<span class="op-fld__p">Pilih cabang olahraga</span>'; a.el('bk').classList.remove('is-booked'); },
+      'op-s01': function(a){ a.el('cat-v').innerHTML = '<span class="op-fld__p">'+L('Pilih cabang olahraga')+'</span>'; a.el('bk').classList.remove('is-booked'); },
       'op-s03': feePrep,
       // Opens with the detail scrolled back to the top (static frame rests lower).
       'op-c01': function(a){}
@@ -522,7 +548,7 @@
           .then(function(){ return a.tap('assign'); })
           .then(function(){
             var l = a.el('hlist');
-            ['rangga','rara'].forEach(function(k){ l.insertAdjacentHTML('beforeend', hrow(k, 'CoHost')); pop(a.el('hr-'+k)); });
+            ['rangga','rara'].forEach(function(k){ l.insertAdjacentHTML('beforeend', trHTML(hrow(k, 'CoHost'))); pop(a.el('hr-'+k)); });
             on(a.el('atur-l'), 'is-on'); enable(a, 'lanjut'); return a.back('hc'); })
           .then(function(){ return a.wait(500); })
           .then(function(){ return a.tap('lanjut'); })
@@ -594,7 +620,7 @@
           .then(function(){ return a.sheet('dlg-off', true); })
           .then(function(){ return a.tap('off-ok'); })
           .then(function(){
-            a.el('wl-t').classList.remove('is-on'); a.el('wl-s').textContent = 'Tidak aktif'; a.el('wl-s').classList.remove('is-on');
+            a.el('wl-t').classList.remove('is-on'); a.el('wl-s').textContent = L('Tidak aktif'); a.el('wl-s').classList.remove('is-on');
             on(a.el('wlist'), 'is-manual'); return a.sheet('dlg-off', false); })
           .then(function(){ return a.wait(500); })
           .then(function(){ return a.tap('add-sinta'); })
@@ -607,7 +633,7 @@
   });
 
   // Parts for more.js (Skor Live, Pembayaran, Bagikan & Superhost).
-  window.AyoOP = {P:P, I:I, ic:ic, av:av, ini:ini, role:role, slot:slot, lv:lv, tag:tag, name:name, btn:btn, foot:foot,
+  window.AyoOP = {isEN:!!EN, L:L, trHTML:trHTML, add:add, P:P, I:I, ic:ic, av:av, ini:ini, role:role, slot:slot, lv:lv, tag:tag, name:name, btn:btn, foot:foot,
     headIcons:headIcons, headT:headT, pop:pop, activate:activate, preset:preset, sheetY:sheetY, quietClose:quietClose, enable:enable,
     keys:keys, kbOn:kbOn, scrollAbove:scrollAbove, numKb:numKb, form:form, feeSheet:feeSheet, feeFlow:feeFlow, feePrep:feePrep, prow:prow, plist:plist, stripTo:stripTo, tabTo:tabTo};
 })();

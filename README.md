@@ -44,6 +44,8 @@ framework preset, no build command, and serve the repository root.
 | `about-id.html` | Indonesian twin ("Tentang Kami", Figma 28095:25789), same markup. The language switch moves between the two. On the homepage the footer link follows the chosen language (`data-href-id`, handled in `chrome.js`). |
 | `open-match-id.html` | Open Match — Figma 26953:68879 (players tab 26953:69087, mobile 26953:69152). Hero, why Open Match, two key-feature tabs (host H01–H05, players P01–P05 as Mini UI cards), closing CTA. Deep link `#player` opens the players tab. The hero illustration is a plain box until the new header is designed. Entry point: Activities → Open Match in the top nav (desktop panel and mobile drawer). |
 | `open-match-en.html` | English twin of `open-match-id.html` (Figma 26893:19943, players 26899:7816, mobile 26901:7775), same markup. The language switch moves between the two and keeps the tab hash. |
+| `open-play-id.html` | Open Play for hosts — Figma section 26953:69335 (desktop 27055:7089, mobile 27055:7696). Hero (host session detail as a Mini UI), six key-feature tabs with 21 Mini UI cards (Buat Sesi, Undang Co-host, Peserta, Skor Live, Pembayaran, Bagikan & Superhost), closing CTA. Deep links `#sesi`, `#cohost`, `#peserta`, `#skor`, `#bayar`, `#bagikan` open a tab. Entry point: Activities → Open Play → Host an activity (desktop panel and mobile drawer). |
+| `open-play-en.html` | English twin of `open-play-id.html` (Figma 26903:20319), same markup and motion; the Mini UI copy comes from `components/mini-ui/open-play/i18n-en.js`. The language switch moves between the two and keeps the tab hash. |
 
 The repository focused on the homepage only (decision 2026-11-18); since then
 the Scoring, AVM, About Us and Open Match pages have been rebuilt, each in Indonesian and
@@ -75,6 +77,7 @@ Page-specific code:
 | Scoring | `styles/scoring.css`, `scripts/scoring.js`, `components/mini-ui/`, `assets/scoring/` |
 | AVM | `styles/avm.css`, `scripts/avm.js` (tabs, FAQ accordion, contact form, stat count-up, section reveal), `components/avm-hero/` (animated hero illustration), `components/mini-ui/` + `components/mini-ui/avm/` (25 feature cards) |
 | Open Match | `styles/scoring.css` (shared layout) + `styles/open-match.css`, `scripts/scoring.js` (tabs), `components/mini-ui/open-match/` |
+| Open Play (host) | `styles/scoring.css` (shared layout) + `styles/open-play.css`, `scripts/scoring.js` (tabs, $0,00 card), `components/mini-ui/open-play/` (host.js, more.js, i18n-en.js) |
 | About Us | `styles/about.css`, `scripts/about.js` (story timeline; hero pills that scatter and bounce on hover or tap, then coast to a stop; Moments strip auto-scroll; milestone photo crossfade), `assets/about/` |
 
 All page motion is vanilla JS/CSS and switches off with reduced motion.

@@ -64,7 +64,7 @@
   function table(data, hl){
     var rows = data.map(function(r, i){
       return '<div class="mu-tr'+(hl && MOVED[r[0]] ? ' op-tr-hl' : '')+'" data-el="row-'+r[0]+'"><span'+(i===0?' style="font-weight:700"':'')+'><b class="op-rk">'+(i+1)+'</b>&nbsp; '+FULL[r[0]]+'</span><span class="c-g">'+r[1]+'</span><span class="c-wtl">'+r[2]+'</span><span class="c-d">'+r[3]+'</span><span class="c-p">'+r[4]+'</span></div>'; }).join('');
-    return '<div class="mu-table" data-el="table"><div class="mu-tr mu-tr--head"><span>PEMAIN</span><span class="c-g">Mn</span><span class="c-wtl">M-S-K</span><span class="c-d">Sel</span><span class="c-p">P</span></div><div class="op-rows" data-el="rows">'+rows+'</div></div>';
+    return '<div class="mu-table" data-el="table"><div class="mu-tr mu-tr--head"><span>PEMAIN</span><span class="c-g">Mn</span><span class="c-wtl">M-S-K</span><span class="c-d">'+(O.isEN ? 'Diff' : 'Sel')+'</span><span class="c-p">P</span></div><div class="op-rows" data-el="rows">'+rows+'</div></div>';
   }
   function gd(o){
     o = o || {};
@@ -97,14 +97,14 @@
   function setMode(a, cas){
     a.el('mode').dataset.on = cas ? '1' : '0';
     on(a.el('mode-0'), 'is-on', !cas); on(a.el('mode-1'), 'is-on', cas);
-    a.el('info-t').textContent = cas ? 'Hanya untuk seru-seruan' : 'Ini untuk pertandingan serius';
-    a.el('info-s').textContent = cas ? 'Skor tidak memengaruhi rating skill kamu.' : 'Skor memengaruhi rating skill kamu.';
+    a.el('info-t').textContent = O.L(cas ? 'Hanya untuk seru-seruan' : 'Ini untuk pertandingan serius');
+    a.el('info-s').textContent = O.L(cas ? 'Skor tidak memengaruhi rating skill kamu.' : 'Skor memengaruhi rating skill kamu.');
     O.pop(a.el('info'));
   }
   function pickFormat(a, fmt){
     return a.tap('tile-'+fmt).then(function(){
       a.select('formats', 'tile-'+fmt);
-      var p = a.el('partners'); p.innerHTML = partners(fmt, fmt === 'Custom' ? 'Doubles · 2 vs 2' : 'Pasangan Bergilir'); O.pop(p);
+      var p = a.el('partners'); p.innerHTML = O.trHTML(partners(fmt, fmt === 'Custom' ? 'Doubles · 2 vs 2' : 'Pasangan Bergilir')); O.pop(p);
       return a.wait(1500);
     });
   }
@@ -226,7 +226,7 @@
   }
   function press(a, el, ms){ var e = a.el(el); on(e, 'is-press'); return a.wait(ms || 220).then(function(){ e.classList.remove('is-press'); }); }
 
-  M.add({
+  O.add({
     cards: {
       // SK01 · Beragam format. Static: the formats, Americano picked.
       'op-sk01': {pages:[setup()], to:'formats', margin:8, flow:'op-sk01'},

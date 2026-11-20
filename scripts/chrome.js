@@ -86,12 +86,12 @@
     var menu = document.querySelector('.submenu[data-mega="activities"]');
     if(!menu) return;
     var I = 'assets/icons/mega/';
-    /* Scoring and Open Match open in the page's language. On a page without a
+    /* Scoring, Open Match and Open Play (host) open in the page's language. On a page without a
        twin (the homepage) the link also carries the Indonesian page in
        data-href-id, so syncLangLinks follows the language the visitor chose. */
     var isId = document.documentElement.lang === 'id', hasTwin = !!document.documentElement.dataset.pageLang;
     function twinHref(base){ return hasTwin ? base + (isId ? '-id' : '-en') + '.html' : base + '-en.html" data-href-id="' + base + '-id.html'; }
-    var SCORING = twinHref('scoring'), OPEN_MATCH = twinHref('open-match');
+    var SCORING = twinHref('scoring'), OPEN_MATCH = twinHref('open-match'), OPEN_PLAY_HOST = twinHref('open-play');
     var ARROW = '<img src="'+I+'arrow-brand.svg" alt="" width="16" height="16">';
     /* Exported from Figma (26813:15605, 26813:15612) with the Oxanium
        lettering outlined, so the marks match the design exactly. */
@@ -101,7 +101,7 @@
     var GROUPS = {
       play:  { icon: PADEL, title: 'Open Play',  desc: 'Play with new people, no team needed',
                links: [['#', 'Join an activity', 'Find an open game near you'],
-                       ['#', 'Host an activity', 'See how hosting works']] },
+                       [OPEN_PLAY_HOST, 'Host an activity', 'See how hosting works']] },
       match: { icon: VS,    title: 'Open Match', desc: 'Bring your team and play against another squad',
                cta: [OPEN_MATCH, 'Explore Open Match'] },
       score: { icon: SCORE, title: 'Scoring',    desc: 'Play Americano, Mexicano, or Custom',
@@ -126,7 +126,7 @@
     var DESK = {
       /* Open Play's heading is not a link; its two cards are the entry points. */
       play:  [null, [['#', 'Join an activity', 'Find an open game near you'],
-                                                ['#', 'Host an activity', 'See how hosting works']]],
+                     [OPEN_PLAY_HOST, 'Host an activity', 'See how hosting works']]],
       match: OPEN_MATCH,
       score: SCORING,
       learn: 'index.html#rating'

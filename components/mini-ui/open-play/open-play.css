@@ -285,9 +285,9 @@
 .op-wrow{display:flex;align-items:flex-start;gap:8px;padding:2px 0 6px;transition:opacity .3s,transform .3s}
 .op-wrow.is-gone{opacity:0;transform:translateX(16px)}
 .op-wrow .op-name{gap:1px}
-.op-wrow .op-name span{display:flex;align-items:center;gap:3px}
-.op-wrow .op-mini{align-self:flex-start;margin-top:4px;display:none}
-.op-wlist.is-manual .op-wrow .op-mini{display:inline-block}
+.op-wrow .op-name>span{display:flex;align-items:center;gap:3px}
+.op-wrow .op-name>.op-mini{align-self:flex-start;margin-top:4px;display:none}
+.op-wlist.is-manual .op-wrow .op-name>.op-mini{display:inline-block}
 .op-wrow>.op-ic{margin-left:auto}
 .op-fem{display:inline-flex;width:10px;height:10px;border-radius:50%;background:#f1f1f2;align-items:center;justify-content:center}
 .op-fem svg{width:7px;height:7px}
