@@ -222,14 +222,15 @@
       '<div class="om-reqs" data-el="reqs">'+request('raka')+request('nina')+'</div>');
   }
   function reserve(){
-    var rows = ['maya','bayu','tari','sinta','dika'].map(function(k){
+    var rows = ['bayu','tari','sinta','maya','dika'].map(function(k){
       return '<div class="om-req" data-el="pick-'+k+'">'+avatar(k, 26)+'<div class="mu-col mu-grow" style="gap:3px"><span class="mu-h" style="font-size:10.5px">'+FULL[k]+'</span>'+
         '<span class="om-tags"><span class="om-tag">'+t.self+'</span>'+rate(k)+'</span></div></div>';
     }).join('');
+    // A full-screen modal (close ×): it slides up from the bottom (.om-page--up).
     return h.page('reserve', h.head(h.ico('close')+'<span class="mu-head__title">'+t.reserveT+'</span>'),
       '<div class="om-fld om-search">'+ic('search')+'<span class="om-fld__l" style="font-size:10.5px">'+t.search+'</span></div>'+
       '<div class="om-tabs om-tabs--eq"><span class="is-on">'+t.rtabs[0]+'</span><span>'+t.rtabs[1]+'</span><span>'+t.rtabs[2]+'</span></div>'+
-      '<div class="om-reqs">'+rows+'</div>');
+      '<div class="om-reqs">'+rows+'</div>').replace('class="mu-page"', 'class="mu-page om-page--up"');
   }
 
   /* ---------- H03 · Match Fee sheet ---------- */
@@ -295,12 +296,13 @@
       '<div class="om-resfoot" data-el="res-foot"><span class="om-sq">'+ic('chat')+'</span><div class="mu-btn mu-btn--line" data-el="share">'+h.I.share.replace('<svg','<svg class="om-share"')+t.share+'</div></div>');
   }
   function banner(){
-    var colors = ['#14a3f0','#6dd42c','#f2852c','#ec2435'];
+    // Each swatch is a banner theme (accent + photo tint); the flow taps one.
+    var themes = ['blue','green','orange','red'];
     return h.page('banner', h.head(h.ico('back')+'<span class="mu-head__title">'+t.bannerT+'</span>'),
-      '<div class="om-banner"><span class="om-banner__t">MATCH RESULT</span><span class="om-banner__court"></span>'+
+      '<div class="om-banner" data-el="bn" data-theme="blue"><img class="om-banner__photo" src="assets/open-match/banner-padel.webp" alt="" width="640" height="427"><span class="om-banner__t">MATCH RESULT</span>'+
         '<div class="om-banner__score"><div><span>Fajar Rahman<br>Maya Lestari</span><b class="w">6</b><b class="w">6</b><i>2</i></div><div><span>Raka Aditya<br>Nina Sari</span><b>3</b><b>4</b><i class="l">0</i></div></div>'+
         '<img class="om-banner__logo" src="assets/icons/footer/logo.svg" alt="AYO" width="22" height="12"></div>'+
-      '<div class="om-colors">'+colors.map(function(c, i){ return '<span class="'+(i===0?'is-on':'')+'" style="background:'+c+'"></span>'; }).join('')+'</div>'+
+      '<div class="om-colors" data-el="clrs">'+themes.map(function(c, i){ return '<span class="om-clr--'+c+(i===0?' is-on':'')+'" data-el="clr-'+c+'"></span>'; }).join('')+'</div>'+
       '<div class="mu-btn">'+t.share+'</div>');
   }
 
@@ -379,12 +381,14 @@
           .then(function(){ casual(a, true); return a.wait(1300); })
           .then(function(){ return a.scrollTo('format', 40, 900); });
       },
-      // Tap the empty spot → Reserve Players → Maya → back, Maya takes the
-      // spot; then accept Raka's request and he joins team B.
+      // Tap the empty spot → Reserve Players slides up → scroll the list down
+      // to Maya → tap → it slides down, Maya takes the spot; then accept
+      // Raka's request and he joins team B.
       'om-h02': function(a){
         return a.wait(300).then(function(){ return a.tap('a2'); })
           .then(function(){ return a.go('reserve'); })
-          .then(function(){ return a.wait(400); })
+          .then(function(){ return a.wait(300); })
+          .then(function(){ return a.scrollBottom('pick-maya', 1000); })
           .then(function(){ return a.tap('pick-maya'); })
           .then(function(){ on(a.el('pick-maya'), 'is-picked'); return a.wait(250); })
           .then(function(){ return a.back('players'); })
@@ -450,7 +454,10 @@
           .then(function(){ return a.scrollBottom('res-foot', 1000); })
           .then(function(){ return a.wait(300); })
           .then(function(){ return a.tap('share'); })
-          .then(function(){ return a.go('banner'); });
+          .then(function(){ return a.go('banner'); })
+          .then(function(){ return a.scrollBottom('clrs', 700); })
+          .then(function(){ return a.tap('clr-green'); })
+          .then(function(){ a.select('clrs', 'clr-green'); a.el('bn').dataset.theme = 'green'; return a.wait(1600); });
       }
     }
   });

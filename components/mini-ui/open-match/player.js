@@ -205,7 +205,7 @@
     return h.page('confirm', h.head(h.ico('back')+'<span class="mu-head__title">'+t.resultT+'</span>'),
       four(finalScore())+
       '<div class="op-status" data-el="status"><div class="mu-row" style="gap:5px"><span class="mu-h" style="font-size:10.5px">'+t.waitT+'</span><span class="op-idot">i</span></div><span class="mu-s" style="font-size:9px">'+t.waitS+'</span></div>'+
-      '<div class="op-actions" data-el="bar"><div class="mu-row" style="gap:6px"><span class="om-sq">'+ic('chat')+'</span><div class="mu-btn mu-btn--line" style="flex:1">'+t.decline+'</div><div class="mu-btn" style="flex:1" data-el="confirm">'+t.confirm+'</div></div></div>'+
+      '<div class="op-actions" data-el="bar"><div class="op-actrow"><span class="om-sq">'+ic('chat')+'</span><div class="mu-btn mu-btn--line" style="flex:1">'+t.decline+'</div><div class="mu-btn" style="flex:1" data-el="confirm">'+t.confirm+'</div></div></div>'+
       winBanner('won', true)+table()+'<span class="mu-s" style="text-align:center">'+t.when+'<br>'+t.where+'</span>',
       toast('ok-toast', t.toastOk, 'Fajar R./Maya L. · 2:0'));
   }

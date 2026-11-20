@@ -80,7 +80,11 @@
 /* P03 · Confirm */
 .op-status{display:flex;flex-direction:column;gap:3px;padding:9px 10px;border-radius:10px;background:#f7f5f2}
 .op-status.is-hide,.om-win.is-hide,.op-actions.is-hide{display:none}
-.op-actions .om-sq{height:auto}
+/* Chat, Decline, Confirm in one row: the chat square takes the buttons' height
+   (stretch), and the buttons are a compact 30px instead of the default 36px. */
+.op-actrow{display:flex;align-items:stretch;gap:6px}
+.op-actrow .om-sq{height:auto;width:30px}
+.op-actrow .mu-btn{flex:1;padding:7px 10px;font-size:11px;line-height:16px}
 .op-idot{width:12px;height:12px;border-radius:50%;background:#f2c94c;color:#5c4400;font-size:8px;font-weight:800;display:flex;align-items:center;justify-content:center;font-style:normal}
 
 /* P04 · Review */
