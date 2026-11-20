@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" data-page-lang="EN" data-lang-id="open-match-id.html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open Match — AYO</title>
+<meta name="description" content="Find opponents at your level and play a real competitive match. Host or join individual, doubles or team sparring matches, with scores confirmed by every player.">
+
+<link rel="alternate" hreflang="id" href="open-match-id.html">
+<link rel="alternate" hreflang="en" href="open-match-en.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#ec2435">
+
+<link rel="stylesheet" href="vendor/bootstrap-4.3.1/bootstrap.min.css">
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="styles/bootstrap-compat.css">
+<link rel="stylesheet" href="styles/chrome.css">
+<link rel="stylesheet" href="components/mini-ui/mini-ui.css?v=20261119g">
+<link rel="stylesheet" href="components/site-footer/site-footer.css?v=20261118b">
+<link rel="stylesheet" href="components/mini-ui/open-match/host.css?v=20261120a">
+<link rel="stylesheet" href="components/mini-ui/open-match/player.css?v=20261120b">
+<link rel="stylesheet" href="styles/scoring.css?v=20261119l">
+<link rel="stylesheet" href="styles/open-match.css?v=20261120a">
+</head>
+<body class="ayo-web om-page">
+
+<!-- Open Match page, English — Figma "AYO — Open Match — Host" 26893:19943,
+     players tab 26899:7816, mobile "AYO — Open Match (Mobile 360)" 26901:7775.
+     Indonesian twin: open-match-id.html (same markup, translated copy). Keep the two in step. -->
+
+<!-- 1. NAV (same markup as index.html, English labels, light page) -->
+<nav class="ayo-nav on-light">
+  <div class="nav-in container-fluid">
+    <a class="brand" href="index.html" aria-label="AYO"><img src="assets/logo.svg" alt="AYO"></a>
+    <div class="nav-links" id="navlinks">
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Booking</a></div>
+      <div class="ayo-nav-item has-sub">
+        <button class="nav-top" aria-expanded="false" aria-haspopup="true">Activities <span class="chev" aria-hidden="true"></span></button>
+        <div class="submenu" data-mega="activities">
+          <a href="#">Join activity</a>
+          <a href="#">Hosting activity</a>
+          <a href="open-match-en.html" aria-current="page">Open Match</a>
+          <a href="scoring-en.html">Scoring</a>
+        </div>
+      </div>
+      <div class="ayo-nav-item"><a class="nav-top" href="avm-en.html">For Venue Owners</a></div>
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Partner with Us</a></div>
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Blog</a></div>
+    </div>
+    <div class="nav-actions">
+    <div class="lang" id="lang">
+      <button class="lang-btn" aria-haspopup="true" aria-expanded="false" aria-label="Select language">
+        <span class="flag cur-flag" aria-hidden="true">🇬🇧</span>
+        <span class="cur">EN</span>
+        <span class="chev" aria-hidden="true"></span>
+      </button>
+      <div class="lang-menu" role="menu">
+        <button role="menuitemradio" aria-selected="true" data-code="EN" data-flag="🇬🇧"><span class="flag" aria-hidden="true">🇬🇧</span><span class="lname">English</span><span class="code">EN</span></button>
+        <button role="menuitemradio" aria-selected="false" data-code="ID" data-flag="🇮🇩"><span class="flag" aria-hidden="true">🇮🇩</span><span class="lname">Bahasa Indonesia</span><span class="code">ID</span></button>
+      </div>
+    </div>
+    <a class="nav-icon" href="#" aria-label="Cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3h2.2l2.1 12.4a1.5 1.5 0 0 0 1.5 1.25h8.3a1.5 1.5 0 0 0 1.48-1.2L21 7H6"/></svg>
+    </a>
+    <a class="ayo-btn primary" href="#" data-login>Login</a>
+    <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navlinks">
+      <svg class="ico-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
+      <svg class="ico-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>
+    </button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<!-- 2. HERO (Figma 26953:68912). The illustration is being redesigned; until
+     it lands, the slot is the plain box from the design (420 × 420). -->
+<section class="sc-hero" aria-labelledby="om-title">
+  <div class="wrap container-fluid sc-hero__in">
+    <div class="sc-hero__copy">
+      <nav class="sc-crumb" aria-label="Breadcrumb">
+        <ol><li><a href="index.html">Home</a></li><li><a href="#">Activities</a></li><li><span aria-current="page">Open Match</span></li></ol>
+      </nav>
+      <h1 class="sc-hero__title" id="om-title">Open Match</h1>
+      <p class="sc-hero__lead">Find opponents at your level. Play a real competitive match.</p>
+      <p class="sc-hero__sub">Host or join individual, doubles or team sparring matches. Pick competitive or casual, set the level, and let the score be confirmed by every player.</p>
+      <a class="sc-btn" href="#">Create or Find a match <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a>
+    </div>
+    <div class="om-hero__box" role="img" aria-label="Open Match illustration (coming soon)"></div>
+  </div>
+</section>
+
+<!-- 3. WHY OPEN MATCH (Figma 26953:68945) -->
+<section class="sc-usp" aria-labelledby="om-usp-title">
+  <div class="wrap container-fluid">
+    <p class="sc-eyebrow">Why Open Match</p>
+    <h2 class="sc-h2" id="om-usp-title">Why play Open Match on AYO</h2>
+    <div class="sc-usp__grid">
+      <div class="sc-usp__item">
+        <span class="sc-usp__ico"><!-- gauge (Figma) --><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 14L16 10"/><path d="M3.34 19A10 10 0 1 1 20.66 19"/></svg></span>
+        <h3>Find opponents at your level</h3>
+        <p>Join matches with a skill range that suits you, using PadelLevels or self-rated levels to help find more balanced matchups.</p>
+      </div>
+      <div class="sc-usp__item">
+        <span class="sc-usp__ico"><!-- leaderboard (Figma) --><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21V9H15V21"/><path d="M9 21H3V14H9"/><path d="M15 21H21V16H15"/><path d="M11.65 1L12.55 2.8L14.55 3.1L13.1 4.5L13.45 6.5L11.65 5.55L9.85 6.5L10.2 4.5L8.75 3.1L10.75 2.8L11.65 1Z"/></svg></span>
+        <h3>Play to compete—or just for fun</h3>
+        <p>Play competitively and put your rating on the line, or choose Casual and enjoy the game without affecting your skill rating.</p>
+      </div>
+      <div class="sc-usp__item">
+        <span class="sc-usp__ico"><!-- check (Figma) --><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.8 10A10 10 0 1 1 17 3.33"/><path d="M9 11L12 14L22 4"/></svg></span>
+        <h3>Results everyone can agree on</h3>
+        <p>The host submits the score, and players confirm it—so everyone can trust the recorded match result.</p>
+      </div>
+      <div class="sc-usp__item">
+        <span class="sc-usp__ico"><!-- calendar-check (Figma) --><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2V6"/><path d="M8 2V6"/><path d="M3 10H21"/><path d="M9 16L11 18L15 14"/></svg></span>
+        <h3>Your court, already sorted</h3>
+        <p>Link your match to your AYO court booking, keeping your venue and playing time clear without coordinating a separate reservation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. KEY FEATURES — two tabs (hosts 26953:68987, players 26953:69087).
+     Each card is a Mini UI (components/mini-ui/open-match: host.js H01–H05,
+     player.js P01–P05) that plays when in view. #host / #player open a tab. -->
+<section class="sc-kf" id="fitur" aria-label="Open Match features">
+  <div class="wrap container-fluid">
+    <div class="sc-tabs" role="tablist" aria-label="Who it’s for">
+      <button class="sc-tab is-on" type="button" role="tab" aria-selected="true" aria-controls="kf-host" id="tab-host">For hosts</button>
+      <button class="sc-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-player" id="tab-player" tabindex="-1">For players</button>
+    </div>
+  </div>
+
+  <div class="sc-panel" id="kf-host" role="tabpanel" aria-labelledby="tab-host">
+    <div class="wrap container-fluid sc-intro"><h2 class="sc-h3">Set up a match in minutes.</h2><p>From court booking to confirmed results, manage every step in one place.</p></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">01</span><h3>Set up your match</h3><p>Choose your court, match format, and playing mode. Create an individual or community match, with or without an existing AYO booking.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="om-h01"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">02</span><h3>Invite players or open spots</h3><p>Invite players directly, share your match for others to join, or approve join requests based on skill level.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="om-h02"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">03</span><h3>Set your price and payment method</h3><p>Choose to collect payments online, in cash, through both methods, or make the match free.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="om-h03"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">04</span><h3>Connect Your Match to a Court Booking</h3><p>Display the “Booked via AYO” label to earn participants’ trust and reassure them that the court is reserved.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="om-h04"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">05</span><h3>Record scores and share results</h3><p>Enter scores during or after the match. Once players confirm the results, share the final standings and winner banner.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="om-h05"></div></div></div>
+  </div>
+
+  <div class="sc-panel" id="kf-player" role="tabpanel" aria-labelledby="tab-player" hidden>
+    <div class="wrap container-fluid sc-intro"><h2 class="sc-h3">Find a match. Play with confidence.</h2><p>Find a game at your level, secure your spot, and confirm the result, all in one flow.</p></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">01</span><h3>Find your match</h3><p>Browse matches near you and filter by sport, location, time, playing mode, and skill level.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="om-p01"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">02</span><h3>Choose your spot and join</h3><p>Pick an available spot and pay online or at the venue. No host approval needed.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="om-p02"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">03</span><h3>Confirm the Score</h3><p>Follow the score, then confirm the final result or suggest a correction. If you don’t respond within 24 hours, the score is automatically confirmed.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="om-p03"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">04</span><h3>Rate your Host</h3><p>Review your host’s punctuality, sportsmanship, and communication.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="om-p04"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">05</span><h3>Build your Level</h3><p>Competitive padel match results also count toward your PadelLevels rating.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="om-p05"></div></div></div>
+  </div>
+</section>
+
+<!-- 5. CLOSING (Figma 26953:69073) -->
+<section class="sc-close" aria-labelledby="om-close-title">
+  <div class="wrap container-fluid">
+    <h2 class="sc-h2" id="om-close-title">Ready for your next match?</h2>
+    <p>Download the AYO app to create a match or join one near you.</p>
+    <a class="sc-btn" href="#">Create Open Match <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a>
+  </div>
+</section>
+</main>
+
+<!-- 7. FOOTER — components/site-footer (Figma "Footer") -->
+<footer class="sft">
+  <div class="sft__in">
+    <div class="sft__top">
+      <a class="sft__logo" href="index.html" aria-label="AYO home"><img src="assets/icons/footer/logo.svg" alt="AYO" width="48" height="26"></a>
+      <div class="sft__cta">
+        <p class="sft__cta-label">Own a sports venue?</p>
+        <a class="sft__btn" href="#">Become a Venue Partner <img src="assets/icons/footer/arrow-up-right.svg" alt="" width="16" height="16"></a>
+      </div>
+    </div>
+
+    <div class="sft__cols">
+      <nav class="sft__col sft__col--company" aria-labelledby="sft-company">
+        <p class="sft__h" id="sft-company">Company</p>
+        <div class="sft__links"><a href="about-en.html">About Us</a><a href="#">Policies &amp; Privacy</a><a href="#">Terms &amp; Conditions</a></div>
+      </nav>
+      <nav class="sft__col sft__col--eco" aria-labelledby="sft-eco">
+        <p class="sft__h" id="sft-eco">Ecosystem</p>
+        <div class="sft__links"><a href="#">Activity</a><a href="#">PadelLevels</a><a href="#">Booking</a><a href="avm-en.html">Venue Owner</a><a href="#">Partnership</a><a href="#">Court Directory</a><a href="#">Community Directory</a></div>
+      </nav>
+      <nav class="sft__col sft__col--support" aria-labelledby="sft-support">
+        <p class="sft__h" id="sft-support">Support</p>
+        <div class="sft__links"><a href="#">Contact us</a></div>
+      </nav>
+      <div class="sft__col sft__col--follow">
+        <p class="sft__h">Follow us</p>
+        <div class="sft__social">
+          <a href="#" aria-label="AYO on Instagram"><img src="assets/icons/footer/instagram.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO on TikTok"><img src="assets/icons/footer/tiktok.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO on YouTube"><img src="assets/icons/footer/youtube.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO on Threads"><img src="assets/icons/footer/threads.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO on LinkedIn"><img src="assets/icons/footer/linkedin.svg" alt="" width="18" height="18"></a>
+        </div>
+        <div class="sft__apps">
+          <p class="sft__apps-label">Available on</p>
+          <div class="sft__stores">
+            <a class="sft__store" href="#" aria-label="Download on the App Store"><img src="assets/icons/footer/app-store.svg" alt="" width="27" height="27"><span><small>Download on the</small><b>App Store</b></span></a>
+            <a class="sft__store" href="#" aria-label="Get it on Google Play"><img src="assets/icons/footer/google-play.svg" alt="" width="25" height="27"><span><small>Get it on</small><b>Google Play</b></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sft__bottom">
+      <p class="sft__copy">© 2026 AYO All Right Reserved</p>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V4.5"/><path d="M7.5 9.5 12 5 16.5 9.5"/></svg>
+</button>
+
+<script src="vendor/jquery-3.5.1/jquery.min.js"></script>
+<script src="vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
+<script src="scripts/chrome.js?v=20261120a"></script>
+<script src="components/mini-ui/mini-ui.js?v=20261119n"></script>
+<script src="components/mini-ui/open-match/host.js?v=20261120c"></script>
+<script src="components/mini-ui/open-match/player.js?v=20261120d"></script>
+<!-- Key-feature tabs: shared with the Scoring page (its other parts only run when their markup exists). -->
+<script src="scripts/scoring.js?v=20261119i"></script>
+</body>
+</html>

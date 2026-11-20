@@ -42,11 +42,13 @@ framework preset, no build command, and serve the repository root.
 | `scoring-en.html` | English twin of `scoring-id.html` (Figma 26877:7465), same markup. The top-nav language switch moves between the two and keeps the tab hash. `/scoring.html` redirects to `scoring-id.html` (vercel.json). |
 | `about-en.html` | About Us — Figma 27980:18323 (desktop 27987:7997, mobile 27990:8081, story states 28014:8166 …). Entry point: "About Us" in the footer. |
 | `about-id.html` | Indonesian twin ("Tentang Kami", Figma 28095:25789), same markup. The language switch moves between the two. On the homepage the footer link follows the chosen language (`data-href-id`, handled in `chrome.js`). |
+| `open-match-id.html` | Open Match — Figma 26953:68879 (players tab 26953:69087, mobile 26953:69152). Hero, why Open Match, two key-feature tabs (host H01–H05, players P01–P05 as Mini UI cards), closing CTA. Deep link `#player` opens the players tab. The hero illustration is a plain box until the new header is designed. Entry point: Activities → Open Match in the top nav (desktop panel and mobile drawer). |
+| `open-match-en.html` | English twin of `open-match-id.html` (Figma 26893:19943, players 26899:7816, mobile 26901:7775), same markup. The language switch moves between the two and keeps the tab hash. |
 
 The repository focused on the homepage only (decision 2026-11-18); since then
-the Scoring, AVM and About Us pages have been rebuilt, each in Indonesian and
+the Scoring, AVM, About Us and Open Match pages have been rebuilt, each in Indonesian and
 English.
-The earlier venue, partner, Open Play host, Open Match, court directory, and
+The earlier venue, partner, Open Play host, court directory, and
 foundations pages were removed and will be rebuilt from scratch. Homepage links
 to those pages point to `#` until the new pages exist.
 
@@ -72,6 +74,7 @@ Page-specific code:
 | Homepage | `styles/home.css`, `scripts/home.js` |
 | Scoring | `styles/scoring.css`, `scripts/scoring.js`, `components/mini-ui/`, `assets/scoring/` |
 | AVM | `styles/avm.css`, `scripts/avm.js` (tabs, FAQ accordion, contact form, stat count-up, section reveal), `components/avm-hero/` (animated hero illustration), `components/mini-ui/` + `components/mini-ui/avm/` (25 feature cards) |
+| Open Match | `styles/scoring.css` (shared layout) + `styles/open-match.css`, `scripts/scoring.js` (tabs), `components/mini-ui/open-match/` |
 | About Us | `styles/about.css`, `scripts/about.js` (story timeline; hero pills that scatter and bounce on hover or tap, then coast to a stop; Moments strip auto-scroll; milestone photo crossfade), `assets/about/` |
 
 All page motion is vanilla JS/CSS and switches off with reduced motion.
@@ -88,9 +91,9 @@ Scoring staging board (Figma 28125:11094): Setup 01–03, Match & Skor 02 and
 (host tab H01–H05 in `host.js`, players tab P01–P05 in `player.js`; staging
 board Figma 28427:17089) live in
 `components/mini-ui/open-match/` (icons taken from the PRD — Zap, Hand-peace,
-the PadelLevels mark and wordmark — are in `assets/open-match/`); until the Open Match page exists they are
-reviewed on `mini-ui-preview.html` (`?lang=en` for English, not linked from
-the site). Flows run while the
+the PadelLevels mark and wordmark — are in `assets/open-match/`) and show on the Open Match pages; `mini-ui-preview.html`
+(`?lang=en` for English, `?only=om-p02` for one card, not linked from the
+site) is the review page for single cards. Flows run while the
 card is in view and loop. With reduced
 motion they stay on the first screen. The player photos in
 `assets/scoring/avatars/` are AI-generated, fictional people.

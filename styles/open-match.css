@@ -1,0 +1,24 @@
+/* ==========================================================================
+   AYO — Open Match page (open-match-id.html / open-match-en.html)
+   Figma: ID desktop 26953:68879, players tab 26953:69087, mobile 26953:69152;
+   EN 26893:19943 / 26899:7816 / 26901:7775.
+   The layout is the Scoring page's (styles/scoring.css, sc-*); this file only
+   holds what differs. Mini UI cards: components/mini-ui/open-match.
+   ========================================================================== */
+
+/* Type weights from the Open Match frames (ExtraBold headings). */
+.om-page .sc-h2{font-size:46px;line-height:54px;font-weight:var(--fw-extrabold)}
+.om-page .sc-close .sc-h2{font-size:44px;line-height:52px}
+.om-page .sc-feat__txt h3{font-weight:var(--fw-extrabold)}
+.om-page .sc-btn{font-weight:var(--fw-semibold)}
+
+/* Hero illustration slot (Figma 26953:68943): a plain 420 × 420 box until the
+   redesigned header lands. */
+.om-hero__box{width:420px;height:420px;border-radius:24px;background:#eaf1fa}
+
+@media (max-width:900px){
+  .om-page .sc-h2{font-size:28px;line-height:34px}
+  .om-page .sc-close .sc-h2{font-size:28px;line-height:34px}
+  /* Mobile frame 26953:69201: 328 × 328, centred. */
+  .om-hero__box{width:100%;max-width:328px;height:auto;aspect-ratio:1;margin:0 auto;background:#f7f7f7}
+}
