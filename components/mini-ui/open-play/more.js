@@ -157,7 +157,7 @@
       (o.hero
         // Location as in the PRD: the pin with a green check, venue, court, then
         // the green "Booked via AYO" tag.
-        ? '<div class="op-hloc"><span class="op-hloc__pin">'+I.pinFill+'<i>'+I.tick+'</i></span><div class="op-hloc__c"><div><b>Kawan AYO Arena Bogor</b><span>Lapangan Utama</span></div><span class="op-hbooked">Booked via AYO</span></div></div>'
+        ? '<div class="op-hloc"><span class="op-hloc__pin">'+I.pinFill+'<i>'+I.tick+'</i></span><div class="op-hloc__c"><div><b>Kawan AYO Arena Bogor</b><span>Lapangan Utama</span></div><span class="op-hbooked">Booked via <img src="assets/icons/footer/logo.svg" alt="AYO" width="48" height="26"></span></div></div>'
         : irow('pin', 'Kawan AYO Arena Bogor', 'Lapangan Utama', tag('Booked via AYO','booked')))+
       '<div data-el="fee">'+irow('money', 'Rp75.000 · Pembayaran Online')+'</div>'+
       (o.full ? '' : irow('lock', 'Privasi · Publik'))+
