@@ -1,0 +1,28 @@
+/* ==========================================================================
+   AYO — Open Play (host) page (open-play-id.html; English twin later)
+   Figma: ID section "Open Play: Host" 26953:69335 — desktop 27055:7089,
+   key-feature tabs 27055:7154 / 7436 / 7501 / 27184:14983 / 27055:7566 /
+   7631, mobile 27055:7696. EN section 26903:20319.
+   The layout is the Scoring page's (styles/scoring.css, sc-*); this file only
+   holds what differs. Mini UI cards: components/mini-ui/open-play.
+   ========================================================================== */
+
+/* Type from the Open Play frames */
+.op-page .sc-hero__title{font-size:64px;line-height:71.68px}
+.op-page .sc-hero__sub{line-height:25.6px;margin-bottom:0}
+.op-page .sc-feat__txt h3{font-weight:var(--fw-extrabold);line-height:35.2px;letter-spacing:-.025em;color:#1a1a1a}
+.op-page .sc-feat__txt p{line-height:25.6px;color:#616161}
+.op-page .sc-num{font-weight:var(--fw-semibold)}
+.op-page .sc-close .sc-h2{font-size:44px;line-height:52px;font-weight:var(--fw-extrabold)}
+.op-page .sc-btn{font-weight:var(--fw-semibold)}
+
+/* Hero illustration slot (Figma 27055:7122, 420 × 420): a plain box until
+   the host-view illustration lands. */
+.op-hero__box{width:420px;height:420px;border-radius:24px;background:#eaf1fa}
+
+@media (max-width:900px){
+  .op-page .sc-hero__title{font-size:40px;line-height:46px}
+  .op-page .sc-feat__txt h3{font-size:22px;line-height:28px;letter-spacing:-.01em}
+  .op-page .sc-close .sc-h2{font-size:28px;line-height:34px}
+  .op-hero__box{width:100%;max-width:328px;height:auto;aspect-ratio:1;margin:0 auto;background:#f7f7f7}
+}

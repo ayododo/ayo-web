@@ -1,0 +1,371 @@
+/* ==========================================================================
+   AYO — Open Play (host) Mini UI cards
+   components/mini-ui/open-play/host.js (Buat Sesi, Co-host, Peserta) and
+   more.js (Skor Live, Pembayaran, Bagikan & Superhost).
+   Builds on components/mini-ui/mini-ui.css (load that first). Drawn at the
+   base size (phone 260 × 392); the card scales it. Same Mini UI rules:
+   neutral bezel, white screen, #eee borders, Figtree, Dark-soft #2c2c2c CTAs,
+   1.2px #2c2c2c outline on what is picked, red only for small badges.
+   Figma: section "Open Play: Host" 26953:69335 (hidden "Motion · …" frames
+   in each card are the steps these flows play).
+   ========================================================================== */
+
+/* ---- Basics ---------------------------------------------------------------- */
+.op-ic{width:13px;height:13px;flex:0 0 auto;display:block;color:#17171a}
+.op-ic svg{width:100%;height:100%;display:block}
+.op-ic--sm{width:11px;height:11px}
+.op-ic--mut{color:#787373}
+.op-av{display:block;flex:0 0 auto;border-radius:50%;object-fit:cover;background:#eee}
+.op-ini{display:flex;align-items:center;justify-content:center;flex:0 0 auto;border-radius:50%;background:#e6effa;color:#1f5fae;font-weight:700}
+.op-u{text-decoration:underline;font-weight:700;color:#17171a}
+.op-req{color:#ec2435;font-style:normal}
+.op-band{display:block;flex:0 0 auto;height:6px;margin:2px -12px;background:#f4f4f5}
+.op-hr{display:block;flex:0 0 auto;height:1px;background:#eee}
+.op-sp{flex:0 0 auto;height:52px}          /* room under the last row for a fixed footer */
+.op-sec{font-size:11.5px;line-height:1.3;font-weight:700}
+.op-sec i{font-style:normal;color:#ec2435}
+
+/* Compact buttons (smaller than .mu-btn so they sit in balance with the rows) */
+.op-btn{display:flex;align-items:center;justify-content:center;gap:5px;padding:8px 10px;border-radius:9px;background:#2c2c2c;color:#fff;font-size:11px;line-height:1.3;font-weight:700;white-space:nowrap;transition:background .2s,color .2s,box-shadow .2s}
+.op-btn--line{background:#fff;color:#17171a;box-shadow:inset 0 0 0 1px #d9d9d9}
+.op-btn--off{background:#f1f1f2;color:#a1a1aa}
+.op-btn .op-ic{width:12px;height:12px;color:currentColor}
+.op-btns{display:flex;gap:7px}.op-btns>*{flex:1}
+.op-mini{flex:0 0 auto;padding:3px 6px;border-radius:5px;background:#2c2c2c;color:#fff;font-size:8.5px;line-height:1.3;font-weight:700;white-space:nowrap}
+.op-mini--line{background:#fff;color:#17171a;box-shadow:inset 0 0 0 1px #52575c}
+
+/* Fixed footer inside the part of the screen the card shows */
+.op-foot{position:absolute;left:0;right:0;bottom:var(--mu-sheet-bottom,0px);z-index:3;display:flex;gap:7px;align-items:center;padding:8px 12px;background:#fff;border-top:1px solid #eee;transition:transform .45s cubic-bezier(.32,.72,0,1)}
+.op-foot>.op-btn{flex:1}
+.op-sq{flex:0 0 auto;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:9px;box-shadow:inset 0 0 0 1px #d9d9d9}
+.op-sq .op-ic{width:14px;height:14px}
+
+/* Badges and tags */
+.op-tag{display:inline-flex;align-items:center;gap:3px;align-self:flex-start;padding:2px 5px;border-radius:4px;font-size:7.5px;line-height:1.3;font-weight:700;white-space:nowrap}
+.op-tag--coach{background:#3949c9;color:#fff;letter-spacing:.02em}
+.op-tag--open{background:#13804b;color:#fff}
+.op-tag--super{background:#fdecef;color:#ec2435}
+.op-tag--full{background:#fde7d9;color:#c2410c}
+.op-tag--booked{background:#13804b;color:#fff}
+.op-tag--paid{background:#e3f5eb;color:#13804b}
+.op-tag--join{background:#e6effa;color:#1f5fae}
+.op-tag--res{background:#8b5cf6;color:#fff;border-radius:7px}
+.op-tag svg{width:9px;height:9px}
+.op-role{position:absolute;left:50%;bottom:-3px;transform:translateX(-50%);padding:0 3px;border-radius:2px;font-size:6.5px;line-height:1.35;font-weight:700;white-space:nowrap}
+.op-role--host{background:#e6effa;color:#1f5fae}
+.op-role--co{background:#e3f5eb;color:#13804b}
+.op-avw{position:relative;flex:0 0 auto;display:block;padding-bottom:4px}
+.op-slot{flex:0 0 auto;border-radius:50%;border:1px dashed #cacccf;position:relative}
+.op-slot b{position:absolute;right:-2px;top:-2px;width:10px;height:10px;border-radius:50%;background:#52575c;color:#fff;font-size:7px;line-height:10px;text-align:center}
+
+/* PadelLevels value / self rating chips */
+.op-lv{display:inline-flex;align-items:center;gap:2px;padding:1px 4px;border-radius:3px;background:#f1f1f2;font-size:8px;line-height:1.35;font-weight:700;color:#17171a;white-space:nowrap;transition:box-shadow .15s}
+.op-lv svg{width:8px;height:8px}
+.op-lv--y{background:#fdf0c4;color:#7a5a00}
+.op-lv--r{background:#ec2435;color:#fff}
+.op-lv--r svg path{fill:#fff}
+.op-lv.is-on{box-shadow:inset 0 0 0 1.2px #2c2c2c}
+.op-self{padding:1px 4px;border-radius:3px;box-shadow:inset 0 0 0 1px #e4e4e7;font-size:8px;line-height:1.35;font-weight:500;white-space:nowrap}
+
+/* ---- Create Open Play form (Buat Sesi, Pembayaran 01) ----------------------- */
+.op-form{display:flex;flex-direction:column;gap:9px}
+.op-fld{display:flex;align-items:center;gap:8px;padding:6px 9px;border:1px solid #e3e3e3;border-radius:9px;min-height:32px;transition:border-color .15s}
+.op-fld.is-focus{border-color:#2c2c2c;box-shadow:inset 0 0 0 .2px #2c2c2c}
+.op-fld__l{font-size:8.5px;line-height:1.3;color:#787373}
+.op-fld__v{font-size:10.5px;line-height:1.35;font-weight:500;color:#17171a;min-height:1.35em}
+.op-fld__p{font-size:10px;line-height:1.35;color:#a1a1aa}
+.op-group{border:1px solid #e3e3e3;border-radius:9px;overflow:hidden}
+.op-group .op-fld{border:0;border-radius:0}
+.op-group .op-fld+.op-fld{border-top:1px solid #e3e3e3}
+.op-pl{display:block;width:46px;height:auto;margin-bottom:2px}
+.op-links{display:flex;flex-direction:column}
+.op-link{display:flex;align-items:center;gap:6px;padding:9px 0;border-bottom:1px solid #eee;font-size:11px;font-weight:700}
+.op-link .op-v{margin-left:auto;font-size:10px;font-weight:500;color:#17171a}
+.op-link .op-ic{width:12px;height:12px}
+.op-link .mu-toggle{margin-left:auto;transform:scale(.85);transform-origin:100% 50%}
+.op-bkrow{display:flex;align-items:center;gap:6px;padding:8px 9px;border:1px solid #e3e3e3;border-radius:9px;font-size:10.5px;font-weight:600}
+.op-bkrow .op-ic{margin-left:auto}
+.op-ayo{display:inline-block;height:9px;width:auto;vertical-align:-1px}
+.op-tl{display:flex;flex-direction:column;gap:3px;padding:8px 9px;border:1px solid #e3e3e3;border-radius:9px}
+.op-tl b{font-size:10.5px;line-height:1.3}
+.op-tl .mu-s{font-size:9px}
+.op-tl .op-tag{margin:1px 0}
+.op-bk:not(.is-booked) .op-tl{display:none}
+.op-bk.is-booked .op-bkrow{display:none}
+.op-co{display:flex;flex-direction:column;gap:7px;padding:8px 9px;border:1px solid #e3e3e3;border-radius:9px}
+.op-co__r{display:flex;align-items:center;gap:6px;font-size:10px;color:#787373}
+.op-co__r b{margin-left:auto;color:#17171a}
+.op-qbox{display:flex;flex-direction:column;gap:7px;padding:8px 9px;border:1px solid #e3e3e3;border-radius:9px}
+.op-qrow{display:flex;align-items:center;gap:6px;font-size:10px;color:#787373}
+.op-step{margin-left:auto;display:flex;align-items:center;gap:7px}
+.op-step i{width:16px;height:16px;border-radius:50%;background:#f1f1f2;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:11px;line-height:1;font-weight:700;color:#17171a}
+.op-step b{min-width:16px;text-align:center;font-size:11px;color:#17171a}
+.op-step b.is-focus{box-shadow:inset 0 -1.2px #2c2c2c}
+.op-cbrow{display:flex;align-items:flex-start;gap:6px;font-size:9.5px;line-height:1.35}
+.op-cb{flex:0 0 auto;width:12px;height:12px;border-radius:3px;border:1.3px solid #52575c;display:flex;align-items:center;justify-content:center;transition:background .1s,border-color .1s}
+.op-cb.is-on{background:#2c2c2c;border-color:#2c2c2c}
+.op-cb.is-on::after{content:'';width:5px;height:2.6px;border:solid #fff;border-width:0 0 1.4px 1.4px;transform:translateY(-.8px) rotate(-45deg)}
+.op-form .mu-seg__i{padding:6px 8px;font-size:10.5px}
+.op-info{display:flex;flex-direction:column;gap:2px;padding:8px 9px}
+.op-info .mu-t{font-size:10px}
+.op-info .mu-s{font-size:9px}
+.op-form.is-casual .op-only-comp{display:none}
+
+/* Sheets: compact enough to sit whole in the part of the screen a card shows */
+.op-sheet{gap:8px;padding:8px 12px 12px}
+.op-sheet__t{display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:800}
+.op-sheet__t .mu-ico{width:13px;height:13px}
+.op-rlist{display:flex;flex-direction:column}
+.op-rlist>div{display:flex;align-items:center;justify-content:space-between;padding:4px 0;font-size:10.5px}
+.op-rlist .mu-radio{width:12px;height:12px}
+.op-rlist .mu-radio.is-on{border-width:4px}
+.op-chips{display:flex;flex-wrap:wrap;gap:4px}
+.op-chip{padding:4px 8px;border-radius:7px;box-shadow:inset 0 0 0 1px #e3e3e3;font-size:9.5px;font-weight:500;color:#787373;white-space:nowrap;transition:box-shadow .1s,color .1s}
+.op-chip.is-on{box-shadow:inset 0 0 0 1.2px #2c2c2c;color:#17171a;font-weight:600}
+.op-note{display:flex;align-items:flex-start;gap:6px;padding:7px 8px;border-radius:8px;background:#f4f4f5;font-size:8.5px;line-height:1.4;color:#17171a}
+.op-note .op-ic{width:11px;height:11px;margin-top:1px}
+.op-rp{color:#9b9797;margin-right:1px}
+.op-minmax{display:flex;align-items:center;gap:6px}
+.op-minmax .op-fld{flex:1}
+.op-minmax>i{flex:0 0 auto;width:8px;height:1px;background:#d9d9d9}
+/* A sheet with more content than fits: the inner part slides (sheet scroll) */
+.op-sheet--tall{padding:0;gap:0;overflow:hidden;max-height:calc(var(--mu-vis-h,382px) - 14px);transition:transform .45s cubic-bezier(.32,.72,0,1),bottom .4s cubic-bezier(.32,.72,0,1),max-height .4s cubic-bezier(.32,.72,0,1)}
+.op-sheet--tall.op-up{max-height:calc(var(--mu-vis-h,382px) - 14px - var(--op-kb,84px))}
+.op-sheet--tall>.op-in{display:flex;flex-direction:column;gap:8px;padding:8px 12px 12px;transition:transform .8s cubic-bezier(.45,0,.2,1)}
+.op-sheet--tall.no-anim>.op-in{transition:none}
+/* Sheet lifted above the on-screen keyboard */
+.mu-sheet.op-up{bottom:calc(var(--mu-sheet-bottom,0px) + var(--op-kb,84px))}
+
+/* On-screen keyboards (they rise from the bottom of the part shown) */
+.op-kb{position:absolute;left:0;right:0;z-index:7;background:#e3e5e8;padding:4px 4px 6px;transform:translateY(105%);transition:transform .4s cubic-bezier(.32,.72,0,1)}
+.op-kb.is-on{transform:none}
+.op-kb--num{bottom:var(--mu-sheet-bottom,0px);display:grid;grid-template-columns:repeat(4,1fr);gap:3px}
+.op-kb--num span{display:flex;align-items:center;justify-content:center;height:17px;border-radius:4px;background:#fff;font-size:10px;font-weight:500;transition:background .12s}
+.op-kb--num span.op-k2{background:#d4d6da;font-size:8px}
+.op-kb--num span.op-ok{background:#2c2c2c;color:#fff}
+.op-kb--num span.op-ok svg{width:10px;height:10px}
+.op-kb span.is-press{background:#c9ccd1}
+.op-kb--abc{bottom:var(--mu-sheet-bottom,0px);display:flex;flex-direction:column;gap:3px}
+.op-kb--abc>div{display:flex;justify-content:center;gap:2.5px}
+.op-kb--abc span{width:20px;height:20px;display:flex;align-items:center;justify-content:center;border-radius:4px;background:#fff;font-size:9.5px;transition:background .12s}
+
+.mu-sheet.op-up{transition:transform .45s cubic-bezier(.32,.72,0,1),bottom .4s cubic-bezier(.32,.72,0,1)}
+.mu-sheet{transition:transform .45s cubic-bezier(.32,.72,0,1),bottom .4s cubic-bezier(.32,.72,0,1)}
+
+/* Pilih Venue / Pilih Jadwal (Buat Sesi 01) */
+.op-venue{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #eee}
+.op-venue:last-child{border-bottom:0}
+.op-venue--sel{padding:2px 0 8px}
+.op-venue .op-ic{width:12px;height:12px}
+.op-thumb{flex:0 0 auto;width:30px;height:30px;border-radius:6px;background:linear-gradient(135deg,#1f6fb8,#3fa0e0);position:relative;overflow:hidden}
+.op-thumb::before{content:'';position:absolute;inset:5px;border:1.1px solid rgba(255,255,255,.75);border-radius:2px}
+.op-thumb::after{content:'';position:absolute;left:50%;top:5px;bottom:5px;border-left:1.1px solid rgba(255,255,255,.75)}
+.op-thumb--1{background:linear-gradient(135deg,#2b8a9f,#4cb8d2)}
+.op-dayrow{display:flex;gap:4px;overflow:hidden}
+.op-day{position:relative;flex:0 0 auto;width:38px;display:flex;flex-direction:column;align-items:center;padding:3px 0;border-radius:6px;font-size:8.5px;font-weight:700;white-space:nowrap}
+.op-day small{font-size:6.5px;font-weight:500;color:#9b9797}
+.op-day.is-on{background:#2c2c2c;color:#fff}.op-day.is-on small{color:#d9d9d9}
+.op-day i{position:absolute;top:3px;right:5px;width:4px;height:4px;border-radius:50%;background:#ec2435}
+.op-court{display:flex;align-items:center;justify-content:space-between;padding:7px 9px;border:1px solid #e3e3e3;border-radius:8px;font-size:10px;font-weight:500;transition:border-color .12s}
+.op-court.is-on{border-color:#2c2c2c}
+.op-court.is-on .op-cb{background:#2c2c2c;border-color:#2c2c2c}
+.op-court.is-on .op-cb::after{content:'';width:5px;height:2.6px;border:solid #fff;border-width:0 0 1.4px 1.4px;transform:translateY(-.8px) rotate(-45deg)}
+/* Toast above the footer (Co-host 01) */
+.op-toast{position:absolute;left:12px;right:12px;bottom:calc(var(--mu-sheet-bottom,0px) + 54px);z-index:8;padding:7px 10px;border-radius:8px;background:#2c2c2c;color:#fff;font-size:9.5px;font-weight:600;
+  opacity:0;transform:translateY(6px);transition:opacity .25s,transform .3s cubic-bezier(.32,.72,0,1)}
+.op-toast.is-on{opacity:1;transform:none}
+
+/* ---- Session detail (Co-host, Peserta 03, Bagikan) ------------------------- */
+.op-dtitle{font-size:14px;line-height:1.25;font-weight:800;letter-spacing:-.01em}
+.op-meta{display:flex;align-items:center;flex-wrap:wrap;gap:3px;font-size:9px;line-height:1.3;color:#787373;font-weight:500}
+.op-meta .op-ic{width:11px;height:11px;color:#17171a}
+.op-meta b{color:#17171a;font-weight:500}
+.op-ppl{display:flex;align-items:center;gap:5px}
+.op-ppl>em{font-style:normal;font-size:9px;font-weight:700;text-decoration:underline}
+.op-ppl>b{margin-left:4px;font-size:9px;font-weight:700;white-space:nowrap}
+.op-dtabs{display:flex;gap:18px;border-bottom:1px solid #eee;font-size:10px;color:#a1a1aa;font-weight:500}
+.op-dtabs>span{padding:0 0 5px}
+.op-dtabs>.is-on{color:#17171a;font-weight:700;box-shadow:inset 0 -2px #17171a}
+.op-dates{display:flex;gap:5px;overflow:hidden}
+.op-dates>span{flex:0 0 auto;padding:5px 9px;border-radius:6px;box-shadow:inset 0 0 0 1px #d4d4d8;font-size:9px;font-weight:500}
+.op-dates>.is-on{background:#2c2c2c;color:#fff;box-shadow:none;font-weight:700}
+.op-irow{display:flex;gap:8px;align-items:flex-start}
+.op-irow>.op-ic{width:14px;height:14px;margin-top:1px}
+.op-irow b{display:block;font-size:10px;line-height:1.3}
+.op-irow span{display:block;font-size:9.5px;line-height:1.35;color:#787373}
+.op-irow .op-tag{margin-top:2px}
+.op-sub{font-size:11px;font-weight:700}
+.op-desc{font-size:9px;line-height:1.4;color:#787373}
+.op-org{display:flex;align-items:center;gap:8px}
+.op-logo{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:#e4e4e7;display:flex;align-items:center;justify-content:center;color:#fff;font-size:7px;font-weight:800}
+.op-logo--kpb{background:#1f2a44}
+.op-rate{display:inline-flex;align-items:center;gap:3px;padding:1px 4px 1px 0;border-radius:4px;font-size:9px;color:#787373;transition:background .3s,padding .3s}
+.op-rate b{color:#17171a}
+.op-rate.is-hl{background:#fdf3d6;padding-left:4px}
+.op-rate .op-star{width:10px;height:10px}
+.op-crown{display:inline-block;width:10px;height:10px;flex:0 0 auto}
+.op-hc{display:flex;align-items:center;gap:16px}
+.op-hc__c{display:flex;flex-direction:column;gap:4px}
+.op-hc__c>b{font-size:10px}
+.op-hc__c>div{display:flex;gap:6px}
+.op-reco{display:flex;flex-direction:column;gap:2px;padding:8px 10px;border:1px solid #eee;border-radius:10px}
+.op-reco b{font-size:10px}.op-reco span{font-size:9px;color:#787373}
+.op-dcard{display:flex;flex-direction:column;gap:8px;padding:9px 10px;border:1px solid #eee;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.04)}
+
+/* ---- Host & CoHost / Tambah CoHost (Co-host 01, 03) ------------------------ */
+.op-hrow{display:flex;align-items:center;gap:8px;padding:1px 0;transition:opacity .3s,transform .3s}
+.op-hrow.is-gone{opacity:0;transform:translateX(14px)}
+.op-hrow .op-ic{margin-left:auto;color:#17171a}
+.op-mrow{display:flex;align-items:center;gap:8px;padding:3px 0;transition:opacity .25s}
+.op-mrow .op-cb{margin-left:auto;width:13px;height:13px}
+.op-mrow.is-hide{display:none}
+.op-name{display:flex;flex-direction:column;min-width:0}
+.op-name b{font-size:10.5px;line-height:1.3}
+.op-name span{font-size:8.5px;line-height:1.3;color:#787373}
+.op-search{display:flex;align-items:center;gap:6px;padding:7px 9px;border:1px solid #d4d4d8;border-radius:8px;font-size:9.5px;color:#a1a1aa;transition:border-color .15s}
+.op-search.is-focus{border-color:#2c2c2c;color:#17171a}
+.op-search .op-ic{width:12px;height:12px;color:#52575c}
+.op-fab{position:absolute;right:12px;bottom:calc(var(--mu-sheet-bottom,0px) + 52px);z-index:3;width:28px;height:28px;border-radius:50%;background:#2c2c2c;color:#fff;display:flex;align-items:center;justify-content:center}
+.op-fab svg{width:14px;height:14px}
+.op-atur{font-size:10px;font-weight:700;text-decoration:underline;color:#a1a1aa;transition:color .2s}
+.op-atur.is-on{color:#17171a}
+
+/* CoHost notification (Co-host 02): a tall sheet page over a dimmed screen */
+.op-notif{background:rgba(26,25,25,.45)}
+.op-notif .mu-head{height:24px;padding:0;background:transparent}   /* the dimmed strip above the sheet (engine counts it as the header) */
+.op-notif .mu-body{border-radius:16px 16px 0 0;background:#fff}
+.op-scope{margin:0;padding-left:12px;font-size:8.5px;line-height:1.5}
+.op-mini-s{display:flex;flex-direction:column;gap:3px;padding:8px 9px;border:1px solid #eee;border-radius:10px}
+.op-mini-s b{font-size:9.5px}.op-mini-s span{font-size:8.5px;color:#787373}
+.op-mrow2{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid #eee}
+.op-mrow2:last-child{border-bottom:0}
+.op-mrow2 b{display:block;font-size:10.5px}
+.op-mrow2 span{display:block;font-size:8.5px;line-height:1.35;color:#787373}
+.op-opt{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #eee;font-size:10.5px;font-weight:500}
+.op-opt:last-child{border-bottom:0}
+.op-opt .op-ic:last-child{margin-left:auto}
+.op-log{display:flex;flex-direction:column;gap:3px;padding:8px 9px;border:1px solid #eee;border-radius:10px}
+.op-log b{font-size:10px}.op-log span{font-size:9.5px;line-height:1.35}.op-log small{font-size:8.5px;color:#787373}
+.op-filters{display:flex;gap:5px;overflow:hidden}
+.op-filters>span{flex:0 0 auto;display:flex;align-items:center;gap:4px;padding:5px 7px;border-radius:6px;box-shadow:inset 0 0 0 1px #d4d4d8;font-size:9px;white-space:nowrap}
+
+/* ---- Player list (Peserta, Pembayaran 03) ---------------------------------- */
+.op-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 7px;border-radius:999px;box-shadow:inset 0 0 0 1px #e4e4e7;font-size:9px;font-weight:500}
+.op-tabs{position:relative;overflow:hidden;margin:0 -12px;border-bottom:1px solid #eee}
+.op-tabs__in{display:flex;gap:16px;padding:0 12px;transition:transform .5s cubic-bezier(.45,0,.2,1)}
+.op-tabs__in>span{flex:0 0 auto;padding:4px 2px 6px;font-size:9.5px;font-weight:500;color:#a1a1aa;white-space:nowrap;transition:color .2s,box-shadow .2s}
+.op-tabs__in>.is-on{color:#17171a;font-weight:700;box-shadow:inset 0 -2px #17171a}
+.op-prow{display:flex;flex-direction:column;gap:6px;padding:2px 0 9px;border-bottom:1px solid #eee;transition:opacity .3s,transform .3s,max-height .35s}
+.op-prow.is-gone{opacity:0;transform:translateX(16px)}
+.op-prow__top{display:flex;align-items:flex-start;gap:7px}
+.op-prow__r{margin-left:auto;display:flex;align-items:center;gap:3px}
+.op-prow__r .op-ic{width:12px;height:12px}
+.op-chips2{display:flex;align-items:center;gap:3px;margin-top:4px}
+.op-pnote{display:flex;align-items:flex-start;gap:5px;font-size:8.5px;line-height:1.4}
+.op-pnote .op-ic{width:10px;height:10px;margin-top:1px;color:#52575c}
+.op-pnote u{font-weight:700}
+.op-pnote [data-x]{display:none}
+.op-pnote.is-open [data-c]{display:none}
+.op-pnote.is-open [data-x]{display:inline}
+.op-addp{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(var(--mu-sheet-bottom,0px) - 60px);z-index:3}   /* below the part shown, as in the PRD */
+/* Level tooltip (Peserta 02) */
+.op-lvw{position:relative;display:inline-flex}
+.op-tip{position:absolute;left:50%;top:calc(100% + 7px);z-index:4;padding:6px 9px;border-radius:5px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.16);font-size:8.5px;white-space:nowrap;
+  opacity:0;transform:translate(-50%,-3px);transition:opacity .2s,transform .25s cubic-bezier(.32,.72,0,1)}
+.op-tip::before{content:'';position:absolute;left:50%;top:-4px;width:8px;height:8px;background:#fff;transform:translateX(-50%) rotate(45deg)}
+.op-tip.is-on{opacity:1;transform:translate(-50%,0)}
+
+/* Waiting list (Peserta 03) */
+.op-wl{display:flex;align-items:center;gap:5px;padding:7px 9px;border:1px solid #e4e4e7;border-radius:8px;font-size:9.5px;font-weight:500}
+.op-wl .op-ic{width:11px;height:11px;color:#52575c}
+.op-wl__s{margin-left:auto;font-size:7.5px;color:#a1a1aa;transition:color .2s}
+.op-wl__s.is-on{color:#17171a}
+.op-wl .mu-toggle{transform:scale(.8);transform-origin:100% 50%}
+.op-wrow{display:flex;align-items:flex-start;gap:8px;padding:2px 0 6px;transition:opacity .3s,transform .3s}
+.op-wrow.is-gone{opacity:0;transform:translateX(16px)}
+.op-wrow .op-name{gap:1px}
+.op-wrow .op-name span{display:flex;align-items:center;gap:3px}
+.op-wrow .op-mini{align-self:flex-start;margin-top:4px;display:none}
+.op-wlist.is-manual .op-wrow .op-mini{display:inline-block}
+.op-wrow>.op-ic{margin-left:auto}
+.op-fem{display:inline-flex;width:10px;height:10px;border-radius:50%;background:#f1f1f2;align-items:center;justify-content:center}
+.op-fem svg{width:7px;height:7px}
+.op-search--sm{flex:1;padding:5px 8px}
+.op-dlg{gap:5px;padding:13px 12px 12px}
+.op-dlg .mu-h{font-size:11.5px}
+.op-dlg .mu-s{font-size:9px;line-height:1.4}
+.op-dlg .op-btns{margin-top:6px}
+
+/* ---- Checkout / thank you (Pembayaran 02, Bagikan 01) ---------------------- */
+.op-st{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700}
+.op-st::before{content:'';width:3px;height:10px;border-radius:1px;background:#2c2c2c}
+.op-pay{display:flex;align-items:center;gap:8px;padding:5px 0}
+.op-pay__l{flex:0 0 auto;width:30px;text-align:center;font-size:8px;font-weight:800}
+.op-pay .mu-radio{width:13px;height:13px;margin-left:auto}
+.op-pay .mu-radio.is-on{border-width:4px}
+.op-pay .op-u{margin-left:auto;font-size:8.5px}
+.op-terms{font-size:8.5px;line-height:1.45}
+.op-terms u{text-decoration:underline}
+.op-total{display:flex;flex-direction:column;margin-right:auto}
+.op-total span{font-size:8.5px;color:#787373}.op-total b{font-size:13px;font-weight:800;transition:opacity .2s}
+.op-ok{width:36px;height:36px;border-radius:10px;background:#13804b;display:flex;align-items:center;justify-content:center;margin:0 auto}
+.op-ok svg{width:20px;height:20px}
+.op-ty{font-size:14px;line-height:1.25;font-weight:800;text-align:center}
+.op-ses{display:flex;align-items:center;gap:8px}
+.op-ses .mu-col{gap:2px}
+.op-map{flex:0 0 auto;width:48px;height:48px;border-radius:8px;background:#eef0f2}
+.op-chan{display:flex;justify-content:space-between}
+.op-chan>span{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:8.5px;font-weight:500;transition:transform .15s}
+.op-chan>span.is-press{transform:scale(.92)}
+.op-chan i{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.op-chan i svg{width:28px;height:28px}
+.op-copy{display:flex;align-items:center;justify-content:center;gap:5px;padding:7px;border-radius:8px;background:#f4f4f5;font-size:10px;font-weight:700}
+.op-copy .op-ic{width:11px;height:11px}
+.op-comm{display:flex;align-items:center;gap:8px;padding:8px 9px;border:1px solid #eee;border-radius:10px}
+.op-comm .mu-col b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.op-comm>.op-btn{padding:4px 10px;font-size:9px;background:#fff;color:#17171a;box-shadow:inset 0 0 0 1px #17171a}
+
+/* ---- Activity list (Bagikan 03) ------------------------------------------- */
+.op-loc{display:flex;flex-direction:column;align-items:center;font-size:8px;color:#787373}
+.op-loc b{display:flex;align-items:center;gap:2px;font-size:11px;color:#17171a}
+.op-fchips{display:flex;align-items:center;gap:5px;overflow:hidden}
+.op-fchips>span:not(.op-ic){flex:0 0 auto;display:flex;align-items:center;gap:3px;padding:4px 8px;border-radius:999px;box-shadow:inset 0 0 0 1px #e4e4e7;font-size:9px;font-weight:500;white-space:nowrap}
+.op-days{display:flex;gap:5px}
+.op-days>span{flex:0 0 auto;width:32px;padding:4px 0;border-radius:7px;box-shadow:inset 0 0 0 1px #e4e4e7;display:flex;flex-direction:column;align-items:center;font-size:10px;font-weight:700;line-height:1.2}
+.op-days small{font-size:6.5px;font-weight:500;color:#787373}
+.op-days>.is-on{background:#2c2c2c;color:#fff;box-shadow:none}.op-days>.is-on small{color:#d9d9d9}
+.op-grp{display:flex;align-items:center;justify-content:space-between;margin:0 -12px;padding:6px 12px;background:#f4f4f5;font-size:9px}
+.op-grp b{font-size:9px}
+.op-acard{display:flex;flex-direction:column;gap:5px;padding:2px 0 10px;border-bottom:1px solid #eee;border-radius:10px;transition:box-shadow .2s}
+.op-acard.is-press{box-shadow:0 0 0 3px #f4f4f5;background:#f9f9f9}
+.op-acard__o{display:flex;align-items:center;gap:5px;font-size:8.5px;color:#787373}
+.op-acard__o .op-logo{width:16px;height:16px;font-size:5px}
+.op-acard b{font-size:11px;line-height:1.3}
+.op-acard__m{display:flex;align-items:center;gap:4px;font-size:8.5px;font-weight:500}
+.op-acard__m .op-ic{width:10px;height:10px}
+.op-acard__v{display:flex;align-items:flex-start;gap:4px;font-size:9px;font-weight:500}
+.op-acard__v small{display:block;font-size:8px;color:#787373;font-weight:400}
+.op-acard__v .op-ic{width:11px;height:11px;color:#787373}
+.op-acard__a{display:flex;align-items:center;justify-content:space-between}
+.op-acard__a>div{display:flex;align-items:center;gap:3px}
+.op-acard__a>span{padding:1px 5px;border-radius:4px;background:#f1f1f2;font-size:8.5px;font-weight:700}
+.op-hostav{position:relative;display:block;flex:0 0 auto}
+.op-hostav .op-crown{position:absolute;left:-3px;top:-4px;width:9px;height:9px}
+
+/* ---- Scoring screens in Indonesian (Skor Live) ---------------------------- */
+.op-sc .mu-tile{font-size:11px}
+.op-sc .mu-li .mu-h{font-size:11px}
+.op-sc .mu-li .mu-s{font-size:9px}
+.op-tr-hl{background:#f4f4f5;margin:0 -10px;padding-left:10px!important;padding-right:10px!important;transition:background .4s}
+.op-rows{position:relative}
+.op-rows>.mu-tr{transition:transform .6s cubic-bezier(.45,0,.2,1),background .4s}
+.op-numpad{gap:7px;padding:8px 12px 10px}
+.op-numpad .mu-keys span{padding:3px 0;font-size:12px}
+.op-numpad .op-btn{padding:6px}
+
+/* Card stacking: a page the flow pushes later paints above the ones before it */
+.mu-stage[data-mu^="op-"] [data-page]:not(:first-child){z-index:1}
+
+/* Player list header: title row, search and tabs fixed above the list */
+.op-head2{flex-direction:column;align-items:stretch;gap:7px;padding-bottom:0}
+.op-head2__r{display:flex;align-items:center;gap:7px}

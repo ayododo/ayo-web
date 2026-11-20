@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="id" data-page-lang="ID" data-lang-en="open-play-en.html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open Play — AYO</title>
+<meta name="description" content="Jadi host Open Play, urusan operasional biar AYO yang jalankan. Buat sesi, undang co-host, kelola peserta, catat skor, dan terima pembayaran online di aplikasi AYO.">
+
+<link rel="alternate" hreflang="id" href="open-play-id.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#ec2435">
+
+<link rel="stylesheet" href="vendor/bootstrap-4.3.1/bootstrap.min.css">
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="styles/bootstrap-compat.css">
+<link rel="stylesheet" href="styles/chrome.css">
+<link rel="stylesheet" href="components/mini-ui/mini-ui.css?v=20261119g">
+<link rel="stylesheet" href="components/site-footer/site-footer.css?v=20261118b">
+<link rel="stylesheet" href="components/mini-ui/open-play/open-play.css?v=20261120a">
+<link rel="stylesheet" href="styles/scoring.css?v=20261119l">
+<link rel="stylesheet" href="styles/open-play.css?v=20261120a">
+</head>
+<body class="ayo-web op-page">
+
+<!-- Open Play (host) page — Figma section "Open Play: Host" 26953:69335 (ID):
+     desktop 27055:7089, key-feature tabs 27055:7154 / 7436 / 7501 /
+     27184:14983 / 27055:7566 / 7631, mobile 27055:7696.
+     English twin (open-play-en.html) comes later from EN section 26903:20319. -->
+
+<!-- 1. NAV (same markup as index.html, Indonesian labels, light page) -->
+<nav class="ayo-nav on-light">
+  <div class="nav-in container-fluid">
+    <a class="brand" href="index.html" aria-label="AYO"><img src="assets/logo.svg" alt="AYO"></a>
+    <div class="nav-links" id="navlinks">
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Booking</a></div>
+      <div class="ayo-nav-item has-sub">
+        <button class="nav-top" aria-expanded="false" aria-haspopup="true">Aktivitas <span class="chev" aria-hidden="true"></span></button>
+        <div class="submenu" data-mega="activities">
+          <a href="#">Ikut aktivitas</a>
+          <a href="#">Buat aktivitas</a>
+          <a href="open-play-id.html" aria-current="page">Open Play</a>
+          <a href="open-match-id.html">Open Match</a>
+          <a href="scoring-id.html">Scoring</a>
+        </div>
+      </div>
+      <div class="ayo-nav-item"><a class="nav-top" href="avm-id.html">Untuk Pemilik Venue</a></div>
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Jadi Mitra</a></div>
+      <div class="ayo-nav-item"><a class="nav-top" href="#">Blog</a></div>
+    </div>
+    <div class="nav-actions">
+    <div class="lang" id="lang">
+      <button class="lang-btn" aria-haspopup="true" aria-expanded="false" aria-label="Pilih bahasa">
+        <span class="flag cur-flag" aria-hidden="true">🇮🇩</span>
+        <span class="cur">ID</span>
+        <span class="chev" aria-hidden="true"></span>
+      </button>
+      <div class="lang-menu" role="menu">
+        <button role="menuitemradio" aria-selected="false" data-code="EN" data-flag="🇬🇧"><span class="flag" aria-hidden="true">🇬🇧</span><span class="lname">English</span><span class="code">EN</span></button>
+        <button role="menuitemradio" aria-selected="true" data-code="ID" data-flag="🇮🇩"><span class="flag" aria-hidden="true">🇮🇩</span><span class="lname">Bahasa Indonesia</span><span class="code">ID</span></button>
+      </div>
+    </div>
+    <a class="nav-icon" href="#" aria-label="Cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2.5 3h2.2l2.1 12.4a1.5 1.5 0 0 0 1.5 1.25h8.3a1.5 1.5 0 0 0 1.48-1.2L21 7H6"/></svg>
+    </a>
+    <a class="ayo-btn primary" href="#" data-login>Masuk</a>
+    <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navlinks">
+      <svg class="ico-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
+      <svg class="ico-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>
+    </button>
+    </div>
+  </div>
+</nav>
+
+<main>
+<!-- 2. HERO (Figma 27055:7122). The host-view illustration is still a
+     placeholder in the design; until it lands the slot is a plain 420 × 420 box. -->
+<section class="sc-hero" aria-labelledby="op-title">
+  <div class="wrap container-fluid sc-hero__in">
+    <div class="sc-hero__copy">
+      <nav class="sc-crumb" aria-label="Breadcrumb">
+        <ol><li><a href="index.html">Home</a></li><li><a href="#">Aktivitas</a></li><li><span aria-current="page">Open Play (Host)</span></li></ol>
+      </nav>
+      <h1 class="sc-hero__title" id="op-title">Open Play : Host</h1>
+      <p class="sc-hero__lead">Jadi host Open Play, urusan operasional biar AYO yang jalankan.</p>
+      <p class="sc-hero__sub">Buat dan kelola Open Play dengan mudah. Atur detail permainan, sesi publik atau privat, dan kelola peserta — semua dalam aplikasi AYO.</p>
+    </div>
+    <div class="op-hero__box" role="img" aria-label="Ilustrasi Open Play untuk host (segera hadir)"></div>
+  </div>
+</section>
+
+<!-- 3. KEY FEATURES — six tabs (Figma 27055:7154 default, 7436, 7501,
+     27184:14983, 27055:7566, 7631). Each card is a Mini UI
+     (components/mini-ui/open-play: host.js, more.js) that plays when in view.
+     #sesi, #cohost, #peserta, #skor, #bayar, #bagikan open a tab. -->
+<section class="sc-kf" id="fitur" aria-label="Fitur Open Play untuk host">
+  <div class="wrap container-fluid">
+    <div class="sc-tabs" role="tablist" aria-label="Fitur untuk host">
+      <button class="sc-tab is-on" type="button" role="tab" aria-selected="true" aria-controls="kf-sesi" id="tab-sesi">Buat Sesi</button>
+      <button class="sc-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-cohost" id="tab-cohost" tabindex="-1">Undang Co-host</button>
+      <button class="sc-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-peserta" id="tab-peserta" tabindex="-1">Peserta</button>
+      <button class="sc-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-skor" id="tab-skor" tabindex="-1">Skor Live (SKOR)</button>
+      <button class="sc-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-bayar" id="tab-bayar" tabindex="-1">Pembayaran</button>
+      <button class="sc-tab" type="button" role="tab" aria-selected="false" aria-controls="kf-bagikan" id="tab-bagikan" tabindex="-1">Bagikan &amp; Superhost</button>
+    </div>
+  </div>
+
+  <div class="sc-panel" id="kf-sesi" role="tabpanel" aria-labelledby="tab-sesi">
+    <div class="wrap container-fluid sc-intro"><h2 class="sc-h3">Siapkan sesi dalam beberapa klik.</h2><p>Semua yang dibutuhkan pemain untuk memutuskan ada di satu layar.</p></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">01</span><h3>Cabang Olahraga, lapangan &amp; jam</h3><p>Pilih cabang olahraga, lapangan, dan jadwal. Lapangan yang dibooking lewat AYO tampil dengan label “Booked via AYO”.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-s01"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">02</span><h3>Kuota &amp; level</h3><p>Atur jumlah pemain yang dibutuhkan dan rentang level, mis. Newbie – Intermediate.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-s02"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">03</span><h3>Biaya &amp; Pembayaran Online</h3><p>Atur biaya per peserta dan gunakan pembayaran online konfirmasi otomatis dan real-time.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-s03"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">04</span><h3>Santai atau Kompetitif</h3><p>Pilih permainan santai untuk seru-seruan bersama atau pertandingan kompetitif untuk menguji kemampuanmu.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-s04"></div></div></div>
+  </div>
+
+  <div class="sc-panel" id="kf-cohost" role="tabpanel" aria-labelledby="tab-cohost" hidden>
+    <div class="wrap container-fluid sc-intro"><h2 class="sc-h3">Kelola sesi lebih besar bersama co-host.</h2><p>Bagi tugas di hari-H dengan pemain yang kamu percaya.</p></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">01</span><h3>Undang Co-host</h3><p>Tambahkan pemain yang kamu percaya sebagai co-host di sesimu.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-c01"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">02</span><h3>Bagi tugas di hari Pertandingan</h3><p>Co-host membantu menyambut pemain, mengelola kehadiran, dan memastikan sesi berjalan lancar.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-c02"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">03</span><h3>Tetap Pegang Kendali</h3><p>Delegasikan tugas pengelolaan sesi tanpa kehilangan kendali atas keputusan dan pengaturan utama.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-c03"></div></div></div>
+  </div>
+
+  <div class="sc-panel" id="kf-peserta" role="tabpanel" aria-labelledby="tab-peserta" hidden>
+    <div class="wrap container-fluid sc-intro"><h2 class="sc-h3">Kelola susunan pemain dengan lebih mudah.</h2><p>Atur permintaan bergabung, lihat level kemampuan pemain, dan pantau ketersediaan slot seiring bertambahnya peserta.</p></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">01</span><h3>Tentukan Siapa yang Bisa Bergabung</h3><p>Tinjau permintaan bergabung dan tentukan pemain yang dapat mengikuti sesi.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-p01"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">02</span><h3>Kenali Pemain Sebelum Hari Pertandingan</h3><p>Lihat level kemampuan yang dipilih setiap pemain sebelum sesi dimulai, sehingga kamu dapat mengetahui komposisi peserta sejak awal.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-p02"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">03</span><h3>Slot Penuh? Kelola Daftar Tunggu</h3><p>Saat slot Open Play penuh, pemain yang tertarik tetap bisa masuk daftar tunggu dan undang mereka saat slot kosong.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-p03"></div></div></div>
+  </div>
+
+  <div class="sc-panel" id="kf-skor" role="tabpanel" aria-labelledby="tab-skor" hidden>
+    <div class="wrap container-fluid sc-intro"><h2 class="sc-h3">Kenali Scoring, aplikasi pencatat skor gratis untuk Open Play.</h2><p>Catat skor secara langsung, jalankan Americano, Mexicano, atau game dengan format kustom, dan pantau klasemen—semuanya dalam satu aplikasi.</p></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">01</span><h3>Beragam Format Permainan</h3><p>Pilih format Americano, Mexicano, atau atur format sendiri sesuai kebutuhan grup dan gaya bermainmu.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-sk01"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">02</span><h3>Tim seimbang</h3><p>Matchmaker menyusun tim seimbang secara otomatis, jadi setiap game tetap kompetitif.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-sk02"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">03</span><h3>Papan skor live</h3><p>Catat skor sambil bermain; setiap pemain bisa memantaunya dari HP masing-masing.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-sk03"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">04</span><h3>Semua Fitur, Sepenuhnya Gratis.</h3><p>Jalankan Americano, Mexicano, dan game dengan format pilihanmu. Nikmati fitur pengaturan pasangan otomatis, pencatatan skor secara langsung, hingga klasemen akhir—semuanya gratis di AYO.</p></div>
+      <!-- Same card as the Scoring page's Format 05: "$" counts down to 0,00, then the
+           features and +more appear (scripts/scoring.js). The markup is the end state. -->
+      <div class="sc-feat__vis"><div class="sc-card sc-card--free" data-free>
+        <p class="sc-free__price"><span class="sc-free__cur">$</span><span class="sc-free__num" data-free-num>0,00</span></p>
+        <p class="sc-free__feats">
+          <span class="sc-free__line"><span class="sc-free__item">Americano</span><span class="sc-free__item sc-free__sep" aria-hidden="true">·</span><span class="sc-free__item">Mexicano</span><span class="sc-free__item sc-free__sep" aria-hidden="true">·</span><span class="sc-free__item">Custom</span></span>
+          <span class="sc-free__line"><span class="sc-free__item">Pasangan otomatis</span><span class="sc-free__item sc-free__sep" aria-hidden="true">·</span><span class="sc-free__item">Skor live</span><span class="sc-free__item sc-free__sep" aria-hidden="true">·</span><span class="sc-free__item">Klasemen</span></span>
+        </p>
+        <span class="sc-free__more">+more</span>
+      </div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">05</span><h3>Klasemen live</h3><p>Lihat jumlah pertandingan, kemenangan, hasil imbang, kekalahan, selisih poin, dan total poin setiap pemain. Klasemen diperbarui otomatis setiap kali skor dimasukkan.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-sk05"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">06</span><h3>Atur scoring menjadi kompetitif</h3><p>Buat agar hasil pertandinganmu berkontribusi pada rating dengan mengaktifkan mode Scoring ke competitive. Pantau perkembangan, tingkatkan performa, dan lihat progres dengan mudah.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-sk06"></div></div></div>
+  </div>
+
+  <div class="sc-panel" id="kf-bayar" role="tabpanel" aria-labelledby="tab-bayar" hidden>
+    <div class="wrap container-fluid sc-intro"><h2 class="sc-h3">Terima Pembayaran Tanpa Perlu Menagih Pemain.</h2><p>Tentukan biaya setiap pemain, terima pembayaran online saat mereka bergabung, dan pantau status pembayaran dalam satu tempat.</p></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">01</span><h3>Tentukan Biaya per Pemain</h3><p>Atur jumlah biaya yang harus dibayar setiap peserta untuk mengikuti sesimu.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-by01"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">02</span><h3>Bayar Saat Bergabung</h3><p>Pemain menyelesaikan pembayaran online saat memilih dan mengambil slot pertandingan.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-by02"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">03</span><h3>Pantau Pembayaran Secara Otomatis</h3><p>Lihat status pembayaran setiap pemain dalam satu tempat, sehingga kamu tahu siapa yang sudah membayar dan siapa yang belum.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-by03"></div></div></div>
+  </div>
+
+  <div class="sc-panel" id="kf-bagikan" role="tabpanel" aria-labelledby="tab-bagikan" hidden>
+    <div class="wrap container-fluid sc-intro"><h2 class="sc-h3">Jangkau Lebih Banyak Pemain. Bangun Kepercayaan. Kembangkan Sesi Kamu.</h2><p>Bagikan sesi, tampilkan penilaian pemain, dan tunjukkan reputasimu melalui badge Superhost.</p></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">01</span><h3>Jangkau Lebih Banyak Pemain</h3><p>Bagikan sesi ke WhatsApp dan Instagram hanya dengan satu ketukan untuk menarik lebih banyak pemain.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-b01"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">02</span><h3>Bangun Kepercayaan Melalui Rating Pemain</h3><p>Pemain dapat memberikan penilaian atas pengalaman mereka, dan rating host-mu ditampilkan di setiap kartu sesi untuk membantu pemain lain menentukan pilihan.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-b02"></div></div></div>
+    <div class="sc-feat"><div class="sc-feat__txt"><span class="sc-num">03</span><h3>Tampil Lebih Menonjol dengan Badge Superhost</h3><p>Host terbaik mendapatkan badge Superhost, sehingga pemain lebih percaya diri untuk bergabung dalam sesi yang kamu adakan.</p></div><div class="sc-feat__vis"><div class="sc-card mu-stage" data-mu="op-b03"></div></div></div>
+  </div>
+</section>
+
+<!-- 4. CLOSING (Figma 27055:7264) -->
+<section class="sc-close" aria-labelledby="op-close-title">
+  <div class="wrap container-fluid">
+    <h2 class="sc-h2" id="op-close-title">Siap jadi host Open Play pertamamu?</h2>
+    <p>Unduh aplikasi AYO, buat sesi dalam hitungan menit, dan bagikan ke komunitasmu.</p>
+    <a class="sc-btn" href="#">Download Aplikasi AYO</a>
+  </div>
+</section>
+</main>
+
+<!-- 7. FOOTER — components/site-footer, Indonesian copy (Figma "Footer · ID") -->
+<footer class="sft">
+  <div class="sft__in">
+    <div class="sft__top">
+      <a class="sft__logo" href="index.html" aria-label="Beranda AYO"><img src="assets/icons/footer/logo.svg" alt="AYO" width="48" height="26"></a>
+      <div class="sft__cta">
+        <p class="sft__cta-label">Punya venue olahraga?</p>
+        <a class="sft__btn" href="#">Jadi Mitra Venue <img src="assets/icons/footer/arrow-up-right.svg" alt="" width="16" height="16"></a>
+      </div>
+    </div>
+
+    <div class="sft__cols">
+      <nav class="sft__col sft__col--company" aria-labelledby="sft-company">
+        <p class="sft__h" id="sft-company">Perusahaan</p>
+        <div class="sft__links"><a href="about-id.html">Tentang Kami</a><a href="#">Kebijakan &amp; Privasi</a><a href="#">Syarat &amp; Ketentuan</a></div>
+      </nav>
+      <nav class="sft__col sft__col--eco" aria-labelledby="sft-eco">
+        <p class="sft__h" id="sft-eco">Ekosistem</p>
+        <div class="sft__links"><a href="#">Aktivitas</a><a href="#">PadelLevels</a><a href="#">Booking</a><a href="avm-id.html">Pemilik Venue</a><a href="#">Kemitraan</a><a href="#">Direktori Lapangan</a><a href="#">Direktori Komunitas</a></div>
+      </nav>
+      <nav class="sft__col sft__col--support" aria-labelledby="sft-support">
+        <p class="sft__h" id="sft-support">Bantuan</p>
+        <div class="sft__links"><a href="#">Hubungi Kami</a></div>
+      </nav>
+      <div class="sft__col sft__col--follow">
+        <p class="sft__h">Follow Kami</p>
+        <div class="sft__social">
+          <a href="#" aria-label="AYO di Instagram"><img src="assets/icons/footer/instagram.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO di TikTok"><img src="assets/icons/footer/tiktok.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO di YouTube"><img src="assets/icons/footer/youtube.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO di Threads"><img src="assets/icons/footer/threads.svg" alt="" width="18" height="18"></a>
+          <a href="#" aria-label="AYO di LinkedIn"><img src="assets/icons/footer/linkedin.svg" alt="" width="18" height="18"></a>
+        </div>
+        <div class="sft__apps">
+          <p class="sft__apps-label">Tersedia di</p>
+          <div class="sft__stores">
+            <a class="sft__store" href="#" aria-label="Download di App Store"><img src="assets/icons/footer/app-store.svg" alt="" width="27" height="27"><span><small>Download on the</small><b>App Store</b></span></a>
+            <a class="sft__store" href="#" aria-label="Dapatkan di Google Play"><img src="assets/icons/footer/google-play.svg" alt="" width="25" height="27"><span><small>Get it on</small><b>Google Play</b></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sft__bottom">
+      <p class="sft__copy">© 2026 AYO All Right Reserved</p>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Kembali ke atas">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V4.5"/><path d="M7.5 9.5 12 5 16.5 9.5"/></svg>
+</button>
+
+<script src="vendor/jquery-3.5.1/jquery.min.js"></script>
+<script src="vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
+<script src="scripts/chrome.js?v=20261120a"></script>
+<script src="components/mini-ui/mini-ui.js?v=20261119n"></script>
+<script src="components/mini-ui/open-play/host.js?v=20261120a"></script>
+<script src="components/mini-ui/open-play/more.js?v=20261120a"></script>
+<!-- Key-feature tabs: shared with the Scoring page (its other parts only run when their markup exists). -->
+<script src="scripts/scoring.js?v=20261119i"></script>
+</body>
+</html>
