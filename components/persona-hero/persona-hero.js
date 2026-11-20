@@ -14,28 +14,24 @@
   var PERSONAS = [
     {
       key: 'player', label: 'Player',
-      eyebrow: 'Open Play · Open Match · Booking · Community',
       title: 'Find a game. Book a court.\nPlay together.',
       sub: '900,000+ users across 100+ cities in Indonesia. Find a court, join an Open Play or Open Match session, or host your own game, all in one app.',
       ctas: [ { label: 'Download AYO', kind: 'ghost' } ]
     },
     {
       key: 'host', label: 'Host',
-      eyebrow: 'Open Play · Session Management · Payments',
       title: 'Host a session, hassle-free.',
       sub: 'Create sessions, manage participants and track payment automatically. Run it all in one place.',
       ctas: [ { label: 'Download AYO', kind: 'ghost' } ]
     },
     {
       key: 'venue', label: 'Venue Owner',
-      eyebrow: 'Venue Management · Scheduling · Revenue',
       title: 'Manage your venue, connect with more players.',
       sub: 'Simplify venue management with one dashboard for schedules, pricing, and payments. Connect with 900,000+ AYO users and unlock more opportunities to fill your courts.',
       ctas: [ { label: 'Download the App', kind: 'ghost' } ]
     },
     {
       key: 'business', label: 'Business Partner',
-      eyebrow: 'Brand · Sponsorship · Activation',
       title: 'Reach hundreds of thousands of sport enthusiasts.',
       sub: 'Connect your brand with Indonesia\u2019s most active sports community through campaigns, sponsorships, and in-platform activations.',
       ctas: [ { label: 'Explore Partnership', kind: 'ghost', href: '#' } ]
@@ -169,7 +165,6 @@
       }).join('');
 
       content.innerHTML =
-        '<p class="ph-eyebrow">' + esc(p.eyebrow) + '</p>' +
         '<h1 class="ph-title">' + esc(p.title).replace(/\n/g, '<br>') + '</h1>' +
         '<p class="ph-sub">' + esc(p.sub) + '</p>' +
         '<div class="ph-ctas">' + ctas + '</div>';

@@ -73,12 +73,6 @@
 /* ---- Per-persona content --------------------------------------------------- */
 .ph-content { max-width: 60rem; animation: ph-enter .5s cubic-bezier(.2,.7,.2,1) both; }
 
-.ph-eyebrow {
-  font-family: var(--font-mono); font-size: var(--fs-small); font-weight: var(--fw-semibold);
-  text-transform: uppercase; letter-spacing: .12em;
-  color: rgba(255,255,255,.8); margin-bottom: var(--space-5);
-}
-
 /* Shared with the other pages' opening lines via tokens — see --fs-hero. */
 .ph-title {
   font-family: var(--font-sans); font-weight: var(--fw-extrabold);
@@ -353,10 +347,6 @@
   .ph-tab { font-family: var(--font-sans); font-size: 12px; line-height: 18px; letter-spacing: 0; }
 
   .ph-main { flex: none; align-items: flex-start; padding: var(--space-10) 0 0; }
-  .ph-eyebrow {
-    font-family: var(--font-sans); font-size: 12px; line-height: 18px;
-    letter-spacing: .13em; margin-bottom: var(--space-5);
-  }
   .ph-title { font-size: 40px; line-height: 48px; font-weight: var(--fw-bold); letter-spacing: 0; }
   .ph-sub { margin-top: var(--space-4); max-width: none; }
   .ph-ctas { margin-top: var(--space-6); }
