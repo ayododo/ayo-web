@@ -172,9 +172,8 @@
 .om-share{width:12px;height:12px}
 .om-banner{--bn-accent:#14a3f0;--bn-ink:#0f1d33;--bn-tint:rgba(10,30,60,.6);position:relative;height:150px;flex:0 0 auto;border-radius:12px;overflow:hidden;background:var(--bn-ink);transition:background .4s}
 /* Group photo after the match (supplied by the design team), with a dark tint top and bottom. */
-.om-banner__photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.om-banner__photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%}
 .om-banner::before{content:'';position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,var(--bn-tint) 0%,rgba(0,0,0,0) 32%,rgba(0,0,0,0) 45%,var(--bn-tint) 72%,var(--bn-ink) 100%);transition:background .4s}
-.om-banner::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;z-index:1;background:var(--bn-accent);transition:background .4s}
 .om-banner__t{position:absolute;left:10px;top:10px;z-index:1;padding:3px 7px;background:#fff;color:var(--bn-ink);font-size:12px;font-weight:900;letter-spacing:-.01em;box-shadow:3px 3px 0 var(--bn-accent);transition:box-shadow .4s,color .4s}
 .om-banner__score{position:absolute;z-index:1;left:10px;bottom:9px;width:150px;padding:4px 5px;background:#fff;border-radius:2px;display:flex;flex-direction:column;gap:3px}
 .om-banner__score>div{display:flex;align-items:center;gap:4px;font-size:6.5px;line-height:1.2;font-weight:700;color:var(--bn-ink)}
