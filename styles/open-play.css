@@ -73,10 +73,13 @@
   .op-page .sc-close .sc-h2{font-size:28px;line-height:34px}
   .op-hero__visual{--s:.78;width:100%;max-width:328px;height:auto;aspect-ratio:1;margin:0 auto}
   .op-hero__box{width:100%;height:100%}
-  /* Keep the cards inside the screen: less overhang than on desktop. */
-  .op-hf-toast{left:calc(110px*var(--s))}
-  .op-hf-priv{left:calc(-14px*var(--s))}
-  .op-hf-co{left:calc(248px*var(--s))}
-  .op-hf-pay{left:calc(-14px*var(--s));top:calc(300px*var(--s))}
+  /* Mobile: the cards shrink more than the phone (--cs) and sit on the box
+     edges, so they leave the session detail readable and stay on screen. */
+  .op-hero__visual .hx-float{--cs:.68;transform:scale(var(--cs))}
+  .op-hf-toast{left:calc(96px*var(--s));top:calc(-14px*var(--s))}
+  .op-hf-priv{left:calc(-26px*var(--s));top:calc(70px*var(--s))}
+  .op-hf-pay{left:calc(-26px*var(--s));top:calc(262px*var(--s));width:140px}
+  .op-hf-co{left:auto;right:calc(-26px*var(--s));top:calc(392px*var(--s));transform-origin:100% 0}
+  .op-hf-rec{display:none}   /* "received" doesn't fit the narrow card; the label says it */
   .op-hero__box .mu-phone{--mu-scale:.78;top:22px}
 }
