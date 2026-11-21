@@ -1,0 +1,78 @@
+/* ==========================================================================
+   AYO — Open Match hero phone (card om-hero, hero.js)
+   Sizes are the Figma frame's own (Detail Open Match (hero) 28528:94, a
+   240 px screen): 8 / 9.33 / 13.33 px type, 10.67 px side padding.
+   ========================================================================== */
+.mu-page[data-page="omh"]{color:#25282b}
+.mu-page[data-page="omh"] .mu-scroll{padding:0 0 24px;gap:0}
+
+/* Status bar 28 px + title bar 37.7 px. */
+.omh-status{display:flex;align-items:center;justify-content:space-between;height:28px;padding:0 10.67px 0 13.33px;flex:0 0 auto;background:#fff;position:relative;z-index:2}
+.omh-status b{font-size:8px;line-height:1;font-weight:600;color:#000;letter-spacing:.01em}
+.omh-status__ic{display:flex;gap:2px}
+.omh-status__ic svg{width:12px;height:12px;display:block}
+.omh-nav{display:flex;align-items:center;height:30.7px;padding:0 10.67px 0 5.33px;flex:0 0 auto;background:#fff;position:relative;z-index:2}
+.omh-nav__back svg{width:24px;height:24px;display:block}
+.omh-nav__sp{flex:1}
+.omh-nav__ic svg{width:16px;height:16px;display:block}
+
+/* Headline: tag, title, Padel • Competitive • Jakarta. */
+.omh-head{display:flex;flex-direction:column;gap:5.33px;padding:7px 10.67px 0}
+.omh-tag{align-self:flex-start;padding:2.67px 5.33px;border-radius:999px;background:#ec2435;color:#fff;font-size:8px;line-height:9.33px;font-weight:700;white-space:nowrap}
+.omh-title{font-size:13.33px;line-height:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.omh-meta{display:flex;align-items:center;font-size:8px;line-height:12px;white-space:nowrap}
+.omh-meta i{display:block;width:10.67px;height:10.67px;margin-right:2.67px}
+.omh-meta i svg{width:100%;height:100%;display:block}
+.omh-meta em{display:block;width:2px;height:2px;border-radius:50%;background:#25282b;margin:0 4px}
+
+/* Players: two per team, VS in the middle (37.3 px avatars). */
+.omh-teams{display:flex;align-items:flex-start;justify-content:space-between;padding:0 10.67px;margin-top:10.67px}
+.omh-pl{display:flex;flex-direction:column;align-items:center;width:37.33px}
+.omh-av{width:37.33px;height:37.33px;border-radius:50%;object-fit:cover;display:block;background:#eee}
+.omh-badge{display:flex;align-items:center;gap:2px;margin-top:4px;padding:1.33px 4px 1.33px 2.67px;border-radius:4px;background:#f2f2f2}
+.omh-badge svg{width:8px;height:8px;display:block}
+.omh-badge b{font-size:8px;line-height:12px;font-weight:700;color:#2c2c2c;font-variant-numeric:tabular-nums}
+.omh-name{margin-top:2.67px;width:100%;text-align:center;font-size:8px;line-height:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.omh-name--mut{color:#a0a4a8}
+.omh-open{display:flex;align-items:center;justify-content:center;width:37.33px;height:37.33px;border-radius:50%;border:.67px solid #cacccf;background:#fff}
+.omh-open svg{width:10px;height:10px}
+.omh-open+.omh-name{margin-top:2.67px}
+.omh-vs{width:12.67px;height:37.33px;display:flex;align-items:center;justify-content:center;font-size:9.33px;font-weight:700;color:#1a1919}
+.omh-slot{display:grid}
+.omh-slot>*{grid-area:1/1}
+.omh-slot>[data-el="pa2-pl"]{opacity:0;transform:scale(.6);transition:opacity .3s,transform .45s cubic-bezier(.34,1.56,.64,1)}
+.omh-slot>[data-el="pa2-open"]{transition:opacity .2s}
+.omh-slot.is-filled>[data-el="pa2-pl"]{opacity:1;transform:none}
+.omh-slot.is-filled>[data-el="pa2-open"]{opacity:0}
+.omh-badge.is-pop{animation:omh-pop .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes omh-pop{40%{transform:scale(1.25)}}
+
+.omh-req{display:flex;align-items:center;margin:8px 10.67px 0;font-size:8px;line-height:12px;font-weight:700;color:#d31223;white-space:nowrap}
+.omh-req b{font-weight:700}
+.omh-req svg{width:8px;height:8px;margin-left:1.33px}
+
+/* Info rows: 13.3 px icon, 8 px gap, bold line over regular line. */
+.omh-list{display:flex;flex-direction:column;gap:8px;padding:10.67px 10.67px 0}
+.omh-row{display:flex;gap:8px;align-items:flex-start}
+.omh-row__ic{flex:0 0 auto;width:13.33px;height:13.33px}
+.omh-row__ic svg{width:100%;height:100%;display:block}
+.omh-row__c{display:flex;flex-direction:column;gap:2.67px;min-width:0;font-size:9.33px;line-height:14px;white-space:nowrap}
+.omh-row__c b{font-weight:700}
+.omh-row__c b span{font-weight:400}
+.omh-row--one{margin-top:5.33px}
+.omh-desc{display:flex;flex-direction:column;gap:5.33px;margin-top:5.33px}
+.omh-desc b{font-size:9.33px;line-height:14px;font-weight:700}
+.omh-desc span{font-size:8px;line-height:12px;color:#52575c}
+
+/* Snackbar "Players updated." over the title bar. */
+.omh-snack{position:absolute;left:12px;right:12.67px;top:26.67px;z-index:8;display:flex;align-items:center;gap:10.67px;padding:10.67px;border-radius:5.33px;background:#fff;
+  box-shadow:0 2px 8px rgba(0,0,0,.1),0 0 0 .5px rgba(0,0,0,.04);transition:opacity .3s,transform .35s cubic-bezier(.32,.72,0,1)}
+.omh-snack__i svg{width:16px;height:16px;display:block}
+.omh-snack__t{flex:1;font-size:9.33px;line-height:14px}
+.omh-snack__x svg{width:13.33px;height:13.33px;display:block}
+.omh-snack.is-hide{opacity:0;transform:translateY(-10px)}
+
+@media (prefers-reduced-motion:reduce){
+  .omh-slot>*,.omh-snack{transition:none}
+  .omh-badge.is-pop{animation:none}
+}

@@ -21,8 +21,9 @@
 <link rel="stylesheet" href="components/site-footer/site-footer.css?v=20261118b">
 <link rel="stylesheet" href="components/mini-ui/open-match/host.css?v=20261120i">
 <link rel="stylesheet" href="components/mini-ui/open-match/player.css?v=20261120c">
+<link rel="stylesheet" href="components/mini-ui/open-match/hero.css?v=20261121a">
 <link rel="stylesheet" href="styles/scoring.css?v=20261119l">
-<link rel="stylesheet" href="styles/open-match.css?v=20261120a">
+<link rel="stylesheet" href="styles/open-match.css?v=20261121a">
 </head>
 <body class="ayo-web om-page">
 
@@ -87,7 +88,13 @@
       <p class="sc-hero__sub">Jadi host atau ikut match individu, ganda, atau sparring tim. Pilih kompetitif atau santai, atur level, dan biarkan skornya dikonfirmasi semua pemain.</p>
       <a class="sc-btn" href="#">Buat atau Cari Pertandingan <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a>
     </div>
-    <div class="om-hero__box" role="img" aria-label="Ilustrasi Open Match (segera hadir)"></div>
+    <!-- Hero art: the match detail phone in a peach court box with one
+         floating PadelLevels card. scripts/open-match-hero.js plays it: a
+         player joins (snackbar), then the card steps the rating 3.34 → 3.41. -->
+    <div class="om-hero__visual" data-om-hero>
+      <div class="om-hero__box" role="img" aria-label="Detail Open Match di aplikasi AYO dengan kartu rating PadelLevels"><div class="mu-stage" data-mu="om-hero"></div></div>
+      <div class="hx-float om-hf-lv" data-hf="lv" aria-hidden="true"><img class="om-hf-lv__wm" src="assets/open-match/padellevels.svg" alt="" width="79" height="16"><span class="om-hf-lv__l">Rating kamu</span><div class="om-hf-lv__r"><b data-hf="n">3.41</b><span class="om-hf-up">▲ 0.07</span></div><svg class="om-hf-spark" viewBox="0 0 200 44" preserveAspectRatio="none"><polyline points="0,34 25,31 50,33 75,27 100,29 125,24 150,25 175,20" fill="none" stroke="#c9c9c9" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><polyline class="om-hf-spark__new" points="175,20 200,8" fill="none" stroke="#d83232" stroke-width="2.4" stroke-linecap="round" vector-effect="non-scaling-stroke"/><circle class="om-hf-spark__dot" cx="197" cy="9.5" r="3.4" fill="#d83232"/></svg><div class="om-hf-lv__stats"><span><i>Sebelumnya</i><b data-hf="prev">3.34</b></span><span><i>Match</i><b data-hf="m">12</b></span><span><i>Menang</i><b data-hf="w">8</b></span></div></div>
+    </div>
   </div>
 </section>
 
@@ -220,7 +227,9 @@
 <script src="components/mini-ui/mini-ui.js?v=20261119n"></script>
 <script src="components/mini-ui/open-match/host.js?v=20261120h"></script>
 <script src="components/mini-ui/open-match/player.js?v=20261120e"></script>
+<script src="components/mini-ui/open-match/hero.js?v=20261121a"></script>
 <!-- Key-feature tabs: shared with the Scoring page (its other parts only run when their markup exists). -->
 <script src="scripts/scoring.js?v=20261120a"></script>
+<script src="scripts/open-match-hero.js?v=20261121a"></script>
 </body>
 </html>

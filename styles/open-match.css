@@ -12,13 +12,52 @@
 .om-page .sc-feat__txt h3{font-weight:var(--fw-extrabold)}
 .om-page .sc-btn{font-weight:var(--fw-semibold)}
 
-/* Hero illustration slot (Figma 26953:68943): a plain 420 × 420 box until the
-   redesigned header lands. */
-.om-hero__box{width:420px;height:420px;border-radius:24px;background:#eaf1fa}
+/* Hero (Figma 26953:68943, 420 × 420): a peach court box with the match
+   detail as a Mini UI phone (components/mini-ui/open-match/hero.js, card
+   om-hero) and one floating PadelLevels card that steps up after a match
+   (scripts/open-match-hero.js). Court lines as on the Open Play hero. */
+.om-hero__visual{--s:1;position:relative;width:420px;height:420px;font-family:var(--font-sans);color:#25282b}
+.om-hero__box{position:relative;width:420px;height:420px;border-radius:24px;background:#fff1e6;overflow:hidden}
+.om-hero__box::before{content:"";position:absolute;left:7.143%;top:-3.571%;width:85.714%;height:111.429%;
+  box-sizing:border-box;border:3px solid #fff;border-radius:4px;
+  background:
+    linear-gradient(#fff,#fff) 49.86% 0/3px 64.3% no-repeat,
+    linear-gradient(#fff,#fff) 0 56.4%/100% 3px no-repeat}
+.om-hero__box .mu-stage{position:absolute;inset:0}
+.om-hero__box .mu-phone{--mu-scale:1;top:28px}
+
+/* Floating PadelLevels card (Figma "PadelLevels card" 28480:23148, the P05
+   Mini UI), bottom left, over the box edge. Drawn in its "after" state
+   (3.41 ▲ 0.07) so it reads without motion; .is-before is the step back. */
+.om-hero__visual .hx-float{transform:scale(var(--s));transform-origin:0 0;border:.5px solid rgba(0,0,0,.07);box-shadow:0 1px 2px rgba(0,0,0,.04),0 6px 16px rgba(0,0,0,.07)}
+.om-hf-lv{left:calc(-88px*var(--s));top:calc(236px*var(--s));width:184px;padding:13px 13px 12px;display:flex;flex-direction:column;gap:4px}
+.om-hf-lv__wm{width:74px;height:auto;display:block;margin-bottom:3px}
+.om-hf-lv__l{font-size:10px;line-height:13px;color:#787373}
+.om-hf-lv__r{display:flex;align-items:center;gap:7px}
+.om-hf-lv__r b{font-size:30px;line-height:1;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.om-hf-up{padding:2px 7px;border-radius:7px;background:#e6f6ee;color:#1b7a4b;font-size:10px;line-height:14px;font-weight:700;white-space:nowrap;transition:opacity .3s,transform .35s cubic-bezier(.34,1.56,.64,1)}
+.om-hf-spark{width:100%;height:36px;display:block;margin:2px 0}
+.om-hf-spark__new{stroke-dasharray:30;stroke-dashoffset:0;transition:stroke-dashoffset .8s ease}
+.om-hf-spark__dot{transition:opacity .3s .6s}
+.om-hf-lv__stats{display:flex;gap:5px}
+.om-hf-lv__stats span{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;padding:5px 6px;border-radius:8px;background:#f7f7f7}   /* sized by label, so "Sebelumnya" / "Matches" fit */
+.om-hf-lv__stats i{font-style:normal;font-size:8.5px;line-height:1.3;color:#787373;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.om-hf-lv__stats b{font-size:12px;line-height:16px;font-weight:700;font-variant-numeric:tabular-nums;display:inline-block;transition:transform .3s}
+.om-hf-lv__stats b.is-bump{transform:scale(1.25)}
+.om-hf-lv.is-before .om-hf-up{opacity:0;transform:translateY(4px) scale(.9)}
+.om-hf-lv.is-before .om-hf-spark__new{stroke-dashoffset:30}
+.om-hf-lv.is-before .om-hf-spark__dot{opacity:0;transition-delay:0s}
+.om-hero__visual.is-live .om-hf-lv{animation:hx-bob 5.5s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.om-hero__visual .hx-float{animation:none!important}}
 
 @media (max-width:900px){
   .om-page .sc-h2{font-size:28px;line-height:34px}
   .om-page .sc-close .sc-h2{font-size:28px;line-height:34px}
-  /* Mobile frame 26953:69201: 328 × 328, centred. */
-  .om-hero__box{width:100%;max-width:328px;height:auto;aspect-ratio:1;margin:0 auto;background:#f7f7f7}
+  /* Mobile frame 26953:69201: 328 × 328, centred; the phone at 0.78. The
+     card shrinks more than the phone (--cs) and sits on the box's left edge. */
+  .om-hero__visual{--s:.78;width:100%;max-width:328px;height:auto;aspect-ratio:1;margin:0 auto}
+  .om-hero__box{width:100%;height:100%}
+  .om-hero__box .mu-phone{--mu-scale:.78;top:22px}
+  .om-hero__visual .hx-float{--cs:.68;transform:scale(var(--cs))}
+  .om-hf-lv{left:calc(-22px*var(--s));top:calc(322px*var(--s))}   /* below the PadelLevels and date rows */
 }
