@@ -1,16 +1,13 @@
 /* ==========================================================================
    AYO — Open Match hero motion (open-match-id/en.html)
    Floating assets from Figma "asset floating" 28584:47410. While the hero is
-   in view it loops one story, in steps:
-     1. Gilberta's request is accepted: she fills Team A's open spot in the phone,
-        the request count drops 2 → 1 and the snackbar slides in.
-     2. PadelLevels is activated (the Activate button is pressed): the card
-        shows 3.XX · Calibrating · 40%.
-     3. A match is played: the result card pops in, its trend line draws and
-        +0.00 counts up to +0.04; the card steps to 3.4X · 54%.
-     4. The win is verified: the winner banner pops in and the card lands on
-        3.42 · Calibrated · 75%.
-   Then the result and banner fade out and the story starts again.
+   in view it loops one short story. The three assets pop in close together
+   (springy scale + tilt): the PadelLevels card at 0.3 s, the match result at
+   0.85 s (its trend draws, +0.00 counts to +0.04), the winner banner at
+   1.7 s. Meanwhile Gilberta joins Team A in the phone (snackbar) and the
+   PadelLevels card steps: Activate (pressed) → 3.XX · Calibrating · 40% →
+   3.4X · 54% → 3.42 · Calibrated · 75%. After a hold the assets leave one
+   by one and the story starts again (8.6 s loop).
    The phone is the Mini UI card om-hero (components/mini-ui/open-match/hero.js).
    Reduced motion or no IntersectionObserver: the hero stays as drawn
    (all three assets, the card at 3.42 Calibrated).
@@ -48,35 +45,37 @@
     if(slot) slot.classList.remove('is-filled');
     if(snack) snack.classList.add('is-hide');
     if(req) req.textContent = '2';
-    mr.classList.remove('is-in', 'is-draw'); won.classList.remove('is-in'); up.textContent = '+0.00';
+    [mr, pl, won].forEach(function(n){ n.classList.remove('is-in'); });
+    mr.classList.remove('is-draw'); up.textContent = '+0.00';
     bar.style.transition = 'none'; bar.style.width = '0%'; bar.offsetWidth; bar.style.transition = '';
     tag.textContent = tag.dataset.cal;
     step(1);
   }
   function story(){
     reset();
-    // 1 · Gilberta joins Team A (Bayu's partner).
-    later(600, function(){
+    // The three assets pop in close together; the steps follow quickly.
+    later(300, function(){ pl.classList.add('is-in'); });
+    later(650, function(){
       var slot = el('pa2'), snack = el('snack'), req = el('req-n');
       if(slot) slot.classList.add('is-filled');
       if(req) req.textContent = '1';
       if(snack) snack.classList.remove('is-hide');
     });
-    later(2600, function(){ var snack = el('snack'); if(snack) snack.classList.add('is-hide'); });
-    // 2 · Activate PadelLevels.
-    later(1700, function(){ act.classList.add('is-down'); });
-    later(1950, function(){ act.classList.remove('is-down'); });
-    later(2150, function(){ step(2, '3.XX', false, 40); });
-    // 3 · A match result comes in.
-    later(3500, function(){ mr.classList.add('is-in'); });
-    later(3800, trend);
-    later(4200, function(){ step(3, '3.4X', false, 54); });
-    // 4 · The win is verified: calibrated.
-    later(5600, function(){ won.classList.add('is-in'); });
-    later(6300, function(){ step(4, '3.42', true, 75); });
-    later(9400, function(){ mr.classList.remove('is-in'); won.classList.remove('is-in'); });
+    later(850, function(){ mr.classList.add('is-in'); });
+    later(1100, trend);
+    later(1150, function(){ act.classList.add('is-down'); });
+    later(1350, function(){ act.classList.remove('is-down'); });
+    later(1500, function(){ step(2, '3.XX', false, 40); });
+    later(1700, function(){ won.classList.add('is-in'); });
+    later(2500, function(){ step(3, '3.4X', false, 54); });
+    later(2900, function(){ var snack = el('snack'); if(snack) snack.classList.add('is-hide'); });
+    later(3500, function(){ step(4, '3.42', true, 75); });
+    // Hold, then leave one after another.
+    later(7600, function(){ won.classList.remove('is-in'); });
+    later(7750, function(){ mr.classList.remove('is-in'); });
+    later(7900, function(){ pl.classList.remove('is-in'); });
   }
-  function start(){ if(live) return; live = true; vis.classList.add('is-live'); story(); loop = setInterval(story, 10200); }
+  function start(){ if(live) return; live = true; vis.classList.add('is-live'); story(); loop = setInterval(story, 8600); }
   function stop(){ live = false; vis.classList.remove('is-live'); clearInterval(loop); timers.forEach(clearTimeout); timers = []; }
   vis.classList.add('is-motion');
   new IntersectionObserver(function(es){ es.forEach(function(e){ e.isIntersecting ? start() : stop(); }); }, {threshold:.25}).observe(vis);
