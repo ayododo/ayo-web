@@ -81,5 +81,12 @@
   .op-hf-pay{left:calc(-26px*var(--s));top:calc(262px*var(--s));width:140px}
   .op-hf-co{left:auto;right:calc(-26px*var(--s));top:calc(392px*var(--s));transform-origin:100% 0}
   .op-hf-rec{display:none}   /* "received" doesn't fit the narrow card; the label says it */
+  html[lang="id"] .op-hf-co{top:calc(408px*var(--s))}   /* the longer ID price line runs further right */
   .op-hero__box .mu-phone{--mu-scale:.78;top:22px}
+}
+/* Small phones (box narrower than 328px): scale the phone and cards to the box. */
+@media (max-width:359px){
+  .op-hero__visual{--s:.686}
+  .op-hero__box .mu-phone{--mu-scale:.686;top:19px}
+  .op-hero__visual .hx-float{--cs:.6}
 }
