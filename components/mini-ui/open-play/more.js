@@ -131,6 +131,23 @@
      PEMBAYARAN + BAGIKAN — detail, checkout, confirmation, activity list
      ===================================================================== */
   function irow(icon, b, s, extra){ return '<div class="op-irow">'+ic(icon)+'<div><b>'+b+'</b>'+(s?'<span>'+s+'</span>':'')+(extra||'')+'</div></div>'; }
+  // Hero icons, taken from Figma (Event Details 28443:30660, PadelLevels
+  // 28577:41807, Superhost BadgeTag 28443:30584). Drawn on Figma's 13.33px grid.
+  var HV = '<svg viewBox="0 0 13.333 13.333" fill="none" aria-hidden="true">';
+  var HS = ' fill="none" stroke="#25282B" stroke-linecap="round" stroke-linejoin="round"';
+  var HI = {
+    crown: '<svg class="op-crown" viewBox="4 2.667 9.333 9.333" fill="none" aria-hidden="true"><path d="M4.78 5.78l.51.41a1.6 1.6 0 0 0 2.33-.46l1.05-1.89 1.05 1.89a1.6 1.6 0 0 0 2.33.46l.51-.41-.68 3.41a1.07 1.07 0 0 1-.53.7 6.02 6.02 0 0 1-5.35 0 1.07 1.07 0 0 1-.53-.7z" fill="#EC2435" stroke="#EC2435" stroke-width="1.167" stroke-linejoin="round"/><path d="M7.12 8.5c1 .52 2.1.52 3.11 0" stroke="#fff" stroke-width=".583" stroke-linecap="round"/></svg>',
+    level: HV+'<rect width="13.333" height="13.333" rx="2.667" fill="#F3F0ED"/><path d="M7.156 8.339 10.638 3.562l-.334-.23-3.146 4.308L5.597 5.034 2.305 9.844 5.58 5.709z" fill-rule="evenodd" fill="#D83232"/><path d="m7.157 10 3.43-4.735-.334-.23-3.094 4.267-1.56-2.607-2.49 3.078 2.472-2.403z" fill-rule="evenodd" fill="#D83232"/></svg>',
+    cal: HV+'<path d="M8.886 1.109v2.222M4.442 1.109v2.222M1.664 5.554h10M7.22 2.22H6.109c-2.095 0-3.143 0-3.794.652-.65.651-.651 1.698-.651 3.793v1.111c0 2.095 0 3.143.651 3.794.651.65 1.699.651 3.794.651H7.22c2.095 0 3.143 0 3.793-.651.651-.651.651-1.699.651-3.794V6.665c0-2.095 0-3.143-.651-3.793C10.362 2.221 9.315 2.22 7.22 2.22z"'+HS+'/><path d="M6.665 7.777h.005M6.665 10h.005M8.885 7.777h.005M4.445 7.777h.005M4.445 10h.005"'+HS+' stroke-width="1.333"/></svg>',
+    pin: HV+'<path fill="#2C2C2C" fill-rule="evenodd" d="M6.667 1.832C4.325 1.832 2.5 3.499 2.5 5.865c0 1.936.835 3.346 1.793 4.279.482.469.991.814 1.434 1.04.46.234.798.315.94.315.142 0 .479-.08.94-.315.442-.226.951-.571 1.433-1.04.958-.933 1.793-2.343 1.793-4.279 0-2.366-1.825-4.033-4.166-4.033zM1.5 5.865C1.5 2.898 3.823.832 6.667.832s5.166 2.066 5.166 5.033c0 2.252-.98 3.909-2.095 4.996-.556.541-1.148.944-1.678 1.214-.512.261-1.017.424-1.393.424s-.882-.163-1.394-.424a7.1 7.1 0 0 1-1.677-1.214C2.48 9.774 1.5 8.118 1.5 5.865zm5.167-.833c-.57 0-1.056.479-1.056 1.1 0 .621.486 1.1 1.056 1.1.57 0 1.055-.479 1.055-1.1 0-.621-.486-1.1-1.055-1.1zM4.61 6.132c0-1.146.908-2.1 2.056-2.1 1.149 0 2.056.954 2.056 2.1 0 1.147-.907 2.1-2.056 2.1-1.148 0-2.055-.953-2.055-2.1z"/><circle cx="10.336" cy="10.332" r="2.833" fill="#00C48C" stroke="#fff" stroke-width=".333"/><path fill="#fff" fill-rule="evenodd" d="M11.651 9.265a.45.45 0 0 1 0 .636l-1.375 1.375a.45.45 0 0 1-.636 0l-.625-.625a.45.45 0 0 1 .636-.636l.307.307 1.057-1.057a.45.45 0 0 1 .636 0z"/></svg>',
+    money: HV+'<path d="M8.887 2.777H4.443c-1.571 0-2.357 0-2.845.489-.488.488-.488 1.274-.488 2.845v1.111c0 1.571 0 2.357.488 2.845.488.488 1.274.488 2.845.488h4.444c1.571 0 2.357 0 2.845-.488.488-.488.488-1.274.488-2.845V6.111c0-1.571 0-2.357-.488-2.845-.488-.489-1.274-.489-2.845-.489z"'+HS+'/><path d="M10.277 6.668h.005M3.055 6.668h.005"'+HS+' stroke-width="1.333"/><path d="M8.333 6.667a1.667 1.667 0 1 1-3.333 0 1.667 1.667 0 0 1 3.333 0z"'+HS+'/></svg>',
+    lock: HV+'<path d="M6.664 9.166V8.055"'+HS+'/><path d="M2.368 10.47c.125.927.893 1.655 1.829 1.697.786.036 1.586.055 2.466.055.881 0 1.68-.019 2.467-.056.936-.042 1.704-.77 1.829-1.697.082-.606.149-1.226.149-1.858 0-.633-.067-1.253-.149-1.859-.125-.927-.893-1.655-1.829-1.698a54.6 54.6 0 0 0-2.467-.055c-.88 0-1.68.019-2.466.056-.936.042-1.704.77-1.829 1.697-.082.606-.149 1.226-.149 1.858 0 .633.067 1.253.149 1.859z"'+HS+'/><path d="M4.164 4.998V3.609a2.5 2.5 0 0 1 5 0v1.389"'+HS+'/></svg>'
+  };
+  // A hero detail row as in Figma: 13.33px icon, 8px gap, bold line over a
+  // regular one (or one line with a bold lead), optional tag below.
+  function hrow(icon, b, s, extra){
+    return '<div class="op-hloc"><span class="op-hloc__pin">'+HI[icon]+'</span><div class="op-hloc__c"><div><b>'+b+'</b>'+(s?'<span>'+s+'</span>':'')+'</div>'+(extra||'')+'</div></div>';
+  }
   // The Open Play detail (PRD 2139:49870 / 2100:25369): host or player.
   function detail(o){
     o = o || {};
@@ -146,21 +163,29 @@
       (o.hero
         // Hero (Figma 28448:20941): the PRD's own pills — dark teal "Open play"
         // with lime text, pink Superhost with the crown.
-        ? '<div class="mu-row" style="gap:5px"><span class="op-hpill op-hpill--open">Open play</span><span class="op-hpill op-hpill--super">'+I.crown+'Superhost</span></div>'
+        ? '<div class="mu-row" style="gap:5px"><span class="op-hpill op-hpill--open">Open play</span><span class="op-hpill op-hpill--super">'+HI.crown+'Superhost</span></div>'
         : '<div class="mu-row" style="gap:4px">'+tag('Open Play','open')+(o.superhost ? tag('Superhost','super', I.crown) : '')+'</div>')+
-      '<span class="op-dtitle">Fun Padel Kawan AYO Chapter Bogor Area</span>'+
-      '<span class="op-meta">'+ic('racket')+'<b>Padel</b> • '+ic('bolt')+'<b>Kompetitif</b> • '+ic('pin')+'<b>Kabupaten Bogor</b></span>'+
+      (o.hero
+        // Hero session (Figma 28443:30575): a Jakarta game.
+        ? '<span class="op-dtitle">Fun Padel Kawan AYO Jakarta Area</span>'+
+          '<span class="op-meta">'+ic('racket')+'<b>Padel</b> • '+ic('bolt')+'<b>Kompetitif</b> • '+ic('pin')+'<b>Kota Jakarta</b></span>'
+        : '<span class="op-dtitle">Fun Padel Kawan AYO Chapter Bogor Area</span>'+
+          '<span class="op-meta">'+ic('racket')+'<b>Padel</b> • '+ic('bolt')+'<b>Kompetitif</b> • '+ic('pin')+'<b>Kabupaten Bogor</b></span>')+
       '<div class="op-ppl" style="align-items:flex-start">'+ppl+'</div>'+
       '<div class="op-dtabs"><span class="is-on">Detail</span><span>Diskusi</span><span>Skor</span></div>'+
-      irow('level', 'PadelLevels · 2.50 - 3.50', 'Pemain dengan rating 2.50 – 3.50 diutamakan.')+
-      '<div data-el="when">'+irow('cal', 'Minggu, 17 Agustus 2026', '09:30 - 11:30')+'</div>'+
       (o.hero
-        // Location as in the PRD: the pin with a green check, venue, court, then
-        // the green "Booked via AYO" tag.
-        ? '<div class="op-hloc"><span class="op-hloc__pin">'+I.pinFill+'<i>'+I.tick+'</i></span><div class="op-hloc__c"><div><b>Kawan AYO Arena Bogor</b><span>Lapangan Utama</span></div><span class="op-hbooked">Booked via <img src="assets/icons/footer/logo.svg" alt="AYO" width="48" height="26"></span></div></div>'
-        : irow('pin', 'Kawan AYO Arena Bogor', 'Lapangan Utama', tag('Booked via AYO','booked')))+
-      '<div data-el="fee">'+irow('money', 'Rp75.000 · Pembayaran Online')+'</div>'+
-      (o.full ? '' : irow('lock', 'Privasi · Publik'))+
+        // Event Details rows as in Figma 28443:30660: the PadelLevels logo,
+        // calendar, pin with the green check, money and lock icons.
+        ? hrow('level', 'PadelLevels · 2.50 - 3.50', 'Pemain dengan rating 2.50 – 3.50 diutamakan')+
+          '<div data-el="when">'+hrow('cal', 'Minggu, 17 Agustus 2026', '09:30 - 11:30')+'</div>'+
+          hrow('pin', 'Kawan AYO Jakarta', 'Lapangan Utama', '<span class="op-hbooked">Booked via <img src="assets/icons/footer/logo.svg" alt="AYO" width="48" height="26"></span>')+
+          '<div data-el="fee">'+hrow('money', 'Rp75.000 <span>· Hanya Pembayaran Online</span>')+'</div>'+
+          hrow('lock', 'Privasi <span>· Publik</span>')
+        : irow('level', 'PadelLevels · 2.50 - 3.50', 'Pemain dengan rating 2.50 – 3.50 diutamakan.')+
+          '<div data-el="when">'+irow('cal', 'Minggu, 17 Agustus 2026', '09:30 - 11:30')+'</div>'+
+          irow('pin', 'Kawan AYO Arena Bogor', 'Lapangan Utama', tag('Booked via AYO','booked'))+
+          '<div data-el="fee">'+irow('money', 'Rp75.000 · Pembayaran Online')+'</div>'+
+          (o.full ? '' : irow('lock', 'Privasi · Publik')))+
       '<span class="op-desc">Main aman, main nyaman, sudah termasuk foto &amp; air mineral. Tanya dahulu ketersediaan slot jadwal ke admin.</span><b style="font-size:9px">Selengkapnya</b>'+
       '<span class="op-band"></span><span class="op-sub" data-el="org">Penyelenggara</span>'+
       '<div class="op-org" data-el="org-row"><span class="op-logo op-logo--kpb">KPB</span><div class="mu-col mu-grow" style="gap:2px"><b style="font-size:10.5px">Komunitas Padel Bogor</b>'+

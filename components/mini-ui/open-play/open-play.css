@@ -377,7 +377,7 @@
 .op-hpill{display:inline-flex;align-items:center;border-radius:999px;font-weight:700;white-space:nowrap;transform-origin:50% 50%}
 .op-hpill--open{padding:3px 7px;background:#00474d;color:#bdff61;font-size:9px;line-height:12px}
 .op-hpill--super{gap:3px;padding:3px 7px 3px 5px;background:#fdecee;color:#d31223;font-size:9px;line-height:12px}
-.op-hpill--super .op-crown{width:11px;height:11px}
+.op-hpill--super .op-crown{width:11px;height:11px;flex:0 0 auto}
 .op-hloc{display:flex;gap:8px;align-items:flex-start}
 .op-hloc__pin{position:relative;flex:0 0 auto;width:13.33px;height:13.33px}
 .op-hloc__pin>svg{display:block;width:100%;height:100%}
@@ -387,6 +387,7 @@
 .op-hloc__c>div{display:flex;flex-direction:column;gap:2.67px}
 .op-hloc__c b{font-size:9.33px;line-height:13.33px;font-weight:700;color:#25282b}
 .op-hloc__c span{font-size:9.33px;line-height:13.33px;color:#25282b}
+.op-hloc__c b span{font-size:inherit;font-weight:400}   /* "Rp75.000 · Online Payment Only": bold lead, regular rest */
 .op-hloc__c .op-hbooked{display:inline-flex;align-items:center;gap:3px;align-self:flex-start;padding:2px 5px;border-radius:3px;background:#00c48c;color:#fff;font-size:7.5px;line-height:10.5px;font-weight:700;transform-origin:0 50%}
 .op-hbooked img{display:block;width:auto;height:7px}   /* the white AYO logo */
 .op-hpill--open,.op-hpill--super,.op-hbooked{animation:op-grow 4.5s ease-in-out infinite}

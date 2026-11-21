@@ -96,6 +96,6 @@ window.AyoOPen = {
   'Bayar Sekarang':'Pay Now', 'Kamu sudah masuk!':'You\'re in!', 'Spot kamu terkonfirmasi':'Your spot is confirmed', 'Kamu sudah masuk! Spot kamu terkonfirmasi':'You\'re in! Your spot is confirmed',
   'Bergabung':'Joined', 'Bagikan Open Play':'Share Open Play', 'Salin link undangan':'Copy invite link', 'Gabung komunitas biar selalu update':'Join the community to stay in the loop',
   'Gabung':'Join', 'Lihat Detail Open Play':'View Open Play Details', 'Pemain dengan rating 2.50 – 3.50 diutamakan.':'Players with a 2.50 – 3.50 rating are preferred.',
-  'Privasi · Publik':'Privacy · Public', '· Kompetitif · Padel · Kabupaten Bogor':'· Competitive · Padel · Kabupaten Bogor', 'Kompetitif •':'Competitive •',
+  'Privasi · Publik':'Privacy · Public', 'Pemain dengan rating 2.50 – 3.50 diutamakan':'Players with a 2.50 – 3.50 rating are preferred', '· Hanya Pembayaran Online':'· Online Payment Only', '· Publik':'· Public', '· Kompetitif · Padel · Kabupaten Bogor':'· Competitive · Padel · Kabupaten Bogor', 'Kompetitif •':'Competitive •',
   'KPB':'BPC', 'Semua':'All', 'Hari ini':'Today', '| 2 aktivitas':'| 2 activities', '120 Menit':'120 Mins', 'Sparring Santai Akhir Pekan':'Weekend Casual Sparring', 'Gabung Open Play':'Join Open Play'
 };
