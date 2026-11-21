@@ -56,12 +56,8 @@
   };
   var HF = 'assets/scoring/hero-faces/p';
 
-  function status(){
-    return '<div class="omh-status"><b>5:13 PM</b><span class="omh-status__ic">'+
-      '<svg viewBox="0 0 12 12" fill="#000"><path d="M6 2.6c1.6 0 3.1.6 4.2 1.7l-.9.9A4.6 4.6 0 0 0 6 3.9 4.6 4.6 0 0 0 2.7 5.2l-.9-.9A6 6 0 0 1 6 2.6Zm0 2.6c.9 0 1.7.3 2.4 1l-.9.9a2 2 0 0 0-3 0l-.9-.9c.7-.7 1.5-1 2.4-1Zm0 2.6.9.9-.9.9-.9-.9.9-.9Z"/></svg>'+
-      '<svg viewBox="0 0 12 12" fill="#000"><path d="M2.1 8.5h1.3V10H2.1zM4.3 6.8h1.3V10H4.3zM6.5 4.8h1.3V10H6.5zM8.7 2.1H10V10H8.7z"/></svg>'+
-      '<svg viewBox="0 0 12 12" fill="none"><rect x="1.5" y="3" width="8.4" height="6" rx="1.4" stroke="#000"/><rect x="2.8" y="4.3" width="5.8" height="3.4" rx=".6" fill="#000"/><path d="M10.8 5v2" stroke="#000" stroke-linecap="round"/></svg>'+
-      '</span></div><div class="omh-nav"><span class="omh-nav__back">'+I.back+'</span><span class="omh-nav__sp"></span><span class="omh-nav__ic">'+I.share+'</span></div>';
+  function navBar(){
+    return '<div class="omh-nav"><span class="omh-nav__back">'+I.back+'</span><span class="omh-nav__sp"></span><span class="omh-nav__ic">'+I.share+'</span></div>';
   }
   function player(face, name, rate, el){
     return '<span class="omh-pl" data-el="'+el+'"><img class="omh-av" src="'+HF+face+'.webp" alt="" width="38" height="38" decoding="async">'+
@@ -71,7 +67,7 @@
   function row(icon, b, s){ return '<div class="omh-row"><span class="omh-row__ic">'+I[icon]+'</span><span class="omh-row__c"><b>'+b+'</b>'+(s ? '<span>'+s+'</span>' : '')+'</span></div>'; }
 
   function hero(){
-    return h.page('omh', status(),
+    return h.page('omh', navBar(),
       '<div class="omh-head"><span class="omh-tag">Open Match</span><span class="omh-title">'+t.title+'</span>'+
         '<span class="omh-meta"><i>'+I.padel+'</i>'+t.padel+'<em></em><i>'+I.zap+'</i>'+t.comp+'<em></em><i>'+I.mpin+'</i>'+t.city+'</span></div>'+
       // Team A: Bayu + an open spot · VS · Team B: Gabriella + an open spot.

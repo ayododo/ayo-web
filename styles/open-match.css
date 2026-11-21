@@ -87,14 +87,12 @@
 .om-won__t b{font-size:14px;line-height:20px;font-weight:700;color:#2c2c2c}
 .om-won__t span{font-size:12px;line-height:18px;color:#25282b}
 .om-won img{width:64px;height:64px;flex:0 0 auto;object-fit:contain}
-/* Motion: the three assets pop in one after another with a springy
-   overshoot (scale + a small tilt, --r), drift while in view, and leave
-   quickly before the story repeats. Uses the separate scale/rotate
-   properties so the base transform (--k sizing) is untouched. */
-.om-mr{--r:-7deg}.om-pl{--r:-5deg}.om-won{--r:6deg}
-.om-hero__visual.is-motion .om-fl{transition:opacity .2s ease-in,scale .25s ease-in,rotate .25s ease-in}
-.om-hero__visual.is-motion .om-fl:not(.is-in){opacity:0;scale:.7;rotate:var(--r)}
-.om-hero__visual.is-motion .om-fl.is-in{transition:opacity .2s ease-out,scale .65s cubic-bezier(.34,1.8,.5,1),rotate .65s cubic-bezier(.34,1.8,.5,1)}
+/* Motion: the three assets fade in one after another with a short rise,
+   drift while in view, and fade out before the story repeats. Uses the
+   separate translate property so the base transform (--k sizing) is untouched. */
+.om-hero__visual.is-motion .om-fl{transition:opacity .3s ease-in,translate .3s ease-in}
+.om-hero__visual.is-motion .om-fl:not(.is-in){opacity:0;translate:0 8px}
+.om-hero__visual.is-motion .om-fl.is-in{transition:opacity .45s ease-out,translate .45s ease-out}
 .om-hero__visual.is-live .om-fl{animation:hx-bob 5.5s ease-in-out infinite}
 .om-hero__visual.is-live .om-pl{animation-delay:-1.8s}
 .om-hero__visual.is-live .om-won{animation-delay:-3.4s}

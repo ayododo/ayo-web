@@ -7,10 +7,6 @@
 .mu-page[data-page="omh"] .mu-scroll{padding:0 0 24px;gap:0}
 
 /* Status bar 28 px + title bar 37.7 px. */
-.omh-status{display:flex;align-items:center;justify-content:space-between;height:28px;padding:0 10.67px 0 13.33px;flex:0 0 auto;background:#fff;position:relative;z-index:2}
-.omh-status b{font-size:8px;line-height:1;font-weight:600;color:#000;letter-spacing:.01em}
-.omh-status__ic{display:flex;gap:2px}
-.omh-status__ic svg{width:12px;height:12px;display:block}
 .omh-nav{display:flex;align-items:center;height:30.7px;padding:0 10.67px 0 5.33px;flex:0 0 auto;background:#fff;position:relative;z-index:2}
 .omh-nav__back svg{width:24px;height:24px;display:block}
 .omh-nav__sp{flex:1}
