@@ -50,7 +50,8 @@
 .om-mr__sc b{width:32px;text-align:center;font-size:20px;line-height:24px;font-weight:700;color:#25282b}
 .om-mr__sc b.is-lo{color:#cacccf}
 /* PadelLevels card (_Skill Card 1–4, 28577:47007 …), bottom left. */
-.om-pl{--k:.66;left:calc(-120px*var(--s));top:calc(250px*var(--s));width:328px;box-sizing:border-box;padding:12px 16px 16px;border-radius:12px;
+.om-pl{--k:.66;left:calc(-73px*var(--s));top:calc(250px*var(--s));width:256px;   /* shorter than Figma's 328 px; right edge stays clear of the screen content */
+  box-sizing:border-box;padding:12px 16px 16px;border-radius:12px;
   background:linear-gradient(180deg,#121a31 0%,#22315d 92%);box-shadow:0 6px 12px rgba(16,4,40,.2);color:#fff;display:flex;flex-direction:column;gap:14px}
 .om-pl__t{font-size:12px;line-height:16px;font-weight:500}
 .om-pl__logo{width:24px;height:20px;flex:0 0 auto}
