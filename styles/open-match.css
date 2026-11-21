@@ -63,9 +63,12 @@
   background:linear-gradient(180deg,#121a31 0%,#22315d 92%);box-shadow:0 6px 12px rgba(16,4,40,.2);color:#fff;display:flex;flex-direction:column;gap:14px}
 .om-pl__t{font-size:12px;line-height:16px;font-weight:500}
 .om-pl__logo{width:24px;height:20px;flex:0 0 auto}
-.om-pl__intro{display:flex;gap:6px;align-items:center;font-size:12px;line-height:16px;font-weight:500;color:#9b9797}
-.om-pl__intro em{font-style:normal;color:#1679c1}
-.om-pl__a{display:flex;flex-direction:column;gap:14px}
+/* Both states share one grid cell, so the card keeps the same height when it
+   steps from Activate (logo + button) to the rating. */
+.om-pl__body{display:grid}
+.om-pl__body>*{grid-area:1/1;min-width:0}
+.om-pl__a{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start}
+.om-pl__a .om-pl__logo{width:29px;height:24px;margin-top:5px}
 .om-pl__btn{align-self:flex-end;padding:8px 12px;border-radius:999px;background:#ec2435;font-size:14px;line-height:20px;font-weight:700;transition:transform .15s}
 .om-pl__btn.is-down{transform:scale(.92)}
 .om-pl__lv{display:flex;align-items:center;gap:2px;height:34px}
@@ -75,7 +78,7 @@
 .om-pl__cf b{color:#fff;font-weight:700}
 .om-pl__bar{display:block;height:6px;margin-top:8px;border-radius:100px;background:rgba(255,255,255,.1);overflow:hidden}
 .om-pl__bar i{display:block;height:100%;border-radius:inherit;background:#ec2435;transition:width .8s cubic-bezier(.32,.72,0,1)}
-.om-pl[data-step="1"] .om-pl__r,.om-pl:not([data-step="1"]) .om-pl__a{display:none}
+.om-pl[data-step="1"] .om-pl__r,.om-pl:not([data-step="1"]) .om-pl__a{visibility:hidden}
 .om-pl__lv b.is-pop,.om-pl__tag.is-pop{animation:hx-pop .45s cubic-bezier(.34,1.56,.64,1)}
 /* Winner banner (Banner Result 28490:34216), bottom right. */
 .om-won{--k:.66;left:calc(226px*var(--s));top:calc(366px*var(--s));width:328px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:32px;padding:12px 16px;
