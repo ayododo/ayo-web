@@ -12,7 +12,8 @@
   function q(k){ return vis.querySelector('[data-hf="'+k+'"]'); }
   var toast = q('toast'), av = q('toast-av'), name = q('toast-name'), num = q('toast-n'),
       pub = q('pub'), prv = q('prv'), paid = q('paid'), bar = q('bar');
-  var JOIN = [['p3','Rara Amelia'], ['p4','Bima Santoso'], ['p5','Sinta Dewi']];
+  // Faces match the names: p4 and p5 are women, p3 is a man.
+  var JOIN = [['p4','Rara Amelia'], ['p3','Bima Santoso'], ['p5','Sinta Dewi']];
   var step = 0, timer = null, live = false;
 
   vis.classList.add('is-motion');
