@@ -159,11 +159,12 @@
 .mu-am-ta{white-space:normal;font-weight:500;font-size:10.5px;line-height:1.35;align-items:flex-start}
 .mu-am-wlist{display:flex;flex-direction:column;margin:0 -2px}
 /* The card shows only ~225px of screen (300px card, scale 1.15; mobile ~230px),
-   so the Booking Window sheet is kept near 210px tall. */
-.mu-am-sheet[data-el="win-sheet"]{gap:6px;padding-bottom:12px}
+   so the Booking Window sheet is kept near 213px tall. */
+.mu-am-sheet[data-el="win-sheet"]{gap:6px;padding-bottom:10px}
+.mu-am-sheet[data-el="win-sheet"] .mu-btn{padding:7px 10px}
 .mu-am-wopt .mu-radio{width:12px;height:12px}
 .mu-am-wopt .mu-radio.is-on{border-width:4px}
-.mu-am-wopt{display:flex;align-items:center;justify-content:space-between;padding:3px 2px;border-bottom:1px solid #f1f1f1;font-size:10px;line-height:1.25;font-weight:500;color:#17171a}
+.mu-am-wopt{display:flex;align-items:center;justify-content:space-between;padding:4px 2px;border-bottom:1px solid #f1f1f1;font-size:10px;line-height:1.25;font-weight:500;color:#17171a}
 .mu-am-wopt:last-child{border-bottom:0}
 .mu-am-wopt.is-dis{color:#b5b1b1}
 .mu-am-wopt.is-dis .mu-radio{background:#eee;border-color:#e3e3e3}
