@@ -221,14 +221,18 @@
     ['IG Story', '<svg viewBox="0 0 32 32"><defs><linearGradient id="opg2" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#f9a825"/><stop offset=".5" stop-color="#e1306c"/><stop offset="1" stop-color="#833ab4"/></linearGradient></defs><circle cx="16" cy="16" r="16" fill="url(#opg2)"/><circle cx="16" cy="16" r="7" fill="none" stroke="#fff" stroke-width="1.8" stroke-dasharray="3 2"/><path d="M16 12.5v7M12.5 16h7" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>'],
     ['WhatsApp', '<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#25d366"/><path d="M16 8.5a7.5 7.5 0 0 0-6.4 11.4l-1 3.6 3.7-1A7.5 7.5 0 1 0 16 8.5z" fill="none" stroke="#fff" stroke-width="1.6"/><path d="M13.4 12.6c.2-.4.4-.4.6-.4h.4c.1 0 .3 0 .4.3l.6 1.4c0 .2 0 .3-.1.4l-.4.5c-.1.1-.1.2 0 .4.4.7 1.2 1.6 2.3 2 .2.1.3.1.4-.1l.5-.6c.1-.1.3-.2.4-.1l1.4.7c.2.1.3.2.3.3 0 .4-.2 1-.7 1.3-.5.3-1.3.4-2.6-.1-1.6-.7-2.9-2.2-3.4-3.1-.5-.9-.6-1.9-.2-2.6z" fill="#fff"/></svg>']];
   // "You're in" (PRD Thank you Page 3600:35983, share panel 3600:36742).
+  // Each render gets its own gradient ids: this sheet appears in two cards, and a
+  // url(#id) that points into a hidden tab panel paints nothing.
+  var thanksN = 0;
   function thanks(page){
+    var gid = ++thanksN;
     return h.page(page || 'thanks', '',
       '<span style="height:10px;flex:0 0 auto"></span><span class="op-ok">'+I.check+'</span>'+
       '<span class="op-ty">Kamu sudah masuk!<br>Spot kamu terkonfirmasi</span>'+
       '<div class="op-ses"><div class="mu-col mu-grow"><span class="mu-pair">'+av('dimas', 18)+av('laras', 18)+'</span><b style="font-size:10.5px;margin-top:3px">Fun Padel Kawan AYO Chapter…</b>'+
         '<span class="mu-s" style="font-size:8.5px">09:30 - 11:30 · Padel</span><span class="mu-s" style="font-size:8.5px">Kawan AYO Arena Bogor</span>'+tag('Bergabung','join')+'</div><span class="op-map"></span></div>'+
       '<span class="op-band"></span><span class="op-sub" data-el="share">Bagikan Open Play</span>'+
-      '<div class="op-chan">'+CH.map(function(c, i){ return '<span data-el="ch-'+i+'"><i>'+c[1]+'</i>'+c[0]+'</span>'; }).join('')+'</div>'+
+      '<div class="op-chan">'+CH.map(function(c, i){ return '<span data-el="ch-'+i+'"><i>'+c[1].replace(/opg(\d)/g, 'opg$1-'+gid)+'</i>'+c[0]+'</span>'; }).join('')+'</div>'+
       '<span class="op-copy">'+ic('link')+'Salin link undangan</span>'+
       '<span class="op-band"></span><span class="op-sub">Gabung komunitas biar selalu update</span>'+
       '<div class="op-comm"><span class="op-logo" style="background:#7c5cff"></span><div class="mu-col mu-grow"><b style="font-size:10px">Komunitas Padel Bogor</b><span class="mu-s" style="font-size:8.5px">Padel · Kabupaten Bogor</span></div><span class="op-btn">Gabung</span></div>'+
