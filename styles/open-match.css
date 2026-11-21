@@ -26,29 +26,62 @@
 .om-hero__box .mu-stage{position:absolute;inset:0}
 .om-hero__box .mu-phone{--mu-scale:1;top:28px}
 
-/* Floating PadelLevels card (Figma "PadelLevels card" 28480:23148, the P05
-   Mini UI), bottom left, over the box edge. Drawn in its "after" state
-   (3.41 ▲ 0.07) so it reads without motion; .is-before is the step back. */
-.om-hero__visual .hx-float{transform:scale(var(--s));transform-origin:0 0;border:.5px solid rgba(0,0,0,.07);box-shadow:0 1px 2px rgba(0,0,0,.04),0 6px 16px rgba(0,0,0,.07)}
-.om-hf-lv{left:calc(-88px*var(--s));top:calc(236px*var(--s));width:184px;padding:13px 13px 12px;display:flex;flex-direction:column;gap:4px}
-.om-hf-lv__wm{width:74px;height:auto;display:block;margin-bottom:3px}
-.om-hf-lv__l{font-size:10px;line-height:13px;color:#787373}
-.om-hf-lv__r{display:flex;align-items:center;gap:7px}
-.om-hf-lv__r b{font-size:30px;line-height:1;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.om-hf-up{padding:2px 7px;border-radius:7px;background:#e6f6ee;color:#1b7a4b;font-size:10px;line-height:14px;font-weight:700;white-space:nowrap;transition:opacity .3s,transform .35s cubic-bezier(.34,1.56,.64,1)}
-.om-hf-spark{width:100%;height:36px;display:block;margin:2px 0}
-.om-hf-spark__new{stroke-dasharray:30;stroke-dashoffset:0;transition:stroke-dashoffset .8s ease}
-.om-hf-spark__dot{transition:opacity .3s .6s}
-.om-hf-lv__stats{display:flex;gap:5px}
-.om-hf-lv__stats span{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;padding:5px 6px;border-radius:8px;background:#f7f7f7}   /* sized by label, so "Sebelumnya" / "Matches" fit */
-.om-hf-lv__stats i{font-style:normal;font-size:8.5px;line-height:1.3;color:#787373;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.om-hf-lv__stats b{font-size:12px;line-height:16px;font-weight:700;font-variant-numeric:tabular-nums;display:inline-block;transition:transform .3s}
-.om-hf-lv__stats b.is-bump{transform:scale(1.25)}
-.om-hf-lv.is-before .om-hf-up{opacity:0;transform:translateY(4px) scale(.9)}
-.om-hf-lv.is-before .om-hf-spark__new{stroke-dashoffset:30}
-.om-hf-lv.is-before .om-hf-spark__dot{opacity:0;transition-delay:0s}
-.om-hero__visual.is-live .om-hf-lv{animation:hx-bob 5.5s ease-in-out infinite}
-@media (prefers-reduced-motion:reduce){.om-hero__visual .hx-float{animation:none!important}}
+/* Floating assets (Figma "asset floating" 28584:47410). Each is drawn at its
+   Figma size (328 px app cards) and scaled down with --k to sit on the 420 px
+   hero; --s scales positions on mobile. They sit outside the phone's content
+   column (left edges end before the screen's 10.67 px padding). */
+.om-fl{position:absolute;z-index:2;transform:scale(calc(var(--k)*var(--s)));transform-origin:0 0;font-family:var(--font-sans)}
+/* Match result (Matchblock 28577:46874), top left. */
+.om-mr{--k:.62;left:calc(-110px*var(--s));top:calc(-18px*var(--s));width:326px;border:1px solid #e1e0e0;border-radius:12px;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.om-mr__h{display:flex;align-items:center;justify-content:space-between;padding:12px 16px 0}
+.om-mr__h span{display:flex;align-items:center;gap:4px;font-size:12px;line-height:16px;font-weight:500;color:#9b9797}
+.om-mr__h i{width:2px;height:2px;border-radius:50%;background:#bebbbb}
+.om-mr__h b{display:flex;align-items:center;gap:2px;font-size:12px;line-height:18px;font-weight:700;color:#00996d}
+.om-mr__h svg{width:24px;height:24px}
+.om-mr__b{display:flex;flex-direction:column;gap:8px;padding:12px 16px}
+.om-mr__row{display:flex;align-items:center;gap:8px;height:32px}
+.om-mr__row+.om-mr__row{border-top:1px solid #ededed;padding-top:8px;height:40px}
+.om-mr__av{display:flex}
+.om-mr__av img{width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid #fff;box-sizing:border-box}
+.om-mr__av img+img{margin-left:-10px}
+.om-mr__row.is-lose .om-mr__av{opacity:.45}
+.om-mr__w{width:20px;height:20px;flex:0 0 auto}
+.om-mr__sc{margin-left:auto;display:flex}
+.om-mr__sc b{width:32px;text-align:center;font-size:20px;line-height:24px;font-weight:700;color:#25282b}
+.om-mr__sc b.is-lo{color:#cacccf}
+/* PadelLevels card (_Skill Card 1–4, 28577:47007 …), bottom left. */
+.om-pl{--k:.66;left:calc(-120px*var(--s));top:calc(250px*var(--s));width:328px;box-sizing:border-box;padding:12px 16px 16px;border-radius:12px;
+  background:linear-gradient(180deg,#121a31 0%,#22315d 92%);box-shadow:0 6px 12px rgba(16,4,40,.2);color:#fff;display:flex;flex-direction:column;gap:14px}
+.om-pl__t{font-size:12px;line-height:16px;font-weight:500}
+.om-pl__logo{width:24px;height:20px;flex:0 0 auto}
+.om-pl__intro{display:flex;gap:6px;align-items:center;font-size:12px;line-height:16px;font-weight:500;color:#9b9797}
+.om-pl__intro em{font-style:normal;color:#1679c1}
+.om-pl__a{display:flex;flex-direction:column;gap:14px}
+.om-pl__btn{align-self:flex-end;padding:8px 12px;border-radius:999px;background:#ec2435;font-size:14px;line-height:20px;font-weight:700;transition:transform .15s}
+.om-pl__btn.is-down{transform:scale(.92)}
+.om-pl__lv{display:flex;align-items:center;gap:2px;height:34px}
+.om-pl__lv b{font-size:32px;line-height:40px;font-weight:700;margin-right:10px;font-variant-numeric:tabular-nums}
+.om-pl__tag{padding:2px 8px;border-radius:999px;background:rgba(255,255,255,.2);font-size:12px;line-height:18px;white-space:nowrap}
+.om-pl__cf{display:flex;gap:6px;margin-top:12px;font-size:12px;line-height:16px;font-weight:500;color:#9b9797}
+.om-pl__cf b{color:#fff;font-weight:700}
+.om-pl__bar{display:block;height:6px;margin-top:8px;border-radius:100px;background:rgba(255,255,255,.1);overflow:hidden}
+.om-pl__bar i{display:block;height:100%;border-radius:inherit;background:#ec2435;transition:width .8s cubic-bezier(.32,.72,0,1)}
+.om-pl[data-step="1"] .om-pl__r,.om-pl:not([data-step="1"]) .om-pl__a{display:none}
+.om-pl__lv b.is-pop,.om-pl__tag.is-pop{animation:hx-pop .45s cubic-bezier(.34,1.56,.64,1)}
+/* Winner banner (Banner Result 28490:34216), bottom right. */
+.om-won{--k:.66;left:calc(226px*var(--s));top:calc(366px*var(--s));width:328px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:32px;padding:12px 16px;
+  border:1px solid #ededed;border-radius:12px;background:#e6f6f2;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.om-won__t{display:flex;flex-direction:column;gap:2px}
+.om-won__t b{font-size:14px;line-height:20px;font-weight:700;color:#2c2c2c}
+.om-won__t span{font-size:12px;line-height:18px;color:#25282b}
+.om-won img{width:64px;height:64px;flex:0 0 auto;object-fit:contain}
+/* Motion: the result and banner pop in; all three drift while in view. */
+.om-hero__visual.is-motion .om-mr,.om-hero__visual.is-motion .om-won{transition:opacity .35s,translate .35s}
+.om-hero__visual.is-motion .om-mr:not(.is-in),.om-hero__visual.is-motion .om-won:not(.is-in){opacity:0;translate:0 8px}
+.om-hero__visual.is-live .om-fl{animation:hx-bob 5.5s ease-in-out infinite}
+.om-hero__visual.is-live .om-pl{animation-delay:-1.8s}
+.om-hero__visual.is-live .om-won{animation-delay:-3.4s}
+@media (prefers-reduced-motion:reduce){.om-hero__visual .om-fl{animation:none!important;transition:none!important}}
 
 @media (max-width:900px){
   .om-page .sc-h2{font-size:28px;line-height:34px}
@@ -58,6 +91,9 @@
   .om-hero__visual{--s:.78;width:100%;max-width:328px;height:auto;aspect-ratio:1;margin:0 auto}
   .om-hero__box{width:100%;height:100%}
   .om-hero__box .mu-phone{--mu-scale:.78;top:22px}
-  .om-hero__visual .hx-float{--cs:.68;transform:scale(var(--cs))}
-  .om-hf-lv{left:calc(-22px*var(--s));top:calc(322px*var(--s))}   /* below the PadelLevels and date rows */
+  /* Mobile: two assets only (the result card would cover the phone), a bit
+     larger than a straight scale, on the box's bottom edge. */
+  .om-mr{display:none}
+  .om-pl{--k:.6;left:calc(-20px*var(--s));top:calc(376px*var(--s))}
+  .om-won{--k:.56;left:calc(236px*var(--s));top:calc(396px*var(--s))}
 }
