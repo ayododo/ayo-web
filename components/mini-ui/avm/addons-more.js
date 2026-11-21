@@ -4,6 +4,8 @@
    ad03 28093:11727 → 28378:17711 · ac01 28093:11757 → 28378:17741
    ft01 28093:11792 → 28378:17776 · ft03 28093:11831 → 28378:17808
    ft04 28222:13366 → 28378:17854
+   ft02 / ft05 have no Mini UI frame in that file; they are drawn from the
+   product file E75Ugbgs8qbfY6AQpJRRpR ([AVM] sections only, see below).
    Each card's first page is the Figma Mini UI (its static frame shows the
    top of the screen, as the Figma frame does). Every flow starts at the top,
    scrolls to what it is about and plays the interaction; screens Figma does
@@ -90,9 +92,37 @@
              ['dimas','Dimas P.','4.7','Great courts, friendly service','Arena Nusantara · 20 May'],
              ['sinta','Sinta W.','4.6','Easy booking, plenty of parking','Arena Nusantara · 19 May']],
       reply: 'Reply', replied: 'Replied', send: 'Send', replyPh: 'Write a reply…', yourReply: 'Your reply',
-      replyText: 'Thanks, Raka! See you again soon.'
+      replyText: 'Thanks, Raka! See you again soon.',
+      // ft02 · Private Venue
+      custAccess: 'Customer Access', pvSub: 'If active, customers can only access the venue with your permission.',
+      isOn: 'Active', isOff: 'Inactive', tabs: ['Requested','Waitlisted','Granted'], reject: 'Reject', accept: 'Accept',
+      granted: 'Access granted', accessEnds: 'Access ends', grantedOn: '20 May 2026', permanent: 'Permanent', pvToast: ['Access granted','Rebecca Wijaya can now book'],
+      // ft05 · Early Access
+      eaTitle: 'Create Early Access Package', pkgInfo: 'Package Information', pkgName: 'Package Name', pkgVal: 'Early Quarter Package',
+      pkgDesc: 'Description', pkgDescVal: 'Anti-war package schedule. Get access to the schedule for the next 3 months immediately. Get a head start by choosing your schedule!',
+      win: 'Booking Window', winSub: 'Set the booking schedule that can be viewed & booked by customers.', winPh: 'Select Booking Window',
+      uQuota: 'User Quota (Optional)', uQuotaSub: 'Maximum number of customers who can register for this package. Leave blank if there is no quota.', uQuotaPh: 'Usage Quota',
+      privacy: 'Set Privacy', pub: 'Public', pubSub: 'The package will appear on the venue profile and can be viewed by all users.',
+      allowReq: 'Allow Submission of Requests', allowReqSub: 'If enabled, customers can submit a request to gain access to this package.',
+      priv: 'Private', privSub: 'The package does not appear on the venue page. Access can only be granted and managed by the admin.', confirm: 'Confirm',
+      winOpts: ['2 Weeks','1 Month','2 Months','3 Months','6 Months','Custom'], eaToast: ['Package created','Early Quarter Package · 3 months ahead']
     }
   };
+  // Indonesian strings for ft02 / ft05 (ID Figma: Atur Privasi 48:12978,
+  // Requested 48:15453, Atur Jarak 993:52781). The tabs stay in English there.
+  Object.assign(S.id, {
+    custAccess: 'Akses Pelanggan', pvSub: 'Jika aktif, pelanggan hanya dapat mengakses venue atas izin Anda.',
+    isOn: 'Aktif', isOff: 'Tidak aktif', tabs: ['Requested','Waitlisted','Granted'], reject: 'Tolak', accept: 'Terima',
+    granted: 'Akses diberikan', accessEnds: 'Akses berakhir', grantedOn: '20 Mei 2026', permanent: 'Permanen', pvToast: ['Akses diberikan','Rebecca Wijaya sekarang bisa booking'],
+    eaTitle: 'Buat Paket Early Access', pkgInfo: 'Informasi Paket', pkgName: 'Nama Paket', pkgVal: 'Paket Early Quarter',
+    pkgDesc: 'Deskripsi', pkgDescVal: 'Paket anti war jadwal. Langsung dapat akses jadwal 3 bulan kedepan. Curi start pilih jadwal!',
+    win: 'Jarak Booking', winSub: 'Atur jadwal booking yang bisa dilihat & dibooking oleh pelanggan.', winPh: 'Pilih Jarak Booking',
+    uQuota: 'Kuota Pengguna (Opsional)', uQuotaSub: 'Jumlah maks. pelanggan yang bisa mendaftar paket ini. Kosongkan jika tidak ada kuota.', uQuotaPh: 'Kuota penggunaan',
+    privacy: 'Atur Privasi', pub: 'Publik', pubSub: 'Paket akan tampil di profil venue dan dapat dilihat oleh penyewa.',
+    allowReq: 'Izinkan Kirim Pengajuan', allowReqSub: 'Jika aktif, pelanggan dapat mengirimkan pengajuan untuk mendapatkan akses ke paket ini.',
+    priv: 'Terbatas', privSub: 'Paket tidak tampil di halaman venue dan hanya dapat diatur keanggotaannya oleh admin.', confirm: 'Konfirmasi',
+    winOpts: ['2 Minggu','1 Bulan','2 Bulan','3 Bulan','6 Bulan','Custom'], eaToast: ['Paket dibuat','Paket Early Quarter · 3 bulan ke depan']
+  });
   var T = S[lang];
 
   /* ---------- Small templates ---------- */
@@ -415,6 +445,117 @@
       .then(function(){ return a.scrollBottom('rv-raka', 700); });
   }
 
+  /* ---------- FT02 · Private venue (Figma [AVM] Atur Privasi 1633:8126,
+     Akses Pelanggan / Requested 1633:8579, Granted List 1633:10501) ----------
+     One screen: the Private Venue switch on top, the customer tabs below.
+     The switch goes on, the request list wakes up, Rebecca is accepted and
+     moves to Granted. */
+  var CUST = [['rw','RW','Rebecca Wijaya','@rebeccawijaya','#fdeced','#ec2435'],['sk','SK','Sarah Kusumawardani','@sarahksm','#e8f1fd','#1f5fbf']];
+  function cust(c){
+    return '<div class="mu-card mu-am-cust" data-el="cu-'+c[0]+'"><div class="mu-row" style="gap:8px"><span class="mu-am-avatar mu-am-avatar--sm" style="background:'+c[4]+';color:'+c[5]+'">'+c[1]+'</span>'+
+      '<span class="mu-col mu-grow"><span class="mu-am-vn">'+c[2]+'</span><span class="mu-am-vd">'+c[3]+'</span></span></div>'+
+      '<div class="mu-am-acts"><span class="mu-am-act" data-el="rej-'+c[0]+'">'+T.reject+'</span><span class="mu-am-act is-dark" data-el="acc-'+c[0]+'">'+T.accept+'</span></div></div>';
+  }
+  function grantedCard(c){
+    return '<div class="mu-card mu-am-cust mu-new" data-el="gr-'+c[0]+'"><div class="mu-row" style="gap:8px"><span class="mu-am-avatar mu-am-avatar--sm" style="background:'+c[4]+';color:'+c[5]+'">'+c[1]+'</span>'+
+      '<span class="mu-col mu-grow"><span class="mu-am-vn">'+c[2]+'</span><span class="mu-am-vd">'+c[3]+'</span></span><span class="mu-am-badge">'+T.isOn+'</span></div>'+
+      '<div class="mu-am-grid"><span class="mu-col"><span class="mu-am-lbl mu-am-lbl--sm">'+T.granted+'</span><b class="mu-am-small">'+T.grantedOn+'</b></span>'+
+      '<span class="mu-col"><span class="mu-am-lbl mu-am-lbl--sm">'+T.accessEnds+'</span><b class="mu-am-small">'+T.permanent+'</b></span></div></div>';
+  }
+  function ft02(){
+    var t = T.tabs;
+    return pg('private', top(T.custAccess, true),
+      '<div class="mu-card mu-am-priv" data-el="pv"><div class="mu-row mu-row--between"><span class="mu-am-vn">Private Venue</span>'+
+      '<span class="mu-row" style="gap:6px"><span class="mu-am-state" data-el="pv-state">'+T.isOn+'</span><span class="mu-toggle is-on" data-el="pv-toggle"></span></span></div>'+
+      '<span class="mu-am-vd mu-am-wrap">'+T.pvSub+'</span></div>'+
+      '<div class="mu-am-lock" data-el="lock">'+
+      '<div class="mu-tabs mu-am-tabs" data-el="tabs"><span class="is-on" data-el="tab-0">'+t[0]+' (<b data-el="n-req">2</b>)</span><span>'+t[1]+'</span><span data-el="tab-2">'+t[2]+'<i data-el="n-gr"></i></span></div>'+
+      '<div class="mu-col" style="gap:8px" data-el="req-list">'+cust(CUST[0])+cust(CUST[1])+'</div>'+
+      '<div class="mu-col" style="gap:8px;display:none" data-el="gr-list"></div></div>');
+  }
+  function ft02Prep(a){
+    a.el('pv-toggle').classList.remove('is-on'); a.el('pv-state').textContent = T.isOff; a.el('pv-state').classList.add('is-off');
+    a.el('lock').classList.add('is-locked');
+  }
+  function ft02Flow(a){
+    var rw = CUST[0];
+    return a.wait(300)
+      // Private Venue on: the customer lists wake up.
+      .then(function(){ return a.tap('pv-toggle'); })
+      .then(function(){ on(a.el('pv-toggle'), 'is-on'); var s = a.el('pv-state'); s.textContent = T.isOn; s.classList.remove('is-off'); return a.wait(350); })
+      .then(function(){ a.el('lock').classList.remove('is-locked'); return a.wait(900); })
+      // Accept Rebecca: her card leaves, the counts move, a toast confirms.
+      .then(function(){ return a.tap('acc-rw'); })
+      .then(function(){ return busyAct(a, 'acc-rw', 650); })
+      .then(function(){ var c = a.el('cu-rw'); c.style.maxHeight = c.offsetHeight+'px'; c.offsetHeight; on(c, 'is-out'); return a.wait(420); })
+      .then(function(){ a.el('cu-rw').style.display = 'none'; a.el('n-req').textContent = '1'; var g = a.el('n-gr'); g.textContent = ' (1)'; on(g, 'mu-am-pop'); return showToast(a, 1700); })
+      // Over to Granted, where Rebecca now sits as Active.
+      .then(function(){ return a.tap('tab-2'); })
+      .then(function(){
+        a.select('tabs', 'tab-2'); a.el('req-list').style.display = 'none';
+        var gl = a.el('gr-list'); gl.style.display = ''; gl.innerHTML = grantedCard(rw);
+        return a.wait(1400); });
+  }
+  function busyAct(a, el, ms){ on(a.el(el), 'is-busy'); return a.wait(ms).then(function(){ a.el(el).classList.remove('is-busy'); }); }
+
+  /* ---------- FT05 · Early access package (Figma [AVM] 1/3 Atur Jarak
+     3168:41506, 2/3 Atur Kuota 3168:41715, Success 3168:43366; ID copy from
+     993:52781) ----------
+     Create Early Access Package: the Booking Window sheet lists the windows
+     (those not longer than the venue's own 1-month limit are disabled, as the
+     Figma note asks), 3 months is picked and saved, the quota is typed,
+     Confirm wakes up and the package is created. The sheet uses the EN list
+     design for both languages (the ID frame still draws the older stepper). */
+  function ft05(){
+    return pg('early', top(T.eaTitle, true),
+      '<div class="mu-am-sec">'+T.pkgInfo+'</div>'+
+      field(T.pkgName, 'pkg', T.pkgVal)+
+      '<div class="mu-am-fld"><span class="mu-am-lbl">'+T.pkgDesc+'</span><div class="mu-am-in mu-am-ta">'+T.pkgDescVal+'</div></div>'+
+      '<div class="mu-col" style="gap:4px" data-el="win-sec"><div class="mu-am-sec">'+T.win+'</div><span class="mu-am-vd mu-am-wrap">'+T.winSub+'</span></div>'+
+      '<div class="mu-am-in mu-am-select" data-el="win-box"><span class="mu-grow" data-el="win">'+T.winOpts[3]+'</span><span class="mu-am-chev">⌄</span></div>'+
+      '<div class="mu-col" style="gap:4px" data-el="q-sec"><div class="mu-am-sec">'+T.uQuota+'</div><span class="mu-am-vd mu-am-wrap">'+T.uQuotaSub+'</span></div>'+
+      '<div class="mu-am-in" data-el="uq-box"><span data-el="uq">100</span></div>'+
+      '<div class="mu-am-sec" data-el="pr-sec">'+T.privacy+'</div>'+
+      '<div class="mu-card mu-am-opts"><div class="mu-row" style="gap:8px;align-items:flex-start"><span class="mu-radio is-on"></span><span class="mu-col mu-grow" style="gap:2px"><span class="mu-am-vn">'+T.pub+'</span><span class="mu-am-vd mu-am-wrap">'+T.pubSub+'</span>'+
+      '<span class="mu-row mu-row--between" style="margin-top:6px;gap:6px"><span class="mu-am-vd" style="color:#17171a;font-weight:700">'+T.allowReq+'</span><span class="mu-row" style="gap:5px"><span class="mu-am-state">'+T.isOn+'</span><span class="mu-toggle is-on"></span></span></span>'+
+      '<span class="mu-am-vd mu-am-wrap">'+T.allowReqSub+'</span></span></div>'+
+      '<div class="mu-row" style="gap:8px;align-items:flex-start"><span class="mu-radio"></span><span class="mu-col mu-grow" style="gap:2px"><span class="mu-am-vn">'+T.priv+'</span><span class="mu-am-vd mu-am-wrap">'+T.privSub+'</span></span></div></div>'+
+      '<div class="mu-btn mu-btn--soft mu-am-cta" data-el="ea-go">'+T.confirm+'</div>');
+  }
+  function ft05Extra(){
+    // Index 0–1 (2 weeks, 1 month) are not longer than the venue limit: disabled.
+    // The Figma note under the list is left out so the sheet fits the 300px card.
+    var rows = T.winOpts.map(function(o, i){
+      return '<div class="mu-am-wopt'+(i < 2 ? ' is-dis' : '')+'" data-el="wo-'+i+'"><span>'+o+'</span><span class="mu-radio" data-el="wr-'+i+'"></span></div>';
+    }).join('');
+    return sheet('win-sheet', T.win,
+      '<div class="mu-am-wlist">'+rows+'</div>'+
+      '<div class="mu-btn mu-btn--off" data-el="w-save">'+T.save+'</div>')+toast(T.eaToast);
+  }
+  function ft05Prep(a){
+    var w = a.el('win'); w.textContent = T.winPh; w.classList.add('is-ph');
+    var q = a.el('uq'); q.textContent = T.uQuotaPh; q.classList.add('is-ph');
+    var b = a.el('ea-go'); b.classList.remove('mu-btn--soft'); b.classList.add('mu-btn--off');
+  }
+  function ft05Flow(a){
+    return a.wait(300)
+      .then(function(){ return a.scrollTo('win-sec', 6, 900); })
+      .then(function(){ return a.tap('win-box'); })
+      .then(function(){ return a.sheet('win-sheet', true); })
+      .then(function(){ return a.wait(500); })
+      // Pick 3 months: the radio fills and Save wakes up.
+      .then(function(){ return a.tap('wo-3'); })
+      .then(function(){ on(a.el('wr-3'), 'is-on'); var s = a.el('w-save'); s.classList.remove('mu-btn--off'); s.classList.add('mu-btn--soft'); return a.wait(550); })
+      .then(function(){ return a.tap('w-save'); })
+      .then(function(){ var w = a.el('win'); w.classList.remove('is-ph'); w.textContent = T.winOpts[3]; on(a.el('win-box'), 'mu-am-flash'); return a.sheet('win-sheet', false); })
+      .then(function(){ return typeIn(a, 'uq', '100', 160); })
+      .then(function(){ return a.scroll(a.maxY(), 1000); })
+      .then(function(){ var b = a.el('ea-go'); b.classList.remove('mu-btn--off'); b.classList.add('mu-btn--soft'); return a.wait(400); })
+      .then(function(){ return a.tap('ea-go'); })
+      .then(function(){ return busy(a, 'ea-go', 850); })
+      .then(function(){ return showToast(a, 2000); });
+  }
+
   M.add({
     cards: {
       'avm-ad01': {pages:[ad01()], flow:'avm-ad01'},
@@ -422,10 +563,12 @@
       'avm-ad03': {pages:[ad03()], extra:function(){ return toast(T.coachToast); }, flow:'avm-ad03'},
       'avm-ac01': {pages:[ac01()], extra:ac01Sheets, flow:'avm-ac01'},
       'avm-ft01': {pages:[ft01()], extra:function(){ return toast(T.accessToast); }, flow:'avm-ft01'},
+      'avm-ft02': {pages:[ft02()], extra:function(){ return toast(T.pvToast); }, flow:'avm-ft02'},
       'avm-ft03': {pages:[ft03()], flow:'avm-ft03'},
-      'avm-ft04': {pages:[ft04()], flow:'avm-ft04'}
+      'avm-ft04': {pages:[ft04()], flow:'avm-ft04'},
+      'avm-ft05': {pages:[ft05()], extra:ft05Extra, flow:'avm-ft05'}
     },
-    flows: {'avm-ad01':ad01Flow, 'avm-ad02':ad02Flow, 'avm-ad03':ad03Flow, 'avm-ac01':ac01Flow, 'avm-ft01':ft01Flow, 'avm-ft03':ft03Flow, 'avm-ft04':ft04Flow},
-    prep: {'avm-ad03':ad03Prep, 'avm-ac01':ac01Prep, 'avm-ft01':ft01Prep, 'avm-ft03':ft03Prep, 'avm-ft04':ft04Prep}
+    flows: {'avm-ad01':ad01Flow, 'avm-ad02':ad02Flow, 'avm-ad03':ad03Flow, 'avm-ac01':ac01Flow, 'avm-ft01':ft01Flow, 'avm-ft03':ft03Flow, 'avm-ft04':ft04Flow, 'avm-ft02':ft02Flow, 'avm-ft05':ft05Flow},
+    prep: {'avm-ad03':ad03Prep, 'avm-ac01':ac01Prep, 'avm-ft01':ft01Prep, 'avm-ft03':ft03Prep, 'avm-ft04':ft04Prep, 'avm-ft02':ft02Prep, 'avm-ft05':ft05Prep}
   });
 })();
