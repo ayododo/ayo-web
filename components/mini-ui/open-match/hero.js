@@ -3,7 +3,7 @@
    Figma: "Detail Open Match (hero)" 28528:94 in the hero slot 26953:68943
    (mobile 26953:69201). Drawn at the Figma frame's own size (240 px screen),
    with the icons exported from that frame. Players use the Scoring hero's
-   photos and names (assets/scoring/hero-faces). Static card, no flow:
+   photos and names (assets/scoring/hero-faces: p0 Bayu, p1 Gabriella, p4 Gilberta, p3 Fredy). Static card, no flow:
    scripts/open-match-hero.js plays the hero (a player joins, the snackbar,
    and the floating PadelLevels card stepping 3.34 → 3.41).
    Load after mini-ui.js; classes are in hero.css (prefix omh-).
@@ -75,9 +75,10 @@
       '<div class="omh-head"><span class="omh-tag">Open Match</span><span class="omh-title">'+t.title+'</span>'+
         '<span class="omh-meta"><i>'+I.padel+'</i>'+t.padel+'<em></em><i>'+I.zap+'</i>'+t.comp+'<em></em><i>'+I.mpin+'</i>'+t.city+'</span></div>'+
       // Team A: Bayu + an open spot · VS · Team B: Gabriella + an open spot.
-      '<div class="omh-teams">'+player(0, 'Bayu G.', '3.41', 'pa1')+// Team A's open spot also holds Budi (hidden): the hero fills it when
-        // his request is accepted.
-        '<span class="omh-slot" data-el="pa2">'+empty('pa2-open')+player(2, 'Budi S.', '3.12', 'pa2-pl')+'</span>'+
+      '<div class="omh-teams">'+player(0, 'Bayu G.', '3.41', 'pa1')+// Team A's open spot also holds Gilberta (hidden): the hero fills it
+        // when her request is accepted. Teams are mixed: Bayu + Gilberta vs
+        // Gabriella + an open spot.
+        '<span class="omh-slot" data-el="pa2">'+empty('pa2-open')+player(4, 'Gilberta L.', '3.12', 'pa2-pl')+'</span>'+
         '<b class="omh-vs">VS</b>'+player(1, 'Gabriella T.', '3.28', 'pb1')+empty('pb2')+'</div>'+
       '<span class="omh-req" data-el="req"><b data-el="req-n">2</b>&nbsp;'+t.req+I.chev+'</span>'+
       '<div class="omh-list">'+

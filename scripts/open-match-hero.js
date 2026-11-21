@@ -2,7 +2,7 @@
    AYO — Open Match hero motion (open-match-id/en.html)
    Floating assets from Figma "asset floating" 28584:47410. While the hero is
    in view it loops one story, in steps:
-     1. Budi's request is accepted: he fills Team A's open spot in the phone,
+     1. Gilberta's request is accepted: she fills Team A's open spot in the phone,
         the request count drops 2 → 1 and the snackbar slides in.
      2. PadelLevels is activated (the Activate button is pressed): the card
         shows 3.XX · Calibrating · 40%.
@@ -49,7 +49,7 @@
   }
   function story(){
     reset();
-    // 1 · Budi joins Team A.
+    // 1 · Gilberta joins Team A (Bayu's partner).
     later(600, function(){
       var slot = el('pa2'), snack = el('snack'), req = el('req-n');
       if(slot) slot.classList.add('is-filled');
