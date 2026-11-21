@@ -38,6 +38,14 @@
 .om-mr__h i{width:2px;height:2px;border-radius:50%;background:#bebbbb}
 .om-mr__h b{display:flex;align-items:center;gap:2px;font-size:12px;line-height:18px;font-weight:700;color:#00996d}
 .om-mr__h svg{width:24px;height:24px}
+.om-mr__h b span{display:inline;color:inherit;font-weight:700;font-variant-numeric:tabular-nums}   /* not the grey date style above */
+/* Motion: the trend line draws from the low end up, then the arrowhead;
+   the open-match-hero.js count runs +0.00 → +0.04 alongside. */
+.om-hero__visual.is-motion .om-mr__trend path{stroke-dasharray:1;stroke-dashoffset:1}
+.om-hero__visual.is-motion .om-mr__trend .om-mr__line{stroke-dashoffset:-1}   /* the path runs top → bottom; a negative offset draws it from the bottom up */
+.om-hero__visual .om-mr.is-draw .om-mr__trend path{stroke-dashoffset:0}
+.om-mr.is-draw .om-mr__line{transition:stroke-dashoffset .75s cubic-bezier(.4,0,.2,1)}
+.om-mr.is-draw .om-mr__head{transition:stroke-dashoffset .3s ease-out .65s}
 .om-mr__b{display:flex;flex-direction:column;gap:8px;padding:12px 16px}
 .om-mr__row{display:flex;align-items:center;gap:8px;height:32px}
 .om-mr__row+.om-mr__row{border-top:1px solid #ededed;padding-top:8px;height:40px}

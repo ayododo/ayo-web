@@ -6,8 +6,8 @@
         the request count drops 2 → 1 and the snackbar slides in.
      2. PadelLevels is activated (the Activate button is pressed): the card
         shows 3.XX · Calibrating · 40%.
-     3. A match is played: the result card (+0.04) pops in and the card steps
-        to 3.4X · 54%.
+     3. A match is played: the result card pops in, its trend line draws and
+        +0.00 counts up to +0.04; the card steps to 3.4X · 54%.
      4. The win is verified: the winner banner pops in and the card lands on
         3.42 · Calibrated · 75%.
    Then the result and banner fade out and the story starts again.
@@ -22,7 +22,7 @@
   function hf(k){ return vis.querySelector('[data-hf="'+k+'"]'); }
   function el(k){ return vis.querySelector('[data-el="'+k+'"]'); }
   var pl = hf('pl'), act = hf('act'), num = hf('pl-n'), tag = hf('pl-tag'), conf = hf('pl-c'), bar = hf('pl-bar'),
-      mr = hf('mr'), won = hf('won');
+      mr = hf('mr'), won = hf('won'), up = hf('mr-up');
   var timers = [], live = false, loop = null;
 
   function later(ms, fn){ timers.push(setTimeout(fn, ms)); }
@@ -37,12 +37,18 @@
     conf.textContent = pct+'%';
     bar.style.width = pct+'%';
   }
+  // The result card's trend: the line draws itself and +0.00 counts to +0.04.
+  function trend(){
+    mr.classList.remove('is-draw'); mr.offsetWidth; mr.classList.add('is-draw');
+    var t0 = Date.now();
+    (function f(){ var k = Math.min(1, (Date.now() - t0) / 900); up.textContent = '+'+(0.04 * (1 - Math.pow(1 - k, 3))).toFixed(2); if(k < 1 && live) timers.push(setTimeout(f, 40)); })();
+  }
   function reset(){
     var slot = el('pa2'), snack = el('snack'), req = el('req-n');
     if(slot) slot.classList.remove('is-filled');
     if(snack) snack.classList.add('is-hide');
     if(req) req.textContent = '2';
-    mr.classList.remove('is-in'); won.classList.remove('is-in');
+    mr.classList.remove('is-in', 'is-draw'); won.classList.remove('is-in'); up.textContent = '+0.00';
     bar.style.transition = 'none'; bar.style.width = '0%'; bar.offsetWidth; bar.style.transition = '';
     tag.textContent = tag.dataset.cal;
     step(1);
@@ -63,6 +69,7 @@
     later(2150, function(){ step(2, '3.XX', false, 40); });
     // 3 · A match result comes in.
     later(3500, function(){ mr.classList.add('is-in'); });
+    later(3800, trend);
     later(4200, function(){ step(3, '3.4X', false, 54); });
     // 4 · The win is verified: calibrated.
     later(5600, function(){ won.classList.add('is-in'); });
