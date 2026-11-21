@@ -18,7 +18,10 @@
 
 /* Headline: tag, title, Padel • Competitive • Jakarta. */
 .omh-head{display:flex;flex-direction:column;gap:5.33px;padding:7px 10.67px 0}
-.omh-tag{align-self:flex-start;padding:2.67px 5.33px;border-radius:999px;background:#ec2435;color:#fff;font-size:8px;line-height:9.33px;font-weight:700;white-space:nowrap}
+.omh-tag{align-self:flex-start;padding:2.67px 5.33px;border-radius:999px;background:#ec2435;color:#fff;font-size:8px;line-height:9.33px;font-weight:700;white-space:nowrap;transform-origin:50% 50%}
+/* The pill grows a little and settles back, as the Open Play hero pills do. */
+.omh-tag{animation:omh-grow 4.5s ease-in-out infinite}
+@keyframes omh-grow{0%,22%,100%{transform:scale(1)}10%{transform:scale(1.12)}}
 .omh-title{font-size:13.33px;line-height:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .omh-meta{display:flex;align-items:center;font-size:8px;line-height:12px;white-space:nowrap}
 .omh-meta i{display:block;width:10.67px;height:10.67px;margin-right:2.67px}
@@ -74,5 +77,5 @@
 
 @media (prefers-reduced-motion:reduce){
   .omh-slot>*,.omh-snack{transition:none}
-  .omh-badge.is-pop{animation:none}
+  .omh-badge.is-pop,.omh-tag{animation:none}
 }
