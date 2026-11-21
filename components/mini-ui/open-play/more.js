@@ -168,7 +168,7 @@
       (o.hero
         // Hero session (Figma 28443:30575): a Jakarta game.
         ? '<span class="op-dtitle">Fun Padel Kawan AYO Jakarta Area</span>'+
-          '<span class="op-meta">'+ic('racket')+'<b>Padel</b> • '+ic('bolt')+'<b>Kompetitif</b> • '+ic('pin')+'<b>Kota Jakarta</b></span>'
+          '<span class="op-meta">'+ic('racket')+'<b>Padel</b> • '+ic('bolt')+'<b>Kompetitif</b> • '+ic('pin')+'<b>Jakarta</b></span>'
         : '<span class="op-dtitle">Fun Padel Kawan AYO Chapter Bogor Area</span>'+
           '<span class="op-meta">'+ic('racket')+'<b>Padel</b> • '+ic('bolt')+'<b>Kompetitif</b> • '+ic('pin')+'<b>Kabupaten Bogor</b></span>')+
       '<div class="op-ppl" style="align-items:flex-start">'+ppl+'</div>'+
