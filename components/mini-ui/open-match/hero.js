@@ -77,9 +77,12 @@
       // Team A: Bayu + an open spot · VS · Team B: Gabriella + an open spot.
       '<div class="omh-teams">'+player(0, 'Bayu G.', '3.41', 'pa1')+// Team A's open spot also holds Gilberta (hidden): the hero fills it
         // when her request is accepted. Teams are mixed: Bayu + Gilberta vs
-        // Gabriella + an open spot.
+        // Gabriella + Fredy.
         '<span class="omh-slot" data-el="pa2">'+empty('pa2-open')+player(4, 'Gilberta L.', '3.12', 'pa2-pl')+'</span>'+
-        '<b class="omh-vs">VS</b>'+player(1, 'Gabriella T.', '3.28', 'pb1')+empty('pb2')+'</div>'+
+        '<b class="omh-vs">VS</b>'+player(1, 'Gabriella T.', '3.28', 'pb1')+
+        // Team B's open spot holds Fredy (hidden): he joins Gabriella right
+        // after Gilberta, matching the result card (Gabriella + Fredy).
+        '<span class="omh-slot" data-el="pb2">'+empty('pb2-open')+player(3, 'Fredy R.', '3.05', 'pb2-pl')+'</span></div>'+
       '<span class="omh-req" data-el="req"><b data-el="req-n">2</b>&nbsp;'+t.req+I.chev+'</span>'+
       '<div class="omh-list">'+
         row('level', 'PadelLevels · 2.50 - 3.50', t.lvSub)+

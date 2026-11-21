@@ -43,10 +43,10 @@
 .omh-vs{width:12.67px;height:37.33px;display:flex;align-items:center;justify-content:center;font-size:9.33px;font-weight:700;color:#1a1919}
 .omh-slot{display:grid}
 .omh-slot>*{grid-area:1/1}
-.omh-slot>[data-el="pa2-pl"]{opacity:0;transform:scale(.6);transition:opacity .3s,transform .45s cubic-bezier(.34,1.56,.64,1)}
-.omh-slot>[data-el="pa2-open"]{transition:opacity .2s}
-.omh-slot.is-filled>[data-el="pa2-pl"]{opacity:1;transform:none}
-.omh-slot.is-filled>[data-el="pa2-open"]{opacity:0}
+.omh-slot>.omh-pl:not(.omh-pl--open){opacity:0;transform:scale(.6);transition:opacity .3s,transform .45s cubic-bezier(.34,1.56,.64,1)}
+.omh-slot>.omh-pl--open{transition:opacity .2s}
+.omh-slot.is-filled>.omh-pl:not(.omh-pl--open){opacity:1;transform:none}
+.omh-slot.is-filled>.omh-pl--open{opacity:0}
 .omh-badge.is-pop{animation:omh-pop .5s cubic-bezier(.34,1.56,.64,1)}
 @keyframes omh-pop{40%{transform:scale(1.25)}}
 

@@ -4,7 +4,8 @@
    in view it loops one short story. The three assets pop in close together
    (springy scale + tilt): the PadelLevels card at 0.3 s, the match result at
    0.85 s (its trend draws, +0.00 counts to +0.04), the winner banner at
-   1.7 s. Meanwhile Gilberta joins Team A in the phone (snackbar) and the
+   1.7 s. Meanwhile Gilberta joins Team A and Fredy joins Team B in the phone
+   (snackbar) and the
    PadelLevels card steps: Activate (pressed) → 3.XX · Calibrating · 40% →
    3.4X · 54% → 3.42 · Calibrated · 75%. After a hold the assets leave one
    by one and the story starts again (8.6 s loop).
@@ -41,8 +42,8 @@
     (function f(){ var k = Math.min(1, (Date.now() - t0) / 900); up.textContent = '+'+(0.04 * (1 - Math.pow(1 - k, 3))).toFixed(2); if(k < 1 && live) timers.push(setTimeout(f, 40)); })();
   }
   function reset(){
-    var slot = el('pa2'), snack = el('snack'), req = el('req-n');
-    if(slot) slot.classList.remove('is-filled');
+    var snack = el('snack'), req = el('req-n');
+    ['pa2', 'pb2'].forEach(function(k){ var sl = el(k); if(sl) sl.classList.remove('is-filled'); });
     if(snack) snack.classList.add('is-hide');
     if(req) req.textContent = '2';
     [mr, pl, won].forEach(function(n){ n.classList.remove('is-in'); });
@@ -61,6 +62,8 @@
       if(req) req.textContent = '1';
       if(snack) snack.classList.remove('is-hide');
     });
+    // Fredy joins Gabriella (Team B), so both pairs match the result card.
+    later(1000, function(){ var sl = el('pb2'); if(sl) sl.classList.add('is-filled'); });
     later(850, function(){ mr.classList.add('is-in'); });
     later(1100, trend);
     later(1150, function(){ act.classList.add('is-down'); });

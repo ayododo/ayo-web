@@ -81,7 +81,7 @@
 .om-pl[data-step="1"] .om-pl__r,.om-pl:not([data-step="1"]) .om-pl__a{visibility:hidden}
 .om-pl__lv b.is-pop,.om-pl__tag.is-pop{animation:hx-pop .45s cubic-bezier(.34,1.56,.64,1)}
 /* Winner banner (Banner Result 28490:34216), bottom right. */
-.om-won{--k:.66;left:calc(226px*var(--s));top:calc(366px*var(--s));width:328px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:32px;padding:12px 16px;
+.om-won{--k:.66;left:calc(226px*var(--s));top:calc(338px*var(--s));width:328px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:32px;padding:12px 16px;
   border:1px solid #ededed;border-radius:12px;background:#e6f6f2;box-shadow:0 4px 12px rgba(0,0,0,.06)}
 .om-won__t{display:flex;flex-direction:column;gap:2px}
 .om-won__t b{font-size:14px;line-height:20px;font-weight:700;color:#2c2c2c}
