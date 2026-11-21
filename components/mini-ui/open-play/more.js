@@ -136,6 +136,8 @@
   var HV = '<svg viewBox="0 0 13.333 13.333" fill="none" aria-hidden="true">';
   var HS = ' fill="none" stroke="#25282B" stroke-linecap="round" stroke-linejoin="round"';
   var HI = {
+    // Padel racket (Figma 28443:30595), 10.67px box.
+    padel: '<svg viewBox="0 0 10.667 10.667" fill="#25282B" aria-hidden="true"><path d="M6.04 2.944a.4.4 0 1 0 .4-.693.4.4 0 0 0-.4.693zM7.195 3.61a.4.4 0 1 0 .4-.692.4.4 0 0 0-.4.692zM5.787 4.183a.4.4 0 1 1-.693-.4.4.4 0 0 1 .693.4zM6.942 4.85a.4.4 0 1 1-.693-.4.4.4 0 0 1 .693.4z"/><path fill-rule="evenodd" d="M5.508.467c.719-.194 1.519.01 2.425.532.906.523 1.482 1.115 1.674 1.834.192.72-.033 1.457-.46 2.196-.425.736-1.03 1.463-1.802 1.863a2.6 2.6 0 0 1-.39.169L4.996 8.486l-.89 1.543a.667.667 0 0 1-.911.244l-.924-.533a.667.667 0 0 1-.244-.911l.89-1.543.255-2.409a2.6 2.6 0 0 1-.05-.422c-.038-.868.288-1.756.713-2.493C4.263 1.223 4.788.661 5.508.467zm.208.772c-.42.113-.804.459-1.187 1.123-.385.666-.636 1.4-.607 2.057.028.628.311 1.219 1.077 1.661.767.442 1.42.392 1.978.102.584-.303 1.093-.887 1.478-1.553.383-.664.49-1.17.379-1.59-.112-.421-.475-.87-1.301-1.347-.826-.477-1.396-.566-1.817-.453zM3.453 7.959l-.667 1.154.693.4.667-1.154-.693-.4zm1.146-1.186c.305.176.603.294.894.362l-.826.601-.935-.54.107-1.016c.204.218.456.417.76.593z"/></svg>',
     crown: '<svg class="op-crown" viewBox="4 2.667 9.333 9.333" fill="none" aria-hidden="true"><path d="M4.78 5.78l.51.41a1.6 1.6 0 0 0 2.33-.46l1.05-1.89 1.05 1.89a1.6 1.6 0 0 0 2.33.46l.51-.41-.68 3.41a1.07 1.07 0 0 1-.53.7 6.02 6.02 0 0 1-5.35 0 1.07 1.07 0 0 1-.53-.7z" fill="#EC2435" stroke="#EC2435" stroke-width="1.167" stroke-linejoin="round"/><path d="M7.12 8.5c1 .52 2.1.52 3.11 0" stroke="#fff" stroke-width=".583" stroke-linecap="round"/></svg>',
     level: HV+'<rect width="13.333" height="13.333" rx="2.667" fill="#F3F0ED"/><path d="M7.156 8.339 10.638 3.562l-.334-.23-3.146 4.308L5.597 5.034 2.305 9.844 5.58 5.709z" fill-rule="evenodd" fill="#D83232"/><path d="m7.157 10 3.43-4.735-.334-.23-3.094 4.267-1.56-2.607-2.49 3.078 2.472-2.403z" fill-rule="evenodd" fill="#D83232"/></svg>',
     cal: HV+'<path d="M8.886 1.109v2.222M4.442 1.109v2.222M1.664 5.554h10M7.22 2.22H6.109c-2.095 0-3.143 0-3.794.652-.65.651-.651 1.698-.651 3.793v1.111c0 2.095 0 3.143.651 3.794.651.65 1.699.651 3.794.651H7.22c2.095 0 3.143 0 3.793-.651.651-.651.651-1.699.651-3.794V6.665c0-2.095 0-3.143-.651-3.793C10.362 2.221 9.315 2.22 7.22 2.22z"'+HS+'/><path d="M6.665 7.777h.005M6.665 10h.005M8.885 7.777h.005M4.445 7.777h.005M4.445 10h.005"'+HS+' stroke-width="1.333"/></svg>',
@@ -168,7 +170,7 @@
       (o.hero
         // Hero session (Figma 28443:30575): a Jakarta game.
         ? '<span class="op-dtitle">Fun Padel Kawan AYO Jakarta Area</span>'+
-          '<span class="op-meta">'+ic('racket')+'<b>Padel</b> • '+ic('bolt')+'<b>Kompetitif</b> • '+ic('pin')+'<b>Jakarta</b></span>'
+          '<span class="op-meta">'+'<span class="op-ic">'+HI.padel+'</span>'+'<b>Padel</b> • '+ic('bolt')+'<b>Kompetitif</b> • '+ic('pin')+'<b>Jakarta</b></span>'
         : '<span class="op-dtitle">Fun Padel Kawan AYO Chapter Bogor Area</span>'+
           '<span class="op-meta">'+ic('racket')+'<b>Padel</b> • '+ic('bolt')+'<b>Kompetitif</b> • '+ic('pin')+'<b>Kabupaten Bogor</b></span>')+
       '<div class="op-ppl" style="align-items:flex-start">'+ppl+'</div>'+
