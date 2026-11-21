@@ -18,7 +18,15 @@
 
 /* Hero (Figma 27055:7122, 420 × 420): a light box with the host's session
    detail as a Mini UI phone (components/mini-ui/open-play, card op-hero). */
-.op-hero__box{position:relative;width:420px;height:420px;border-radius:24px;background:#f7f7f7;overflow:hidden}
+.op-hero__box{position:relative;width:420px;height:420px;border-radius:24px;background:#eaf6ee;overflow:hidden}
+/* Court lines behind the phone, as on the Open Match hero (Figma 28522:155):
+   a 360 × 468 court at (30, -15) with a 3px white outline, the centre line
+   (top 300px) and the service line at 262px. In % so it scales on mobile. */
+.op-hero__box::before{content:"";position:absolute;left:7.143%;top:-3.571%;width:85.714%;height:111.429%;
+  box-sizing:border-box;border:3px solid #fff;border-radius:4px;
+  background:
+    linear-gradient(#fff,#fff) 49.86% 0/3px 64.3% no-repeat,
+    linear-gradient(#fff,#fff) 0 56.4%/100% 3px no-repeat}
 .op-hero__box .mu-stage{position:absolute;inset:0}
 .op-hero__box .mu-phone{--mu-scale:1;top:28px}
 
