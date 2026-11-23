@@ -134,8 +134,11 @@
       icon: { on: 'icons/activity/gametime.svg', off: 'icons/activity/gametime-off.svg' },
       tag: 'GameTime',
       hasRole: false,
-      image: 'activity/gametime.webp',
-      imageAlt: 'Players in a GameTime round',
+      image: 'activity/gametime.webp?v=2',
+      imageAlt: 'A player swinging a racket on an indoor court',
+      /* Figma 27233:26211 shows the photo from 10.5% down: racket tip to
+         knees, player on the right clear of the GAMETIME chip. */
+      imagePos: '50% 24%',
       href: '#',
       headline: 'Every Points Counts. Every Round Matters',
       tagline: '',
