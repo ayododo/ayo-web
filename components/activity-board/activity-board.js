@@ -60,7 +60,7 @@
       /* The player stands right of centre and reaches high. Hold the frame
          near the top so the raised hand and racket stay in on the wide desktop
          panel, and to the right so narrow screens keep the player in view. */
-      imagePos: '72% 8%',
+      imagePos: '72% 32%',
       href: '#',
       roles: {
         host: {
