@@ -96,6 +96,26 @@
 @media (prefers-reduced-motion:reduce){.ab-card__photo img.is-in{transition:none}}
 .ab-card__body{flex:1 1 0;display:flex;flex-direction:column;justify-content:space-between;gap:32px;padding:56px}
 .ab-card__text{display:flex;flex-direction:column;gap:16px}
+/* Google Play "Best of 2026" award on the 2026 milestone (Figma 28014:8397,
+   node 28614:31544): 96px, 66px down and 56px in from the body's top-right.
+   Same plate, glass-tile turn, float and gold shine as the homepage hero
+   award (components/persona-hero/persona-hero.css), minus the drop shadow.
+   Shown only while 2026 is on (.is-award on the card); coming back into
+   view replays the pop-in. */
+.ab-card__body{position:relative}
+.ab-award{display:none;position:absolute;top:66px;right:56px;width:96px;height:96px;perspective:600px;pointer-events:none}
+.ab-card.is-award .ab-award{display:block;animation:ab-award-in .9s cubic-bezier(.2,.9,.25,1.2) .15s both}
+.ab-award__in{position:relative;width:100%;height:100%;animation:ab-award-float 3.28s ease-in-out infinite alternate}
+.ab-award__plate,.ab-award__shine{position:absolute;inset:0;width:100%;height:100%;display:block}
+.ab-award__plate{animation:ab-award-plate 1.64s ease-in-out infinite alternate}
+.ab-award__shine{-webkit-mask:url(../assets/award/plate.png) center/contain no-repeat;mask:url(../assets/award/plate.png) center/contain no-repeat;background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.5) 50%,transparent 62%) no-repeat;background-size:250% 100%;mix-blend-mode:soft-light;animation:ab-award-shine 6.56s ease-in-out infinite}
+.ab-award__tile{position:absolute;left:15.5%;top:15.5%;width:69%;height:69%;background:url(../assets/award/tile-seq.webp) 0 0/4100% 100% no-repeat;filter:drop-shadow(0 4px 8px rgba(0,0,0,.18));animation:ab-award-seq 1.64s steps(41,jump-none) infinite alternate}
+@keyframes ab-award-in{from{opacity:0;transform:translateY(-14px) scale(.7)}to{opacity:1;transform:none}}
+@keyframes ab-award-float{from{transform:translateY(2px)}to{transform:translateY(-4px)}}
+@keyframes ab-award-plate{from{transform:rotateY(-4deg)}to{transform:rotateY(4deg)}}
+@keyframes ab-award-seq{from{background-position:0 0}to{background-position:100% 0}}
+@keyframes ab-award-shine{0%,20%{background-position:130% 0}60%,100%{background-position:-30% 0}}
+@media (prefers-reduced-motion:reduce){.ab-card.is-award .ab-award,.ab-award__in,.ab-award__plate,.ab-award__shine,.ab-award__tile{animation:none}.ab-award__tile{background-position:50% 0}}
 /* All milestone texts share one cell, so the card takes the tallest one's height
    and nothing moves between years (about.js builds the stack). */
 .ab-card__texts{display:grid}
@@ -283,6 +303,7 @@
   .ab-card__body{gap:12px;padding:24px}
   .ab-card__text{gap:12px}
   .ab-card__year{font-size:48px;line-height:52px}
+  .ab-award{top:48px;right:24px;width:56px;height:56px}
   .ab-card__title{font-size:22px;line-height:30px}
   .ab-arrow{width:40px;height:40px}
 

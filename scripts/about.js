@@ -84,6 +84,7 @@
       if(k === i) t.removeAttribute('aria-hidden'); else t.setAttribute('aria-hidden', 'true');
     });
     tl.style.setProperty('--p', i);
+    card.classList.toggle('is-award', 'award' in b.dataset);
     swapPhoto(b.dataset.img, b.dataset.alt || '');
     prev.disabled = i === 0;
     next.disabled = i === total - 1;
