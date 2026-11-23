@@ -3,6 +3,9 @@
    Figma: desktop 27967:7943 (all slides 27942:18522), mobile 27967:7970.
    Heading on the left, one quote card on the right that autoplays through the
    testimonials; dots and arrows step it by hand. Stacks on narrow screens.
+   Two audiences (Figma 28670:35537 EN / 28676:35550 ID): tabs under the sub
+   switch between "ayo" (light card, red AYO App chip) and "avm" (Dark-soft
+   card, AVM chip); .qtc[data-group] carries the open one.
    Depends on: styles/tokens.css (tokens only). Behaviour: quote-carousel.js.
    ========================================================================== */
 
@@ -36,6 +39,8 @@
   min-height: 618px;
   display: flex; flex-direction: column; gap: 32px;
   padding: 56px; border: 1px solid var(--qtc-line); border-radius: 24px; background: #fff;
+  position: relative;
+  transition: background-color .4s ease, border-color .4s ease, height .35s ease;
 }
 /* The swapping part: person + quote. Fades out, swaps, fades back in. */
 .qtc__slide { flex: 1; display: flex; transition: opacity .3s ease, transform .3s ease; }
@@ -62,6 +67,54 @@
   flex: 1; display: flex; align-items: center; margin: 0;
   font-weight: var(--fw-medium); font-size: 24px; line-height: 36px; color: var(--qtc-ink);
 }
+
+/* Long, multi-paragraph quotes (the AVM venue owners): smaller type. */
+.qtc__quote--long { flex-direction: column; justify-content: center; align-items: stretch; gap: 12px; font-size: 18px; line-height: 28px; }
+.qtc__quote--long p { margin: 0; }
+
+/* ---- Audience tabs + card chip --------------------------------------------- */
+.qtc__tabs {
+  align-self: flex-start; display: inline-flex; gap: 4px; padding: 4px; margin-top: 24px;
+  border-radius: 999px; background: #edecec;
+}
+.qtc__tab {
+  padding: 11px 20px; border: 0; border-radius: 999px; background: transparent; cursor: pointer;
+  font-family: inherit; font-size: 15px; line-height: 18px; font-weight: var(--fw-semibold); color: var(--qtc-muted);
+  transition: background-color .25s ease, color .25s ease, box-shadow .25s ease;
+}
+.qtc__tab:hover { color: var(--qtc-ink); }
+.qtc__tab[aria-selected="true"] { background: #fff; color: var(--qtc-ink); box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+.qtc__tab[data-qtc-tab="avm"][aria-selected="true"] { background: var(--bg-dark-soft, #2c2c2c); color: #fff; box-shadow: none; }
+.qtc__tab:focus:not(:focus-visible) { outline: none; }
+.qtc__tab:focus-visible { outline: 2px solid var(--qtc-ink); outline-offset: 2px; }
+
+.qtc__chip {
+  position: absolute; top: 56px; right: 56px;
+  padding: 5px 12px; border-radius: 999px; background: rgba(236,36,53,.08); color: var(--brand);
+  font-size: 12px; line-height: 14px; font-weight: var(--fw-semibold); letter-spacing: .08em; text-transform: uppercase;
+  transition: opacity .3s ease, background-color .4s ease, color .4s ease;
+}
+.qtc__person { padding-right: 96px; }              /* room for the AYO APP chip */
+.qtc[data-group="avm"] .qtc__person { padding-right: 64px; }   /* the AVM chip is narrower */
+
+/* Heading, sub and chip fade with the quote when the group changes. */
+.qtc__title, .qtc__sub { transition: opacity .3s ease; }
+.qtc__title.is-out, .qtc__sub.is-out, .qtc__chip.is-out { opacity: 0; }
+
+/* ---- AVM group: Dark-soft card ---------------------------------------------- */
+.qtc[data-group="avm"] .qtc__card { background: var(--bg-dark-soft, #2c2c2c); border-color: var(--bg-dark-soft, #2c2c2c); }
+.qtc[data-group="avm"] .qtc__chip { background: rgba(255,255,255,.12); color: #fff; }
+.qtc[data-group="avm"] .qtc__name,
+.qtc[data-group="avm"] .qtc__quote { color: #fff; }
+.qtc[data-group="avm"] .qtc__role { color: #a8a3a3; }
+.qtc[data-group="avm"] .qtc__avatar--photo { background: #3a3939; }
+.qtc[data-group="avm"] .qtc__dot { background: rgba(255,255,255,.24); }
+.qtc[data-group="avm"] .qtc__dot[aria-current="true"] { background: var(--brand); }
+.qtc[data-group="avm"] .qtc__arrow { background: transparent; border-color: rgba(255,255,255,.28); color: #fff; }
+.qtc[data-group="avm"] .qtc__arrow:not(.qtc__arrow--next):hover { background: rgba(255,255,255,.08); }
+.qtc[data-group="avm"] .qtc__arrow--next { background: #fff; border-color: #fff; color: var(--qtc-ink); }
+.qtc[data-group="avm"] .qtc__dot:focus-visible,
+.qtc[data-group="avm"] .qtc__arrow:focus-visible { outline-color: #fff; }
 
 /* ---- Footer: dots + arrows ------------------------------------------------- */
 .qtc__foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
@@ -108,9 +161,15 @@
   .qtc__role { font-size: 12px; line-height: 16px; }
   .qtc__quote { font-size: 18px; line-height: 28px; }
   .qtc__arrow { width: 40px; height: 40px; }
+  .qtc__quote--long { gap: 10px; font-size: 16px; line-height: 25px; }
+  .qtc__tabs { margin-top: 12px; }
+  .qtc__tab { padding: 9px 14px; font-size: 14px; line-height: 17px; }
+  /* The chip sits in the flow above the person on a phone. */
+  .qtc__chip { position: static; align-self: flex-start; }
+  .qtc__person, .qtc[data-group="avm"] .qtc__person { padding-right: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .qtc__slide, .qtc__dot, .qtc__arrow { transition: none; }
+  .qtc__slide, .qtc__dot, .qtc__arrow, .qtc__card, .qtc__tab, .qtc__chip, .qtc__title, .qtc__sub { transition: none; }
   .qtc__slide.is-out { transform: none; }
 }
