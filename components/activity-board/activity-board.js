@@ -56,7 +56,11 @@
       tag: 'Open Play',
       hasRole: true,
       image: 'activity/open-play.webp',
-      imageAlt: 'Players in an open play session',
+      imageAlt: 'A padel player reaching up to serve',
+      /* The player stands right of centre and reaches high. Hold the frame
+         near the top so the raised hand and racket stay in on the wide desktop
+         panel, and to the right so narrow screens keep the player in view. */
+      imagePos: '72% 8%',
       href: '#',
       roles: {
         host: {
@@ -178,7 +182,7 @@
       id: a.id, title: a.title, tag: a.tag, hasRole: true,
       /* A role may point somewhere of its own — host has its own page, while
          participant still falls back to the activity's. */
-      image: a.image, imageAlt: a.imageAlt, href: r.href || a.href, micros: a.micros,
+      image: a.image, imageAlt: a.imageAlt, imagePos: a.imagePos, href: r.href || a.href, micros: a.micros,
       tagline: r.tagline, features: r.features,
       giant: r.giant, giantLabel: r.giantLabel, cta: r.cta,
       avatars: r.avatars, avatarsNote: r.avatarsNote
@@ -337,7 +341,8 @@
 
     panel.innerHTML =
       '<div class="actb__media' + (d.image ? '' : ' actb__media--empty') + '">' +
-        (d.image ? '<img src="' + esc(ASSETS + d.image) + '" alt="' + esc(d.imageAlt) + '">' : '') +
+        (d.image ? '<img src="' + esc(ASSETS + d.image) + '" alt="' + esc(d.imageAlt) + '"' +
+          (d.imagePos ? ' style="object-position:' + esc(d.imagePos) + '"' : '') + '>' : '') +
         '<span class="actb__scrim" aria-hidden="true"></span>' +
         '<span class="actb__chip">' + chip + '</span>' +
         overlayHTML(d) +
