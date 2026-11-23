@@ -114,141 +114,77 @@
   show(0);
 })();
 
-/* Hero sport pills (Figma 28057:8203): hover the illustration and the pills
-   drift apart, bounce off the edges of the box and knock into each other; the
-   cursor pushes any pill it comes near. The first push is gentle and eased
-   in. When the pointer leaves they don't go back: they coast on from
-   wherever they are, slowing down (still bouncing and nudging each other)
-   until they come to rest, and stay there. The next hover starts from that
-   spot. On touch, a tap on the illustration starts it
-   and a tap anywhere else (or on it again) lets them coast to a stop.
-   Pills are treated as their tilted bounding boxes, equal mass, slightly
-   bouncy; tilt stays within 35° of the design so the labels stay readable.
-   Positions are in px of the current box, so the 0.586× mobile art moves the
-   same way. Off with reduced motion: the pills keep their designed places. */
+/* Hero sport pills (Figma 28057:8203), reactive: nothing happens on its own
+   when the pointer enters the illustration. A pill only moves out of the way
+   when the cursor comes close to it (a soft push that grows as the cursor
+   gets nearer), leans a little in the direction it's moving, and springs
+   back to its designed place (a small overshoot, then still) once the cursor
+   moves off. Every pill always ends up back in the Figma layout. On touch,
+   a finger on the illustration pushes the same way. At rest the pills float
+   gently (CSS, about.css). Off with reduced motion. */
 (function(){
   'use strict';
   var art = document.querySelector('.ab-art');
   if(!art) return;
   var reduce = matchMedia('(prefers-reduced-motion: reduce)');
   var pills = [].slice.call(art.querySelectorAll('.ab-pill')).map(function(el){
-    return { el: el, gx: parseFloat(el.style.getPropertyValue('--x')), gy: parseFloat(el.style.getPropertyValue('--y')), r0: parseFloat(el.style.getPropertyValue('--r')) || 0 };
+    return { el: el, gx: parseFloat(el.style.getPropertyValue('--x')), gy: parseFloat(el.style.getPropertyValue('--y')), r0: parseFloat(el.style.getPropertyValue('--r')) || 0,
+             dx: 0, dy: 0, vx: 0, vy: 0, a: 0, va: 0 };
   });
-  var W = 0, H = 0, u = 0, playing = false, running = false, placed = false, last = 0, ptr = null;
-  var BOUNCE = .86, TILT = 35, BURST = .4, burstLeft = 0;
+  var u = 1, ptr = null, running = false, last = 0;
+  var K = 70, DAMP = 12, REACH = 64, PUSH = 3200, LEAN = 10;
 
   function measure(){
-    var old = u;
-    W = art.clientWidth; H = art.clientHeight; u = W / 560;
-    pills.forEach(function(p){
-      p.hx = p.gx * u; p.hy = p.gy * u; p.hw = p.el.offsetWidth / 2; p.hh = p.el.offsetHeight / 2;
-      // A resize keeps a moved pill at the same spot relative to the art.
-      if(placed && old){ var k = u / old; p.x *= k; p.y *= k; p.vx *= k; p.vy *= k; }
-    });
+    u = art.clientWidth / 560;
+    pills.forEach(function(p){ p.hx = p.gx * u; p.hy = p.gy * u; p.hw = p.el.offsetWidth / 2; p.hh = p.el.offsetHeight / 2; });
   }
-  function place(){
-    pills.forEach(function(p){ p.x = p.hx; p.y = p.hy; p.vx = p.vy = 0; p.a = p.r0; p.va = 0; });
-    placed = true;
+  function render(p){
+    if(!p.dx && !p.dy && !p.a){ p.el.style.transform = ''; return; }
+    p.el.style.transform = 'translate(-50%,-50%) translate(' + p.dx.toFixed(2) + 'px,' + p.dy.toFixed(2) + 'px) rotate(' + (p.r0 + p.a).toFixed(2) + 'deg)';
   }
-  function render(){
-    pills.forEach(function(p){
-      p.el.style.transform = 'translate(-50%,-50%) translate(' + (p.x - p.hx).toFixed(2) + 'px,' + (p.y - p.hy).toFixed(2) + 'px) rotate(' + p.a.toFixed(2) + 'deg)';
-    });
-  }
-
-  function play(){
-    if(reduce.matches) return;
-    measure();
-    if(!placed) place();
-    playing = true;
-    art.classList.add('is-playing');
-    // Gentle push: each pill drifts away from the middle of the box. The push
-    // is eased in over BURST seconds (see tick) rather than given at once.
-    pills.forEach(function(p){
-      var dx = p.x - W / 2, dy = p.y - H / 2, d = Math.hypot(dx, dy) || 1;
-      var sp = (160 + Math.random() * 90) * u;
-      p.bx = dx / d * sp + (Math.random() - .5) * 40 * u;
-      p.by = dy / d * sp + (Math.random() - .5) * 40 * u;
-      p.ba = (Math.random() - .5) * 70;
-    });
-    burstLeft = BURST;
-    if(!running){ running = true; last = 0; requestAnimationFrame(tick); }
-  }
-  function coast(){ playing = false; ptr = null; art.classList.remove('is-playing'); }
+  function start(){ if(!running){ running = true; last = 0; requestAnimationFrame(tick); } }
 
   function tick(t){
     var dt = last ? Math.min((t - last) / 1000, 1 / 30) : 1 / 60;
     last = t;
-    var m = 6 * u, moving = playing;
-    // Ease the hover push in: a share of it every frame, front-loaded and
-    // tapering off (sums to the whole push over BURST seconds).
-    var share = 0;
-    if(burstLeft > 0){
-      var t0 = 1 - burstLeft / BURST, t1 = Math.min(1, t0 + dt / BURST);
-      share = (1 - Math.pow(1 - t1, 2)) - (1 - Math.pow(1 - t0, 2));
-      burstLeft -= dt;
-    }
+    var moving = !!ptr;
     pills.forEach(function(p){
-      if(share && p.bx !== undefined){ p.vx += p.bx * share; p.vy += p.by * share; p.va += p.ba * share; }
-      if(playing){
-        // A little drag, but keep a lazy drift so they never stop dead while hovered.
-        var drag = Math.pow(.72, dt), s;
-        p.vx *= drag; p.vy *= drag;
-        s = Math.hypot(p.vx, p.vy);
-        if(s < 60 * u){ var k = s ? 60 * u / s : 0; if(k){ p.vx *= k; p.vy *= k; } else { p.vx = 60 * u; } }
-        if(ptr){
-          var dx = p.x - ptr.x, dy = p.y - ptr.y, d = Math.hypot(dx, dy), R = 120 * u;
-          if(d < R && d > 0){ var f = (1 - d / R) * 2200 * u * dt; p.vx += dx / d * f; p.vy += dy / d * f; }
+      var fx = -K * p.dx - DAMP * p.vx, fy = -K * p.dy - DAMP * p.vy;
+      if(ptr){
+        // Distance from the cursor to the pill's edge (not its centre), so a
+        // long pill reacts along its whole length.
+        var cx = p.hx + p.dx, cy = p.hy + p.dy;
+        var ox = Math.max(Math.abs(ptr.x - cx) - p.hw, 0), oy = Math.max(Math.abs(ptr.y - cy) - p.hh, 0);
+        var d = Math.hypot(ox, oy), R = REACH * u;
+        if(d < R){
+          var vx = cx - ptr.x, vy = cy - ptr.y, n = Math.hypot(vx, vy), s = 1 - d / R;
+          // Cursor dead on the centre: push outwards, away from the middle of the art.
+          if(n < 1){ vx = p.hx - art.clientWidth / 2; vy = p.hy - art.clientHeight / 2; n = Math.hypot(vx, vy) || 1; }
+          fx += vx / n * s * s * PUSH * u; fy += vy / n * s * s * PUSH * u;
         }
-        // Tilt wobbles but is pulled back towards the design's angle.
-        p.va += (p.r0 - p.a) * 40 * dt; p.va *= Math.pow(.15, dt);
-      } else {
-        // Coasting: friction only. A fast pill takes about four seconds to stop.
-        var fr = Math.pow(.35, dt);
-        p.vx *= fr; p.vy *= fr; p.va *= Math.pow(.2, dt);
-        if(Math.hypot(p.vx, p.vy) > 2 * u || Math.abs(p.va) > 1) moving = true;
-        else { p.vx = p.vy = p.va = 0; }
       }
-      p.x += p.vx * dt; p.y += p.vy * dt; p.a += p.va * dt;
-      if(Math.abs(p.a - p.r0) > TILT){ p.a = p.r0 + (p.a > p.r0 ? TILT : -TILT); p.va *= -.4; }
-      // Half-size of the tilted pill's bounding box, for walls and contacts.
-      var rad = p.a * Math.PI / 180, c = Math.abs(Math.cos(rad)), sn = Math.abs(Math.sin(rad));
-      p.ex = c * p.hw + sn * p.hh; p.ey = sn * p.hw + c * p.hh;
-      // Edges of the box (a few px of give, as the design overhangs it).
-      if(p.x - p.ex < -m){ p.x = -m + p.ex; p.vx = Math.abs(p.vx) * BOUNCE; p.va += p.vy * .03; }
-      if(p.x + p.ex > W + m){ p.x = W + m - p.ex; p.vx = -Math.abs(p.vx) * BOUNCE; p.va -= p.vy * .03; }
-      if(p.y - p.ey < -m){ p.y = -m + p.ey; p.vy = Math.abs(p.vy) * BOUNCE; p.va -= p.vx * .03; }
-      if(p.y + p.ey > H + m){ p.y = H + m - p.ey; p.vy = -Math.abs(p.vy) * BOUNCE; p.va += p.vx * .03; }
+      p.vx += fx * dt; p.vy += fy * dt;
+      p.dx += p.vx * dt; p.dy += p.vy * dt;
+      // Lean into the motion a little, then settle back to the design's angle.
+      var lean = Math.max(-LEAN, Math.min(LEAN, p.vx / u * .05));
+      p.va += ((lean - p.a) * 90 - p.va * 14) * dt; p.a += p.va * dt;
+      if(Math.abs(p.dx) + Math.abs(p.dy) > .3 || Math.hypot(p.vx, p.vy) > .5 || Math.abs(p.a) > .1) moving = true;
+      else if(!ptr){ p.dx = p.dy = p.vx = p.vy = p.a = p.va = 0; }
+      render(p);
     });
-    // Pill against pill: push apart along the shallower overlap and trade momentum.
-    for(var i = 0; i < pills.length; i++) for(var j = i + 1; j < pills.length; j++){
-      var A = pills[i], B = pills[j], dx = B.x - A.x, dy = B.y - A.y;
-      var ox = A.ex + B.ex - Math.abs(dx), oy = A.ey + B.ey - Math.abs(dy);
-      if(ox <= 0 || oy <= 0) continue;
-      var n, rel, jv;
-      if(ox < oy){
-        n = dx < 0 ? -1 : 1; A.x -= n * ox / 2; B.x += n * ox / 2;
-        rel = (B.vx - A.vx) * n;
-        if(rel < 0){ jv = -(1 + BOUNCE) * rel / 2; A.vx -= jv * n; B.vx += jv * n; }
-      } else {
-        n = dy < 0 ? -1 : 1; A.y -= n * oy / 2; B.y += n * oy / 2;
-        rel = (B.vy - A.vy) * n;
-        if(rel < 0){ jv = -(1 + BOUNCE) * rel / 2; A.vy -= jv * n; B.vy += jv * n; }
-      }
-      if(rel < 0){ var spin = Math.min(90, Math.abs(rel) * .2 / u); A.va -= spin * (Math.random() < .5 ? 1 : -1); B.va += spin * (Math.random() < .5 ? 1 : -1); }
-    }
-    render();
-    // At rest the pills simply stay where they stopped (the transform remains).
-    if(moving) requestAnimationFrame(tick); else running = false;
+    if(moving) requestAnimationFrame(tick);
+    else { running = false; art.classList.remove('is-playing'); }
   }
 
   function local(e){ var r = art.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
-  art.addEventListener('pointerenter', function(e){ if(e.pointerType === 'mouse'){ ptr = local(e); play(); } });
-  art.addEventListener('pointermove', function(e){ if(playing && e.pointerType === 'mouse') ptr = local(e); });
-  art.addEventListener('pointerleave', function(e){ if(e.pointerType === 'mouse') coast(); });
-  art.addEventListener('pointerdown', function(e){ if(e.pointerType !== 'mouse'){ if(playing) coast(); else play(); } });
-  document.addEventListener('pointerdown', function(e){ if(playing && e.pointerType !== 'mouse' && !art.contains(e.target)) coast(); });
-  addEventListener('resize', function(){ if(placed){ measure(); if(!running) render(); } });
+  function enter(e){ if(reduce.matches) return; measure(); ptr = local(e); art.classList.add('is-playing'); start(); }
+  art.addEventListener('pointerenter', function(e){ if(e.pointerType === 'mouse') enter(e); });
+  art.addEventListener('pointerdown', function(e){ if(e.pointerType !== 'mouse') enter(e); });
+  art.addEventListener('pointermove', function(e){ if(ptr) ptr = local(e); });
+  ['pointerleave', 'pointerup', 'pointercancel'].forEach(function(ev){
+    art.addEventListener(ev, function(e){ if(ev === 'pointerleave' || e.pointerType !== 'mouse') ptr = null; });
+  });
+  addEventListener('resize', function(){ if(running) measure(); });
 })();
 
 /* Moments photo strip (Figma "Photo strip · auto-scroll" 27988:8049): drifts
