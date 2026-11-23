@@ -121,7 +121,10 @@
    back to its designed place (a small overshoot, then still) once the cursor
    moves off. Every pill always ends up back in the Figma layout. On touch,
    a finger on the illustration pushes the same way. At rest the pills float
-   gently (CSS, about.css). Off with reduced motion. */
+   gently (CSS, about.css). The ball in each pill rolls with it: it turns
+   as the pill slides (exaggerated, so a short push gives most of a turn),
+   rolls back on the way home and hops a touch while the pill is moving
+   fast. Off with reduced motion. */
 (function(){
   'use strict';
   var art = document.querySelector('.ab-art');
@@ -136,10 +139,17 @@
 
   function measure(){
     u = art.clientWidth / 560;
-    pills.forEach(function(p){ p.hx = p.gx * u; p.hy = p.gy * u; p.hw = p.el.offsetWidth / 2; p.hh = p.el.offsetHeight / 2; });
+    pills.forEach(function(p){ p.hx = p.gx * u; p.hy = p.gy * u; p.hw = p.el.offsetWidth / 2; p.hh = p.el.offsetHeight / 2;
+      p.ball = p.ball || p.el.querySelector('img, .ab-pill__plus'); p.br = p.ball ? p.ball.offsetWidth / 2 || 15 * u : 0; });
   }
   function render(p){
-    if(!p.dx && !p.dy && !p.a){ p.el.style.transform = ''; return; }
+    if(!p.dx && !p.dy && !p.a){ p.el.style.transform = ''; if(p.ball) p.ball.style.transform = ''; return; }
+    if(p.ball){
+      // Roll: distance travelled along the pill over the ball's radius, doubled.
+      var roll = (p.dx - p.dy * .5) / p.br * 114.6;
+      var hop = Math.min(Math.hypot(p.vx, p.vy) / u * .012, 4) * u;
+      p.ball.style.transform = 'translateY(' + (-hop).toFixed(2) + 'px) rotate(' + roll.toFixed(1) + 'deg)';
+    }
     p.el.style.transform = 'translate(-50%,-50%) translate(' + p.dx.toFixed(2) + 'px,' + p.dy.toFixed(2) + 'px) rotate(' + (p.r0 + p.a).toFixed(2) + 'deg)';
   }
   function start(){ if(!running){ running = true; last = 0; requestAnimationFrame(tick); } }
