@@ -46,17 +46,17 @@
   sec.style.setProperty('--sc-marquee-dur', Math.round(set.scrollWidth / 45) + 's');
 })();
 
-/* Format 05 price: "$" counting down from 25,00 to 0,00 (two decimals, comma
-   as the decimal mark). A card marked data-free="idr" (the Indonesian Scoring
-   page) counts down in Rupiah instead, from Rp356.000 to Rp0, in thousands. */
+/* Format 05 price: "$" counting down from 25.00 to 0.00 (two decimals, US
+   format). A card marked data-free="idr" (the Indonesian pages) counts down in
+   Rupiah instead, from Rp356.000 to Rp0, in thousands. */
 var FREE_PRICES = {
-  usd: {label:'$', from:25, step:.01, nf:new Intl.NumberFormat('id-ID', {minimumFractionDigits:2, maximumFractionDigits:2})},
+  usd: {label:'$', from:25, step:.01, nf:new Intl.NumberFormat('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})},
   idr: {label:'Rp', from:356000, step:1000, nf:new Intl.NumberFormat('id-ID', {maximumFractionDigits:0})}
 };
 function freePrice(card){ return FREE_PRICES[card && card.dataset.free === 'idr' ? 'idr' : 'usd']; }
 
 /* Format 05 price card: while the card is in view, loop: the price counts down
-   from $25,00 to $0,00, the six features appear one by one, then the +more
+   from $25.00 to $0.00 (Rp356.000 to Rp0 in Indonesian), the six features appear one by one, then the +more
    pill pops in; hold, fade out, repeat. Out of view (or reduced motion) it
    rests on the end state in the markup. */
 (function(){
