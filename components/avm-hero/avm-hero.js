@@ -30,6 +30,11 @@
   mount._avmHero = true;
 
   var ID = (document.documentElement.lang || '').toLowerCase().indexOf('id') === 0;
+  // Money: Rupiah on the Indonesian page, rounded US dollars on the English one
+  // (Rp15.000 = $1, the same rate as the Mini UI cards in mini-ui.js).
+  var CUR = ID ? 'Rp' : '$';
+  function usdNum(v){ return Math.round(v / 15000).toLocaleString('en-US'); }
+  function cash(v){ return ID ? 'Rp'+String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, '.') : '$'+usdNum(v); }
 
   /* ---------- Strings (from the ID / EN Figma) ---------- */
   var S = ID ? {
@@ -128,7 +133,7 @@
           '<circle cx="162" cy="75" r="12" fill="none" stroke="#9E0620" stroke-opacity=".15"/>'+
           '<circle cx="162" cy="75" r="6.5" fill="#fff" stroke="#9E0620" stroke-width="2"/>'+
           '<path transform="translate(169 50) scale(1.449)" opacity=".85" fill="#25282B" d="M70.392 0C72.678 0 74.532 1.854 74.532 4.141V30.364C74.532 32.651 72.678 34.505 70.392 34.505H6.902C4.616 34.505 2.762 32.651 2.762 30.364V19.651C1.993 19.259.886 18.521.397 18.003C.392 17.998.234 17.844.165 17.748C.055 17.607 0 17.433 0 17.259C0 17.064.062 16.883.179 16.735C.206 16.709.308 16.594.404 16.5C.872 16.01 1.965 15.262 2.762 14.854V4.141C2.762 1.854 4.616 0 6.902 0H70.392Z"/>'+
-          '<text x="183" y="68" class="ah-ch__t1">July 2021</text><text x="183" y="84" class="ah-ch__t2">Rp10.000.000</text>'+
+          '<text x="183" y="68" class="ah-ch__t1">July 2021</text><text x="183" y="84" class="ah-ch__t2">'+cash(10000000)+'</text>'+
         '</g></svg></div>';
   }
   // [accent, from, to, name, court, day, icons, dot]
@@ -153,11 +158,11 @@
         '<div class="ah-back">'+BACK_SHAPE+'</div>'+
         '<div class="ah-main" data-el="main">'+
           '<div class="ah-card ah-info"><div class="ah-card__h"><span>'+S.venue+'</span><span class="ah-badge">'+S.open+'</span></div><i class="ah-dash"></i>'+
-            '<div class="ah-info__r"><div class="ah-info__bal"><span class="ah-info__ic">'+ic('money', 20)+'</span><span><small>'+S.balance+'</small><b>Rp56.000.000</b></span></div>'+
+            '<div class="ah-info__r"><div class="ah-info__bal"><span class="ah-info__ic">'+ic('money', 20)+'</span><span><small>'+S.balance+'</small><b>'+cash(56000000)+'</b></span></div>'+
             '<span class="ah-link">'+S.detail+ic('arrowR', 20)+'</span></div></div>'+
           '<div class="ah-card ah-stats"><div class="ah-card__h"><span>'+S.stats+'</span></div><i class="ah-dash"></i>'+
             '<div class="ah-stats__row" data-el="stats">'+
-              stat('#9e0620', S.rev, 'Rp', '106.785.000', 'rev', 'down', '-7%')+
+              stat('#9e0620', S.rev, CUR, ID ? '106.785.000' : usdNum(106785000), 'rev', 'down', '-7%')+
               stat('#f18701', S.res, '', '243', 'res', 'up', '+24%')+
               stat('#009fb7', S.occ, '', '88%', 'occ', 'up', '+14%')+
             '</div>'+chart()+'<span class="ah-link">'+S.detail+ic('arrowR', 20)+'</span></div>'+
@@ -176,7 +181,7 @@
     return '<div class="ah-f ah-f--fund"><div class="ah-f__in">'+tag(S.fundTag)+
       '<div class="ah-win"><div class="ah-ui">'+
         '<i class="ah-dots"></i>'+
-        '<div class="ah-fund"><span class="ah-fund__l">'+S.balance+'</span><b class="ah-fund__v">Rp<span data-n="fund">19.250.000</span></b>'+
+        '<div class="ah-fund"><span class="ah-fund__l">'+S.balance+'</span><b class="ah-fund__v">'+CUR+'<span data-n="fund">'+(ID ? '19.250.000' : usdNum(19250000))+'</span></b>'+
         '<span class="ah-btn" data-el="withdraw"><span class="ah-btn__a">'+S.withdraw+'</span><span class="ah-btn__b">'+CHECK+S.withdrawn+'</span></span></div>'+
       '</div></div></div></div>';
   }
@@ -186,7 +191,7 @@
   function report(){
     return '<div class="ah-f ah-f--rep"><div class="ah-f__in">'+tag(S.repTag)+
       '<div class="ah-win"><div class="ah-ui"><div class="ah-rep">'+
-        '<div class="ah-rep__h"><span><small>'+S.total+'</small><b>Rp15.000.000</b></span>'+ic('report', 48)+'</div>'+
+        '<div class="ah-rep__h"><span><small>'+S.total+'</small><b>'+cash(15000000)+'</b></span>'+ic('report', 48)+'</div>'+
         '<div class="ah-rep__cta">'+chip('PDF', 'pdf')+chip('Excel', 'xls')+'</div>'+
       '</div></div></div></div></div>';
   }
@@ -274,7 +279,7 @@
     })(t0);
     return wait(id, ms).then(function(){ done = true; node.textContent = f(to); });
   }
-  var money = function(v){ return nf.format(Math.round(v / 1000) * 1000); };
+  var money = function(v){ return ID ? nf.format(Math.round(v / 1000) * 1000) : usdNum(v); };
 
   // Touch marker: appears ON the element, presses, lifts; it never travels.
   // Resolves at the press, so the effect happens with the touch.
