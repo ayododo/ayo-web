@@ -123,7 +123,7 @@
 .bkg__tab.is-active .bkg__tmore{grid-template-rows:1fr;opacity:1;transition:grid-template-rows .45s cubic-bezier(.32,.72,0,1),opacity .35s ease .12s}
 .bkg__tmore-in{min-height:0;overflow:hidden}
 .bkg__tdesc{display:block;padding-top:10px;font-size:16px;line-height:24px;color:#787373}
-.bkg__prog{display:block;margin-top:18px;height:3px;border-radius:2px;background:#ebe7e0;overflow:hidden}
+.bkg__prog{display:block;margin-top:18px;height:3px;border-radius:2px;overflow:hidden}   /* no track: only the red run shows */
 .bkg__prog i{display:block;height:100%;width:100%;background:var(--brand);transform:scaleX(0);transform-origin:left center}
 /* Autoplay: one run of the bar per tab (7s), only while the showcase is on
    screen; hover or keyboard focus holds it. */
