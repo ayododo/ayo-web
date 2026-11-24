@@ -42,7 +42,11 @@
 
 /* Badges and tags */
 .op-tag{display:inline-flex;align-items:center;gap:3px;align-self:flex-start;padding:2px 5px;border-radius:4px;font-size:7.5px;line-height:1.3;font-weight:700;white-space:nowrap}
-.op-tag--coach{background:#3949c9;color:#fff;letter-spacing:.02em}
+.op-tag--coach{background:#3949c9;color:#fff;letter-spacing:.02em;
+  /* All caps has no descenders, so the even padding left the word sitting
+     high: nudge it down to the optical middle, and trim the right padding by
+     the trailing letter-spacing. */
+  padding:2.8px 4.85px 1.2px 5px}
 .op-tag--open{background:#13804b;color:#fff}
 .op-tag--super{background:#fdecef;color:#ec2435}
 .op-tag--full{background:#fde7d9;color:#c2410c}
