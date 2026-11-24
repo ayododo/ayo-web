@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AYO — Sport Together, Made Easy</title>
+<!-- The Booking section's Mini UI phones read <html lang> when their scripts
+     load, so the saved language (scripts/chrome.js, Bahasa Indonesia) is set
+     here, before them. Switching language later reloads the page (home.js). -->
+<script>try{if(JSON.parse(localStorage.getItem('ayo-indonesia-language-v1'))==='ID')document.documentElement.lang='id';}catch(e){}</script>
 
 <!-- Favicon. The SVG is the one browsers prefer — it stays sharp at any size
      and needs no @2x variant. The 32px PNG covers engines that still ignore
@@ -24,7 +28,12 @@
 <link rel="stylesheet" href="components/ad-slot/ad-slot.css?v=20261118">
 <link rel="stylesheet" href="components/quote-carousel/quote-carousel.css?v=20261123a">
 <link rel="stylesheet" href="components/site-footer/site-footer.css?v=20261118b">
-<link rel="stylesheet" href="styles/home.css?v=20261118d">
+<link rel="stylesheet" href="components/mini-ui/mini-ui.css?v=20261119g">
+<link rel="stylesheet" href="components/mini-ui/avm/booking-payments.css?v=20261119a">
+<link rel="stylesheet" href="components/mini-ui/avm/reports-promo.css?v=20261119a">
+<link rel="stylesheet" href="components/mini-ui/avm/addons-more.css?v=20261121c">
+<link rel="stylesheet" href="components/mini-ui/home/booking.css?v=20261124b">
+<link rel="stylesheet" href="styles/home.css?v=20261124i">
 </head>
 <body class="ayo-web">
 
@@ -285,134 +294,127 @@
   </div>
 </section>
 
-<!-- 6. BOOKING -->
+<!-- 6. BOOKING — one booking, two sides (Figma EN 28695:9674: players
+     28732:10019, venue owners 28706:9795; ID 28737:10163). Each side is a
+     tab list next to one Mini UI phone: the active tab shows its copy and a
+     progress bar (autoplay, scripts/home.js) and picks the phone screen.
+     Player screens: components/mini-ui/home/booking.js. Venue screens reuse
+     the AVM page cards (avm-bk03, avm-bk05, avm-pr05, avm-ft01) plus
+     home-rev. Indonesian copy: data-i18n keys, table in scripts/home.js. -->
 <section id="booking" aria-labelledby="bkg-title">
   <div class="wrap container-fluid bkg">
 
     <div class="bkg__head reveal">
       <div class="bkg__intro">
         <p class="bkg__eyebrow">Booking</p>
-        <h2 class="bkg__title" id="bkg-title">One booking, two sides of the court.</h2>
-        <p class="bkg__lede">Players book a court in the AYO app. Venue owners receive and manage it in AYO Venue Management.</p>
+        <h2 class="bkg__title" id="bkg-title" data-i18n="title">One booking, two sides of the court.</h2>
+        <p class="bkg__lede" data-i18n="lede">Players book a court in the AYO app. Venue owners receive and manage it in AYO Venue Management.</p>
       </div>
-      <a class="bkg__jump" href="#bkg-owners">
-        <span class="bkg__jump-ico"><img src="assets/icons/building.svg" alt="" width="16.5" height="15.6667"></span>
-        I own a venue
-        <span class="bkg__jump-arrow"><img src="assets/icons/arrow-down.svg" alt="" width="9.2" height="10.5333"></span>
-      </a>
     </div>
 
-    <!-- Players — AYO app -->
+    <!-- Players — AYO app: phone on the left, copy + tabs on the right. -->
     <article class="bkg__panel reveal" id="bkg-players" aria-labelledby="bkg-players-title">
-      <div class="bkg__top">
-        <!-- Players mock: court × time price grid (Figma 26682:27439). The Lottie
-             plays: pick a date, pick a price, tap Book now → Booked ✓. The
-             markup phone below is the static fallback (final frame). -->
-        <div class="bkg__mock" aria-hidden="true" data-lottie="assets/lottie/booking-ayo-app.json">
-          <div class="bkg__phone">
-            <div class="bkg__screen">
-              <div><p class="m-sub">Padel · 2.1 km</p><p class="m-venue">AYO Arena Venue</p></div>
-              <div class="m-dates">
-                <span class="m-date">Thu<b>29</b></span>
-                <span class="m-date is-on">Fri<b>30</b></span>
-                <span class="m-date">Sat<b>31</b></span>
-                <span class="m-date">Sun<b>1</b></span>
-              </div>
-              <div class="m-grid">
-                <span></span><span class="m-court">Court 1</span><span class="m-court">Court 2</span><span class="m-court">Court 3</span>
-                <span class="m-time">17:00</span><span class="m-cell is-off" style="--i:0">120K</span><span class="m-cell" style="--i:1">120K</span><span class="m-cell" style="--i:2">120K</span><span class="m-time">18:00</span><span class="m-cell" style="--i:3">150K</span><span class="m-cell is-off" style="--i:4">150K</span><span class="m-cell is-off" style="--i:5">150K</span><span class="m-time">19:00</span><span class="m-cell" style="--i:6">150K</span><span class="m-cell is-pick" style="--i:7">150K</span><span class="m-cell" style="--i:8">150K</span><span class="m-time">20:00</span><span class="m-cell is-off" style="--i:9">150K</span><span class="m-cell" style="--i:10">150K</span><span class="m-cell is-off" style="--i:11">150K</span>
-              </div>
-              <div class="m-summary"><span>Fri · 19:00 · Court 2<b>Rp150.000</b></span><span class="m-book">Book now</span></div>
-            </div>
+      <div class="bkg__show bkg__show--players" data-bkg-tabs>
+        <div class="bkg__stage" aria-hidden="true">
+          <div class="bkg__mu mu-stage is-active" data-mu="home-pl01" id="bkg-pl-0"></div>
+          <div class="bkg__mu mu-stage" data-mu="home-pl02" id="bkg-pl-1"></div>
+          <div class="bkg__mu mu-stage" data-mu="home-pl03" id="bkg-pl-2"></div>
+        </div>
+        <div class="bkg__side">
+          <div class="bkg__copy">
+            <span class="bkg__pill" data-i18n="plPill">For players · AYO app</span>
+            <h3 class="bkg__h3" id="bkg-players-title" data-i18n="plTitle">Book courts, done in 2 minutes.</h3>
+            <p class="bkg__p" data-i18n="plLede">Find an open court near you, pick a slot and pay, all in the AYO app.</p>
+          </div>
+          <div class="bkg__tabs" role="tablist" aria-labelledby="bkg-players-title">
+            <button class="bkg__tab is-active" type="button" role="tab" aria-selected="true" aria-controls="bkg-pl-0">
+              <span class="bkg__ticon"><img src="assets/icons/zap.svg" alt="" width="16.8" height="21.8"></span>
+              <span class="bkg__tname" data-i18n="pl1">Instant court booking</span>
+              <span class="bkg__tmore"><span class="bkg__tmore-in"><span class="bkg__tdesc" data-i18n="pl1d">See real-time availability and book without calling the venue.</span><span class="bkg__prog" aria-hidden="true"><i></i></span></span></span>
+            </button>
+            <button class="bkg__tab" type="button" role="tab" aria-selected="false" aria-controls="bkg-pl-1">
+              <span class="bkg__ticon"><img src="assets/icons/search-zoom.svg" alt="" width="17.8" height="17.8"></span>
+              <span class="bkg__tname" data-i18n="pl2">Find the right court</span>
+              <span class="bkg__tmore"><span class="bkg__tmore-in"><span class="bkg__tdesc" data-i18n="pl2d">Explore courts in one place and compare locations, prices, and facilities to find the best fit for your game.</span><span class="bkg__prog" aria-hidden="true"><i></i></span></span></span>
+            </button>
+            <button class="bkg__tab" type="button" role="tab" aria-selected="false" aria-controls="bkg-pl-2">
+              <span class="bkg__ticon"><img src="assets/icons/credit-card.svg" alt="" width="19.8" height="14.8"></span>
+              <span class="bkg__tname" data-i18n="pl3">Flexible payment options</span>
+              <span class="bkg__tmore"><span class="bkg__tmore-in"><span class="bkg__tdesc" data-i18n="pl3d">Pay in full, or secure your booking with a down payment where available.</span><span class="bkg__prog" aria-hidden="true"><i></i></span></span></span>
+            </button>
           </div>
         </div>
-        <div class="bkg__copy">
-          <span class="bkg__pill">For players · AYO app</span>
-          <h3 class="bkg__h3" id="bkg-players-title">Book courts, done in 2 minutes.</h3>
-          <p class="bkg__p">Find an open court and book it in minutes. No calls, no waiting.</p>
-          <a class="bkg__btn" href="https://ayo.co.id/venues">Find a court <span class="bkg__btn-ico"><img src="assets/icons/arrow-right.svg" alt="" width="10.5333" height="9.2"></span></a>
-        </div>
       </div>
-      <ul class="bkg__feats">
-        <li class="bkg__feat"><span class="bkg__ficon"><img src="assets/icons/zap.svg" alt="" width="16.8" height="21.8001"></span><h4>Instant court booking</h4><p>See real-time availability and book without calling the venue.</p></li>
-        <li class="bkg__feat"><span class="bkg__ficon"><img src="assets/icons/search-zoom.svg" alt="" width="17.8" height="17.8"></span><h4>Find the right court</h4><p>Explore courts in one place and compare locations, prices, and facilities to find the best fit for your game</p></li>
-        <li class="bkg__feat"><span class="bkg__ficon"><img src="assets/icons/credit-card.svg" alt="" width="19.8" height="14.8"></span><h4>Flexible payment options</h4><p>Pay in full, or secure your booking with a down payment where available.</p></li>
-      </ul>
+      <div class="bkg__bridge">
+        <p class="bkg__bridge-txt">
+          <span class="bkg__chip"><b data-i18n="chipSlot">Fri · 19:00–21:00 · Court 2</b><span class="bkg__dp">DP</span></span>
+          <span data-i18n="bridge">The same booking lands in the venue's AVM the moment it's paid.</span>
+        </p>
+        <a class="bkg__btn" href="https://ayo.co.id/venues"><span data-i18n="findCourt">Find a court</span> <span class="bkg__btn-ico"><img src="assets/icons/arrow-right.svg" alt="" width="10.5333" height="9.2"></span></a>
+      </div>
     </article>
 
-    <img class="bkg__connector" src="assets/icons/booking-connector.svg" alt="" width="1368" height="42">
-
-    <div class="bkg__jump-row">
-      <a class="bkg__jump bkg__jump--up" href="#bkg-players">
-        <span class="bkg__jump-ico"><img src="assets/icons/user.svg" alt="" width="13.1669" height="16.0835"></span>
-        I want to play
-        <span class="bkg__jump-arrow"><img src="assets/icons/arrow-down.svg" alt="" width="9.2" height="10.5333"></span>
-      </a>
-    </div>
-
-    <!-- Venue owners — AVM -->
+    <!-- Venue owners — AVM: copy on top, tabs left, phone right. -->
     <article class="bkg__panel bkg__panel--owners reveal" id="bkg-owners" aria-labelledby="bkg-owners-title">
-      <div class="bkg__top">
-        <div class="bkg__copy">
-          <span class="bkg__pill bkg__pill--dark">For venue owners · AYO Venue Management</span>
-          <h3 class="bkg__h3" id="bkg-owners-title">Reach 900,000+ AYO users. Manage your venue in one place.</h3>
-          <p class="bkg__p">Get discovered on AYO, manage bookings and court schedules, track payments and grow your business with AVM.</p>
-          <div class="bkg__ctas">
-            <a class="bkg__btn bkg__btn--dark" href="#">Register your venue <span class="bkg__btn-ico"><img src="assets/icons/arrow-right.svg" alt="" width="10.5333" height="9.2"></span></a>
-            <a class="bkg__btn bkg__btn--ghost" href="#">Learn more about AVM</a>
-          </div>
+      <div class="bkg__copy">
+        <span class="bkg__pill bkg__pill--dark" data-i18n="ownPill">For venue owners · AYO Venue Management</span>
+        <h3 class="bkg__h3" id="bkg-owners-title" data-i18n="ownTitle">Reach 900,000+ AYO users. Manage your venue in one place.</h3>
+        <p class="bkg__p" data-i18n="ownLede">Get discovered on AYO, manage bookings and court schedules, track payments and grow your business with AVM.</p>
+        <ul class="bkg__sizes">
+          <li><img src="assets/icons/check.svg" alt="" width="13.1667" height="9.83334"><span data-i18n="size1">Single court to multi-venue</span></li>
+          <li><img src="assets/icons/check.svg" alt="" width="13.1667" height="9.83334"><span data-i18n="size2">Owners &amp; staff on one schedule</span></li>
+          <li><img src="assets/icons/check.svg" alt="" width="13.1667" height="9.83334"><span data-i18n="size3">Phone or desktop</span></li>
+        </ul>
+      </div>
+      <div class="bkg__show bkg__show--owners" data-bkg-tabs>
+        <div class="bkg__tabs" role="tablist" aria-labelledby="bkg-owners-title">
+          <button class="bkg__tab is-active" type="button" role="tab" aria-selected="true" aria-controls="bkg-ow-0">
+            <span class="bkg__ticon"><img src="assets/icons/bell.svg" alt="" width="19.8" height="20.8"></span>
+            <span class="bkg__tname" data-i18n="ow1">Real-time bookings</span>
+            <span class="bkg__tmore"><span class="bkg__tmore-in"><span class="bkg__tdesc" data-i18n="ow1d">View incoming bookings, customer details, and payment statuses as soon as reservations are made.</span><span class="bkg__prog" aria-hidden="true"><i></i></span></span></span>
+          </button>
+          <button class="bkg__tab" type="button" role="tab" aria-selected="false" aria-controls="bkg-ow-1">
+            <span class="bkg__ticon"><img src="assets/icons/calendar.svg" alt="" width="19.8" height="19.8"></span>
+            <span class="bkg__tname" data-i18n="ow2">Schedules &amp; court availability</span>
+            <span class="bkg__tmore"><span class="bkg__tmore-in"><span class="bkg__tdesc" data-i18n="ow2d">Manage court schedules, pricing, and availability in one place to help prevent double bookings.</span><span class="bkg__prog" aria-hidden="true"><i></i></span></span></span>
+          </button>
+          <button class="bkg__tab" type="button" role="tab" aria-selected="false" aria-controls="bkg-ow-2">
+            <span class="bkg__ticon"><img src="assets/icons/bar-chart.svg" alt="" width="17.8" height="15.8"></span>
+            <span class="bkg__tname" data-i18n="ow3">Payments &amp; revenue reports</span>
+            <span class="bkg__tmore"><span class="bkg__tmore-in"><span class="bkg__tdesc" data-i18n="ow3d">Track revenue across transaction types with daily, weekly and monthly summaries.</span><span class="bkg__prog" aria-hidden="true"><i></i></span></span></span>
+          </button>
+          <button class="bkg__tab" type="button" role="tab" aria-selected="false" aria-controls="bkg-ow-3">
+            <span class="bkg__ticon"><img src="assets/icons/promo.svg" alt="" width="24" height="24"></span>
+            <span class="bkg__tname" data-i18n="ow4">Promos &amp; customers</span>
+            <span class="bkg__tmore"><span class="bkg__tmore-in"><span class="bkg__tdesc" data-i18n="ow4d">Create promotional campaigns and voucher codes, track their performance, and get to know your customers better.</span><span class="bkg__prog" aria-hidden="true"><i></i></span></span></span>
+          </button>
+          <button class="bkg__tab" type="button" role="tab" aria-selected="false" aria-controls="bkg-ow-4">
+            <span class="bkg__ticon"><img src="assets/icons/staff-access.svg" alt="" width="24" height="24"></span>
+            <span class="bkg__tname" data-i18n="ow5">Give employees the right access</span>
+            <span class="bkg__tmore"><span class="bkg__tmore-in"><span class="bkg__tdesc" data-i18n="ow5d">Assign access to specific services for each staff member based on their roles and responsibilities. Activity logs are available to monitor and track staff activities.</span><span class="bkg__prog" aria-hidden="true"><i></i></span></span></span>
+          </button>
         </div>
-        <div class="bkg__mock" aria-hidden="true" data-lottie="assets/lottie/booking-avm-dashboard.json">
-          <div class="bkg__phone">
-            <div class="bkg__screen bkg__screen--avm">
-              <div class="m-head">
-                <span class="m-head-venue">Your Venue <img src="assets/icons/chevron-down-sm.svg" alt="" width="12" height="12"></span>
-                <span class="m-open">Open</span>
-              </div>
-              <div class="m-stats">
-                <span class="m-stat m-stat--hl"><small>Income</small><b>Rp106.785.000</b></span>
-                <span class="m-stat"><small>Reservation</small><b>256 <span class="m-up"><img src="assets/icons/arrow-up-green.svg" alt="" width="8" height="6.66667"></span></b></span>
-              </div>
-              <div class="m-chart">
-                <div class="m-chart-title"><b>Revenue overview</b><small>This year</small></div>
-                <div class="m-plot">
-                  <img src="assets/icons/revenue-line.svg" alt="" width="192" height="104">
-                  <span class="m-tip">May 2026<b>Rp10.000.000</b></span>
-                </div>
-                <div class="m-axis"><span>Jan</span><span>Mar</span><span>May</span><span>Jul</span><span>Sep</span><span>Nov</span></div>
-              </div>
-              <div class="m-upcoming">
-                <p class="m-label">Upcoming</p>
-                <div class="m-booking"><span><b>19:00 · Court 2</b><small>Booked via AYO app</small></span><span class="m-new">New</span></div>
-              </div>
-            </div>
-          </div>
+        <div class="bkg__stage" aria-hidden="true">
+          <div class="bkg__mu mu-stage is-active" data-mu="avm-bk03" id="bkg-ow-0"></div>
+          <div class="bkg__mu mu-stage" data-mu="avm-bk05" id="bkg-ow-1"></div>
+          <div class="bkg__mu mu-stage" data-mu="home-rev" id="bkg-ow-2"></div>
+          <div class="bkg__mu mu-stage" data-mu="avm-pr05" id="bkg-ow-3"></div>
+          <div class="bkg__mu mu-stage" data-mu="avm-ft01" id="bkg-ow-4"></div>
         </div>
       </div>
-      <ul class="bkg__feats bkg__feats--5">
-        <li class="bkg__feat"><span class="bkg__ficon"><img src="assets/icons/bell.svg" alt="" width="19.8001" height="20.8"></span><h4>Real-time bookings</h4><p>View incoming bookings, customer details, and payment statuses as soon as reservations are made.</p></li>
-        <li class="bkg__feat"><span class="bkg__ficon"><img src="assets/icons/calendar.svg" alt="" width="19.8" height="19.8"></span><h4>Schedules &amp; court availability</h4><p>Manage court schedules, pricing, and availability in one place to help prevent double bookings.</p></li>
-        <li class="bkg__feat"><span class="bkg__ficon"><img src="assets/icons/bar-chart.svg" alt="" width="17.8" height="15.8"></span><h4>Payments &amp; revenue reports</h4><p>Track revenue across transaction types with daily, weekly and monthly summaries.</p></li>
-        <li class="bkg__feat"><span class="bkg__ficon"><img src="assets/icons/promo.svg" alt="" width="24" height="24"></span><h4>Promos &amp; customers</h4><p>Create promotional campaigns and voucher codes, track their performance, and get to know your customers better.</p></li>
-        <li class="bkg__feat"><span class="bkg__ficon"><img src="assets/icons/staff-access.svg" alt="" width="24" height="24"></span><h4>Give employees the right access</h4><p>Assign access to specific services for each staff member based on their roles and responsibilities. Activity logs are available to monitor and track staff activities.</p></li>
-      </ul>
-      <div class="bkg__extra">
-        <div class="bkg__flex">
-          <h4>Flexible for venues of every size</h4>
-          <ul class="bkg__checks">
-            <li><span class="bkg__check"><img src="assets/icons/check.svg" alt="" width="13.1667" height="9.83334"></span>Manage anything from a single court to multiple venue locations.</li>
-            <li><span class="bkg__check"><img src="assets/icons/check.svg" alt="" width="13.1667" height="9.83334"></span>Keep owners and staff aligned with shared schedules.</li>
-            <li><span class="bkg__check"><img src="assets/icons/check.svg" alt="" width="13.1667" height="9.83334"></span>Manage your venue through your phone or desktop.</li>
-          </ul>
-        </div>
+      <div class="bkg__close">
         <div class="bkg__steps">
-          <h4>Join in 4 steps</h4>
+          <h4 data-i18n="steps">Join in 4 steps</h4>
           <ol>
-            <li class="bkg__step is-current"><span class="bkg__marker"><span class="bkg__num">1</span><span class="bkg__line"></span></span><b>Register</b><span>Submit your venue and business details.</span></li>
-            <li class="bkg__step"><span class="bkg__marker"><span class="bkg__num">2</span><span class="bkg__line"></span></span><b>Get verified</b><span>The AYO team reviews your information.</span></li>
-            <li class="bkg__step"><span class="bkg__marker"><span class="bkg__num">3</span><span class="bkg__line"></span></span><b>Set up your venue</b><span>Complete your venue details, courts, schedules, and pricing.</span></li>
-            <li class="bkg__step"><span class="bkg__marker"><span class="bkg__num">4</span><span class="bkg__line"></span></span><b>Go live</b><span>Start managing your venue and receiving booking through AYO.</span></li>
+            <li class="bkg__step is-current"><span class="bkg__marker"><span class="bkg__num">1</span><span class="bkg__line"></span></span><b data-i18n="st1">Register</b><span data-i18n="st1d">Submit your venue and business details.</span></li>
+            <li class="bkg__step"><span class="bkg__marker"><span class="bkg__num">2</span><span class="bkg__line"></span></span><b data-i18n="st2">Get verified</b><span data-i18n="st2d">The AYO team reviews your information.</span></li>
+            <li class="bkg__step"><span class="bkg__marker"><span class="bkg__num">3</span><span class="bkg__line"></span></span><b data-i18n="st3">Set up your venue</b><span data-i18n="st3d">Complete your venue details, courts, schedules, and pricing.</span></li>
+            <li class="bkg__step"><span class="bkg__marker"><span class="bkg__num">4</span><span class="bkg__line"></span></span><b data-i18n="st4">Go live</b><span data-i18n="st4d">Start managing your venue and receiving booking through AYO.</span></li>
           </ol>
+        </div>
+        <div class="bkg__ctas">
+          <a class="bkg__btn bkg__btn--dark" href="avm-en.html" data-href-id="avm-id.html"><span data-i18n="register">Register your venue</span> <span class="bkg__btn-ico"><img src="assets/icons/arrow-right.svg" alt="" width="10.5333" height="9.2"></span></a>
+          <a class="bkg__btn bkg__btn--ghost" href="avm-en.html" data-href-id="avm-id.html" data-i18n="learnAvm">Learn more about AVM</a>
         </div>
       </div>
     </article>
@@ -635,13 +637,15 @@
 
 <script src="vendor/jquery-3.5.1/jquery.min.js"></script>
 <script src="vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
-<script src="scripts/home.js?v=20261118c"></script>
+<script src="scripts/home.js?v=20261124c"></script>
 <script src="components/quote-carousel/quote-carousel.js?v=20261123a"></script>
 <script src="scripts/chrome.js?v=20261120b"></script>
 <script src="components/persona-hero/persona-hero.js?v=20261120a"></script>
 <script src="components/activity-board/activity-board.js?v=20261123c" defer></script>
-<!-- lottie_light: the booking animations use no expressions, so the light
-     build (no eval) is enough — same runtime the venue page already ships. -->
-<script defer src="vendor/lottie_light.min.js"></script>
+<script src="components/mini-ui/mini-ui.js?v=20261119n"></script>
+<script src="components/mini-ui/avm/booking-payments.js?v=20261119a"></script>
+<script src="components/mini-ui/avm/reports-promo.js?v=20261119a"></script>
+<script src="components/mini-ui/avm/addons-more.js?v=20261121a"></script>
+<script src="components/mini-ui/home/booking.js?v=20261124e"></script>
 </body>
 </html>

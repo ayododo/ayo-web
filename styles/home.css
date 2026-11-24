@@ -52,6 +52,7 @@
 .spt__arrow svg{width:16px;height:16px;display:block}
 .spt__arrow:hover:not(:disabled){background:#fff}
 .spt__arrow:disabled{opacity:.35;cursor:default}
+@media (prefers-reduced-motion: reduce){ .bkg__mu.is-active{animation:none} .bkg__tmore,.bkg__tab{transition:none !important} }
 @media (prefers-reduced-motion: reduce){ .spt__more.is-open .spt__track{scroll-behavior:auto} }
 @media (max-width:900px){
   .spt__bento{grid-template-columns:1fr}
@@ -60,9 +61,12 @@
   .spt__row .spt__tile{flex:1 1 calc(50% - 8px)}
 }
 
-/* ---------- 6. Booking — players panel, connector, owners panel ----------
-   Two tinted panels, one per side of a booking. The phone mock-ups are built
-   in markup rather than exported, so their copy stays live text. */
+/* ---------- 6. Booking — two tabbed showcases --------------------------
+   Figma EN 28695:9674 (players 28732:10019, venue owners 28706:9795).
+   Each side: a tinted panel with a tab list next to one Mini UI phone
+   (components/mini-ui/, display size set here with --mu-scale). The active
+   tab is a white card with its description and an autoplay progress bar
+   (scripts/home.js); the others show their icon and title only. */
 #booking{background:var(--bg-white);padding:clamp(40px,5vw,72px) 0}
 .bkg{display:flex;flex-direction:column;gap:32px}
 .bkg__head{display:flex;align-items:flex-end;justify-content:space-between;gap:32px}
@@ -70,24 +74,15 @@
 .bkg__eyebrow{font-family:var(--font-mono);font-weight:var(--fw-semibold);font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#d31223}
 .bkg__title{font-weight:var(--fw-extrabold);font-size:clamp(30px,3.06vw,44px);line-height:1.09;letter-spacing:-.02em;color:var(--bg-dark)}
 .bkg__lede{max-width:620px;font-size:18px;line-height:28px;color:#787373}
-.bkg__jump{flex-shrink:0;display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 20px;border:1px solid #a0a4a8;border-radius:var(--radius-pill);
-  background:var(--bg-white);font-weight:var(--fw-bold);font-size:16px;line-height:24px;color:var(--bg-dark);transition:border-color .15s,background .15s}
-.bkg__jump:hover{border-color:var(--bg-dark);background:var(--bg-subtle);color:var(--bg-dark)}
-.bkg__jump-ico{width:20px;height:20px;display:grid;place-items:center;flex-shrink:0}
-.bkg__jump-arrow{width:16px;height:16px;display:grid;place-items:center;flex-shrink:0}
-.bkg__jump--up .bkg__jump-arrow img{transform:scaleY(-1)}
-.bkg__jump-row{display:flex;justify-content:flex-end}
 
-.bkg__panel{background:#f9f9f9;border-radius:28px;padding:48px;display:flex;flex-direction:column;gap:40px;scroll-margin-top:96px}
-.bkg__top{display:flex;align-items:center;gap:48px}
-.bkg__copy{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:20px}
+.bkg__panel{background:#f9f9f9;border-radius:28px;padding:64px 48px 48px;display:flex;flex-direction:column;gap:56px;scroll-margin-top:96px}
+.bkg__copy{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:20px}
 .bkg__pill{padding:8px 14px;border-radius:var(--radius-pill);background:var(--bg-white);box-shadow:inset 0 0 0 1px var(--bg-disabled);
   font-family:var(--font-mono);font-weight:var(--fw-semibold);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--bg-dark)}
 .bkg__pill--dark{background:var(--bg-dark);box-shadow:none;color:#fff}
-.bkg__h3{font-weight:var(--fw-extrabold);font-size:clamp(28px,2.8vw,40px);line-height:1.1;letter-spacing:-.02em;color:var(--bg-dark)}
-.bkg__p{max-width:460px;font-size:18px;line-height:28px;color:#787373}
-.bkg__panel--owners .bkg__p{max-width:520px}
-.bkg__btn{margin-top:4px;display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 24px;border-radius:var(--radius-pill);
+.bkg__h3{max-width:804px;font-weight:var(--fw-extrabold);font-size:clamp(28px,2.8vw,40px);line-height:1.1;letter-spacing:-.02em;color:var(--bg-dark)}
+.bkg__p{max-width:520px;font-size:18px;line-height:28px;color:#787373}
+.bkg__btn{flex-shrink:0;display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 24px;border-radius:var(--radius-pill);
   background:var(--brand);color:#fff;font-weight:var(--fw-bold);font-size:16px;line-height:24px;transition:filter .15s,transform .15s}
 /* Colour restated on hover: the Bootstrap-compat link reset (a:hover → inherit)
    outranks a single class and turned the label dark. */
@@ -95,88 +90,77 @@
 .bkg__btn--dark{background:var(--bg-dark)}
 .bkg__btn--dark:hover{filter:brightness(1.25)}
 .bkg__btn-ico{width:16px;height:16px;display:grid;place-items:center}
-/* Owners CTA row (Figma 26417:5359): solid "Register" + outline "Learn more". */
-.bkg__ctas{margin-top:4px;display:flex;flex-wrap:wrap;gap:12px}
-.bkg__ctas .bkg__btn{margin-top:0}
 .bkg__btn--ghost{background:transparent;color:var(--bg-dark);box-shadow:inset 0 0 0 1.5px var(--bg-dark)}
 .bkg__btn--ghost:hover{filter:none;color:var(--bg-dark);background:rgba(26,25,25,.06)}
 
-.bkg__feats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;list-style:none;margin:0;padding:0}
-.bkg__feats--4{grid-template-columns:repeat(4,minmax(0,1fr))}
-.bkg__feats--5{grid-template-columns:repeat(5,minmax(0,1fr))}
-.bkg__feat{background:var(--bg-white);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:14px}
-.bkg__ficon{width:48px;height:48px;border-radius:14px;background:#f3f0ed;display:grid;place-items:center}
-.bkg__feat h4{font-weight:var(--fw-bold);font-size:18px;line-height:26px;color:var(--bg-dark)}
-.bkg__feat p{font-size:16px;line-height:22px;color:#787373}
+/* "Flexible for venues of every size" as one row of chips. */
+.bkg__sizes{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.bkg__sizes li{display:inline-flex;align-items:center;gap:8px;padding:8px 16px 8px 12px;border:1px solid #ebe7e0;border-radius:var(--radius-pill);background:var(--bg-white);
+  font-weight:var(--fw-semibold);font-size:14px;line-height:20px;color:var(--bg-dark)}
+.bkg__sizes img{width:14px;height:auto;filter:brightness(0);opacity:.85}
 
-.bkg__connector{display:block;width:100%;height:42px}
+/* Showcase: phone stage + tab list side by side. */
+/* Top-aligned: the tab list grows and shrinks as descriptions open, the
+   phone stays where it is. */
+.bkg__show{display:flex;align-items:flex-start;justify-content:space-between;gap:48px}
+.bkg__side{width:560px;flex-shrink:0;display:flex;flex-direction:column;gap:40px}
+.bkg__show--owners .bkg__tabs{width:560px;flex-shrink:0}
+.bkg__tabs{display:flex;flex-direction:column;gap:4px}
+.bkg__tab{position:relative;display:grid;grid-template-columns:40px 1fr;column-gap:16px;align-items:center;width:100%;padding:22px 24px;border:0;border-radius:20px;
+  background:rgba(255,255,255,0);text-align:left;font:inherit;color:inherit;cursor:pointer;transition:background-color .4s ease}
+.bkg__tab:hover .bkg__tname{color:var(--bg-dark)}
+.bkg__tab:focus-visible{outline:2px solid var(--bg-dark);outline-offset:2px}
+.bkg__tab.is-active{background:var(--bg-white)}
+.bkg__ticon{width:40px;height:40px;border-radius:12px;background:#f3f0ed;display:grid;place-items:center;opacity:.7;transition:opacity .25s}
+.bkg__ticon img{max-width:20px;max-height:20px}
+.bkg__tab.is-active .bkg__ticon{opacity:1}
+.bkg__tname{font-weight:var(--fw-bold);font-size:20px;line-height:28px;color:#787373;transition:color .25s}
+.bkg__tab.is-active .bkg__tname{color:var(--bg-dark)}
+/* Description + progress open like an accordion: the row height animates
+   (grid 0fr → 1fr) while the text fades in, and closes the same way. */
+.bkg__tmore{grid-column:2;display:grid;grid-template-rows:0fr;opacity:0;
+  transition:grid-template-rows .45s cubic-bezier(.32,.72,0,1),opacity .2s ease}
+.bkg__tab.is-active .bkg__tmore{grid-template-rows:1fr;opacity:1;transition:grid-template-rows .45s cubic-bezier(.32,.72,0,1),opacity .35s ease .12s}
+.bkg__tmore-in{min-height:0;overflow:hidden}
+.bkg__tdesc{display:block;padding-top:10px;font-size:16px;line-height:24px;color:#787373}
+.bkg__prog{display:block;margin-top:18px;height:3px;border-radius:2px;background:#ebe7e0;overflow:hidden}
+.bkg__prog i{display:block;height:100%;width:100%;background:var(--brand);transform:scaleX(0);transform-origin:left center}
+/* Autoplay: one run of the bar per tab (7s), only while the showcase is on
+   screen; hover or keyboard focus holds it. */
+.bkg__tab.is-active .bkg__prog i{animation:bkg-prog 7s linear forwards;animation-play-state:paused}
+.bkg__show.is-run .bkg__tab.is-active .bkg__prog i{animation-play-state:running}
+.bkg__show.is-run:hover .bkg__tab.is-active .bkg__prog i,
+.bkg__show.is-run:focus-within .bkg__tab.is-active .bkg__prog i{animation-play-state:paused}
+.bkg__show.is-still .bkg__prog{display:none !important}
+@keyframes bkg-prog{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 
-/* Phone mock-ups */
-.bkg__mock{flex-shrink:0;width:420px;height:420px;border-radius:24px;background:var(--bg-white);overflow:hidden;display:flex;justify-content:center;align-items:flex-end}
-/* Lottie layer (see home.js). Fills the 420 card; the animation draws its own
-   card and phone, so the markup phone is hidden once it is ready. */
-.bkg__mock{position:relative}
-.bkg__lottie{position:absolute;inset:0}
-.bkg__lottie svg{display:block}
-.bkg__mock.is-lottie .bkg__phone{visibility:hidden}
-.bkg__phone{width:260px;height:392px;padding:10px 10px 0;border-radius:34px 34px 0 0;background:#ececec;display:flex}
-.bkg__screen{flex:1;min-width:0;display:flex;flex-direction:column;gap:12px;padding:18px 14px 0;border-radius:26px 26px 0 0;background:var(--bg-white);overflow:hidden;color:var(--bg-dark)}
-.bkg__screen--avm{gap:10px;padding:16px 12px 0;background:#fff}
-.m-sub{font-size:12px;line-height:16px;color:#787373}
-.m-venue{font-weight:var(--fw-extrabold);font-size:16px;line-height:20px}
-.m-dates,.m-slots,.m-stats{display:flex;gap:6px}
-.m-date{flex:1;display:flex;flex-direction:column;align-items:center;padding:6px 0;border:1px solid var(--bg-disabled);border-radius:10px;font-size:12px;line-height:16px}
-.m-date b{font-weight:var(--fw-bold)}
-.m-date.is-on{background:var(--bg-dark);border-color:var(--bg-dark);color:#fff}
-.m-label{font-weight:var(--fw-bold);font-size:12px;line-height:16px}
-.m-slot{flex:1;text-align:center;padding:8px 0;border:1px solid var(--bg-disabled);border-radius:8px;font-weight:var(--fw-semibold);font-size:12px;line-height:16px}
-.m-slot.is-off{background:#f3f0ed;border-color:#f3f0ed;color:#9b9797;text-decoration:line-through}
-.m-slot.is-on{background:var(--brand);border-color:var(--brand);color:#fff}
-.m-summary{margin:auto 0 12px;display:flex;align-items:center;justify-content:space-between;padding:12px;border-radius:14px;background:var(--bg-dark);font-size:12px;line-height:16px}
-.m-summary > span:first-child{display:flex;flex-direction:column;color:#9b9797}
-.m-summary b{color:#fff;font-weight:var(--fw-bold)}
-.m-book{padding:8px 12px;border-radius:var(--radius-pill);background:var(--brand);color:#fff;font-weight:var(--fw-bold)}
-/* Players mock — court × time price grid (Figma 26680:13090). The picked
-   price is red; booked slots are struck through. */
-.m-grid{display:grid;grid-template-columns:34px repeat(3,minmax(0,1fr));gap:6px 4px;align-items:center}
-.m-court{text-align:center;font-weight:var(--fw-bold);font-size:11px;line-height:16px}
-.m-time{font-weight:var(--fw-medium);font-size:11px;line-height:16px;color:#787373}
-.m-cell{position:relative;display:grid;place-items:center;height:32px;border:1px solid var(--bg-disabled);border-radius:8px;background:#fff;
-  font-weight:var(--fw-semibold);font-size:12px;line-height:16px;color:var(--bg-dark)}
-.m-cell.is-off{background:#f3f0ed;border-color:#f3f0ed;color:#bebbbb;text-decoration:line-through}
-.m-cell.is-pick{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:var(--fw-bold)}
-.m-summary b{font-size:12px}
+/* Phone stage: one Mini UI per tab, stacked; only the active one shows.
+   The phone sits low and bleeds off the bottom edge (Mini UI spec). */
+.bkg__stage{position:relative;flex:1;min-width:0;border-radius:24px;background:var(--bg-white);overflow:hidden}
+/* display:none (not just hidden) so the Mini UI engine sees the other
+   phones leave the view: their flow stops and resets, and a phone starts its
+   flow from the beginning each time its tab comes back. */
+.bkg__mu{position:absolute;inset:0;display:none}
+.bkg__mu.is-active{display:block;animation:bkg-mu-in .45s cubic-bezier(.32,.72,0,1)}
+@keyframes bkg-mu-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+/* Same display size on both sides, the one the AVM page uses (1.15). */
+.bkg__show .bkg__stage{flex:0 1 560px;height:460px}
+.bkg__show--players .bkg__stage{margin-top:40px}
+.bkg__show .bkg__mu .mu-phone{--mu-scale:1.15;top:40px}
 
-.m-head{display:flex;align-items:center;justify-content:space-between;padding:0 2px}
-.m-head-venue{display:flex;align-items:center;gap:4px;font-weight:var(--fw-extrabold);font-size:14px;line-height:18px}
-.m-open{padding:2px 8px;border-radius:6px;background:#e6f6ee;color:#1b7a4b;font-weight:var(--fw-bold);font-size:10px;line-height:14px}
-.m-stat{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;padding:8px;border-radius:10px;background:var(--bg-white)}
-.m-stat--hl{border-top:2px solid var(--brand)}
-.m-stat small,.m-chart-title small,.m-booking small{font-size:10px;line-height:14px;color:#787373}
-.m-stat b{display:flex;align-items:center;gap:2px;font-weight:var(--fw-bold);font-size:14px;line-height:18px;white-space:nowrap}
-.m-up{width:16px;height:16px;display:grid;place-items:center}
-.m-chart{display:flex;flex-direction:column;gap:6px;padding:10px 10px 8px;border-radius:12px;background:var(--bg-white)}
-.m-chart-title{display:flex;align-items:baseline;justify-content:space-between}
-.m-chart-title b{font-weight:var(--fw-bold);font-size:12px;line-height:16px}
-.m-chart-title small{color:#9b9797}
-.m-plot{position:relative;width:192px;height:104px}
-.m-plot img{display:block}
-.m-tip{position:absolute;left:104px;top:70px;display:flex;flex-direction:column;padding:5px 7px;border-radius:6px;background:var(--bg-dark);font-size:10px;line-height:12px;color:#bebbbb;white-space:nowrap}
-.m-tip b{color:#fff;font-weight:var(--fw-bold)}
-.m-axis{display:flex;justify-content:space-between;font-size:10px;line-height:14px;color:#9b9797}
-.m-upcoming{display:flex;flex-direction:column;gap:6px}
-.m-booking{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1.5px solid #ec221f;border-radius:12px;background:var(--bg-white)}
-.m-booking > span:first-child{display:flex;flex-direction:column}
-.m-booking b{font-weight:var(--fw-bold);font-size:12px;line-height:16px}
-.m-new{padding:2px 8px;border-radius:var(--radius-pill);background:var(--brand);color:#fff;font-weight:var(--fw-bold);font-size:10px;line-height:14px}
+/* Players closing row: the booking chip, the hand-off line, the CTA. */
+.bkg__bridge{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-top:32px;border-top:1px solid #ebe7e0}
+.bkg__bridge-txt{display:flex;align-items:center;flex-wrap:wrap;gap:12px 16px;font-size:16px;line-height:24px;color:#787373}
+.bkg__chip{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid #eee;border-radius:var(--radius-pill);background:var(--bg-white);
+  font-size:14px;line-height:20px;color:var(--bg-dark);white-space:nowrap}
+.bkg__chip b{font-weight:var(--fw-bold)}
+.bkg__dp{padding:1px 7px;border-radius:var(--radius-pill);background:#fff1de;color:#b4610e;font-weight:var(--fw-bold);font-size:11px;line-height:16px}
 
-/* Owners: flexibility list + onboarding steps */
-.bkg__extra{display:flex;gap:48px;padding-top:32px;border-top:1px solid #ebe7e0}
-.bkg__extra h4{font-weight:var(--fw-extrabold);font-size:22px;line-height:28px;color:var(--bg-dark)}
-.bkg__flex{width:340px;flex-shrink:0;display:flex;flex-direction:column;gap:16px}
-.bkg__checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px}
-.bkg__checks li{display:flex;gap:10px;font-size:16px;line-height:24px;color:#787373}
-.bkg__check{flex-shrink:0;width:20px;height:20px;margin-top:2px;display:grid;place-items:center}
+/* Owners closing row: onboarding steps + CTAs. */
+.bkg__close{display:flex;align-items:flex-end;gap:48px;padding-top:40px;border-top:1px solid #ebe7e0}
+.bkg__close h4{font-weight:var(--fw-extrabold);font-size:22px;line-height:28px;color:var(--bg-dark)}
+.bkg__ctas{flex-shrink:0;display:flex;flex-direction:column;align-items:stretch;gap:12px;width:240px}
+.bkg__ctas .bkg__btn{justify-content:center}
 .bkg__steps{flex:1;min-width:0;display:flex;flex-direction:column;gap:20px}
 .bkg__steps ol{list-style:none;margin:0;padding:0;display:flex;gap:16px}
 .bkg__step{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:10px}
@@ -209,26 +193,27 @@
 @keyframes bkg-step-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes bkg-line-fill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 
-@media (max-width:1100px){
-  .bkg__feats--4{grid-template-columns:repeat(2,minmax(0,1fr))}
-  /* Five cards: three over two, no card left alone on a row. */
-  .bkg__feats--5{grid-template-columns:repeat(6,minmax(0,1fr))}
-  .bkg__feats--5 > li{grid-column:span 2}
-  .bkg__feats--5 > li:nth-child(n+4){grid-column:span 3}
-  .bkg__extra{flex-direction:column;gap:32px}
-  .bkg__flex{width:auto}
+@media (max-width:1240px){
+  .bkg__side,.bkg__show--owners .bkg__tabs{width:460px}
+  .bkg__show{gap:32px}
 }
+@media (max-width:1100px){
+  .bkg__close{flex-direction:column;align-items:stretch;gap:32px}
+  .bkg__ctas{flex-direction:row;flex-wrap:wrap;width:auto}
+  .bkg__bridge{flex-direction:column;align-items:flex-start}
+}
+/* One column: copy, then the phone, then the tabs (the active one shows its
+   description under its title, accordion-like). */
 @media (max-width:900px){
   .bkg__head{flex-direction:column;align-items:flex-start;gap:20px}
   .bkg__panel{padding:24px;border-radius:20px;gap:28px}
-  .bkg__top{flex-direction:column;align-items:stretch;gap:28px}
-  .bkg__mock{width:100%;max-width:420px;height:auto;padding-top:24px;align-self:center}
-  .bkg__mock.is-lottie{aspect-ratio:1;padding-top:0}
-  .bkg__mock.is-lottie .bkg__phone{display:none}
-  .bkg__panel--owners .bkg__mock{order:-1}
-  .bkg__feats{grid-template-columns:1fr}
-  .bkg__feats--4,.bkg__feats--5{grid-template-columns:1fr}
-  .bkg__feats--5 > li,.bkg__feats--5 > li:nth-child(n+4){grid-column:auto}
+  .bkg__show{flex-direction:column;gap:24px}
+  .bkg__side{display:contents}
+  .bkg__show--players .bkg__copy{order:-2}
+  .bkg__show .bkg__stage,.bkg__show--players .bkg__stage{order:-1;flex:none;width:100%;height:400px;margin-top:0}
+  .bkg__show .bkg__mu .mu-phone{--mu-scale:1.05;top:32px}
+  .bkg__show--owners .bkg__tabs{width:auto}
+  .bkg__tab{padding:18px 16px}
   .bkg__steps ol{flex-wrap:wrap;row-gap:24px}
   .bkg__step{flex:1 1 calc(50% - 8px)}
   .bkg__line{display:none}
@@ -373,8 +358,7 @@
   .ctaband__lbl-lg{display:none}
   .ctaband__lbl-sm{display:inline}
 
-  /* Booking (Figma 26421:5218): stacked feature cards, owners copy before
-     the dashboard mock, onboarding steps as a vertical list. */
+  /* Booking: smaller type, a shorter phone stage, steps as a vertical list. */
   #booking{padding:40px 0}
   .bkg{gap:24px}
   .bkg__head{gap:16px}
@@ -382,17 +366,15 @@
   .bkg__title,.bkg__h3{font-weight:var(--fw-bold);font-size:32px;line-height:40px;letter-spacing:0}
   .bkg__lede,.bkg__p{font-size:16px;line-height:22px}
   .bkg__panel{padding:20px;border-radius:28px;gap:24px}
-  .bkg__top{gap:24px}
   .bkg__pill{font-family:var(--font-sans);font-size:10px;line-height:16px;letter-spacing:.06em}
-  .bkg__panel--owners .bkg__mock{order:0}
-  .bkg__feats{gap:12px}
-  .bkg__feat{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:16px;border-radius:20px}
-  .bkg__ficon{width:48px;height:48px;border-radius:14px}
-  .bkg__feat h4{font-size:18px;line-height:22px}
-  .bkg__feat p{font-size:16px;line-height:22px}
-  .bkg__extra{padding-top:8px;gap:28px;border-top:0}
-  .bkg__extra h4{font-weight:var(--fw-bold);font-size:20px;line-height:24px}
-  .bkg__checks li{font-size:16px;line-height:22px}
+  .bkg__show .bkg__stage{height:350px}
+  .bkg__show .bkg__mu .mu-phone{--mu-scale:.95;top:24px}
+  .bkg__tname{font-size:17px;line-height:24px}
+  .bkg__tdesc{font-size:15px;line-height:22px}
+  .bkg__chip{white-space:normal}
+  .bkg__close{padding-top:24px;gap:24px}
+  .bkg__close h4{font-weight:var(--fw-bold);font-size:20px;line-height:24px}
+  .bkg__ctas{flex-direction:column}
   .bkg__steps ol{flex-direction:column;flex-wrap:nowrap;gap:16px}
   .bkg__step{flex:none}
   .bkg__line{display:block}

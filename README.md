@@ -73,7 +73,7 @@ Page-specific code:
 
 | Page | Files |
 | --- | --- |
-| Homepage | `styles/home.css`, `scripts/home.js` |
+| Homepage | `styles/home.css`, `scripts/home.js` (Booking tabs + autoplay, Booking Indonesian copy), `components/mini-ui/` + `components/mini-ui/avm/` + `components/mini-ui/home/` (Booking phones) |
 | Scoring | `styles/scoring.css`, `scripts/scoring.js`, `components/mini-ui/`, `assets/scoring/` |
 | AVM | `styles/avm.css`, `scripts/avm.js` (tabs, FAQ accordion, contact form, stat count-up, section reveal), `components/avm-hero/` (animated hero illustration), `components/mini-ui/` + `components/mini-ui/avm/` (25 feature cards) |
 | Open Match | `styles/scoring.css` (shared layout) + `styles/open-match.css`, `scripts/scoring.js` (tabs), `components/mini-ui/open-match/` |
@@ -100,7 +100,13 @@ site) is the review page for single cards. Flows run while the
 card is in view and loop. With reduced
 motion they stay on the first screen. The player photos in
 `assets/scoring/avatars/` are AI-generated, fictional people.
-`tools/lottie/` regenerates the Booking section animation.
+The homepage Booking section (two tabbed showcases, Figma 28695:9674, ID
+28737:10163) shows Mini UI phones too: the player screens and the revenue
+screen are in `components/mini-ui/home/`, the other venue screens reuse the AVM
+cards. Its copy switches with the chosen language (data-i18n, `scripts/home.js`);
+the phones follow `<html lang>`, so a language switch reloads the homepage.
+`tools/lottie/` and `assets/lottie/booking-*.json` belong to the previous
+Booking animation and are no longer loaded.
 
 Keep stylesheet and script order consistent with the HTML entry points:
 

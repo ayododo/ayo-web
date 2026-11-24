@@ -1,0 +1,63 @@
+/* ==========================================================================
+   Homepage › Booking — Mini UI parts for home-pl01..03 and home-rev
+   (components/mini-ui/home/booking.js). Drawn at the base phone size
+   (260 × 392) like every Mini UI; the section scales the phone.
+   Spec: white cards with #eee borders, tints #f4f4f5, labels #787373,
+   selected = Dark-soft #2c2c2c stroke 1.2, no red highlight.
+   ========================================================================== */
+
+.mu-hb-caret{width:9px;height:6px;display:inline-block;vertical-align:1px;margin-left:2px}
+.mu-hb-val{font-size:14px;line-height:1.25;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.mu-hb-off{font-size:10px;font-weight:700;color:#1b7a4b}
+
+/* Date tiles: day on top, date below. */
+.mu-hb-date{display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 2px;color:#17171a}
+.mu-hb-date small{font-size:10px;font-weight:400;color:#787373}
+.mu-hb-date.is-on{border-width:1.2px}
+
+/* Court × hour grid. */
+.mu-hb-grid{display:grid;grid-template-columns:30px repeat(3,minmax(0,1fr));gap:5px;align-items:center}
+.mu-hb-court{text-align:center;font-size:10px;font-weight:700}
+.mu-hb-time{font-size:10px;color:#787373}
+.mu-hb-cell{display:flex;align-items:center;justify-content:center;height:28px;border:1px solid #eee;border-radius:10px;background:#fff;
+  font-size:10px;font-weight:700;color:#17171a;transition:border-color .15s,box-shadow .15s}
+.mu-hb-cell.is-off{border-color:#f4f4f5;background:#f4f4f5;color:#d9d9d9;font-weight:400;text-decoration:line-through}
+.mu-hb-cell.is-pick{border-color:#2c2c2c;box-shadow:inset 0 0 0 .2px #2c2c2c}
+
+/* Summary bar under the grid. */
+.mu-hb-sum{gap:8px}
+.mu-hb-book{flex:0 0 auto;padding:8px 14px;border-radius:999px;font-size:10px}
+.mu-hb-sum.is-idle .mu-hb-val{color:#d9d9d9}
+.mu-hb-sum.is-idle .mu-hb-book{background:#f4f4f5;color:#787373}
+
+/* Payment options. */
+.mu-hb-opt{gap:8px;padding:9px 10px;border-radius:10px;transition:border-color .15s}
+.mu-hb-opt.is-on{border-color:#2c2c2c;border-width:1.2px}
+
+/* Reports: a three-way Daily / Weekly / Monthly switch. */
+.mu-hb-seg3 .mu-seg__knob{width:calc(33.333% - 2.7px)}
+.mu-hb-seg3[data-on="1"] .mu-seg__knob{transform:translateX(100%)}
+.mu-hb-seg3[data-on="2"] .mu-seg__knob{transform:translateX(calc(200% + 2px))}
+
+/* Weekly line chart with a value over each point. */
+.mu-hb-chart{position:relative;height:92px}
+.mu-hb-plot{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.mu-hb-line{stroke-dasharray:1;stroke-dashoffset:0;transition:stroke-dashoffset 1s cubic-bezier(.45,0,.2,1)}
+.mu-hb-line.is-undrawn{stroke-dashoffset:1;transition:none}
+.mu-hb-plot [data-el="area"]{transition:opacity .6s .3s}
+.mu-hb-plot .is-hidden{opacity:0;transition:none}
+.mu-hb-dot{fill:#fff;stroke:#2c2c2c;stroke-width:1.5;transition:opacity .25s}
+.mu-hb-dot.is-hi{fill:#2c2c2c;stroke:#fff;stroke-width:1.6}
+.mu-hb-lbl{position:absolute;transform:translateX(-50%);font-size:8.5px;line-height:1.2;font-weight:600;color:#787373;white-space:nowrap;transition:opacity .25s,transform .25s}
+.mu-hb-lbl.is-hi{font-size:9.5px;font-weight:700;color:#17171a}
+.mu-hb-lbl.is-hidden{opacity:0;transform:translate(-50%,3px);transition:none}
+.mu-hb-axis{position:relative;height:12px}
+.mu-hb-axis span{position:absolute;transform:translateX(-50%);font-size:9px;color:#787373}
+.mu-hb-axis span.is-hi{font-weight:700;color:#17171a}
+
+/* Pinned footer for a screen's main action (Book now, Pay, Mark as paid,
+   Stop promo, Save). White behind it, fading in above, so the content
+   scrolls under it; the scroll gets room so its end clears the footer. */
+.mu-hb-foot{padding-top:14px;background:linear-gradient(to bottom,rgba(255,255,255,0),#fff 14px);box-shadow:0 12px 0 #fff}
+.mu-hb-foot .mu-btn{margin:0}
+.mu-scroll.mu-hb-padfoot{padding-bottom:78px}

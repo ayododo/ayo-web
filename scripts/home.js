@@ -74,42 +74,91 @@
   io.observe(band);
 })();
 
-/* Booking mock-ups — Lottie motion (assets/lottie/booking-*.json, 420×420).
-   The markup phone inside each .bkg__mock is the static fallback: it stays
-   for no-JS, reduced motion, or a failed fetch, and is only swapped out once
-   the animation has actually rendered its first frame. Each one mounts when it
-   nears the viewport and pauses when it leaves, so two SVG renderers are not
-   running for art nobody can see. */
-document.addEventListener('DOMContentLoaded', function(){
-  var mocks = [].slice.call(document.querySelectorAll('.bkg__mock[data-lottie]'));
-  if(!mocks.length || typeof lottie === 'undefined' || !('IntersectionObserver' in window)) return;
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  var anims = new WeakMap();
-  function mount(mock){
-    if(mock.dataset.lottieState) { var a = anims.get(mock); if(a) a.play(); return; }
-    mock.dataset.lottieState = 'loading';
-    fetch(mock.dataset.lottie)
-      .then(function(r){ if(!r.ok) throw 0; return r.json(); })
-      .then(function(data){
-        var box = document.createElement('div');
-        box.className = 'bkg__lottie';
-        mock.appendChild(box);
-        var anim = lottie.loadAnimation({ container: box, renderer: 'svg', loop: true, autoplay: true, animationData: data });
-        anim.addEventListener('DOMLoaded', function(){ mock.classList.add('is-lottie'); mock.dataset.lottieState = 'ready'; });
-        anims.set(mock, anim);
-      })
-      .catch(function(){ mock.dataset.lottieState = 'failed'; });   /* markup mock stays */
-  }
-
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting) mount(e.target);
-      else { var a = anims.get(e.target); if(a) a.pause(); }
+/* Booking — tabbed showcases (players, venue owners). Each [data-bkg-tabs]
+   pairs a tab list with Mini UI phones (components/mini-ui/): the active tab
+   shows its description and a progress bar, and its phone is the visible
+   one. Tabs advance on their own while the showcase is on screen (one bar
+   run each, paused on hover or keyboard focus); a click or Enter jumps.
+   With reduced motion the bars are hidden and nothing advances. A phone
+   that was hidden is re-measured when it is shown (AyoMiniUI.refresh). */
+(function(){
+  var shows = document.querySelectorAll('[data-bkg-tabs]');
+  if(!shows.length) return;
+  var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  [].forEach.call(shows, function(show){
+    var tabs = [].slice.call(show.querySelectorAll('.bkg__tab'));
+    var panes = tabs.map(function(t){ return document.getElementById(t.getAttribute('aria-controls')); });
+    var cur = 0;
+    function go(i, focus){
+      cur = (i + tabs.length) % tabs.length;
+      tabs.forEach(function(t, k){
+        var onTab = k === cur;
+        t.classList.toggle('is-active', onTab);
+        t.setAttribute('aria-selected', String(onTab));
+        t.tabIndex = onTab ? 0 : -1;
+        panes[k].classList.toggle('is-active', onTab);
+      });
+      if(focus) tabs[cur].focus();
+      // refresh() looks inside the node it gets, so pass the stage that holds the phones.
+      if(window.AyoMiniUI) window.AyoMiniUI.refresh(panes[cur].parentNode);
+    }
+    tabs.forEach(function(t, k){
+      t.addEventListener('click', function(){ go(k); });
+      t.addEventListener('keydown', function(e){
+        var d = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1 : e.key === 'ArrowUp' || e.key === 'ArrowLeft' ? -1 : 0;
+        if(d){ e.preventDefault(); go(cur + d, true); }
+      });
+      // The bar's animation ending is the autoplay tick.
+      t.querySelector('.bkg__prog i').addEventListener('animationend', function(){ if(t.classList.contains('is-active')) go(cur + 1); });
     });
-  }, { rootMargin: '200px 0px' });
-  mocks.forEach(function(m){ io.observe(m); });
-});
+    go(0);
+    if(still || !('IntersectionObserver' in window)){ show.classList.add('is-still'); return; }
+    new IntersectionObserver(function(es){ show.classList.toggle('is-run', es[0].isIntersecting); }, { threshold: .35 }).observe(show);
+  });
+})();
+
+/* Booking — Indonesian copy. The homepage has no Indonesian twin, so the
+   strings with data-i18n swap with html[data-language] (scripts/chrome.js).
+   The Mini UI phones take their language from <html lang> when they are
+   drawn, so a switch that changes it reloads the page. */
+(function(){
+  var root = document.documentElement;
+  var nodes = document.querySelectorAll('#booking [data-i18n]');
+  if(!nodes.length) return;
+  var ID = {
+    title:'Satu booking, dua sisi lapangan.',
+    lede:'Pemain booking lapangan di aplikasi AYO. Pemilik venue menerima dan mengelolanya di AYO Venue Management.',
+    plPill:'Untuk pemain · Aplikasi AYO', plTitle:'Booking lapangan, beres dalam 2 menit.',
+    plLede:'Cari lapangan terdekat, pilih jam, dan bayar, semua di aplikasi AYO.',
+    pl1:'Booking lapangan instan', pl1d:'Lihat jadwal kosong secara real-time dan booking tanpa perlu menelepon venue.',
+    pl2:'Cari lapangan sesuai preferensimu', pl2d:'Cari lapangan, bandingkan lokasi, harga, dan fasilitasnya untuk menemukan yang paling cocok dengan gaya mainmu.',
+    pl3:'Bayar sesuai pilihanmu', pl3d:'Bayar penuh atau DP dulu, dengan metode pembayaran pilihanmu.',
+    chipSlot:'Jum · 19:00–21:00 · Lap. 2', bridge:'Booking yang sama langsung masuk ke AVM venue begitu dibayar.', findCourt:'Cari Lapangan',
+    ownPill:'Untuk pemilik venue · AYO Venue Management', ownTitle:'Jangkau 900.000+ pengguna AYO. Kelola venue dalam satu platform.',
+    ownLede:'Buat venue kamu lebih mudah ditemukan di AYO, kelola booking dan jadwal lapangan, pantau transaksi, dan kembangkan bisnis bersama AYO Venue Management (AVM).',
+    size1:'Satu lapangan hingga multi-venue', size2:'Pemilik & staf satu jadwal', size3:'Lewat ponsel atau desktop',
+    ow1:'Booking real-time', ow1d:'Lihat booking masuk, detail pelanggan, dan status pembayaran secara langsung.',
+    ow2:'Jadwal & ketersediaan lapangan', ow2d:'Atur jadwal, harga, dan ketersediaan lapangan dalam satu tempat untuk membantu mencegah booking ganda.',
+    ow3:'Pembayaran & laporan pendapatan', ow3d:'Pantau pendapatan dari booking dan aktivitas melalui berbagai jenis transaksi, lengkap dengan ringkasan harian, mingguan, dan bulanan.',
+    ow4:'Promo & pelanggan', ow4d:'Buat program promosi dan kode voucher, pantau performanya, dan kenali pelangganmu.',
+    ow5:'Berikan akses sesuai peran karyawan', ow5d:'Berikan akses layanan sesuai peran dan tanggung jawab tiap karyawan, lengkap dengan log aktivitas untuk memantau aktivitas karyawanmu.',
+    steps:'Bergabung dalam 4 langkah',
+    st1:'Daftar', st1d:'Lengkapi data venue dan bisnismu.', st2:'Verifikasi', st2d:'Tim AYO akan memverifikasi data kamu.',
+    st3:'Atur Venue', st3d:'Lengkapi informasi venue, lapangan, jadwal, dan harga.', st4:'Mulai Beroperasi', st4d:'Mulai kelola venue dan terima booking melalui AYO.',
+    register:'Daftarkan venue', learnAvm:'Pelajari tentang AVM'
+  };
+  function apply(){
+    var id = root.dataset.language === 'ID';
+    [].forEach.call(nodes, function(n){
+      if(n.dataset.en == null) n.dataset.en = n.textContent;
+      var k = n.dataset.i18n;
+      n.textContent = id && ID[k] ? ID[k] : n.dataset.en;
+    });
+    if(root.dataset.language && id !== (root.lang === 'id')){ root.lang = id ? 'id' : 'en'; location.reload(); }
+  }
+  new MutationObserver(apply).observe(root, { attributes: true, attributeFilter: ['data-language'] });
+  if(root.dataset.language) apply();
+})();
 
 /* Booking › "Join in 4 steps" — plays once when the steps scroll into view:
    each number lights up in turn and the line runs on to the next step. Without
