@@ -35,6 +35,8 @@
     }
   };
   var t = S[lang];
+  // Rp on the Indonesian page, rounded USD on the English one (mini-ui.js).
+  function money(n){ return M.h.money(n, lang); }
 
   // Icons exported from Figma 28528:94 (stroke/fill colours kept).
   var I = {
@@ -84,7 +86,7 @@
         row('level', 'PadelLevels · 2.50 - 3.50', t.lvSub)+
         row('cal', t.date, '9:30 - 11:30')+
         row('pin', t.venue, t.court)+
-        row('money', 'Rp75.000 <span>'+t.online+'</span>', 'Rp85.000 '+t.cash)+
+        row('money', money(75000)+' <span>'+t.online+'</span>', money(85000)+' '+t.cash)+
         '<div class="omh-row omh-row--one"><span class="omh-row__ic">'+I.lock+'</span><span class="omh-row__c"><b>'+t.privacy+' <span>'+t.pub+'</span></b></span></div>'+
         '<div class="omh-desc"><b>'+t.desc+'</b><span>'+t.descV+'</span></div>'+
       '</div>',

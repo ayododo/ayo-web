@@ -54,9 +54,9 @@
       newOnline:'New booking via AYO', newOnlineS:'Raka Aditya · Football · 06:00–08:00',
       detail:'Booking Details', paid:'Paid', bid:'Booking ID', dateSlot:'Date &amp; Slot', dateSlotV:'12 May 2026 · 10:00 – 12:00',
       courtSport:'Court &amp; Sport', extra:'Extra Services', photo:'Photography', totalPaid:'Total paid',
-      dp:'DP', online:'Online Payment', voucher:'AYO voucher −Rp40.000', offline:'Remaining Offline Payment', unpaid:'Unpaid',
-      seeDetail:'See details →', markPaid:'Mark as Paid', dlgT:'Mark as paid?', dlgS:'The remaining Rp170.000 was paid at the venue.',
-      cancel:'Cancel', yesPaid:'Yes, Paid', paidDone:'Paid in Full', paidToast:'Booking marked as paid', paidToastS:'AYO-260512-0418 · Rp380.000',
+      dp:'DP', online:'Online Payment', voucher:'AYO voucher −$3', offline:'Remaining Offline Payment', unpaid:'Unpaid',
+      seeDetail:'See details →', markPaid:'Mark as Paid', dlgT:'Mark as paid?', dlgS:'The remaining $11 was paid at the venue.',
+      cancel:'Cancel', yesPaid:'Yes, Paid', paidDone:'Paid in Full', paidToast:'Booking marked as paid', paidToastS:'AYO-260512-0418 · $25',
       open:'Open', compact:'Compact', detailTab:'Detail', courtA:'Court A ▾', month:'June 2026',
       wd:['M','T','W','T','F','S','S'], day:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], legend:['Available','Filling up','Full'],
       slotsFor:'Slots · Thu, 4 Jun', avail:'Available', booked:'Booked', closed:'Closed',
@@ -69,13 +69,13 @@
       bal:'Balance', cur:'Current balance', withdraw:'Withdraw to Bank', hist:'Balance History', txW:'Withdrawal', acct:'Account ••4821', ok:'Successful',
       txBs:'12 May · Raka Aditya', txB2s:'11 May · Bima Santoso', incoming:'Incoming', proc:'Processing',
       wdT:'Withdraw Funds', availBal:'Available balance', amt:'Withdrawal amount', dest:'Destination account', holder:'Arena Nusantara',
-      wdNote:'Funds arrive within 24 hours', wdGo:'Withdraw', wdToast:'Withdrawal submitted', wdToastS:'Rp2.000.000 to BCA ••4821',
+      wdNote:'Funds arrive within 24 hours', wdGo:'Withdraw', wdToast:'Withdrawal submitted', wdToastS:'$130 to BCA ••4821',
       res:'Reschedule', oldS:'Old schedule', oldV:'12 May · 10:00', newS:'New schedule', newV:'14 May · 16:00', pick:'Pick a slot',
       breakdown:'Price Change Details', oldP:'Old schedule price', newP:'New schedule price', refund:'Renter gets a refund',
       pol:['D-7 · 100%','D-5 · 50%','&lt; 24 hrs · 0%'], saveRes:'Save Changes', pickT:'Choose New Schedule', dates:['13 May','14 May','15 May'],
-      choose:'Select', resToast:'Booking rescheduled', resToastS:'Rp25.000 refunded to the renter',
+      choose:'Select', resToast:'Booking rescheduled', resToastS:'$2 refunded to the renter',
       dpTitle:'Create Payment Link', totalBill:'Total bill', dpT:'Mark as down payment', dpS:'Customer pays part first', nominal:'Amount',
-      payNow:'Pay now', rest:'Remaining balance', createLink:'Create Link', dpToast:'Down payment link created', dpToastS:'Pay now Rp120.000'
+      payNow:'Pay now', rest:'Remaining balance', createLink:'Create Link', dpToast:'Down payment link created', dpToastS:'Pay now $8'
     }
   };
   var S = T[lang];
@@ -84,7 +84,10 @@
   var CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
   var BELL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg>';
   var LINK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10.5 13.5a3.5 3.5 0 0 0 5 0l2.5-2.5a3.5 3.5 0 0 0-5-5l-1 1"/><path d="M13.5 10.5a3.5 3.5 0 0 0-5 0L6 13a3.5 3.5 0 0 0 5 5l1-1"/></svg>';
-  function rp(n){ return 'Rp'+String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+  // Rupiah on the Indonesian page, rounded USD on the English one (mini-ui.js).
+  function rp(n){ return h.money(n, lang); }
+  // The 16:00 slot in the reschedule picker; its chip id is made from this label.
+  var ST16 = '16:00 · '+rp(100000);
   function att(el){ return el ? ' data-el="'+el+'"' : ''; }
   function title(t){ return '<span class="mu-head__title">'+t+'</span>'; }
   function back(t){ return h.head(h.ico('back')+title(t)); }
@@ -123,7 +126,7 @@
   function bk02Detail(){
     return h.page('detail', h.head(h.ico('back')+title(S.detail)+'<span class="mu-head__sp"></span>'+pill(S.paid, 'green')),
       '<div class="mu-bp-card mu-bp-card--detail">'+kv(S.bid, 'AYO-260512-0418')+DIV+kv(S.dateSlot, S.dateSlotV)+DIV+kv(S.courtSport, 'Court 1 · Futsal')+DIV+kv(S.extra, S.photo)+'</div>'+
-      '<div class="mu-bp-card mu-bp-card--row" data-el="d-total"><div class="mu-bp-row"><span class="mu-bp-k">'+S.totalPaid+'</span><span class="mu-bp-v">Rp350.000</span></div></div>');
+      '<div class="mu-bp-card mu-bp-card--row" data-el="d-total"><div class="mu-bp-row"><span class="mu-bp-k">'+S.totalPaid+'</span><span class="mu-bp-v">'+rp(350000)+'</span></div></div>');
   }
   function bk02Sched(){
     return h.page('sched', schedHead(S.d12),
@@ -137,8 +140,8 @@
     return h.page('detail', h.head(h.ico('back')+title(S.detail)+'<span class="mu-head__sp"></span>'+pill(S.dp, 'orange', 'h-pill')),
       '<div class="mu-bp-card mu-bp-card--tight">'+kv(S.extra, S.photo)+'</div>'+
       '<div class="mu-bp-card mu-bp-card--pay">'+
-        '<div class="mu-bp-kv"><span class="mu-bp-k">'+S.online+'</span><span class="mu-bp-v mu-bp-v--lg">Rp210.000</span><span class="mu-bp-sub">'+S.voucher+'</span></div>'+DIV+
-        '<div class="mu-bp-kv"><div class="mu-bp-row"><span class="mu-bp-k">'+S.offline+'</span>'+pill(S.unpaid, 'red', 'off-pill')+'</div><span class="mu-bp-v mu-bp-v--lg" data-el="off-amt">Rp170.000</span></div>'+
+        '<div class="mu-bp-kv"><span class="mu-bp-k">'+S.online+'</span><span class="mu-bp-v mu-bp-v--lg">'+rp(210000)+'</span><span class="mu-bp-sub">'+S.voucher+'</span></div>'+DIV+
+        '<div class="mu-bp-kv"><div class="mu-bp-row"><span class="mu-bp-k">'+S.offline+'</span>'+pill(S.unpaid, 'red', 'off-pill')+'</div><span class="mu-bp-v mu-bp-v--lg" data-el="off-amt">'+rp(170000)+'</span></div>'+
       '</div>'+
       '<span class="mu-bp-link">'+S.seeDetail+'</span>'+
       '<div class="mu-btn" data-el="mark">'+S.markPaid+'</div>');
@@ -192,7 +195,7 @@
   }
 
   /* ---------- Payments ---------- */
-  var METH = [['QR','n'],['EW','b'],['CC','o'],['VA','g'],['GR','r'],['Rp','l']];
+  var METH = [['QR','n'],['EW','b'],['CC','o'],['VA','g'],['GR','r'],[lang === 'id' ? 'Rp' : '$','l']];
   // PY01 · Opsi pembayaran: Payment Link vs manual, and the methods a link takes.
   function py01(){
     function opt(t, s, el, isOn){ return '<div class="mu-bp-opt'+(isOn?' is-on':'')+'" data-el="'+el+'"><div class="mu-col mu-grow"><span class="mu-bp-v">'+t+'</span><span class="mu-bp-k">'+s+'</span></div><span class="mu-radio'+(isOn?' is-on':'')+'"></span></div>'; }
@@ -205,7 +208,7 @@
   function py01Link(){
     var chips = S.m.slice(0, 5).map(function(m){ return '<span class="mu-bp-mchip">'+m+'</span>'; }).join('');
     return h.page('link', back('Payment Link'),
-      '<div class="mu-bp-card mu-bp-ready"><span class="mu-bp-ok">'+CHECK+'</span><span class="mu-bp-v">'+S.linkReady+'</span><span class="mu-bp-v mu-bp-v--xl">Rp350.000</span><span class="mu-bp-k">'+S.linkFor+'</span></div>'+
+      '<div class="mu-bp-card mu-bp-ready"><span class="mu-bp-ok">'+CHECK+'</span><span class="mu-bp-v">'+S.linkReady+'</span><span class="mu-bp-v mu-bp-v--xl">'+rp(350000)+'</span><span class="mu-bp-k">'+S.linkFor+'</span></div>'+
       '<div class="mu-bp-url"><span class="mu-bp-urli">'+LINK+'</span><span class="mu-grow">pay.ayo.co.id/l/8KQ2</span><span class="mu-bp-copy" data-el="copy">'+S.copy+'</span></div>'+
       '<div class="mu-bp-mchips">'+chips+'</div><span class="mu-bp-k">'+S.valid+'</span>'+
       '<div class="mu-btn">'+S.shareLink+'</div>');
@@ -214,18 +217,18 @@
   function tx(t, s, amt, p, el){ return '<div class="mu-bp-tx"'+att(el)+'><div class="mu-col mu-grow"><span class="mu-bp-v">'+t+'</span><span class="mu-bp-k">'+s+'</span></div><div class="mu-bp-amt"><span class="mu-bp-v">'+amt+'</span>'+p+'</div></div>'; }
   function py02(){
     return h.page('saldo', back(S.bal),
-      '<div class="mu-bp-card mu-bp-card--bal"><span class="mu-bp-k">'+S.cur+'</span><span class="mu-bp-v mu-bp-v--xxl" data-el="bal">Rp19.250.000</span><div class="mu-btn" data-el="wd-btn">'+S.withdraw+'</div></div>'+
+      '<div class="mu-bp-card mu-bp-card--bal"><span class="mu-bp-k">'+S.cur+'</span><span class="mu-bp-v mu-bp-v--xxl" data-el="bal">'+rp(19250000)+'</span><div class="mu-btn" data-el="wd-btn">'+S.withdraw+'</div></div>'+
       '<div class="mu-bp-row" data-el="hist"><span class="mu-bp-v">'+S.hist+'</span>'+pill('Excel', 'green')+'</div>'+
       '<div class="mu-col" style="gap:9px" data-el="txs">'+
-        tx(S.txW, S.acct, '−Rp5.000.000', pill(S.ok, 'green'))+
-        tx('Booking · Court 1', S.txBs, '+Rp350.000', pill(S.incoming, 'blue'))+
-        tx('Booking · Court 2', S.txB2s, '+Rp300.000', pill(S.incoming, 'blue'))+
+        tx(S.txW, S.acct, '−'+rp(5000000), pill(S.ok, 'green'))+
+        tx('Booking · Court 1', S.txBs, '+'+rp(350000), pill(S.incoming, 'blue'))+
+        tx('Booking · Court 2', S.txB2s, '+'+rp(300000), pill(S.incoming, 'blue'))+
       '</div>');
   }
   function py02Form(){
     return h.page('wd', back(S.wdT),
-      '<div class="mu-tint mu-bp-row"><span class="mu-bp-k">'+S.availBal+'</span><span class="mu-bp-v">Rp19.250.000</span></div>'+
-      '<div class="mu-col" style="gap:4px"><span class="mu-bp-k">'+S.amt+'</span><div class="mu-field mu-bp-amtf" data-el="amt-f"><span data-el="amt" class="mu-bp-ph">Rp0</span></div></div>'+
+      '<div class="mu-tint mu-bp-row"><span class="mu-bp-k">'+S.availBal+'</span><span class="mu-bp-v">'+rp(19250000)+'</span></div>'+
+      '<div class="mu-col" style="gap:4px"><span class="mu-bp-k">'+S.amt+'</span><div class="mu-field mu-bp-amtf" data-el="amt-f"><span data-el="amt" class="mu-bp-ph">'+rp(0)+'</span></div></div>'+
       '<div class="mu-col" style="gap:4px"><span class="mu-bp-k">'+S.dest+'</span><div class="mu-bp-opt is-on"><span class="mu-bp-mi mu-bp-mi--b">BCA</span><div class="mu-col mu-grow"><span class="mu-bp-v">BCA ••4821</span><span class="mu-bp-k">'+S.holder+'</span></div><span class="mu-radio is-on"></span></div></div>'+
       '<span class="mu-bp-sub">'+S.wdNote+'</span>'+
       '<div class="mu-btn mu-btn--off" data-el="wd-go"><span data-el="wd-go-l">'+S.wdGo+'</span></div>');
@@ -236,25 +239,25 @@
       '<div class="mu-bp-card mu-bp-card--sched"><div class="mu-bp-kv mu-grow"><span class="mu-bp-k">'+S.oldS+'</span><span class="mu-bp-v">'+S.oldV+'</span></div><span class="mu-bp-arrow">→</span>'+
         '<div class="mu-bp-kv mu-grow mu-bp-newbox" data-el="new-box"><span class="mu-bp-k">'+S.newS+'</span><span class="mu-bp-v" data-el="new-v">'+S.newV+'</span></div></div>'+
       '<div class="mu-bp-card mu-bp-card--calc"><span class="mu-bp-v">'+S.breakdown+'</span>'+
-        '<div class="mu-bp-row"><span class="mu-bp-k">'+S.oldP+'</span><span class="mu-bp-num">Rp125.000</span></div>'+
-        '<div class="mu-bp-row"><span class="mu-bp-k">'+S.newP+'</span><span class="mu-bp-num" data-el="new-p">Rp100.000</span></div>'+DIV+
-        '<div class="mu-bp-row"><span class="mu-bp-v">'+S.refund+'</span><span class="mu-bp-v mu-bp-v--green" data-el="refund">Rp25.000</span></div></div>'+
+        '<div class="mu-bp-row"><span class="mu-bp-k">'+S.oldP+'</span><span class="mu-bp-num">'+rp(125000)+'</span></div>'+
+        '<div class="mu-bp-row"><span class="mu-bp-k">'+S.newP+'</span><span class="mu-bp-num" data-el="new-p">'+rp(100000)+'</span></div>'+DIV+
+        '<div class="mu-bp-row"><span class="mu-bp-v">'+S.refund+'</span><span class="mu-bp-v mu-bp-v--green" data-el="refund">'+rp(25000)+'</span></div></div>'+
       '<div class="mu-row" style="gap:6px" data-el="pol">'+pill(S.pol[0], 'green', 'pol-0')+pill(S.pol[1], 'orange')+pill(S.pol[2], 'grey')+'</div>'+
       '<div class="mu-btn" data-el="save">'+S.saveRes+'</div>');
   }
   function py03Sheet(){
     function chips(list, pre){ return '<div class="mu-bp-chips">'+list.map(function(c){ return '<span class="mu-bp-chip" data-el="'+pre+c.replace(/\W/g,'')+'">'+c+'</span>'; }).join('')+'</div>'; }
     return '<div class="mu-sheet" data-el="pick"><span class="mu-sheet__bar"></span><span class="mu-h" style="font-size:13px">'+S.pickT+'</span>'+
-      chips(S.dates, 'sd-')+chips(['10:00 · Rp125.000','16:00 · Rp100.000'], 'st-')+'<div class="mu-btn" data-el="pick-ok">'+S.choose+'</div></div>'+toast(S.resToast, S.resToastS);
+      chips(S.dates, 'sd-')+chips(['10:00 · '+rp(125000), ST16], 'st-')+'<div class="mu-btn" data-el="pick-ok">'+S.choose+'</div></div>'+toast(S.resToast, S.resToastS);
   }
   // PY04 · Toggle DP: down payment on, 30% / 50%, amounts recomputed.
   function py04(){
     return h.page('dp', back(S.dpTitle),
-      '<div class="mu-col" style="gap:4px"><span class="mu-bp-k">'+S.totalBill+'</span><div class="mu-field mu-bp-amtf">Rp400.000</div></div>'+
+      '<div class="mu-col" style="gap:4px"><span class="mu-bp-k">'+S.totalBill+'</span><div class="mu-field mu-bp-amtf">'+rp(400000)+'</div></div>'+
       '<div class="mu-bp-opt"><div class="mu-col mu-grow"><span class="mu-bp-v">'+S.dpT+'</span><span class="mu-bp-k">'+S.dpS+'</span></div><span class="mu-toggle is-on" data-el="dp-toggle"></span></div>'+
       '<div class="mu-bp-chips" data-el="dp-opts"><span class="mu-bp-chip is-on" data-el="c30">30%</span><span class="mu-bp-chip" data-el="c50">50%</span><span class="mu-bp-chip">'+S.nominal+'</span></div>'+
-      '<div class="mu-tint mu-col mu-bp-sum" data-el="dp-sum"><div class="mu-bp-row"><span class="mu-bp-k">'+S.payNow+'</span><span class="mu-bp-v" data-el="now">Rp120.000</span></div>'+
-        '<div class="mu-bp-row"><span class="mu-bp-k">'+S.rest+'</span><span class="mu-bp-num mu-bp-num--muted" data-el="rest">Rp280.000</span></div></div>'+
+      '<div class="mu-tint mu-col mu-bp-sum" data-el="dp-sum"><div class="mu-bp-row"><span class="mu-bp-k">'+S.payNow+'</span><span class="mu-bp-v" data-el="now">'+rp(120000)+'</span></div>'+
+        '<div class="mu-bp-row"><span class="mu-bp-k">'+S.rest+'</span><span class="mu-bp-num mu-bp-num--muted" data-el="rest">'+rp(280000)+'</span></div></div>'+
       '<div class="mu-btn" data-el="create"><span data-el="create-l">'+S.createLink+'</span></div>');
   }
 
@@ -310,7 +313,7 @@
       // New slot not picked: no new price, nothing to refund yet.
       'avm-py03': function(a){
         var v = a.el('new-v'); v.textContent = S.pick; on(v, 'is-ph');
-        a.el('new-p').textContent = '–'; a.el('refund').textContent = 'Rp0';
+        a.el('new-p').textContent = '–'; a.el('refund').textContent = rp(0);
       },
       // Down payment off: options and summary hidden.
       'avm-py04': function(a){ a.el('dp-toggle').classList.remove('is-on'); a.el('dp-opts').style.display = 'none'; a.el('dp-sum').style.display = 'none'; }
@@ -415,10 +418,10 @@
       // PY02 · Withdraw → amount typed → Withdraw (busy) → back: the balance
       // counts down, the new withdrawal row lands at the top of the history.
       'avm-py02': function(a){
-        var digits = '2000000';
+        var digits = lang === 'id' ? '2000000' : '130';
         function typeAmt(){
           var el = a.el('amt'), i = 0; el.classList.remove('mu-bp-ph'); on(el, 'mu-caret');
-          function step(){ i++; el.textContent = rp(+digits.slice(0, i)); return i < digits.length ? a.wait(150).then(step) : a.wait(300); }
+          function step(){ i++; el.textContent = lang === 'id' ? rp(+digits.slice(0, i)) : '$'+digits.slice(0, i); return i < digits.length ? a.wait(150).then(step) : a.wait(300); }
           return step();
         }
         return a.wait(400)
@@ -432,7 +435,7 @@
           .then(function(){ return a.back('saldo'); })
           .then(function(){
             on(a.el('toast'), 'is-on');
-            var row = document.createElement('div'); row.innerHTML = tx(S.txW, S.acct, '−Rp2.000.000', pill(S.proc, 'orange'), 'tx-new');
+            var row = document.createElement('div'); row.innerHTML = tx(S.txW, S.acct, '−'+rp(2000000), pill(S.proc, 'orange'), 'tx-new');
             row = row.firstChild; row.classList.add('mu-new'); a.el('txs').insertBefore(row, a.el('txs').firstChild);
             return count(a, 'bal', 19250000, 17250000, 1000); })
           .then(function(){ return a.wait(700); })
@@ -446,14 +449,14 @@
           .then(function(){ on(a.el('new-box'), 'is-focus'); return a.sheet('pick', true); })
           .then(function(){ return a.tap('sd-'+S.dates[1].replace(/\W/g,'')); })
           .then(function(){ on(a.el('sd-'+S.dates[1].replace(/\W/g,'')), 'is-on'); return a.wait(350); })
-          .then(function(){ return a.tap('st-1600Rp100000'); })
-          .then(function(){ on(a.el('st-1600Rp100000'), 'is-on'); return a.wait(350); })
+          .then(function(){ return a.tap('st-'+ST16.replace(/\W/g,'')); })
+          .then(function(){ on(a.el('st-'+ST16.replace(/\W/g,'')), 'is-on'); return a.wait(350); })
           .then(function(){ return a.tap('pick-ok'); })
           .then(function(){
             a.sheet('pick', false);
             var v = a.el('new-v'); v.textContent = S.newV; v.classList.remove('is-ph'); a.el('new-box').classList.remove('is-focus');
             return a.wait(450); })
-          .then(function(){ var p = a.el('new-p'); p.textContent = 'Rp100.000'; on(p, 'mu-bp-pop'); return a.wait(350); })
+          .then(function(){ var p = a.el('new-p'); p.textContent = rp(100000); on(p, 'mu-bp-pop'); return a.wait(350); })
           .then(function(){ return count(a, 'refund', 0, 25000, 900); })
           .then(function(){ on(a.el('pol-0'), 'is-hl'); return a.wait(500); })
           .then(function(){ return a.scroll(a.maxY(), 1000); })
@@ -470,7 +473,7 @@
           .then(function(){
             on(a.el('dp-toggle'), 'is-on');
             ['dp-opts','dp-sum'].forEach(function(k){ var e = a.el(k); e.style.display = ''; e.classList.add('mu-new'); });
-            a.el('now').textContent = 'Rp0'; a.el('rest').textContent = 'Rp400.000';
+            a.el('now').textContent = rp(0); a.el('rest').textContent = rp(400000);
             return a.wait(350); })
           .then(function(){ return amounts(0, 120000); })
           .then(function(){ return a.wait(700); })

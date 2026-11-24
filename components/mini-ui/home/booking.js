@@ -28,22 +28,23 @@
   var STR = {
     en: {
       venue:'Arena Nusantara', venueSub:'Padel · 2.1 km',
-      days:[['Thu','29'],['Fri','30'],['Sat','31'],['Sun','1']], courts:['Court 1','Court 2','Court 3'], k:'K',
+      days:[['Thu','29'],['Fri','30'],['Sat','31'],['Sun','1']], courts:['Court 1','Court 2','Court 3'], cell:'$10',
       pick0:'Pick a slot', pick1:'19:00–20:00 · Court 2', pick2:'19:00–21:00 · Court 2', book:'Book now',
       booked:'Court booked', bookedSub:'Arena Nusantara · Fri 19:00–21:00',
-      loc:'Location', city:'South Jakarta', chips:['Padel','Today','≤ Rp200K','Parking'], nearby:'12 courts nearby', from:'from',
-      venues:[['Arena Nusantara','Padel · 2.1 km · ★ 4.8','Rp120K',['Indoor','Parking','Shower']],
-              ['Lapangan Merdeka','Padel · 3.4 km · ★ 4.6','Rp150K',['Outdoor','Parking']],
-              ['Padel Senopati','Padel · 4.0 km · ★ 4.7','Rp180K',['Indoor','Shower']]],
+      loc:'Location', city:'South Jakarta', chips:['Padel','Today','≤ $15','Parking'], nearby:'12 courts nearby', from:'from',
+      venues:[['Arena Nusantara','Padel · 2.1 km · ★ 4.8','$8',['Indoor','Parking','Shower']],
+              ['Lapangan Merdeka','Padel · 3.4 km · ★ 4.6','$10',['Outdoor','Parking']],
+              ['Padel Senopati','Padel · 4.0 km · ★ 4.7','$12',['Indoor','Shower']]],
       pay:'Payment', court:'Arena Nusantara · Court 2', when:'Fri, 30 May · 19:00–21:00 · + Photography',
-      voucher:'AYO voucher', total:'Total', full:'Pay in full', fullS:'Rp380.000 now', dp:'Down payment', dpS:'Rp210.000 now · Rp170.000 at venue',
-      payFull:'Pay Rp380.000', payDp:'Pay Rp210.000', paid:'Payment successful', paidSub:'DP Rp210.000 · rest at the venue',
+      voucher:'AYO voucher', total:'Total', full:'Pay in full', fullS:'$25 now', dp:'Down payment', dpS:'$14 now · $11 at venue',
+      payFull:'Pay $25', payDp:'Pay $14', paid:'Payment successful', paidSub:'DP $14 · rest at the venue',
       reports:'Reports', month:'May 2026', seg:['Daily','Weekly','Monthly'], rev:'Revenue', cnt:'Booking', weekly:'Weekly revenue',
-      weeks:['W1','W2','W3','W4'], short:function(v){ return 'Rp'+v.toFixed(1)+'M'; }
+      weeks:['W1','W2','W3','W4'], wk:[160, 195, 180, 240], total:775, lo:125, hi:250,
+      short:function(v){ return '$'+Math.round(v).toLocaleString('en-US'); }
     },
     id: {
       venue:'Arena Nusantara', venueSub:'Padel · 2,1 km',
-      days:[['Kam','29'],['Jum','30'],['Sab','31'],['Min','1']], courts:['Lap. 1','Lap. 2','Lap. 3'], k:'rb',
+      days:[['Kam','29'],['Jum','30'],['Sab','31'],['Min','1']], courts:['Lap. 1','Lap. 2','Lap. 3'], cell:'150rb',
       pick0:'Pilih jadwal', pick1:'19:00–20:00 · Lap. 2', pick2:'19:00–21:00 · Lap. 2', book:'Booking',
       booked:'Lapangan berhasil dibooking', bookedSub:'Arena Nusantara · Jum 19:00–21:00',
       loc:'Lokasi', city:'Jakarta Selatan', chips:['Padel','Hari ini','≤ Rp200rb','Parkir'], nearby:'12 lapangan terdekat', from:'mulai',
@@ -54,10 +55,12 @@
       voucher:'Voucher AYO', total:'Total', full:'Bayar penuh', fullS:'Rp380.000 sekarang', dp:'Uang muka', dpS:'Rp210rb sekarang · Rp170rb di venue',
       payFull:'Bayar Rp380.000', payDp:'Bayar Rp210.000', paid:'Pembayaran berhasil', paidSub:'DP Rp210.000 · sisanya di venue',
       reports:'Laporan', month:'Mei 2026', seg:['Harian','Mingguan','Bulanan'], rev:'Pendapatan', cnt:'Booking', weekly:'Pendapatan mingguan',
-      weeks:['Mg1','Mg2','Mg3','Mg4'], short:function(v){ return 'Rp'+v.toFixed(1).replace('.', ',')+' jt'; }
+      weeks:['Mg1','Mg2','Mg3','Mg4'], wk:[2.6, 3.1, 2.9, 3.8], total:12.4, lo:2.0, hi:4.0,
+      short:function(v){ return 'Rp'+v.toFixed(1).replace('.', ',')+' jt'; }
     }
   };
   var T = STR[lang];
+  function money(n){ return M.h.money(n, lang); }   // Rp on the ID page, USD on the EN one
 
   /* ---------- Small templates ---------- */
   var CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
@@ -86,10 +89,10 @@
     var head = '<span></span>'+T.courts.map(function(c){ return '<span class="mu-hb-court">'+c+'</span>'; }).join('');
     var rows = GRID.map(function(r, ri){
       return '<span class="mu-hb-time">'+r[0]+'</span>'+r[1].map(function(open, ci){
-        return '<span class="mu-hb-cell'+(open?'':' is-off')+'"'+el('c-'+ri+'-'+ci)+'>150'+T.k+'</span>';
+        return '<span class="mu-hb-cell'+(open?'':' is-off')+'"'+el('c-'+ri+'-'+ci)+'>'+T.cell+'</span>';
       }).join('');
     }).join('');
-    var sum = '<div class="mu-card mu-pad mu-row mu-hb-sum"'+el('sum')+'><div class="mu-col mu-grow"><span class="mu-s"'+el('sum-l')+'>'+T.pick2+'</span><span class="mu-hb-val"'+el('sum-v')+'>Rp300.000</span></div>'+
+    var sum = '<div class="mu-card mu-pad mu-row mu-hb-sum"'+el('sum')+'><div class="mu-col mu-grow"><span class="mu-s"'+el('sum-l')+'>'+T.pick2+'</span><span class="mu-hb-val"'+el('sum-v')+'>'+money(300000)+'</span></div>'+
       '<span class="mu-btn mu-btn--soft mu-hb-book"'+el('book')+'>'+T.book+'</span></div>';
     return pad(h.page('pl01', h.head('<span class="mu-head__title">'+T.venue+'</span>'),
       dates+'<div class="mu-hb-grid"'+el('grid')+'>'+head+rows+'</div>', foot(sum)));
@@ -116,8 +119,8 @@
   }
   function pl03(){
     var sum = '<div class="mu-card mu-pad mu-col" style="gap:7px"><div class="mu-col"><span class="mu-h">'+T.court+'</span><span class="mu-s">'+T.when+'</span></div>'+
-      '<div class="mu-row mu-row--between"><span class="mu-s">'+T.voucher+'</span><span class="mu-hb-off">−Rp40.000</span></div>'+
-      '<div class="mu-row mu-row--between"><span class="mu-h">'+T.total+'</span><span class="mu-hb-val">Rp380.000</span></div></div>';
+      '<div class="mu-row mu-row--between"><span class="mu-s">'+T.voucher+'</span><span class="mu-hb-off">−'+money(40000)+'</span></div>'+
+      '<div class="mu-row mu-row--between"><span class="mu-h">'+T.total+'</span><span class="mu-hb-val">'+money(380000)+'</span></div></div>';
     return pad(h.page('pl03', h.head(h.ico('back')+'<span class="mu-head__title">'+T.pay+'</span>'),
       sum+option('opt-full', T.full, T.fullS, true)+option('opt-dp', T.dp, T.dpS, false, true),
       foot('<span class="mu-btn mu-btn--soft"'+el('pay')+'>'+T.payFull+'</span>')));
@@ -129,11 +132,11 @@
   }
 
   /* ---------- REV · Reports with a weekly line chart ----------
-     Four weeks that add up to the month total (Rp12.4M). The last week is
+     Four weeks that add up to the month total (Rp12,4 jt / $775). The last week is
      the highlighted point. Drawn in Dark-soft, no red. */
-  var WEEKS = [2.6, 3.1, 2.9, 3.8];
+  var WEEKS = T.wk;   // same shape in both: Rp jt (ID) or US$ (EN)
   var CW = 212, CH = 92, X = [18, 76, 136, 194], BASE = 76;
-  function yOf(v){ return Math.round((BASE - (v - 2.0) / 2.0 * 50) * 10) / 10; }
+  function yOf(v){ return Math.round((BASE - (v - T.lo) / (T.hi - T.lo) * 50) * 10) / 10; }
   function rev(){
     var seg = '<div class="mu-seg mu-rpp-seg mu-hb-seg3" data-on="2"'+el('seg')+'><span class="mu-seg__knob"></span>'+
       T.seg.map(function(s, i){ return '<span class="mu-seg__i'+(i===2?' is-on':'')+'"'+el('seg-'+i)+'>'+s+'</span>'; }).join('')+'</div>';
@@ -153,7 +156,7 @@
     var axis = '<div class="mu-hb-axis">'+T.weeks.map(function(w, i){ return '<span style="left:'+(X[i]/CW*100)+'%"'+(i===3?' class="is-hi"':'')+'>'+w+'</span>'; }).join('')+'</div>';
     return h.page('rev', '<div class="mu-head mu-rpp-head"><div class="mu-row"><span class="mu-head__title">'+T.reports+'</span><span class="mu-head__sp"></span>'+pill(T.month, 'line')+'</div>'+seg+'</div>',
       '<div class="mu-rpp-stats">'+
-        '<div class="mu-rpp-stat"><span class="mu-rpp-stat__l">'+T.rev+'</span><span class="mu-rpp-stat__v"'+el('rev')+'>'+T.short(12.4)+'</span>'+pill('+12%', 'ok')+'</div>'+
+        '<div class="mu-rpp-stat"><span class="mu-rpp-stat__l">'+T.rev+'</span><span class="mu-rpp-stat__v"'+el('rev')+'>'+T.short(T.total)+'</span>'+pill('+12%', 'ok')+'</div>'+
         '<div class="mu-rpp-stat"><span class="mu-rpp-stat__l">'+T.cnt+'</span><span class="mu-rpp-stat__v"'+el('cnt')+'>186</span>'+pill('+8%', 'ok')+'</div></div>'+
       '<div class="mu-rpp-chart"'+el('chart')+'><span class="mu-h">'+T.weekly+'</span><div class="mu-hb-chart">'+svg+labels+'</div>'+axis+'</div>');
   }
@@ -184,7 +187,7 @@
     },
     // Opening state of each flow (the static frame above is the end state).
     prep: {
-      'home-pl01': function(a){ pick(a, 1, false); pick(a, 2, false); on(a.el('sum'), 'is-idle'); a.el('sum-l').textContent = T.pick0; a.el('sum-v').textContent = 'Rp0'; },
+      'home-pl01': function(a){ pick(a, 1, false); pick(a, 2, false); on(a.el('sum'), 'is-idle'); a.el('sum-l').textContent = T.pick0; a.el('sum-v').textContent = money(0); },
       'home-pl02': function(a){ for(var i = 0; i < T.venues.length; i++) a.el('v-'+i).style.display = 'none'; },
       'home-pl03': function(a){ choose(a, false); },
       'home-rev':  function(a){
@@ -199,9 +202,9 @@
       'home-pl01': function(a){
         return a.wait(400)
           .then(function(){ return a.tap('c-1-1'); })
-          .then(function(){ pick(a, 1, true); a.el('sum').classList.remove('is-idle'); a.el('sum-l').textContent = T.pick1; a.el('sum-v').textContent = 'Rp150.000'; return a.wait(500); })
+          .then(function(){ pick(a, 1, true); a.el('sum').classList.remove('is-idle'); a.el('sum-l').textContent = T.pick1; a.el('sum-v').textContent = money(150000); return a.wait(500); })
           .then(function(){ return a.tap('c-2-1'); })
-          .then(function(){ pick(a, 2, true); a.el('sum-l').textContent = T.pick2; a.el('sum-v').textContent = 'Rp300.000'; return a.wait(700); })
+          .then(function(){ pick(a, 2, true); a.el('sum-l').textContent = T.pick2; a.el('sum-v').textContent = money(300000); return a.wait(700); })
           .then(function(){ return a.tap('book'); })
           .then(function(){ return toastOn(a); });
       },
@@ -227,7 +230,7 @@
       // point and label appear; the last week is the highlighted one.
       'home-rev': function(a){
         return a.wait(300)
-          .then(function(){ return Promise.all([count(a, a.el('rev'), 12.4, 900, T.short), count(a, a.el('cnt'), 186, 900, function(v){ return String(Math.round(v)); })]); })
+          .then(function(){ return Promise.all([count(a, a.el('rev'), T.total, 900, T.short), count(a, a.el('cnt'), 186, 900, function(v){ return String(Math.round(v)); })]); })
           .then(function(){ a.scrollBottom('chart', 800); return a.wait(500); })
           .then(function(){ a.el('line').classList.remove('is-undrawn'); a.el('area').classList.remove('is-hidden'); return a.wait(250); })
           .then(function(){ var p = a.wait(0); WEEKS.forEach(function(v, i){ p = p.then(function(){ a.el('dot-'+i).classList.remove('is-hidden'); a.el('lbl-'+i).classList.remove('is-hidden'); return a.wait(220); }); }); return p; })

@@ -359,7 +359,7 @@
           .then(function(){
             [].forEach.call(a.el('methods').querySelectorAll('.mu-radio'), function(r){ r.classList.remove('is-on'); });
             a.el('m-qris').querySelector('.mu-radio').classList.add('is-on');
-            a.el('total').textContent = 'Rp77.500'; O.pop(a.el('total')); return a.wait(700); })
+            a.el('total').textContent = O.L('Rp77.500'); O.pop(a.el('total')); return a.wait(700); })
           .then(function(){ return a.tap('pay'); })
           .then(function(){ return a.go('thanks'); })
           .then(function(){ return a.wait(500); });

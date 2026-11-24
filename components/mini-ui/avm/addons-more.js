@@ -126,7 +126,9 @@
   var T = S[lang];
 
   /* ---------- Small templates ---------- */
-  function rp(n){ return 'Rp'+String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+  // Rupiah on the Indonesian page, rounded USD on the English one (mini-ui.js).
+  function rp(n){ return M.h.money(n, lang); }
+  var CUR = lang === 'id' ? 'Rp' : '$', RATE = lang === 'id' ? '150.000' : '10';   // coach rate per hour
   // Header as drawn in the Figma Mini UIs: optional "‹", title, optional "+ Add" pill.
   function top(title, back, add){
     return h.head((back ? '<span class="mu-am-back">‹</span>' : '')+'<span class="mu-head__title">'+title+'</span>'+
@@ -220,7 +222,7 @@
       '<div class="mu-btn mu-btn--line mu-am-linebtn" data-el="add-var">'+T.addVariant+'</div>');
   }
   function ad02Sheet(){
-    return sheet('var-sheet', T.vSheet, field(T.vName, 'vn', '', T.vNamePh)+field(T.vPrice, 'vp', '', '0', 'Rp')+
+    return sheet('var-sheet', T.vSheet, field(T.vName, 'vn', '', T.vNamePh)+field(T.vPrice, 'vp', '', '0', CUR)+
       '<div class="mu-btn mu-btn--soft" data-el="vs-save">'+T.save+'</div>');
   }
   function ad02Flow(a){
@@ -250,7 +252,7 @@
       field(T.coachName, 'cname', 'Aldi Pranata')+
       '<span class="mu-am-lbl">'+T.sport+'</span>'+
       '<div class="mu-am-chips">'+chip(s[0], true, 'cs-0')+chip(s[1], true, 'cs-1')+chip(s[2], false, 'cs-2')+'</div>'+
-      field(T.rate, 'crate', '150.000', '', 'Rp')+
+      field(T.rate, 'crate', RATE, '', CUR)+
       '<div class="mu-btn mu-btn--soft mu-am-cta" data-el="c-save">'+T.save+'</div>');
   }
   function ad03Prep(a){
@@ -267,7 +269,7 @@
       .then(function(){ return pick('cs-0'); })
       .then(function(){ return pick('cs-1'); })
       .then(function(){ return a.scroll(a.maxY(), 1000); })
-      .then(function(){ return typeIn(a, 'crate', '150.000', 120); })
+      .then(function(){ return typeIn(a, 'crate', RATE, 120); })
       .then(function(){ return a.tap('c-save'); })
       .then(function(){ return busy(a, 'c-save', 800); })
       .then(function(){ return showToast(a, 1900); });

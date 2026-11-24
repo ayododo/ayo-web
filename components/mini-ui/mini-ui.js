@@ -51,6 +51,25 @@
     ['Copy Link', '#2c2c2c', W+'<g fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M10.5 13.5a3.5 3.5 0 0 0 5 0l2.5-2.5a3.5 3.5 0 0 0-5-5l-1 1"/><path d="M13.5 10.5a3.5 3.5 0 0 0-5 0L6 13a3.5 3.5 0 0 0 5 5l1-1"/></g></svg>']
   ];
 
+  /* ---------- Money ----------
+     Indonesian pages show Rupiah; English pages show US dollars at rounded
+     prices (not a live rate). USD holds the amounts the cards use, chosen so
+     the sums still add up ($20 court + $8 add-on − $3 voucher = $25; DP $14 +
+     $11 at the venue). Anything else, and the in-between values of a
+     count-up, use Rp15.000 = $1; under $10 keeps cents. */
+  var USD = {2500:.2, 4000:.3, 25000:2, 40000:3, 75000:5, 77500:5.2, 79000:5.3, 85000:6, 100000:7, 120000:8, 125000:9,
+    150000:10, 170000:11, 180000:12, 200000:13, 210000:14, 250000:17, 280000:18, 300000:20, 350000:23, 380000:25, 400000:26,
+    450000:30, 900000:60, 1200000:80, 2000000:130, 4250000:283, 5000000:333, 15000000:1000, 17250000:1153, 19250000:1283};
+  function usd(n){
+    var v = USD[n] != null ? USD[n] : n / 15000;
+    if(Math.abs(v) >= 10) return '$'+Math.round(v).toLocaleString('en-US');
+    v = Math.round(v * 10) / 10;
+    return '$'+(v % 1 ? v.toFixed(2) : String(v));
+  }
+  function rupiah(n){ return 'Rp'+String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+  // money(350000) → 'Rp350.000' on an Indonesian page, '$23' on an English one.
+  function money(n, lang){ return (lang || (document.documentElement.lang === 'id' ? 'id' : 'en')) === 'id' ? rupiah(n) : usd(n); }
+
   /* ---------- Small templates ---------- */
   function ico(n, el){ return '<span class="mu-ico"'+(el?' data-el="'+el+'"':'')+'>'+I[n]+'</span>'; }
   function av(k, size){ return '<img class="mu-av'+(size?' mu-av--'+size:'')+'" src="'+AV+k+'.webp" alt="" width="40" height="40" decoding="async">'; }
@@ -678,7 +697,7 @@
       Object.keys(defs.prep || {}).forEach(function(k){ PREP[k] = defs.prep[k]; });
       init();
     },
-    h: {I:I, ico:ico, av:av, pair:pair, head:head, page:page, on:on, partnerRows:partnerRows, SC:SC, PLUS:PLUS, targetY:targetY},
+    h: {I:I, ico:ico, av:av, pair:pair, head:head, page:page, on:on, partnerRows:partnerRows, SC:SC, PLUS:PLUS, targetY:targetY, money:money, usd:usd, rupiah:rupiah},
     motion: MOTION
   };
 })();

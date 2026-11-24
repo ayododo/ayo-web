@@ -65,7 +65,7 @@
       venue:'Arena Padel Senayan', court:'Court A', approved:'Request approved', approvedS:'Pick your spot now!', pick:'Pick a Spot &amp; Pay',
       spotT:'Select Your Preferred Spot', spotTip:'Choose your position by tapping an available slot.', toPay:'Continue to Payment',
       checkout:'Checkout', actInfo:'Activity Information', participant:'Participant', self:'Self rated · Newbie', method:'Payment Method',
-      online:'Online', cash:'Cash', bca:'BCA Virtual Account', qris:'QRIS', fee1:'+Rp4.000', fee2:'+Rp2.500',
+      online:'Online', cash:'Cash', bca:'BCA Virtual Account', qris:'QRIS', fee1:'+$0.30', fee2:'+$0.20',
       details:'Payment Details', reg:'Regular x1', service:'Service fee', total:'Total', pay:'Pay Now',
       inT:'You’re in!', inS:'Your spot is confirmed.', joined:'Joined', seeDetail:'Open Match Detail',
       resultT:'Match Result', final:'Final Score', when:'Sun, 17 Aug 2026 · 09:00 – 11:00', where:'Court A, Arena Padel Senayan',
@@ -81,6 +81,8 @@
     }
   };
   var t = T[lang];
+  // Rp on the Indonesian page, rounded USD on the English one (mini-ui.js).
+  function money(n){ return M.h.money(n, lang); }
   var SHORT = {fajar:'Fajar R.', maya:'Maya L.', raka:'Raka A.', nina:'Nina S.', bayu:'Bayu A.', tari:'Tari A.', sinta:'Sinta D.', dika:'Dika P.'};
   var RATE = {fajar:'3.41', maya:'3.34', raka:'3.38', nina:'2.95'};
 
@@ -187,8 +189,8 @@
       '<div class="mu-seg mu-seg--sm" data-on="0"><span class="mu-seg__knob"></span><span class="mu-seg__i is-on">'+t.online+'</span><span class="mu-seg__i">'+t.cash+'</span></div>'+
       payRow('<span class="op-logo op-logo--bca">BCA</span>', t.bca, t.fee1, 'pay-bca', false)+payRow('<span class="op-logo">QRIS</span>', t.qris, t.fee2, 'pay-qris', false)+
       '<span class="om-band"></span><span class="op-sec">'+t.details+'</span>'+
-      '<div class="op-sum"><span>'+t.reg+'</span><span>Rp75.000</span></div><div class="op-sum"><span>'+t.service+'</span><span>Rp4.000</span></div>'+
-      '<div class="op-sum op-sum--t"><span>'+t.total+'</span><span>Rp79.000</span></div>'+
+      '<div class="op-sum"><span>'+t.reg+'</span><span>'+money(75000)+'</span></div><div class="op-sum"><span>'+t.service+'</span><span>'+money(4000)+'</span></div>'+
+      '<div class="op-sum op-sum--t"><span>'+t.total+'</span><span>'+money(79000)+'</span></div>'+
       '<div class="mu-btn mu-btn--off om-endbtn" data-el="pay">'+t.pay+'</div>');
   }
   function joined(){

@@ -8,6 +8,8 @@
    Load before host.js and more.js.
    ========================================================================== */
 window.AyoOPen = {
+  // Prices: US dollars on the English page, same amounts as mini-ui.js money().
+  'Rp':'$', 'Rp75.000':'$5', 'Rp85.000':'$6', '+Rp4.000':'+$0.30', '+Rp2.500':'+$0.20', 'Rp79.000':'$5.30', 'Rp77.500':'$5.20',
   // Create Open Play form
   'Buat Open Play':'Create an Open Play', 'Gunakan template aktivitas':'Use activity template', 'Nama Aktivitas':'Activity Name', 'Deskripsi':'Description',
   'Main puas, main aman, main nyaman. Yuk gabung!':'Play hard, play safe, have fun. Come join us!',
@@ -39,7 +41,7 @@ window.AyoOPen = {
   'Ini untuk main santai dan seru-seruan':'This is for your relaxed and social games', 'Skor tidak memengaruhi rating skill kamu.':'Scores will not affect your skill rating.',
   // Session detail (co-host)
   'Detail':'Details', 'Diskusi':'Discussion', 'Skor':'Score', 'Minggu, 17 Agustus 2026':'Sunday, 17 August 2026',
-  '· Pembayaran Online':'· Online Payment', '· Pembayaran Tunai':'· Cash Payment', 'Rp75.000 · Pembayaran Online':'Rp75.000 · Online Payment', 'Rp85.000 · Pembayaran Tunai':'Rp85.000 · Cash Payment',
+  '· Pembayaran Online':'· Online Payment', '· Pembayaran Tunai':'· Cash Payment', 'Rp75.000 · Pembayaran Online':'$5 · Online Payment', 'Rp85.000 · Pembayaran Tunai':'$6 · Cash Payment',
   'Main aman, main nyaman, sudah termasuk foto & air mineral. Tanya dahulu ketersediaan slot jadwal ke admin.':'Play safe and comfortably, photos & mineral water included. Please ask the admin about available schedule slots first.',
   'Selengkapnya':'See More', 'Lokasi':'Location', 'Lihat Map':'View map', 'Penyelenggara':'Organizer', 'Komunitas Padel Bogor':'Bogor Padel Community',
   '★ 4.9 (86 Ulasan) · Dimas Pratama':'★ 4.9 (86 Reviews) · Dimas Pratama', 'Rekomendasi Aktivitas':'Recommended Activities',
@@ -51,7 +53,7 @@ window.AyoOPen = {
   'Menghapus peserta dari Open Play':'Remove participants from the Open Play', 'Mengubah tanggal, waktu, dan harga Open Play':'Change the Open Play date, time and price',
   'Mengubah kapasitas jumlah peserta':'Change the number of spots', 'Mengelola waiting list':'Manage the waiting list', 'Membatalkan Open Play':'Cancel the Open Play',
   'Dapat mengatur GameTime':'Set up GameTime', 'Dapat mengatur Gametime':'Set up GameTime', 'Dapat mengikuti atau mengedit skor':'Enter or edit scores', 'Dapat menginput atau mengedit skor':'Enter or edit scores',
-  '17 Agu 2026, 09:30 · Rp75.000':'17 Aug 2026, 09:30 · Rp75.000', '1/12 Bergabung':'1/12 Joined', 'Booking via AYO':'Booked via AYO',
+  '17 Agu 2026, 09:30 · Rp75.000':'17 Aug 2026, 09:30 · $5', '1/12 Bergabung':'1/12 Joined', 'Booking via AYO':'Booked via AYO',
   'Keluar Sebagai CoHost':'Leave as CoHost', 'Mengerti, Lihat Detail Open Play':'Got it, View Open Play Details',
   'Minggu, 17 Agustus 2026 · 09:30 - 11:30':'Sunday, 17 August 2026 · 09:30 - 11:30', 'Ubah informasi terkait aktivitas.':'Change the activity details.',
   'Dana Terkumpul':'Funds Collected', 'Lihat total dana yang terkumpul dari aktivitas ini.':'See the total funds collected for this activity.',

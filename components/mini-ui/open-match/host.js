@@ -97,6 +97,9 @@
     }
   };
   var t = T[lang];
+  // Match fees typed in the form: Rupiah on the ID page, US dollars on the EN one
+  // (same amounts as mini-ui.js money(): Rp100.000 = $7, Rp125.000 = $9).
+  var CUR = lang === 'id' ? 'Rp' : '$', FEE = lang === 'id' ? ['100.000', '125.000'] : ['7', '9'];
   var RATE = {fajar:'3.41', maya:'3.34', raka:'3.38', nina:'2.95', bayu:'3.12', tari:'2.87', sinta:'3.05', dika:'2.96'};
   var SHORT = {fajar:'Fajar R.', maya:'Maya L.', raka:'Raka A.', nina:'Nina S.', bayu:'Bayu A.', tari:'Tari A.', sinta:'Sinta D.', dika:'Dika P.'};
   var FULL = {fajar:'Fajar Rahman', maya:'Maya Lestari', raka:'Raka Aditya', nina:'Nina Sari', bayu:'Bayu Adi', tari:'Tari Ayu', sinta:'Sinta Dewi', dika:'Dika Putra'};
@@ -241,8 +244,8 @@
   function feeSheet(){
     return '<div class="mu-sheet om-sheet" data-el="fee"><div class="mu-row mu-row--between"><span class="mu-h" style="font-size:13px">'+t.feeT+'</span>'+h.ico('close')+'</div>'+
       chips([t.online, t.cash, t.both, t.free], 'feec', 2, 'om-chips--fee')+
-      '<div class="om-feef" data-el="f-online">'+field(t.onlineFee, '<span class="om-rp">Rp</span><span data-el="v-online">100.000</span>', true)+'</div>'+
-      '<div class="om-feef" data-el="f-cash">'+field(t.cashFee, '<span class="om-rp">Rp</span><span data-el="v-cash">125.000</span>', true)+'</div>'+
+      '<div class="om-feef" data-el="f-online">'+field(t.onlineFee, '<span class="om-rp">'+CUR+'</span><span data-el="v-online">'+FEE[0]+'</span>', true)+'</div>'+
+      '<div class="om-feef" data-el="f-cash">'+field(t.cashFee, '<span class="om-rp">'+CUR+'</span><span data-el="v-cash">'+FEE[1]+'</span>', true)+'</div>'+
       '<div class="mu-btn" data-el="fee-save">'+t.save+'</div></div>';
   }
 
@@ -422,10 +425,10 @@
           .then(function(){ return a.tap('fee-row'); })
           .then(function(){ return a.sheet('fee', true); })
           .then(function(){ return a.tap('feec-0'); })
-          .then(function(){ feeSelect(a, 0); return a.type('v-online', '100.000', 90); })
+          .then(function(){ feeSelect(a, 0); return a.type('v-online', FEE[0], 90); })
           .then(function(){ return a.wait(300); })
           .then(function(){ return a.tap('feec-2'); })
-          .then(function(){ feeSelect(a, 2); return a.type('v-cash', '125.000', 90); })
+          .then(function(){ feeSelect(a, 2); return a.type('v-cash', FEE[1], 90); })
           .then(function(){ return a.wait(400); })
           .then(function(){ return a.tap('fee-save'); })
           .then(function(){ a.el('fee-v').textContent = plain(t.both); pop(a.el('fee-v')); return a.sheet('fee', false); });

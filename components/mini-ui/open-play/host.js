@@ -271,7 +271,7 @@
       .then(function(){ return a.sheet('sh-fee', true); })
       .then(function(){ return a.tap('f-fee'); })
       .then(function(){ on(a.el('f-fee'), 'is-focus'); a.el('sh-fee').classList.add('op-up'); a.el('rp').style.display = ''; return kbOn(a, 'kb', true); })
-      .then(function(){ return keys(a, 'kb', 'fee-in', '100.000', 150); })
+      .then(function(){ return keys(a, 'kb', 'fee-in', EN ? '7' : '100.000', 150); })
       .then(function(){ return a.tap('kb-ok'); })
       .then(function(){ a.el('f-fee').classList.remove('is-focus'); a.el('sh-fee').classList.remove('op-up'); enable(a, 'fee-save'); return kbOn(a, 'kb', false); })
       .then(function(){ return a.wait(250); })

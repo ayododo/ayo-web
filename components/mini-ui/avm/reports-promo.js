@@ -66,19 +66,19 @@
     en: {
       reports:'Reports', month:'May 2026', tabTx:'Transactions', tabMut:'Mutations',
       st:{ok:['Paid','ok'], dp:['DP','warn'], un:['Unpaid','mute']},
-      tx:[['RA','Raka Aditya','Booking · Court 1','Rp350.000','ok'],['SM','Sinta Maharani','Open Play','Rp75.000','ok'],['DP','Dimas Pratama','Booking · DP','Rp120.000','dp'],
-          ['BS','Bima Santoso','Add-on','Rp40.000','ok'],['NP','Nadia Putri','Credit Package','Rp900.000','ok'],['FR','Fajar Rahman','Payment Link','Rp250.000','ok'],['AS','Andi Saputra','Manual Booking','Rp300.000','un']],
-      balL:'Closing balance', bal:'Rp4.250.000', balSub:'as of 15 May 2026',
-      mut:[['+','Funds in · Booking','12 May, 09:21','+Rp350.000'],['+','Funds in · Open Play','12 May, 19:05','+Rp75.000'],['−','Withdrawal to BCA','13 May, 10:00','−Rp2.000.000'],
-           ['−','Refund · Dimas P.','14 May, 08:12','−Rp120.000'],['+','Funds in · Credits','15 May, 16:40','+Rp900.000']],
+      tx:[['RA','Raka Aditya','Booking · Court 1','$23','ok'],['SM','Sinta Maharani','Open Play','$5','ok'],['DP','Dimas Pratama','Booking · DP','$8','dp'],
+          ['BS','Bima Santoso','Add-on','$3','ok'],['NP','Nadia Putri','Credit Package','$60','ok'],['FR','Fajar Rahman','Payment Link','$17','ok'],['AS','Andi Saputra','Manual Booking','$20','un']],
+      balL:'Closing balance', bal:'$283', balSub:'as of 15 May 2026',
+      mut:[['+','Funds in · Booking','12 May, 09:21','+$23'],['+','Funds in · Open Play','12 May, 19:05','+$5'],['−','Withdrawal to BCA','13 May, 10:00','−$130'],
+           ['−','Refund · Dimas P.','14 May, 08:12','−$8'],['+','Funds in · Credits','15 May, 16:40','+$60']],
       segB:'Booking', segM:'Open Play', rev:'Revenue', cntB:'Booking', cntM:'Players', weekly:'Weekly revenue',
       days:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
-      short:function(v){ return 'Rp'+v.toFixed(1)+'M'; },
+      short:function(v){ return M.h.usd(v * 1e6); },
       rpTitle:'Booking Report', range:'1 – 31 May 2026 ▾', status:'All statuses ▾', cols:['Date','Renter','Total'],
-      rows:[['12 May','Raka A.','Rp350.000'],['13 May','Sinta M.','Rp200.000'],['14 May','Dimas P.','Rp400.000']],
+      rows:[['12 May','Raka A.','$23'],['13 May','Sinta M.','$13'],['14 May','Dimas P.','$26']],
       file:'Report_May_2026.xlsx', fileOk:'Downloaded', dl:'Downloading…',
       vTitle:'Create Voucher', vType:'Voucher type',
-      types:[['%','Discount %','Percent off','red'],['Rp','Amount off','Fixed amount','grn'],['CB','Cashback','Balance back','blu'],['+','Free Add-on','Bonus product','org']],
+      types:[['%','Discount %','Percent off','red'],['$','Amount off','Fixed amount','grn'],['CB','Cashback','Balance back','blu'],['+','Free Add-on','Bonus product','org']],
       codeL:'Voucher code', code:'PLAYAGAIN20', codePh:'Enter a voucher code', amtL:'Discount amount', amt:'20%', amtPh:'e.g. 10%', next:'Continue',
       made:'Voucher created', madeSub:'PLAYAGAIN20 · 20% off',
       pTitle:'Set Period', vName:'20% Loyal Customer Discount', perL:'Play period', per:'1 Jun – 31 Jul 2026', perPh:'Select a play period',
@@ -87,7 +87,7 @@
       saved:'Voucher saved', savedSub:'Live for 1 Jun – 31 Jul 2026',
       cTitle:'Credits', active:'Active', pkg:'10-Credit Package', saveP:'Save 10%', cDesc:'1 credit = 1 hour of play · valid 3 months', cTx:'Credit Transactions',
       ctx:[['RA','Raka Aditya','Package bought · 12 May','+10'],['SM','Sinta Maharani','Used · Court 2','−2'],['DP','Dimas Pratama','Used · Court 1','−1'],['BS','Bima Santoso','Package bought · 14 May','+10']],
-      mTitle:'Member Details', since:'Since Jan 2026', left:'Sessions left', valid:'Valid until', validV:'30 Jun', bTitle:'Bundle package', bName:'Monthly Package', bPrice:'Rp1.200.000',
+      mTitle:'Member Details', since:'Since Jan 2026', left:'Sessions left', valid:'Valid until', validV:'30 Jun', bTitle:'Bundle package', bName:'Monthly Package', bPrice:'$80',
       tags:['8 games','Racket rental','Mineral water'], used:function(n){ return n+' of 8 sessions used'; }, log:'Log session', hist:'Session history',
       hRows:[['Session 2 · Court 1','10 May'],['Session 1 · Court 2','3 May']], hNew:['Session 3 · Court 1','Today'],
       dTitle:'Promo Details', dCode:'Discount15', vtL:'Voucher Type', vt:'Public', ppL:'Promo Period', psL:'Promo Start', peL:'Promo End', ps:'13/10/2026 · 19:30', pe:'19/10/2026 · 19:30',
@@ -98,11 +98,12 @@
       lTitle:'Customer List', search:'Search customer name', inactive:'Inactive',
       cust:[['RA','Raka Aditya','12 bookings · 2 Nov',1,''],['DP','Dimas P.','8 bookings · 30 Oct',1,'red'],['SM','Sinta Maharani','3 bookings · 12 Aug',0,'org'],
             ['BS','Bima Santoso','6 bookings · 28 Oct',1,'grn'],['SA','Siska Amelia','2 bookings · 3 Sep',0,''],['NP','Nadia Putri','5 bookings · 1 Nov',1,'red']],
-      q:'Sin', cdTitle:'Customer Details', cdSub:'Last played 12 Aug', totB:'Total bookings', totS:'Total spent', totSV:'Rp450.000', bh:'Booking history',
-      bhRows:[['12 Aug · Court 2','Rp150.000'],['28 Jul · Court 1','Rp150.000'],['9 Jul · Court 2','Rp150.000']], send:'Send voucher', sent:'Voucher sent', sentSub:'PLAYAGAIN20 to Sinta Maharani'
+      q:'Sin', cdTitle:'Customer Details', cdSub:'Last played 12 Aug', totB:'Total bookings', totS:'Total spent', totSV:'$30', bh:'Booking history',
+      bhRows:[['12 Aug · Court 2','$10'],['28 Jul · Court 1','$10'],['9 Jul · Court 2','$10']], send:'Send voucher', sent:'Voucher sent', sentSub:'PLAYAGAIN20 to Sinta Maharani'
     }
   };
   var T = STR[lang];
+  function money(n){ return M.h.money(n, lang); }   // Rp on the ID page, USD on the EN one
 
   /* ---------- Small templates ---------- */
   var CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
@@ -238,7 +239,7 @@
       return '<div class="mu-rpp-tx"'+el('ctx-'+i)+'>'+ini(r[0])+txt(r[1], r[2])+'<span class="mu-rpp-amt'+(plus?' mu-rpp-plus':'')+'">'+r[3]+'</span></div>'; }).join('');
     return h.page('pr03', h.head(title(T.cTitle, false, pill(T.active, 'ok', null, true))),
       '<div class="mu-rpp-credit"'+el('credit')+'><div class="mu-row mu-row--between"><span class="mu-rpp-credit__t">'+T.pkg+'</span><span class="mu-rpp-pill mu-rpp-pill--red mu-rpp-pill--md mu-rpp-pop"'+el('save-p')+'>'+T.saveP+'</span></div>'+
-        '<span class="mu-rpp-credit__p">Rp900.000</span><span class="mu-rpp-credit__d">'+T.cDesc+'</span></div>'+
+        '<span class="mu-rpp-credit__p">'+money(900000)+'</span><span class="mu-rpp-credit__d">'+T.cDesc+'</span></div>'+
       '<div class="mu-h" style="font-size:12px"'+el('tx-h')+'>'+T.cTx+'</div><div class="mu-rpp-list"'+el('ctx')+'>'+rows+'</div>');
   }
 
@@ -273,7 +274,7 @@
         '<span class="mu-rpp-name">'+T.pmL+'</span>'+sched+'<span class="mu-rpp-hr"></span><span class="mu-rpp-more">'+T.courts+'</span></div>'+
       '<div class="mu-rpp-info" style="flex-direction:row;align-items:center"'+el('cut')+'><span class="mu-rpp-ico mu-rpp-ico--mute">%</span><span class="mu-rpp-name mu-grow">'+T.cut+'</span><span class="mu-ico" style="color:#787373">'+I.chev+'</span></div>'+
       '<div class="mu-rpp-info" style="gap:6px"'+el('stats')+'><span class="mu-h">'+T.sum+'</span><span class="mu-rpp-sub" style="white-space:normal">'+T.sumD+'</span>'+
-        stat(T.rev, 'rev', 'Rp15.000.000', '+16%')+'<span class="mu-rpp-hr"></span>'+stat(T.res, 'res', '135', '+10%')+'</div>'+
+        stat(T.rev, 'rev', money(15000000), '+16%')+'<span class="mu-rpp-hr"></span>'+stat(T.res, 'res', '135', '+10%')+'</div>'+
       '<div class="mu-btn mu-btn--soft mu-rpp-stop"'+el('stop')+'><span'+el('stop-t')+'>'+T.stop+'</span></div>');
   }
   function stopDialog(){
@@ -335,7 +336,7 @@
         a.el('left').textContent = '8'; a.el('used').textContent = T.used(0); a.el('prog').style.width = '0';
         T.tags.forEach(function(t, i){ a.el('tag-'+i).classList.add('is-out'); }); [].forEach.call(a.el('hist').children, veil);
       },
-      'avm-pr05': function(a){ a.el('rev').textContent = 'Rp0'; a.el('res').textContent = '0'; a.el('rev-up').classList.add('is-out'); a.el('res-up').classList.add('is-out'); }
+      'avm-pr05': function(a){ a.el('rev').textContent = money(0); a.el('res').textContent = '0'; a.el('rev-up').classList.add('is-out'); a.el('res-up').classList.add('is-out'); }
     },
     flows: {
       // RP01 · down the transaction list (online, manual, credits, payment
@@ -456,7 +457,7 @@
           .then(function(){ return a.scrollBottom('sched', 1400); })
           .then(function(){ return a.wait(500); })
           .then(function(){ return a.scrollTo('stats', 6, 1300); })
-          .then(function(){ return Promise.all([count(a, a.el('rev'), 15000000, 1200, function(v){ return 'Rp'+dots(v); }), count(a, a.el('res'), 135, 1200, function(v){ return String(Math.round(v)); })]); })
+          .then(function(){ return Promise.all([count(a, a.el('rev'), 15000000, 1200, function(v){ return money(v); }), count(a, a.el('res'), 135, 1200, function(v){ return String(Math.round(v)); })]); })
           .then(function(){ a.el('rev-up').classList.remove('is-out'); a.el('res-up').classList.remove('is-out'); return a.wait(900); })
           .then(function(){ return a.scrollBottom('stop', 800); })
           .then(function(){ return a.tap('stop'); })
