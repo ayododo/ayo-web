@@ -4,8 +4,9 @@
    "ayo" (players & communities, light card) and "avm" (venue owners, dark
    card). Each <template data-qtc-item> says its group (data-group) and, when
    it has a translation, its language (data-lang="en" | "id"). The page
-   language is html[data-language] (EN/ID, set by scripts/chrome.js); a group
-   with no quotes in that language falls back to English. Each tab button
+   language is html[data-language] (EN/ID, set by scripts/chrome.js). A quote
+   and its translation share data-key; a quote with no Indonesian twin stays
+   in English, in its place. Each tab button
    carries its heading and sub (data-title / data-sub, plus -id for Bahasa
    Indonesia) and the card chip (data-chip).
 
@@ -37,11 +38,18 @@
   var timer = 0, hover = false, visible = false;
 
   function lang() { return html.dataset.language === 'ID' ? 'id' : 'en'; }
+  // The English quotes set the order. In Bahasa Indonesia each one is swapped
+  // for its translation (same data-key, data-lang="id") when there is one, so
+  // a group can be partly translated without losing its other quotes.
   function listFor(g) {
     var mine = all.filter(function (t) { return t.dataset.group === g; });
-    var l = lang();
-    var inLang = mine.filter(function (t) { return (t.dataset.lang || 'en') === l; });
-    return inLang.length ? inLang : mine.filter(function (t) { return (t.dataset.lang || 'en') === 'en'; });
+    var base = mine.filter(function (t) { return (t.dataset.lang || 'en') === 'en'; });
+    if (lang() !== 'id') return base;
+    return base.map(function (t) {
+      var k = t.dataset.key;
+      var twin = k && mine.filter(function (x) { return x.dataset.lang === 'id' && x.dataset.key === k; })[0];
+      return twin || t;
+    });
   }
   function tabFor(g) { return tabs.filter(function (t) { return t.dataset.qtcTab === g; })[0]; }
   function copy(tab, key) {
