@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="styles/bootstrap-compat.css">
 <link rel="stylesheet" href="styles/chrome.css?v=20261125c">
 <link rel="stylesheet" href="components/site-footer/site-footer.css?v=20261118b">
-<link rel="stylesheet" href="styles/partner.css?v=20261125c">
+<link rel="stylesheet" href="styles/partner.css?v=20261125d">
 </head>
 <body class="ayo-web">
 
@@ -266,11 +266,14 @@
       </div>
       <form class="pt-form" data-pt-form aria-labelledby="pt-form-title" novalidate>
         <div class="pt-form__head"><h3 id="pt-form-title">Ajukan kerja sama</h3><p>Kolom bertanda * wajib diisi.</p></div>
-        <div class="pt-field"><span class="pt-field__box"><label class="pt-field__lab" for="pt-f-subject">Subject<i aria-hidden="true">*</i></label><select id="pt-f-subject" name="subject" required><option selected>Brand Partnership</option><option>Community Engagement</option><option>Digital Activation</option><option>Solusi Event Olahraga</option><option>Lainnya</option></select></span><svg class="pt-field__chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 7.5S11.318 12.5 10 12.5 5 7.5 5 7.5"/></svg></div>
+        <div class="pt-field"><span class="pt-field__box"><label class="pt-field__lab" for="pt-f-subject">Subject<i aria-hidden="true">*</i></label><select id="pt-f-subject" name="subject" required><option data-k="avm">AYO Venue Management</option><option data-k="brand" selected>Brand Partnership</option><option data-k="digital">Digital Activation</option><option data-k="community">Community Engagement</option><option data-k="event">Solusi Event Olahraga</option><option data-k="activity">Aktivitas</option><option data-k="booking">Booking</option><option data-k="other">Lainnya</option></select></span><svg class="pt-field__chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 7.5S11.318 12.5 10 12.5 5 7.5 5 7.5"/></svg></div>
         <div class="pt-field"><span class="pt-field__box"><label class="pt-field__lab" for="pt-f-name">Nama<i aria-hidden="true">*</i></label><input id="pt-f-name" name="name" type="text" autocomplete="name" required></span></div>
         <div class="pt-field"><span class="pt-field__box"><label class="pt-field__lab" for="pt-f-email">Email<i aria-hidden="true">*</i></label><input id="pt-f-email" name="email" type="email" autocomplete="email" required></span></div>
         <div class="pt-field pt-field--phone"><span class="pt-cc" data-cc><span class="pt-cc__flag flag flag--id" aria-hidden="true"></span><span class="pt-cc__code" aria-hidden="true">+62</span><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 7.5S11.318 12.5 10 12.5 5 7.5 5 7.5"/></svg><select name="country_code" aria-label="Kode negara"><option value="+62" data-flag="id" selected>Indonesia (+62)</option><option value="+65" data-flag="sg">Singapore (+65)</option><option value="+60" data-flag="my">Malaysia (+60)</option><option value="+61" data-flag="au">Australia (+61)</option><option value="+44" data-flag="gb">United Kingdom (+44)</option><option value="+1" data-flag="us">United States (+1)</option></select></span><span class="pt-field__sep" aria-hidden="true"></span><span class="pt-field__box"><label class="pt-field__lab" for="pt-f-phone">Nomor HP<i aria-hidden="true">*</i></label><input id="pt-f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" pattern="[0-9 \-]{6,15}" required></span></div>
         <div class="pt-field"><span class="pt-field__box"><label class="pt-field__lab" for="pt-f-sport">Kategori Olahraga<i aria-hidden="true">*</i></label><select id="pt-f-sport" name="sport" required><option value=""></option><option>Padel</option><option>Tenis</option><option>Badminton</option><option>Pickleball</option><option>Mini Soccer</option><option>Sepak Bola</option><option>Futsal</option><option>Basket</option><option>Lari</option><option>Tenis Meja</option><option>Squash</option><option>Voli</option><option>Multi-olahraga</option><option>Lainnya</option></select></span><svg class="pt-field__chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 7.5S11.318 12.5 10 12.5 5 7.5 5 7.5"/></svg></div>
+        <div class="pt-field" data-when="avm" hidden><span class="pt-field__box"><label class="pt-field__lab" for="pt-f-venue">Nama Venue<i aria-hidden="true">*</i></label><input id="pt-f-venue" name="venue_name" type="text" autocomplete="organization" required disabled></span></div>
+        <div class="pt-field" data-when="avm" hidden><span class="pt-field__box"><label class="pt-field__lab" for="pt-f-venue-loc">Lokasi Venue<i aria-hidden="true">*</i></label><input id="pt-f-venue-loc" name="venue_location" type="text" autocomplete="address-level2" required disabled></span></div>
+        <div class="pt-form__group" data-when="booking" hidden><div class="pt-field"><span class="pt-field__box"><label class="pt-field__lab" for="pt-f-booking">Booking ID (opsional)</label><input id="pt-f-booking" name="booking_id" type="text" autocomplete="off" aria-describedby="pt-f-booking-hint" disabled></span></div><p class="pt-form__hint" id="pt-f-booking-hint">Tidak punya Booking ID? Tetap kirim, lalu tulis venue, tanggal, dan jam di pertanyaanmu.</p></div>
         <div class="pt-field pt-field--area"><span class="pt-field__box"><label class="pt-field__lab" for="pt-f-msg">Pertanyaan<i aria-hidden="true">*</i></label><textarea id="pt-f-msg" name="message" rows="4" required></textarea></span></div>
         <p class="pt-form__legal">Dengan mengirim formulir ini, kamu menyetujui <a href="#">Syarat &amp; Ketentuan</a> serta <a href="#">Kebijakan Privasi</a> AYO.</p>
         <button class="pt-form__btn" type="submit">Kirim Pesan</button>
@@ -359,6 +362,6 @@
 <script src="vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
 <script src="scripts/chrome.js?v=20261125d"></script>
 <script src="scripts/cc-picker.js?v=20261125a"></script>
-<script src="scripts/partner.js?v=20261125c"></script>
+<script src="scripts/partner.js?v=20261125d"></script>
 </body>
 </html>

@@ -272,6 +272,25 @@
       form.addEventListener('reset', function(){ setTimeout(label, 0); });
       label();
     });
+    /* Subject-dependent fields: [data-when="<option data-k>"] shows only for
+       that subject (AVM → venue name + location, Booking → Booking ID + hint).
+       Hidden fields are disabled so they skip validation and aren't sent. */
+    var subject = form.querySelector('select[name="subject"]');
+    var whens = $$('[data-when]', form);
+    var applySubject = function(){
+      var o = subject.options[subject.selectedIndex], k = o ? o.getAttribute('data-k') : '';
+      whens.forEach(function(w){
+        var on = w.getAttribute('data-when') === k;
+        w.hidden = !on;
+        $$('input, select, textarea', w).forEach(function(el){ el.disabled = !on; });
+        if(!on) (w.classList.contains('pt-field') ? [w] : $$('.pt-field', w)).forEach(function(f){ f.classList.remove('is-invalid'); });
+      });
+    };
+    if(subject && whens.length){
+      subject.addEventListener('change', applySubject);
+      form.addEventListener('reset', function(){ setTimeout(applySubject, 0); });
+      applySubject();
+    }
     // Country code: scripts/cc-picker.js draws the picker and keeps the
     // flag + code in step with the <select> (also on form.reset()).
     form.addEventListener('submit', function(e){
