@@ -8,9 +8,9 @@
    same grid cell (only the chosen one visible), so the card is as tall as
    the longest title in this language and width, the photo fills that same
    box, and the arrows never move.
-   Autoplay: each milestone stays DWELL ms. Meanwhile the red line creeps
-   toward the next year, then surges the last stretch (glowing head, light
-   trail) and hits the next dot, which pops with a ring; the new milestone's
+   Autoplay: each milestone stays DWELL ms. Meanwhile the red line runs at
+   one steady speed toward the next year (glowing head, light trail) and
+   hits the next dot, which pops with a ring; the new milestone's
    text rises in as the photo crossfades. After the last year the line sweeps
    back to the first and it loops. A click on a year or an arrow sweeps the
    line there and autoplay carries on from it. It pauses while the pointer is
@@ -145,13 +145,12 @@
   }, {passive:true});
 
   /* ---- Line engine + autoplay ------------------------------------------- */
-  var DWELL = 5600, LAST = 7000, SURGE = 750, CREEP = .22;
+  var DWELL = 5600, LAST = 7000;
   var anim = null;                   // a sweep: {from, to, t0, dur}
   var elapsed = 0, last = 0, raf = 0, spd = 0;
   var paused = { hover:false, focus:false, view:true, tab:document.hidden };
   function isPaused(){ return paused.hover || paused.focus || paused.view || paused.tab; }
   function easeIO(k){ return k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }
-  function easeIn(k){ return k * k * k; }
 
   function sweep(to){
     if(Math.abs(to - p) < .001){ p = to; return; }
@@ -182,13 +181,10 @@
     } else if(!isPaused()){
       elapsed += dt;
       if(current < total - 1){
-        var creepEnd = DWELL - SURGE;
-        if(elapsed < creepEnd) setP(current + CREEP * (elapsed / creepEnd), 0);
-        else {
-          var s = Math.min(1, (elapsed - creepEnd) / SURGE);
-          setP(current + CREEP + (1 - CREEP) * easeIn(s), .35 + .65 * s);
-          if(s >= 1){ elapsed = 0; show(current + 1, false, 'arrive'); setP(current, 1); hit(current); }
-        }
+        // Constant speed: the line covers the gap evenly over DWELL.
+        var s = Math.min(1, elapsed / DWELL);
+        setP(current + s, .5);
+        if(s >= 1){ elapsed = 0; show(current + 1, false, 'arrive'); setP(current, .5); hit(current); }
       } else if(elapsed >= LAST){
         elapsed = 0; show(0);       // the line sweeps back to the first year
       } else setP(p, 0);
