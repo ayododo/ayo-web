@@ -90,13 +90,13 @@
 /* Autoplay (about.js adds .is-driven): JS moves --p every frame, so the CSS
    transition is off. While a milestone is shown the line runs at one steady
    speed toward the next year: solid red up to the current dot (--s), then
-   .ab-tl__head, a stretch that fades from brand red to white, up to --p.
+   .ab-tl__head, a stretch that fades from brand red to the grey track colour, up to --p.
    It turns solid once it reaches the next dot. No dot on the tip. */
 .ab-tl.is-driven::after{transition:none;width:calc((100% - var(--w)) * var(--s,var(--p,0)) / 4)}
 .ab-tl__head{position:absolute;top:11px;height:2px;z-index:0;pointer-events:none;
   left:calc(var(--w) / 2 + (100% - var(--w)) * var(--s,0) / 4);
   width:calc((100% - var(--w)) * (var(--p,0) - var(--s,0)) / 4);
-  background:linear-gradient(90deg,var(--brand),#fff);border-radius:0 2px 2px 0}
+  background:linear-gradient(90deg,var(--brand),var(--ab-line));border-radius:0 2px 2px 0}
 .ab-tl button{position:relative}
 .ab-tl button::after{content:'';position:absolute;left:50%;top:12px;width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:50%;
   border:2px solid var(--brand);opacity:0;pointer-events:none}

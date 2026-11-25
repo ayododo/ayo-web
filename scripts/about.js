@@ -10,7 +10,7 @@
    box, and the arrows never move.
    Autoplay: each milestone stays DWELL ms. Meanwhile the red line runs at
    one steady speed toward the next year, its leading stretch fading from
-   red to white, and hits the next dot, which pops with a ring; the new milestone's
+   red to the grey track, and hits the next dot, which pops with a ring; the new milestone's
    text rises in as the photo crossfades. After the last year the line sweeps
    back to the first and it loops. A click on a year or an arrow sweeps the
    line there and autoplay carries on from it. It pauses while the pointer is
