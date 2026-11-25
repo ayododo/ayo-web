@@ -61,3 +61,15 @@
 .mu-hb-foot{padding-top:14px;background:linear-gradient(to bottom,rgba(255,255,255,0),#fff 14px);box-shadow:0 12px 0 #fff}
 .mu-hb-foot .mu-btn{margin:0}
 .mu-scroll.mu-hb-padfoot{padding-bottom:78px}
+
+/* BK03 (home) · online settlement status in the pinned footer: waiting
+   (soft pulse) → settled automatically (green check). No action button —
+   an online payment needs no "Mark as paid". */
+.mu-hb-auto{display:flex;align-items:center;gap:7px;padding:9px 10px;border-radius:10px;background:#f4f4f5;font-size:10px;line-height:1.25;font-weight:600;color:#787373;transition:background .35s,color .35s}
+.mu-hb-auto__ico{flex:0 0 auto;width:16px;height:16px;border-radius:50%;border:1.5px dashed #b9b5b5;display:flex;align-items:center;justify-content:center;color:transparent;transition:background .35s,border-color .35s,color .35s}
+.mu-hb-auto__ico svg{width:9px;height:9px}
+.mu-hb-auto:not(.is-done) .mu-hb-auto__ico{animation:mu-hb-wait 1.6s linear infinite}
+@keyframes mu-hb-wait{to{transform:rotate(360deg)}}
+.mu-hb-auto.is-done{background:#e6f6ee;color:#1b7a4b}
+.mu-hb-auto.is-done .mu-hb-auto__ico{border:0;background:#1b9e5a;color:#fff;animation:mu-bp-pop .45s cubic-bezier(.32,.72,0,1)}
+@media (prefers-reduced-motion: reduce){ .mu-hb-auto__ico{animation:none!important} }

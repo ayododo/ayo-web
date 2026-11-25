@@ -32,8 +32,8 @@
 <link rel="stylesheet" href="components/mini-ui/avm/booking-payments.css?v=20261119a">
 <link rel="stylesheet" href="components/mini-ui/avm/reports-promo.css?v=20261119a">
 <link rel="stylesheet" href="components/mini-ui/avm/addons-more.css?v=20261121c">
-<link rel="stylesheet" href="components/mini-ui/home/booking.css?v=20261124b">
-<link rel="stylesheet" href="styles/home.css?v=20261124j">
+<link rel="stylesheet" href="components/mini-ui/home/booking.css?v=20261125a">
+<link rel="stylesheet" href="styles/home.css?v=20261125a">
 </head>
 <body class="ayo-web">
 
@@ -299,7 +299,7 @@
      tab list next to one Mini UI phone: the active tab shows its copy and a
      progress bar (autoplay, scripts/home.js) and picks the phone screen.
      Player screens: components/mini-ui/home/booking.js. Venue screens reuse
-     the AVM page cards (avm-bk03, avm-bk05, avm-pr05, avm-ft01) plus
+     the AVM page cards (avm-bk05, avm-pr05, avm-ft01) plus home-bk03 (DP settled online, automatically) and
      home-rev. Indonesian copy: data-i18n keys, table in scripts/home.js. -->
 <section id="booking" aria-labelledby="bkg-title">
   <div class="wrap container-fluid bkg">
@@ -343,14 +343,10 @@
               <span class="bkg__tmore"><span class="bkg__tmore-in"><span class="bkg__tdesc" data-i18n="pl3d">Pay in full, or secure your booking with a down payment where available.</span><span class="bkg__prog" aria-hidden="true"><i></i></span></span></span>
             </button>
           </div>
+          <!-- CTA under the tabs (the closing bridge row — booking chip and
+               hand-off line — was removed). -->
+          <a class="bkg__btn bkg__btn--find" href="https://ayo.co.id/venues"><span data-i18n="findCourt">Find a court</span> <span class="bkg__btn-ico"><img src="assets/icons/arrow-right.svg" alt="" width="10.5333" height="9.2"></span></a>
         </div>
-      </div>
-      <div class="bkg__bridge">
-        <p class="bkg__bridge-txt">
-          <span class="bkg__chip"><b data-i18n="chipSlot">Fri · 19:00–21:00 · Court 2</b><span class="bkg__dp">DP</span></span>
-          <span data-i18n="bridge">The same booking lands in the venue's AVM the moment it's paid.</span>
-        </p>
-        <a class="bkg__btn" href="https://ayo.co.id/venues"><span data-i18n="findCourt">Find a court</span> <span class="bkg__btn-ico"><img src="assets/icons/arrow-right.svg" alt="" width="10.5333" height="9.2"></span></a>
       </div>
     </article>
 
@@ -395,7 +391,7 @@
           </button>
         </div>
         <div class="bkg__stage" aria-hidden="true">
-          <div class="bkg__mu mu-stage is-active" data-mu="avm-bk03" id="bkg-ow-0"></div>
+          <div class="bkg__mu mu-stage is-active" data-mu="home-bk03" id="bkg-ow-0"></div>
           <div class="bkg__mu mu-stage" data-mu="avm-bk05" id="bkg-ow-1"></div>
           <div class="bkg__mu mu-stage" data-mu="home-rev" id="bkg-ow-2"></div>
           <div class="bkg__mu mu-stage" data-mu="avm-pr05" id="bkg-ow-3"></div>
@@ -642,7 +638,7 @@
 
 <script src="vendor/jquery-3.5.1/jquery.min.js"></script>
 <script src="vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
-<script src="scripts/home.js?v=20261124c"></script>
+<script src="scripts/home.js?v=20261125a"></script>
 <script src="components/quote-carousel/quote-carousel.js?v=20261124a"></script>
 <script src="scripts/chrome.js?v=20261125b"></script>
 <script src="components/persona-hero/persona-hero.js?v=20261120a"></script>
@@ -651,6 +647,6 @@
 <script src="components/mini-ui/avm/booking-payments.js?v=20261125usd"></script>
 <script src="components/mini-ui/avm/reports-promo.js?v=20261125usd"></script>
 <script src="components/mini-ui/avm/addons-more.js?v=20261125usd"></script>
-<script src="components/mini-ui/home/booking.js?v=20261125usd"></script>
+<script src="components/mini-ui/home/booking.js?v=20261125b"></script>
 </body>
 </html>

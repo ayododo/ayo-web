@@ -133,7 +133,7 @@
     pl1:'Booking lapangan instan', pl1d:'Lihat jadwal kosong secara real-time dan booking tanpa perlu menelepon venue.',
     pl2:'Cari lapangan sesuai preferensimu', pl2d:'Cari lapangan, bandingkan lokasi, harga, dan fasilitasnya untuk menemukan yang paling cocok dengan gaya mainmu.',
     pl3:'Bayar sesuai pilihanmu', pl3d:'Bayar penuh atau DP dulu, dengan metode pembayaran pilihanmu.',
-    chipSlot:'Jum · 19:00–21:00 · Lap. 2', bridge:'Booking yang sama langsung masuk ke AVM venue begitu dibayar.', findCourt:'Cari Lapangan',
+    findCourt:'Cari Lapangan',
     ownPill:'Untuk pemilik venue · AYO Venue Management', ownTitle:'Jangkau 900.000+ pengguna AYO. Kelola venue dalam satu platform.',
     ownLede:'Buat venue kamu lebih mudah ditemukan di AYO, kelola booking dan jadwal lapangan, pantau transaksi, dan kembangkan bisnis bersama AYO Venue Management (AVM).',
     size1:'Satu lapangan hingga multi-venue', size2:'Pemilik & staf satu jadwal', size3:'Lewat ponsel atau desktop',

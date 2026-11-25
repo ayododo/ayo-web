@@ -7,12 +7,16 @@
      home-pl01  Instant court booking   pick Fri 30 · 19:00 + 20:00 on Court 2, Book now
      home-pl02  Find the right court    filters, venue cards with price + facilities
      home-pl03  Flexible payment        total with voucher, Pay in full / Down payment
-   Venue-owner tab (AVM) — the AVM page cards are reused (avm-bk03, avm-bk05,
-   avm-pr05, avm-ft01); only the revenue screen is homepage-specific:
+   Venue-owner tab (AVM) — the AVM page cards are reused (avm-bk05, avm-pr05,
+   avm-ft01); two screens are homepage-specific:
+     home-bk03  Booking details · the DP booking, settled online, automatically
      home-rev   Reports · Daily / Weekly / Monthly, stat tiles, weekly line chart
    The booking the player makes (Court 2, 19:00–21:00, Photography add-on,
-   voucher −Rp40.000, DP Rp210.000 + Rp170.000 at the venue) is the one the
-   venue sees in avm-bk03.
+   voucher −Rp40.000, DP Rp210.000 now + Rp170.000 later) is the one the venue
+   sees in home-bk03. A DP on AYO stays online end to end: the player pays the
+   rest in the app, so the venue never marks it paid by hand — the balance
+   flips to Paid by itself. (AVM's "Mark as paid" is for manual, pay-at-venue
+   bookings only; the AVM page's avm-bk03 still shows that case.)
 
    Registers with components/mini-ui/mini-ui.js (load it first). Strings are
    picked by <html lang>; the homepage sets it from the saved language before
@@ -36,10 +40,14 @@
               ['Lapangan Merdeka','Padel · 3.4 km · ★ 4.6','$10',['Outdoor','Parking']],
               ['Padel Senopati','Padel · 4.0 km · ★ 4.7','$12',['Indoor','Shower']]],
       pay:'Payment', court:'Arena Nusantara · Court 2', when:'Fri, 30 May · 19:00–21:00 · + Photography',
-      voucher:'AYO voucher', total:'Total', full:'Pay in full', fullS:'$25 now', dp:'Down payment', dpS:'$14 now · $11 at venue',
-      payFull:'Pay $25', payDp:'Pay $14', paid:'Payment successful', paidSub:'DP $14 · rest at the venue',
+      voucher:'AYO voucher', total:'Total', full:'Pay in full', fullS:'$25 now', dp:'Down payment', dpS:'$14 now · $11 later, online',
+      payFull:'Pay $25', payDp:'Pay $14', paid:'Payment successful', paidSub:'DP $14 · pay the rest online in the app',
+      detail:'Booking Details', extra:'Extra Services', photo:'Photography', paidP:'Paid', dpOnline:'Down payment · Online', voucherS:'AYO voucher −$3',
+      restOnline:'Remaining · Online', waiting:'Pending', restS:'Paid by the customer in the AYO app',
+      autoWait:'Settles itself once the customer pays', autoDone:'Paid in full · $25 added to Balance',
+      restToast:'Remaining payment received', restToastS:'Court 2 · Fri 19:00–21:00 · $11',
       reports:'Reports', month:'May 2026', seg:['Daily','Weekly','Monthly'], rev:'Revenue', cnt:'Booking', weekly:'Weekly revenue',
-      weeks:['W1','W2','W3','W4'], wk:[160, 195, 180, 240], total:775, lo:125, hi:250,
+      weeks:['W1','W2','W3','W4'], wk:[160, 195, 180, 240], revTotal:775, lo:125, hi:250,
       short:function(v){ return '$'+Math.round(v).toLocaleString('en-US'); }
     },
     id: {
@@ -52,10 +60,14 @@
               ['Lapangan Merdeka','Padel · 3,4 km · ★ 4,6','Rp150rb',['Outdoor','Parkir']],
               ['Padel Senopati','Padel · 4,0 km · ★ 4,7','Rp180rb',['Indoor','Shower']]],
       pay:'Pembayaran', court:'Arena Nusantara · Lap. 2', when:'Jum, 30 Mei · 19:00–21:00 · + Fotografi',
-      voucher:'Voucher AYO', total:'Total', full:'Bayar penuh', fullS:'Rp380.000 sekarang', dp:'Uang muka', dpS:'Rp210rb sekarang · Rp170rb di venue',
-      payFull:'Bayar Rp380.000', payDp:'Bayar Rp210.000', paid:'Pembayaran berhasil', paidSub:'DP Rp210.000 · sisanya di venue',
+      voucher:'Voucher AYO', total:'Total', full:'Bayar penuh', fullS:'Rp380.000 sekarang', dp:'Uang muka', dpS:'Rp210rb sekarang · Rp170rb online',
+      payFull:'Bayar Rp380.000', payDp:'Bayar Rp210.000', paid:'Pembayaran berhasil', paidSub:'DP Rp210.000 · sisanya dibayar online di aplikasi',
+      detail:'Detail Booking', extra:'Jasa Tambahan', photo:'Fotografi', paidP:'Lunas', dpOnline:'DP · Pembayaran Online', voucherS:'Voucher AYO −Rp40.000',
+      restOnline:'Sisa Pelunasan Online', waiting:'Menunggu', restS:'Dibayar penyewa lewat aplikasi AYO',
+      autoWait:'Lunas otomatis saat penyewa bayar', autoDone:'Lunas · Rp380.000 masuk ke Saldo',
+      restToast:'Pelunasan diterima', restToastS:'Lap. 2 · Jum 19:00–21:00 · Rp170.000',
       reports:'Laporan', month:'Mei 2026', seg:['Harian','Mingguan','Bulanan'], rev:'Pendapatan', cnt:'Booking', weekly:'Pendapatan mingguan',
-      weeks:['Mg1','Mg2','Mg3','Mg4'], wk:[2.6, 3.1, 2.9, 3.8], total:12.4, lo:2.0, hi:4.0,
+      weeks:['Mg1','Mg2','Mg3','Mg4'], wk:[2.6, 3.1, 2.9, 3.8], revTotal:12.4, lo:2.0, hi:4.0,
       short:function(v){ return 'Rp'+v.toFixed(1).replace('.', ',')+' jt'; }
     }
   };
@@ -131,6 +143,24 @@
     a.el('pay').textContent = dp ? T.payDp : T.payFull;
   }
 
+  /* ---------- BK03 · The player's DP booking, as the venue sees it ----------
+     Both parts are online: the DP is in, the rest waits for the player to pay
+     in the app. No "Mark as paid" — when the payment arrives, the venue is
+     notified and the booking settles by itself (into Balance). */
+  var BELL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg>';
+  function bp(t, tone, n){ return '<span class="mu-bp-pill mu-bp-pill--'+tone+'"'+(n?el(n):'')+'>'+t+'</span>'; }
+  function bk03(){
+    return pad(h.page('detail', h.head(h.ico('back')+'<span class="mu-head__title">'+T.detail+'</span><span class="mu-head__sp"></span>'+bp('DP', 'orange', 'h-pill')),
+      '<div class="mu-bp-card mu-bp-card--tight"><div class="mu-bp-kv"><span class="mu-bp-k">'+T.extra+'</span><span class="mu-bp-v">'+T.photo+'</span></div></div>'+
+      '<div class="mu-bp-card mu-bp-card--pay">'+
+        '<div class="mu-bp-kv"><div class="mu-bp-row"><span class="mu-bp-k">'+T.dpOnline+'</span>'+bp(T.paidP, 'green')+'</div><span class="mu-bp-v mu-bp-v--lg">'+money(210000)+'</span><span class="mu-bp-sub">'+T.voucherS+'</span></div>'+
+        '<span class="mu-bp-div"></span>'+
+        '<div class="mu-bp-kv"><div class="mu-bp-row"><span class="mu-bp-k">'+T.restOnline+'</span>'+bp(T.waiting, 'orange', 'rest-pill')+'</div><span class="mu-bp-v mu-bp-v--lg">'+money(170000)+'</span><span class="mu-bp-sub">'+T.restS+'</span></div>'+
+      '</div>',
+      foot('<div class="mu-hb-auto"'+el('auto')+'><span class="mu-hb-auto__ico">'+CHECK+'</span><span'+el('auto-t')+'>'+T.autoWait+'</span></div>')));
+  }
+  function bk03Toast(){ return '<div class="mu-toast mu-bp-toast"'+el('toast')+'><span class="mu-bp-tick">'+BELL+'</span><span class="mu-col"><b>'+T.restToast+'</b><span>'+T.restToastS+'</span></span></div>'; }
+
   /* ---------- REV · Reports with a weekly line chart ----------
      Four weeks that add up to the month total (Rp12,4 jt / $775). The last week is
      the highlighted point. Drawn in Dark-soft, no red. */
@@ -156,7 +186,7 @@
     var axis = '<div class="mu-hb-axis">'+T.weeks.map(function(w, i){ return '<span style="left:'+(X[i]/CW*100)+'%"'+(i===3?' class="is-hi"':'')+'>'+w+'</span>'; }).join('')+'</div>';
     return h.page('rev', '<div class="mu-head mu-rpp-head"><div class="mu-row"><span class="mu-head__title">'+T.reports+'</span><span class="mu-head__sp"></span>'+pill(T.month, 'line')+'</div>'+seg+'</div>',
       '<div class="mu-rpp-stats">'+
-        '<div class="mu-rpp-stat"><span class="mu-rpp-stat__l">'+T.rev+'</span><span class="mu-rpp-stat__v"'+el('rev')+'>'+T.short(T.total)+'</span>'+pill('+12%', 'ok')+'</div>'+
+        '<div class="mu-rpp-stat"><span class="mu-rpp-stat__l">'+T.rev+'</span><span class="mu-rpp-stat__v"'+el('rev')+'>'+T.short(T.revTotal)+'</span>'+pill('+12%', 'ok')+'</div>'+
         '<div class="mu-rpp-stat"><span class="mu-rpp-stat__l">'+T.cnt+'</span><span class="mu-rpp-stat__v"'+el('cnt')+'>186</span>'+pill('+8%', 'ok')+'</div></div>'+
       '<div class="mu-rpp-chart"'+el('chart')+'><span class="mu-h">'+T.weekly+'</span><div class="mu-hb-chart">'+svg+labels+'</div>'+axis+'</div>');
   }
@@ -183,7 +213,8 @@
       'home-pl01': {pages:[pl01()], extra:function(){ return toast(T.booked, T.bookedSub); }, flow:'home-pl01'},
       'home-pl02': {pages:[pl02()], flow:'home-pl02'},
       'home-pl03': {pages:[pl03()], extra:function(){ return toast(T.paid, T.paidSub); }, flow:'home-pl03'},
-      'home-rev':  {pages:[rev()], toBottom:'chart', flow:'home-rev'}
+      'home-rev':  {pages:[rev()], toBottom:'chart', flow:'home-rev'},
+      'home-bk03': {pages:[bk03()], extra:bk03Toast, flow:'home-bk03'}
     },
     // Opening state of each flow (the static frame above is the end state).
     prep: {
@@ -226,11 +257,25 @@
           .then(function(){ return a.tap('pay'); })
           .then(function(){ return toastOn(a); });
       },
+      // The rest is still pending; then the player pays in the app: the
+      // venue is notified, the balance turns Paid and the booking DP → Paid,
+      // with no one tapping anything on the venue side.
+      'home-bk03': function(a){
+        function flip(n){ var p = a.el(n); p.textContent = T.paidP; p.className = 'mu-bp-pill mu-bp-pill--green mu-bp-pop'; }
+        return a.wait(1400)
+          .then(function(){ on(a.el('toast'), 'is-on'); return a.wait(600); })
+          .then(function(){
+            flip('rest-pill');
+            var au = a.el('auto'); on(au, 'is-done'); a.el('auto-t').textContent = T.autoDone;
+            return a.wait(500); })
+          .then(function(){ flip('h-pill'); return a.wait(1500); })
+          .then(function(){ a.el('toast').classList.remove('is-on'); return a.wait(600); });
+      },
       // Totals count up, the line draws left to right, then each week's
       // point and label appear; the last week is the highlighted one.
       'home-rev': function(a){
         return a.wait(300)
-          .then(function(){ return Promise.all([count(a, a.el('rev'), T.total, 900, T.short), count(a, a.el('cnt'), 186, 900, function(v){ return String(Math.round(v)); })]); })
+          .then(function(){ return Promise.all([count(a, a.el('rev'), T.revTotal, 900, T.short), count(a, a.el('cnt'), 186, 900, function(v){ return String(Math.round(v)); })]); })
           .then(function(){ a.scrollBottom('chart', 800); return a.wait(500); })
           .then(function(){ a.el('line').classList.remove('is-undrawn'); a.el('area').classList.remove('is-hidden'); return a.wait(250); })
           .then(function(){ var p = a.wait(0); WEEKS.forEach(function(v, i){ p = p.then(function(){ a.el('dot-'+i).classList.remove('is-hidden'); a.el('lbl-'+i).classList.remove('is-hidden'); return a.wait(220); }); }); return p; })
@@ -238,7 +283,6 @@
       }
     }
   });
-  footify('avm-bk03', '[data-el="mark"]');
   footify('avm-pr05', '[data-el="stop"]');
   footify('avm-ft01', '[data-el="a-save"]');
 })();
