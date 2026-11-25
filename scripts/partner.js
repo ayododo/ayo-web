@@ -166,12 +166,8 @@
         f.addEventListener('click', function(e){ if(e.target === f || e.target.classList.contains('pt-field__box')) el.focus(); });
       }
     });
-    var cc = form.querySelector('.pt-cc select');
-    if(cc) cc.addEventListener('change', function(){
-      var o = cc.options[cc.selectedIndex];
-      form.querySelector('.pt-cc__flag').textContent = o.dataset.flag;
-      form.querySelector('.pt-cc__code').textContent = o.value;
-    });
+    // Country code: scripts/cc-picker.js draws the picker and keeps the
+    // flag + code in step with the <select> (also on form.reset()).
     form.addEventListener('submit', function(e){
       e.preventDefault();
       if(!form.checkValidity()){ form.reportValidity(); return; }
@@ -185,8 +181,6 @@
     if(again) again.addEventListener('click', function(){
       form.reset();
       fields.forEach(sync);
-      var fl = form.querySelector('.pt-cc__flag'); if(fl) fl.textContent = '🇮🇩';
-      var c = form.querySelector('.pt-cc__code'); if(c) c.textContent = '+62';
       sent.hidden = true; form.hidden = false;
       var first = form.querySelector('input:not([type=hidden])'); if(first) first.focus();
     });

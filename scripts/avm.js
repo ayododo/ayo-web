@@ -89,12 +89,8 @@
       if(el) el.addEventListener('invalid', function(){ f.classList.add('is-invalid'); });
     });
     // Country code: the flag follows the chosen option.
-    var cc = form.querySelector('.avm-cc select');
-    if(cc) cc.addEventListener('change', function(){
-      var o = cc.options[cc.selectedIndex];
-      form.querySelector('.avm-cc__flag').textContent = o.dataset.flag;
-      form.querySelector('.avm-cc__code').textContent = o.value;
-    });
+    // Country code: scripts/cc-picker.js draws the picker and keeps the
+    // flag + code in step with the <select> (also on form.reset()).
     form.addEventListener('submit', function(e){
       e.preventDefault();
       if(!form.checkValidity()){ form.reportValidity(); return; }
@@ -108,8 +104,6 @@
     if(again) again.addEventListener('click', function(){
       form.reset();
       fields.forEach(sync);
-      var f = form.querySelector('.avm-cc__flag'); if(f) f.textContent = '🇮🇩';
-      var c = form.querySelector('.avm-cc__code'); if(c) c.textContent = '+62';
       sent.hidden = true; form.hidden = false;
       var first = form.querySelector('input:not([type=hidden])'); if(first) first.focus();
     });
