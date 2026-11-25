@@ -180,6 +180,10 @@
   var mAvm = document.documentElement.dataset.pageLang
     ? '<a class="m-link" href="' + (document.documentElement.lang === 'id' ? 'avm-id.html' : 'avm-en.html') + '">For Venue Owners</a>'
     : '<a class="m-link" href="avm-en.html" data-href-id="avm-id.html">For Venue Owners</a>';
+  /* Partner with Us opens the Partner (B2B) page the same way. */
+  var mPartner = document.documentElement.dataset.pageLang
+    ? '<a class="m-link" href="' + (document.documentElement.lang === 'id' ? 'partner-id.html' : 'partner-en.html') + '">Partner with Us</a>'
+    : '<a class="m-link" href="partner-en.html" data-href-id="partner-id.html">Partner with Us</a>';
   if(drawerNav && burger){
     var cartLink = drawerNav.querySelector('.nav-icon[aria-label="Cart"]');
     if(cartLink){
@@ -202,7 +206,7 @@
             '<div class="m-acc__panel m-acts" id="m-acc-activities" hidden>' + mActs + '</div>' +
           '</div>' +
           mAvm +
-          '<a class="m-link" href="#">Partner with Us</a>' +
+          mPartner +
           '<a class="m-link" href="#">Blog</a>' +
         '</div>' +
         '<div class="m-account" data-m-auth="in" hidden>' +
