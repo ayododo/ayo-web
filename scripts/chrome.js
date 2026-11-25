@@ -235,8 +235,8 @@
         '<div class="m-acc" data-m-lang-wrap>' +
           '<button class="m-link m-acc__btn" type="button" aria-expanded="false" aria-controls="m-acc-lang">'+tr('Change Language', 'Ganti Bahasa')+CHEV+'</button>' +
           '<div class="m-acc__panel m-lang" id="m-acc-lang" role="group" aria-label="'+tr('Language', 'Bahasa')+'" hidden>' +
-            '<button type="button" class="m-lang__opt" data-m-lang="EN" aria-pressed="false"><span class="flag" aria-hidden="true">🇬🇧</span>English<span class="carbon-icon carbon-checkmark" aria-hidden="true"></span></button>' +
-            '<button type="button" class="m-lang__opt" data-m-lang="ID" aria-pressed="false"><span class="flag" aria-hidden="true">🇮🇩</span>Bahasa Indonesia<span class="carbon-icon carbon-checkmark" aria-hidden="true"></span></button>' +
+            '<button type="button" class="m-lang__opt" data-m-lang="EN" aria-pressed="false"><span class="flag flag--gb" aria-hidden="true"></span>English<span class="carbon-icon carbon-checkmark" aria-hidden="true"></span></button>' +
+            '<button type="button" class="m-lang__opt" data-m-lang="ID" aria-pressed="false"><span class="flag flag--id" aria-hidden="true"></span>Bahasa Indonesia<span class="carbon-icon carbon-checkmark" aria-hidden="true"></span></button>' +
           '</div>' +
         '</div>' +
         '<div class="m-sep"></div>' +
@@ -408,7 +408,7 @@
       b.setAttribute('aria-checked', String(b.dataset.code === code));
       if(b.dataset.code === code){
         lang.querySelector('.cur').textContent = code;
-        var flag = lang.querySelector('.cur-flag'); if(flag) flag.textContent = b.dataset.flag;
+        var flag = lang.querySelector('.cur-flag'); if(flag) flag.className = 'flag cur-flag flag--' + b.dataset.flag;
       }
     });
     document.documentElement.dataset.language = code;
