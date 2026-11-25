@@ -7,7 +7,16 @@
    The card keeps one height for every year: all five texts are laid in the
    same grid cell (only the chosen one visible), so the card is as tall as
    the longest title in this language and width, the photo fills that same
-   box, and the arrows never move. */
+   box, and the arrows never move.
+   Autoplay: each milestone stays DWELL ms. Meanwhile the red line creeps
+   toward the next year, then surges the last stretch (glowing head, light
+   trail) and hits the next dot, which pops with a ring; the new milestone's
+   text rises in as the photo crossfades. After the last year the line sweeps
+   back to the first and it loops. A click on a year or an arrow sweeps the
+   line there and autoplay carries on from it. It pauses while the pointer is
+   on the timeline or card (hover devices), while focus is inside, while the
+   section is off screen and while the tab is hidden. Reduced motion: no
+   autoplay, the line just follows the chosen year (as before). */
 (function(){
   'use strict';
   var story = document.querySelector('[data-story]');
@@ -70,8 +79,30 @@
     setTimeout(drop, 1800);   // fallback when no transition runs (reduced motion, hidden tab)
   }
 
-  function show(i, focus){
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var p = 0;                         // line position, in milestones (0 … total-1)
+  var head = null;
+  if(!reduce){
+    tl.classList.add('is-driven');
+    head = document.createElement('span');
+    head.className = 'ab-tl__head';
+    head.setAttribute('aria-hidden', 'true');
+    tl.appendChild(head);
+  }
+  function enterText(i){
+    if(reduce) return;
+    var t = texts[i];
+    t.classList.remove('is-enter'); void t.offsetWidth; t.classList.add('is-enter');
+  }
+  function hit(i){
+    if(reduce) return;
+    var li = items[i];
+    li.classList.remove('is-hit'); void li.offsetWidth; li.classList.add('is-hit');
+  }
+
+  function show(i, focus, how){
     if(i < 0 || i >= total) return;
+    var from = current;
     current = i;
     var b = buttons[i];
     items.forEach(function(li, k){
@@ -83,7 +114,9 @@
       t.classList.toggle('is-on', k === i);
       if(k === i) t.removeAttribute('aria-hidden'); else t.setAttribute('aria-hidden', 'true');
     });
-    tl.style.setProperty('--p', i);
+    if(reduce) tl.style.setProperty('--p', i);
+    else if(how !== 'arrive') sweep(i);     // autoplay arrivals are already at the dot
+    if(i !== from || how === 'init') enterText(i);
     card.classList.toggle('is-award', 'award' in b.dataset);
     swapPhoto(b.dataset.img, b.dataset.alt || '');
     prev.disabled = i === 0;
@@ -92,14 +125,14 @@
   }
 
   buttons.forEach(function(b, i){
-    b.addEventListener('click', function(){ show(i); });
+    b.addEventListener('click', function(){ show(i); restart(); });
     b.addEventListener('keydown', function(e){
       var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-      if(d){ e.preventDefault(); show(Math.min(total - 1, Math.max(0, i + d)), true); }
+      if(d){ e.preventDefault(); show(Math.min(total - 1, Math.max(0, i + d)), true); restart(); }
     });
   });
-  prev.addEventListener('click', function(){ show(current - 1); });
-  next.addEventListener('click', function(){ show(current + 1); });
+  prev.addEventListener('click', function(){ show(current - 1); restart(); });
+  next.addEventListener('click', function(){ show(current + 1); restart(); });
 
   // Swipe on the card (mobile frame "Timeline · swipe").
   var x0 = null, y0 = 0;
@@ -108,10 +141,81 @@
     if(x0 === null) return;
     var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
     x0 = null;
-    if(Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) show(current + (dx < 0 ? 1 : -1));
+    if(Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)){ show(current + (dx < 0 ? 1 : -1)); restart(); }
   }, {passive:true});
 
-  show(0);
+  /* ---- Line engine + autoplay ------------------------------------------- */
+  var DWELL = 5600, LAST = 7000, SURGE = 750, CREEP = .22;
+  var anim = null;                   // a sweep: {from, to, t0, dur}
+  var elapsed = 0, last = 0, raf = 0, spd = 0;
+  var paused = { hover:false, focus:false, view:true, tab:document.hidden };
+  function isPaused(){ return paused.hover || paused.focus || paused.view || paused.tab; }
+  function easeIO(k){ return k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }
+  function easeIn(k){ return k * k * k; }
+
+  function sweep(to){
+    if(Math.abs(to - p) < .001){ p = to; return; }
+    var d = Math.abs(to - p);
+    anim = { from: p, to: to, t0: performance.now(), dur: Math.min(1300, 520 + 220 * d) };
+    kick();
+  }
+  function restart(){ elapsed = 0; }
+  function setP(v, s){
+    p = v;
+    tl.style.setProperty('--p', p.toFixed(4));
+    spd += ((s || 0) - spd) * .25;
+    if(head){
+      head.style.setProperty('--spd', spd.toFixed(3));
+      head.style.setProperty('--hv', (p > .02 && p < total - 1.02) || anim ? 1 : 0);
+    }
+    // Dots behind the line turn red as it passes them.
+    items.forEach(function(li, k){ li.classList.toggle('is-past', k < current && k <= p + .02); });
+  }
+  function frame(now){
+    raf = 0;
+    var dt = Math.min(64, now - (last || now)); last = now;
+    if(anim){
+      var k = Math.min(1, (now - anim.t0) / anim.dur);
+      var np = anim.from + (anim.to - anim.from) * easeIO(k);
+      setP(np, dt ? Math.min(1, Math.abs(np - p) / dt * 90) : 0);
+      if(k >= 1){ anim = null; setP(current, 0); hit(current); }
+    } else if(!isPaused()){
+      elapsed += dt;
+      if(current < total - 1){
+        var creepEnd = DWELL - SURGE;
+        if(elapsed < creepEnd) setP(current + CREEP * (elapsed / creepEnd), 0);
+        else {
+          var s = Math.min(1, (elapsed - creepEnd) / SURGE);
+          setP(current + CREEP + (1 - CREEP) * easeIn(s), .35 + .65 * s);
+          if(s >= 1){ elapsed = 0; show(current + 1, false, 'arrive'); setP(current, 1); hit(current); }
+        }
+      } else if(elapsed >= LAST){
+        elapsed = 0; show(0);       // the line sweeps back to the first year
+      } else setP(p, 0);
+    } else setP(p, 0);
+    tl.classList.toggle('is-playing', !isPaused());
+    if(anim || !isPaused() || spd > .01) kick();
+  }
+  function kick(){ if(!raf && !reduce) raf = requestAnimationFrame(frame); }
+  function setPause(k, v){ paused[k] = v; if(!v){ last = performance.now(); kick(); } else kick(); }
+
+  show(0, false, 'init');
+  if(!reduce){
+    setP(0, 0);
+    var hoverable = matchMedia('(hover: hover)').matches;
+    [tl, card].forEach(function(el){
+      if(hoverable){
+        el.addEventListener('mouseenter', function(){ setPause('hover', true); });
+        el.addEventListener('mouseleave', function(){ setPause('hover', false); });
+      }
+      el.addEventListener('focusin', function(e){ if(e.target.matches(':focus-visible')) setPause('focus', true); });
+      el.addEventListener('focusout', function(){ setPause('focus', false); });
+    });
+    document.addEventListener('visibilitychange', function(){ setPause('tab', document.hidden); });
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){ setPause('view', !es[0].isIntersecting); }, {threshold:.35}).observe(story);
+    } else setPause('view', false);
+  }
 })();
 
 /* Hero sport pills (Figma 28057:8203), reactive: nothing happens on its own

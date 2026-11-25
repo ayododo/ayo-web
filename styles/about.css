@@ -87,6 +87,26 @@
 .ab-tl::before,.ab-tl::after{content:'';position:absolute;top:11px;left:calc(var(--w) / 2);height:2px;background:var(--ab-line)}
 .ab-tl::before{right:calc(var(--w) / 2)}
 .ab-tl::after{width:calc((100% - var(--w)) * var(--p,0) / 4);background:var(--brand);transition:width .35s ease}
+/* Autoplay (about.js adds .is-driven): JS moves --p every frame, so the CSS
+   transition is off. The line creeps toward the next year while a milestone
+   is shown, then surges the last stretch and "hits" the next dot.
+   .ab-tl__head is the glowing tip; --spd (0–1) stretches its light trail. */
+.ab-tl.is-driven::after{transition:none}
+.ab-tl__head{position:absolute;top:12px;left:calc(var(--w) / 2 + (100% - var(--w)) * var(--p,0) / 4);z-index:0;width:0;height:0;pointer-events:none;
+  opacity:var(--hv,0);transition:opacity .4s ease}
+.ab-tl__head::before{content:'';position:absolute;right:0;top:-1px;height:2px;width:calc(14px + 120px * var(--spd,0));
+  background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.85));border-radius:2px;opacity:calc(.25 + .75 * var(--spd,0))}
+.ab-tl__head::after{content:'';position:absolute;left:-5px;top:-5px;width:10px;height:10px;border-radius:50%;background:var(--brand);
+  box-shadow:0 0 0 3px rgba(236,36,53,.16),0 0 calc(8px + 16px * var(--spd,0)) calc(2px + 4px * var(--spd,0)) rgba(236,36,53,.55)}
+.ab-tl button{position:relative}
+.ab-tl button::after{content:'';position:absolute;left:50%;top:12px;width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:50%;
+  border:2px solid var(--brand);opacity:0;pointer-events:none}
+.ab-tl .is-hit button::after{animation:ab-hit .9s cubic-bezier(.2,.7,.2,1)}
+.ab-tl.is-playing .is-on button::before{animation:ab-breathe 1.8s ease-in-out infinite}
+.ab-tl .is-hit button::before{animation:ab-pop .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes ab-hit{0%{opacity:.9;transform:scale(.6)}100%{opacity:0;transform:scale(2.6)}}
+@keyframes ab-pop{0%{transform:scale(.4)}100%{transform:none}}
+@keyframes ab-breathe{0%,100%{box-shadow:0 0 0 0 rgba(236,36,53,.28)}50%{box-shadow:0 0 0 7px rgba(236,36,53,0)}}
 .ab-tl li{position:relative;z-index:1;width:var(--w)}
 .ab-tl button{display:flex;flex-direction:column;align-items:center;gap:16px;width:100%;padding:0;border:0;background:none;cursor:pointer;font:inherit;
   font-size:18px;line-height:28px;font-weight:var(--fw-medium);color:var(--ab-dim)}
@@ -131,6 +151,14 @@
 .ab-card__texts{display:grid}
 .ab-card__texts>.ab-card__text{grid-area:1/1;transition:opacity .25s ease,visibility .25s}
 .ab-card__texts>.ab-card__text:not(.is-on){opacity:0;visibility:hidden}
+/* Milestone entrance (about.js adds .is-enter): eyebrow, big year and title
+   rise in one after another, the year out of a light blur. */
+.ab-card__text.is-enter>*{animation:ab-rise .7s cubic-bezier(.2,.75,.2,1) both}
+.ab-card__text.is-enter>.ab-card__year{animation:ab-year .85s cubic-bezier(.2,.75,.2,1) .06s both}
+.ab-card__text.is-enter>.ab-card__title{animation-delay:.16s}
+@keyframes ab-rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes ab-year{from{opacity:0;transform:translateY(28px) scale(.96);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@media (prefers-reduced-motion:reduce){.ab-card__text.is-enter>*,.ab-tl .is-hit button::after,.ab-tl .is-hit button::before,.ab-tl.is-playing .is-on button::before{animation:none}.ab-tl__head{display:none}}
 .ab-card__year{font-size:72px;line-height:76px;font-weight:var(--fw-extrabold);letter-spacing:-.02em;color:var(--ab-ink)}
 .ab-card__title{font-size:28px;line-height:36px;font-weight:var(--fw-bold);color:var(--ab-ink)}
 .ab-arrows{display:flex;gap:12px}
