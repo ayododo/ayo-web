@@ -357,10 +357,10 @@
   /* Indonesia offers EN/ID. Other countries use EN without a language control.
      These frontend preferences do not route to a regional backend. */
   var COUNTRIES = [
-    {code:'ID', name:'Indonesia', flag:'🇮🇩'},
-    {code:'MY', name:'Malaysia', flag:'🇲🇾'},
-    {code:'AU', name:'Australia', flag:'🇦🇺'},
-    {code:'SG', name:'Singapore', flag:'🇸🇬'}
+    {code:'ID', name:'Indonesia', flag:'id'},
+    {code:'MY', name:'Malaysia', flag:'my'},
+    {code:'AU', name:'Australia', flag:'au'},
+    {code:'SG', name:'Singapore', flag:'sg'}
   ];
   var countryKey = 'ayo-country-v1';
   /* Country picker is hidden for now (Indonesia only). Flip to true to bring it back. */
@@ -425,7 +425,7 @@
       '</button>' +
       '<div class="nav-popover country-menu" id="country-menu" role="menu" aria-labelledby="country-menu-title">' +
         '<p class="nav-menu-title" id="country-menu-title">Country / region</p>' +
-        COUNTRIES.map(function(c){ return '<button type="button" role="menuitemradio" aria-checked="false" data-country="'+c.code+'"><span class="flag" aria-hidden="true">'+c.flag+'</span><span>'+c.name+'</span><span class="carbon-icon carbon-checkmark menu-check" aria-hidden="true"></span></button>'; }).join('') +
+        COUNTRIES.map(function(c){ return '<button type="button" role="menuitemradio" aria-checked="false" data-country="'+c.code+'"><span class="flag flag--'+c.flag+'" aria-hidden="true"></span><span>'+c.name+'</span><span class="carbon-icon carbon-checkmark menu-check" aria-hidden="true"></span></button>'; }).join('') +
       '</div>';
     lang.parentNode.insertBefore(countryRoot, lang);
     if(!COUNTRY_PICKER) countryRoot.hidden = true;
