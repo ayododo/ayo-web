@@ -14,7 +14,7 @@
    text rises in as the photo crossfades. After the last year the line sweeps
    back to the first and it loops. A click on a year or an arrow sweeps the
    line there and autoplay carries on from it. It pauses while the pointer is
-   on the timeline or card (hover devices), while focus is inside, while the
+   on the timeline (hover devices), while focus is inside, while the
    section is off screen and while the tab is hidden. Reduced motion: no
    autoplay, the line just follows the chosen year (as before). */
 (function(){
@@ -199,11 +199,12 @@
   if(!reduce){
     setP(0, 0);
     var hoverable = matchMedia('(hover: hover)').matches;
+    // Hover pauses only on the timeline itself; the card keeps playing.
+    if(hoverable){
+      tl.addEventListener('mouseenter', function(){ setPause('hover', true); });
+      tl.addEventListener('mouseleave', function(){ setPause('hover', false); });
+    }
     [tl, card].forEach(function(el){
-      if(hoverable){
-        el.addEventListener('mouseenter', function(){ setPause('hover', true); });
-        el.addEventListener('mouseleave', function(){ setPause('hover', false); });
-      }
       el.addEventListener('focusin', function(e){ if(e.target.matches(':focus-visible')) setPause('focus', true); });
       el.addEventListener('focusout', function(){ setPause('focus', false); });
     });
