@@ -9,8 +9,8 @@
    the longest title in this language and width, the photo fills that same
    box, and the arrows never move.
    Autoplay: each milestone stays DWELL ms. Meanwhile the red line runs at
-   one steady speed toward the next year (glowing head, light trail) and
-   hits the next dot, which pops with a ring; the new milestone's
+   one steady speed toward the next year, its leading stretch fading from
+   red to white, and hits the next dot, which pops with a ring; the new milestone's
    text rises in as the photo crossfades. After the last year the line sweeps
    back to the first and it loops. A click on a year or an arrow sweeps the
    line there and autoplay carries on from it. It pauses while the pointer is
@@ -147,7 +147,7 @@
   /* ---- Line engine + autoplay ------------------------------------------- */
   var DWELL = 5600, LAST = 7000;
   var anim = null;                   // a sweep: {from, to, t0, dur}
-  var elapsed = 0, last = 0, raf = 0, spd = 0;
+  var elapsed = 0, last = 0, raf = 0;
   var paused = { hover:false, focus:false, view:true, tab:document.hidden };
   function isPaused(){ return paused.hover || paused.focus || paused.view || paused.tab; }
   function easeIO(k){ return k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }
@@ -159,14 +159,12 @@
     kick();
   }
   function restart(){ elapsed = 0; }
-  function setP(v, s){
+  // tail: the stretch past the current dot is drawn as the red-to-white
+  // fade (autoplay run); otherwise the whole line is solid up to p.
+  function setP(v, tail){
     p = v;
     tl.style.setProperty('--p', p.toFixed(4));
-    spd += ((s || 0) - spd) * .25;
-    if(head){
-      head.style.setProperty('--spd', spd.toFixed(3));
-      head.style.setProperty('--hv', (p > .02 && p < total - 1.02) || anim ? 1 : 0);
-    }
+    tl.style.setProperty('--s', (tail ? Math.min(current, p) : p).toFixed(4));
     // Dots behind the line turn red as it passes them.
     items.forEach(function(li, k){ li.classList.toggle('is-past', k < current && k <= p + .02); });
   }
@@ -176,28 +174,28 @@
     if(anim){
       var k = Math.min(1, (now - anim.t0) / anim.dur);
       var np = anim.from + (anim.to - anim.from) * easeIO(k);
-      setP(np, dt ? Math.min(1, Math.abs(np - p) / dt * 90) : 0);
-      if(k >= 1){ anim = null; setP(current, 0); hit(current); }
+      setP(np, false);
+      if(k >= 1){ anim = null; setP(current, false); hit(current); }
     } else if(!isPaused()){
       elapsed += dt;
       if(current < total - 1){
         // Constant speed: the line covers the gap evenly over DWELL.
         var s = Math.min(1, elapsed / DWELL);
-        setP(current + s, .5);
-        if(s >= 1){ elapsed = 0; show(current + 1, false, 'arrive'); setP(current, .5); hit(current); }
+        setP(current + s, true);
+        if(s >= 1){ elapsed = 0; show(current + 1, false, 'arrive'); setP(current, false); hit(current); }
       } else if(elapsed >= LAST){
         elapsed = 0; show(0);       // the line sweeps back to the first year
-      } else setP(p, 0);
-    } else setP(p, 0);
+      } else setP(p, false);
+    } else setP(p, p > current);
     tl.classList.toggle('is-playing', !isPaused());
-    if(anim || !isPaused() || spd > .01) kick();
+    if(anim || !isPaused()) kick();
   }
   function kick(){ if(!raf && !reduce) raf = requestAnimationFrame(frame); }
   function setPause(k, v){ paused[k] = v; if(!v){ last = performance.now(); kick(); } else kick(); }
 
   show(0, false, 'init');
   if(!reduce){
-    setP(0, 0);
+    setP(0, false);
     var hoverable = matchMedia('(hover: hover)').matches;
     // Hover pauses only on the timeline itself; the card keeps playing.
     if(hoverable){
