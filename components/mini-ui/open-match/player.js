@@ -235,8 +235,18 @@
 
   /* ---------- P05 · Build your level ---------- */
   function level(){
-    var spark = '<svg class="op-spark" viewBox="0 0 200 44" preserveAspectRatio="none" aria-hidden="true"><polyline points="0,34 25,31 50,33 75,27 100,29 125,24 150,25 175,20" fill="none" stroke="#c9c9c9" stroke-width="2" stroke-linejoin="round"/>'+
-      '<polyline class="op-spark__new" data-el="spark" points="175,20 200,8" fill="none" stroke="#d83232" stroke-width="2.4" stroke-linecap="round"/><circle class="op-spark__dot" data-el="spark-dot" cx="200" cy="8" r="3.4" fill="#d83232"/></svg>';
+    // Trend line: drawn in a stretched viewBox (preserveAspectRatio none, so
+    // strokes use non-scaling-stroke), with room on the right; the end dot is
+    // an HTML span so it stays round and never gets clipped at the edge.
+    var old = '0,36 22,34 44,35 66,31 88,32 110,28 132,29 154,25 174,23', nx = 174, ny = 23, ex = 194, ey = 9;
+    var spark = '<div class="op-spark"><svg viewBox="0 0 200 44" preserveAspectRatio="none" aria-hidden="true">'+
+      '<defs><linearGradient id="opSparkG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d83232" stop-opacity=".18"/><stop offset="1" stop-color="#d83232" stop-opacity="0"/></linearGradient>'+
+        '<linearGradient id="opSparkN" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9a9a9a" stop-opacity=".14"/><stop offset="1" stop-color="#9a9a9a" stop-opacity="0"/></linearGradient></defs>'+
+      '<polygon points="0,44 '+old+' '+nx+',44" fill="url(#opSparkN)"/>'+
+      '<polygon class="op-spark__area" points="'+nx+',44 '+nx+','+ny+' '+ex+','+ey+' '+ex+',44" fill="url(#opSparkG)"/>'+
+      '<polyline points="'+old+'" fill="none" stroke="#c9c9c9" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>'+
+      '<polyline class="op-spark__new" data-el="spark" points="'+nx+','+ny+' '+ex+','+ey+'" pathLength="1" fill="none" stroke="#d83232" stroke-width="2.4" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>'+
+      '<i class="op-spark__dot" data-el="spark-dot" style="left:'+(ex / 2)+'%;top:'+(ey / 44 * 100).toFixed(2)+'%"></i></div>';
     return h.page('level', h.head(h.ico('back')+'<span class="mu-head__title">'+t.resultT+'</span>'),
       four(finalScore(), 'maya')+
       '<div class="op-lv" data-el="lv"><img class="op-lv__wm" src="assets/open-match/padellevels.svg" alt="PadelLevels" width="79" height="16">'+
