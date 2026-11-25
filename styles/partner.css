@@ -227,7 +227,7 @@
 .pt-cc select{position:absolute;inset:0;opacity:0;cursor:pointer;padding:0}
 .pt-cc svg{width:20px;height:20px}
 .pt-field__sep{flex:0 0 auto;width:1px;height:20px;margin:0 4px;background:#cacccf}
-.pt-form__group{display:flex;flex-direction:column;gap:8px}
+.pt-form__group{display:flex;flex-direction:column;gap:20px}
 .pt-form__group[hidden],.pt-field[hidden]{display:none}
 .pt-form__hint{margin:0;font-size:12px;line-height:18px;color:var(--pt-form-sub)}
 .pt-form__legal{margin:0;font-size:12px;line-height:18px;color:#a0a4a8}
