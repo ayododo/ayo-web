@@ -166,6 +166,112 @@
         f.addEventListener('click', function(e){ if(e.target === f || e.target.classList.contains('pt-field__box')) el.focus(); });
       }
     });
+    /* Dropdowns (Subject, Kategori Olahraga): the native <select> keeps the
+       value, validity and reset, but its popup is replaced by a listbox card
+       under the field. A transparent button over the field opens it.
+       Keyboard: Enter/Space/↑/↓ open; ↑/↓, Home/End, first letter move;
+       Enter/Space pick; Esc/Tab close. */
+    var ddUid = 0;
+    fields.forEach(function(f){
+      var sel = fieldEl(f);
+      if(!sel || sel.tagName !== 'SELECT') return;
+      var lab = f.querySelector('.pt-field__lab');
+      var name = lab ? lab.textContent.replace(/\*/g, '').trim() : '';
+      var opts = [].slice.call(sel.options).filter(function(o){ return o.value !== ''; });
+      var id = 'pt-dd-' + (++ddUid);
+      sel.tabIndex = -1;
+      sel.setAttribute('aria-hidden', 'true');
+      sel.style.pointerEvents = 'none';
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'pt-dd__btn';
+      btn.setAttribute('aria-haspopup', 'listbox');
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-controls', id);
+      f.appendChild(btn);
+      var list = document.createElement('ul');
+      list.className = 'pt-dd__list';
+      list.id = id;
+      list.setAttribute('role', 'listbox');
+      list.setAttribute('aria-label', name);
+      list.tabIndex = -1;
+      list.innerHTML = opts.map(function(o, i){ return '<li role="option" id="' + id + '-' + i + '" data-i="' + i + '">' + o.textContent + '</li>'; }).join('');
+      f.appendChild(list);
+      f.classList.add('pt-field--dd');
+      var items = [].slice.call(list.children), active = 0;
+      var cur = function(){ return opts.indexOf(sel.options[sel.selectedIndex]); };
+      function label(){
+        var i = cur();
+        btn.setAttribute('aria-label', name + (i > -1 ? ': ' + opts[i].textContent : ''));
+        items.forEach(function(li, k){ li.setAttribute('aria-selected', String(k === i)); });
+      }
+      function setActive(i){
+        active = Math.max(0, Math.min(items.length - 1, i));
+        items.forEach(function(li, k){ li.classList.toggle('is-active', k === active); });
+        list.setAttribute('aria-activedescendant', items[active].id);
+        var li = items[active];
+        if(li.offsetTop < list.scrollTop) list.scrollTop = li.offsetTop;
+        else if(li.offsetTop + li.offsetHeight > list.scrollTop + list.clientHeight) list.scrollTop = li.offsetTop + li.offsetHeight - list.clientHeight;
+      }
+      var isOpen = function(){ return f.classList.contains('is-open'); };
+      function outside(e){ if(!f.contains(e.target)) close(false); }
+      function open(){
+        if(isOpen()) return;
+        f.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+        setActive(Math.max(0, cur()));
+        list.focus({preventScroll:true});
+        document.addEventListener('pointerdown', outside, true);
+      }
+      function close(refocus){
+        if(!isOpen()) return;
+        f.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+        document.removeEventListener('pointerdown', outside, true);
+        if(refocus) btn.focus({preventScroll:true});
+      }
+      function pick(i){
+        if(opts[i] !== sel.options[sel.selectedIndex]){
+          sel.value = opts[i].value;
+          sel.dispatchEvent(new Event('change', {bubbles:true}));
+        }
+        label();
+        close(true);
+      }
+      btn.addEventListener('click', function(e){ e.stopPropagation(); isOpen() ? close(true) : open(); });
+      btn.addEventListener('keydown', function(e){
+        if(e.key === 'ArrowDown' || e.key === 'ArrowUp'){ e.preventDefault(); open(); }
+      });
+      list.addEventListener('click', function(e){
+        e.stopPropagation();
+        var li = e.target.closest('li'); if(li) pick(+li.dataset.i);
+      });
+      list.addEventListener('pointermove', function(e){
+        var li = e.target.closest('li'); if(li && +li.dataset.i !== active) setActive(+li.dataset.i);
+      });
+      list.addEventListener('keydown', function(e){
+        var k = e.key;
+        if(k === 'ArrowDown'){ e.preventDefault(); setActive(active + 1); }
+        else if(k === 'ArrowUp'){ e.preventDefault(); setActive(active - 1); }
+        else if(k === 'Home'){ e.preventDefault(); setActive(0); }
+        else if(k === 'End'){ e.preventDefault(); setActive(items.length - 1); }
+        else if(k === 'Enter' || k === ' '){ e.preventDefault(); pick(active); }
+        else if(k === 'Escape'){ e.preventDefault(); close(true); }
+        else if(k === 'Tab'){ close(false); }
+        else if(k.length === 1 && /\S/.test(k)){
+          var q = k.toLowerCase();
+          for(var n = 1; n <= items.length; n++){
+            var j = (active + n) % items.length;
+            if(opts[j].textContent.toLowerCase().indexOf(q) === 0){ setActive(j); break; }
+          }
+        }
+      });
+      list.addEventListener('focusout', function(e){ if(!f.contains(e.relatedTarget)) close(false); });
+      sel.addEventListener('change', label);
+      sel.addEventListener('invalid', function(){ setTimeout(function(){ if(document.activeElement === sel || !form.contains(document.activeElement)) btn.focus({preventScroll:true}); }, 0); });
+      form.addEventListener('reset', function(){ setTimeout(label, 0); });
+      label();
+    });
     // Country code: scripts/cc-picker.js draws the picker and keeps the
     // flag + code in step with the <select> (also on form.reset()).
     form.addEventListener('submit', function(e){
