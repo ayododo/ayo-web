@@ -153,8 +153,7 @@
   scroll-snap-type:x mandatory;scroll-padding:0 var(--edge);scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .pt-rail::-webkit-scrollbar{display:none}
 .pt-case{flex:0 0 324px;display:flex;flex-direction:column;overflow:hidden;scroll-snap-align:start;
-  border:1px solid var(--pt-line2);border-radius:20px;background:#fff;transition:transform .4s var(--pt-ease),box-shadow .4s}
-.pt-case:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(26,25,25,.08)}
+  border:1px solid var(--pt-line2);border-radius:20px;background:#fff}
 /* Photo frame: 212px tall over a fixed 322px-wide crop box so every photo
    keeps the crop set in Figma (on the 280px mobile card the right edge is
    clipped, as in the mobile frame). */
@@ -170,8 +169,8 @@
 .pt-case__brand img{display:block;width:100%;aspect-ratio:380/148;flex:0 0 auto}
 .pt-case__brand--w94{width:94px}
 .pt-case__brand--w114{width:114px}
-.pt-case__brand--tag{width:auto;padding:4px 10px;border:1px solid var(--pt-line2)}
-.pt-case__brand--tag img{width:105px;height:18px;aspect-ratio:auto}
+.pt-case__brand--tag{width:94px}
+.pt-case__brand--tag img{width:70px;height:auto;aspect-ratio:105/18}
 .pt-case__text{display:flex;flex-direction:column;gap:8px}
 .pt-case__text h3{margin:0;font-size:20px;line-height:24px;font-weight:var(--fw-bold);color:var(--pt-ink2)}
 .pt-case__text p{margin:0;font-size:14px;line-height:20px;color:var(--pt-sec)}
