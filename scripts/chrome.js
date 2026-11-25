@@ -9,6 +9,25 @@
 (function(){
   var rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* Nav language (Figma "Nav ID & EN" 28790:32311, mobile 26953:62164 /
+     26953:61345). Twin pages declare <html lang>; the homepage has no twin and
+     gets lang="id" from the saved choice before this runs (index.html <head>),
+     and reloads when the visitor switches (home.js). Every label the nav,
+     mega menu, drawer and account menu draw goes through tr(). */
+  var NAV_ID = document.documentElement.lang === 'id';
+  function tr(en, id){ return NAV_ID ? id : en; }
+  (function(){
+    var NAV = {'Activities':'Aktivitas', 'For Venue Owners':'Untuk Pemilik Venue', 'Partner with Us':'Jadi Mitra', 'Login':'Masuk'};
+    var REV = {}; Object.keys(NAV).forEach(function(k){ REV[NAV[k]] = k; });
+    var map = NAV_ID ? NAV : REV;
+    document.querySelectorAll('.ayo-nav .nav-links .nav-top, .ayo-nav .nav-actions [data-login]').forEach(function(el){
+      var t = el.firstChild;
+      if(t && t.nodeType === 3){ var k = t.nodeValue.trim(); if(map[k]) t.nodeValue = t.nodeValue.replace(k, map[k]); }
+    });
+    var lb = document.querySelector('.ayo-nav .lang-btn');
+    if(lb) lb.setAttribute('aria-label', tr('Select language', 'Pilih bahasa'));
+  })();
+
   /* back to top */
   var toTop=document.getElementById('toTop');
   if(toTop){
@@ -41,7 +60,7 @@
     }
     if(burger){
       burger.setAttribute('aria-expanded', open);
-      burger.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
+      burger.setAttribute('aria-label', open ? tr('Close menu', 'Tutup menu') : 'Menu');
     }
   }
   if(burger) burger.addEventListener('click', function(){ setMenu(drawer ? !menuIsOpen() : !links.classList.contains('open')); });
@@ -99,14 +118,14 @@
     var SCORE = '<img class="act-ico" src="'+I+'scoring.svg" alt="" width="48" height="48">';
     var PADEL = '<img class="act-ico act-ico--padel" src="'+I+'padel.webp" alt="" width="40" height="40">';
     var GROUPS = {
-      play:  { icon: PADEL, title: 'Open Play',  desc: 'Play with new people, no team needed',
-               links: [['#', 'Join an activity', 'Find an open game near you'],
-                       [OPEN_PLAY_HOST, 'Host an activity', 'See how hosting works']] },
-      match: { icon: VS,    title: 'Open Match', desc: 'Bring your team and play against another squad',
-               cta: [OPEN_MATCH, 'Explore Open Match'] },
-      score: { icon: SCORE, title: 'Scoring',    desc: 'Play Americano, Mexicano, or Custom',
-               links: [[SCORING, 'Explore Scoring', 'Learn how Scoring works'],
-                       ['index.html#rating', 'Learn about PadelLevels', 'An international padel rating system']] }
+      play:  { icon: PADEL, title: 'Open Play',  desc: tr('Play with new people, no team needed', 'Main bareng orang baru, tanpa perlu tim'),
+               links: [['#', tr('Join an activity', 'Ikut aktivitas'), tr('Find an open game near you', 'Cari sesi main di sekitarmu')],
+                       [OPEN_PLAY_HOST, tr('Host an activity', 'Buat aktivitas'), tr('See how hosting works', 'Pelajari cara menjadi host')]] },
+      match: { icon: VS,    title: 'Open Match', desc: tr('Bring your team and play against another squad', 'Bawa timmu dan tanding melawan tim lain'),
+               cta: [OPEN_MATCH, tr('Explore Open Match', 'Jelajahi Open Match')] },
+      score: { icon: SCORE, title: 'Scoring',    desc: tr('Play Americano, Mexicano, or Custom', 'Main format Americano, Mexicano, atau Custom'),
+               links: [[SCORING, tr('Explore Scoring', 'Jelajahi Scoring'), tr('Learn how Scoring works', 'Pelajari cara kerja Scoring')],
+                       ['index.html#rating', tr('Learn about PadelLevels', 'Pelajari PadelLevels'), tr('An international padel rating system', 'Sistem rating padel internasional')]] }
     };
     function txt(t, d){ return '<span class="act-txt"><b>'+t+'</b><small>'+d+'</small></span>'; }
 
@@ -125,8 +144,7 @@
     }
     var DESK = {
       /* Open Play's heading is not a link; its two cards are the entry points. */
-      play:  [null, [['#', 'Join an activity', 'Find an open game near you'],
-                     [OPEN_PLAY_HOST, 'Host an activity', 'See how hosting works']]],
+      play:  [null, GROUPS.play.links],
       match: OPEN_MATCH,
       score: SCORING,
       learn: 'index.html#rating'
@@ -144,11 +162,11 @@
       '</div>' +
       '<a class="amenu__learn" href="'+DESK.learn+'">' +
         '<span class="amenu__learn-top">' +
-          '<span class="amenu__label">Collaboration</span>' +
+          '<span class="amenu__label">'+tr('Collaboration', 'Kolaborasi')+'</span>' +
           PL_ICO +
-          '<span class="act-txt amenu__learn-txt"><b>PadelLevels</b><small>An international padel rating system</small></span>' +
+          '<span class="act-txt amenu__learn-txt"><b>PadelLevels</b><small>'+tr('An international padel rating system', 'Sistem rating padel internasional')+'</small></span>' +
         '</span>' +
-        '<span class="amenu__more">Read more'+ARROW+'</span>' +
+        '<span class="amenu__more">'+tr('Read more', 'Selengkapnya')+ARROW+'</span>' +
       '</a>';
     menu.classList.add('submenu--cascade');
     menu.parentElement.classList.add('has-mega');
@@ -178,12 +196,12 @@
   /* For Venue Owners opens the AVM page in the page's language; on a page
      without a twin (the homepage) syncLangLinks follows the chosen language. */
   var mAvm = document.documentElement.dataset.pageLang
-    ? '<a class="m-link" href="' + (document.documentElement.lang === 'id' ? 'avm-id.html' : 'avm-en.html') + '">For Venue Owners</a>'
-    : '<a class="m-link" href="avm-en.html" data-href-id="avm-id.html">For Venue Owners</a>';
+    ? '<a class="m-link" href="' + (document.documentElement.lang === 'id' ? 'avm-id.html' : 'avm-en.html') + '">'+tr('For Venue Owners', 'Untuk Pemilik Venue')+'</a>'
+    : '<a class="m-link" href="avm-en.html" data-href-id="avm-id.html">'+tr('For Venue Owners', 'Untuk Pemilik Venue')+'</a>';
   /* Partner with Us opens the Partner (B2B) page the same way. */
   var mPartner = document.documentElement.dataset.pageLang
-    ? '<a class="m-link" href="' + (document.documentElement.lang === 'id' ? 'partner-id.html' : 'partner-en.html') + '">Partner with Us</a>'
-    : '<a class="m-link" href="partner-en.html" data-href-id="partner-id.html">Partner with Us</a>';
+    ? '<a class="m-link" href="' + (document.documentElement.lang === 'id' ? 'partner-id.html' : 'partner-en.html') + '">'+tr('Partner with Us', 'Jadi Mitra')+'</a>'
+    : '<a class="m-link" href="partner-en.html" data-href-id="partner-id.html">'+tr('Partner with Us', 'Jadi Mitra')+'</a>';
   if(drawerNav && burger){
     var cartLink = drawerNav.querySelector('.nav-icon[aria-label="Cart"]');
     if(cartLink){
@@ -199,10 +217,10 @@
     drawer.hidden = true;
     drawer.innerHTML =
       '<div class="m-drawer__in">' +
-        '<div class="m-list" role="group" aria-label="Main">' +
+        '<div class="m-list" role="group" aria-label="'+tr('Main', 'Menu utama')+'">' +
           '<a class="m-link" href="#">Booking</a>' +
           '<div class="m-acc">' +
-            '<button class="m-link m-acc__btn" type="button" aria-expanded="false" aria-controls="m-acc-activities">Activities'+CHEV+'</button>' +
+            '<button class="m-link m-acc__btn" type="button" aria-expanded="false" aria-controls="m-acc-activities">'+tr('Activities', 'Aktivitas')+CHEV+'</button>' +
             '<div class="m-acc__panel m-acts" id="m-acc-activities" hidden>' + mActs + '</div>' +
           '</div>' +
           mAvm +
@@ -210,20 +228,20 @@
           '<a class="m-link" href="#">Blog</a>' +
         '</div>' +
         '<div class="m-account" data-m-auth="in" hidden>' +
-          '<a class="m-acct" href="#"><span class="m-acct__ico m-acct__ico--photo"><span data-m-initials aria-hidden="true">AP</span><img src="assets/avatar-1.jpg" alt="" width="32" height="32"></span>Profile</a>' +
+          '<a class="m-acct" href="#"><span class="m-acct__ico m-acct__ico--photo"><span data-m-initials aria-hidden="true">AP</span><img src="assets/avatar-1.jpg" alt="" width="32" height="32"></span>'+tr('Profile', 'Profil')+'</a>' +
           '<a class="m-acct" href="#"><span class="m-acct__ico"><span class="carbon-icon carbon-dashboard" aria-hidden="true"></span></span>Dashboard</a>' +
         '</div>' +
         '<div class="m-sep" data-m-lang-wrap></div>' +
         '<div class="m-acc" data-m-lang-wrap>' +
-          '<button class="m-link m-acc__btn" type="button" aria-expanded="false" aria-controls="m-acc-lang">Change Language'+CHEV+'</button>' +
-          '<div class="m-acc__panel m-lang" id="m-acc-lang" role="group" aria-label="Language" hidden>' +
+          '<button class="m-link m-acc__btn" type="button" aria-expanded="false" aria-controls="m-acc-lang">'+tr('Change Language', 'Ganti Bahasa')+CHEV+'</button>' +
+          '<div class="m-acc__panel m-lang" id="m-acc-lang" role="group" aria-label="'+tr('Language', 'Bahasa')+'" hidden>' +
             '<button type="button" class="m-lang__opt" data-m-lang="EN" aria-pressed="false"><span class="flag" aria-hidden="true">🇬🇧</span>English<span class="carbon-icon carbon-checkmark" aria-hidden="true"></span></button>' +
             '<button type="button" class="m-lang__opt" data-m-lang="ID" aria-pressed="false"><span class="flag" aria-hidden="true">🇮🇩</span>Bahasa Indonesia<span class="carbon-icon carbon-checkmark" aria-hidden="true"></span></button>' +
           '</div>' +
         '</div>' +
         '<div class="m-sep"></div>' +
-        '<button class="m-link m-logout" type="button" data-m-auth="in" data-m-logout hidden>Log Out</button>' +
-        '<div class="m-guest" data-m-auth="out"><a class="ayo-btn primary m-login" href="#" data-login>Login</a></div>' +
+        '<button class="m-link m-logout" type="button" data-m-auth="in" data-m-logout hidden>'+tr('Log Out', 'Keluar')+'</button>' +
+        '<div class="m-guest" data-m-auth="out"><a class="ayo-btn primary m-login" href="#" data-login>'+tr('Login', 'Masuk')+'</a></div>' +
       '</div>';
     drawerNav.appendChild(drawer);
     scrim = document.createElement('div');
@@ -473,13 +491,13 @@
     accountRoot.className = 'nav-account';
     accountRoot.hidden = true;
     accountRoot.innerHTML =
-      '<button class="account-btn" type="button" aria-label="Account menu" aria-expanded="false">' +
+      '<button class="account-btn" type="button" aria-label="'+tr('Account menu', 'Menu akun')+'" aria-expanded="false">' +
         '<span class="account-avatar"><span aria-hidden="true" data-account-initials>AP</span><img src="assets/avatar-1.jpg" alt="" width="36" height="36"></span>' +
       '</button>' +
       '<div class="nav-popover account-menu" id="account-menu" role="menu" aria-label="Account">' +
-        '<button type="button" role="menuitem" data-account-profile><span class="carbon-icon carbon-profile" aria-hidden="true"></span>Profil</button>' +
-        '<button type="button" role="menuitem" data-account-dashboard><span class="carbon-icon carbon-dashboard" aria-hidden="true"></span>Dasbor</button>' +
-        '<button type="button" role="menuitem" data-logout>Keluar</button>' +
+        '<button type="button" role="menuitem" data-account-profile><span class="carbon-icon carbon-profile" aria-hidden="true"></span>'+tr('Profile', 'Profil')+'</button>' +
+        '<button type="button" role="menuitem" data-account-dashboard><span class="carbon-icon carbon-dashboard" aria-hidden="true"></span>'+tr('Dashboard', 'Dashboard')+'</button>' +
+        '<button type="button" role="menuitem" data-logout>'+tr('Log Out', 'Keluar')+'</button>' +
       '</div>';
     navLogin.insertAdjacentElement('afterend', accountRoot);
     accountButton = accountRoot.querySelector('.account-btn');
@@ -503,7 +521,7 @@
     if(session){
       var name = session.name.slice(0,64);
       accountRoot.querySelector('[data-account-initials]').textContent = name.split(/\s+/).map(function(n){ return n[0]; }).join('').slice(0,2).toUpperCase();
-      accountButton.setAttribute('aria-label', 'Account menu: ' + name);
+      accountButton.setAttribute('aria-label', tr('Account menu: ', 'Menu akun: ') + name);
     } else accountPopup.close();
   }
   renderSession();
