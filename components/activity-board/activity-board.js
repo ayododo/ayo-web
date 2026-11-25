@@ -332,7 +332,7 @@
     }).join('') + '</ul>';
   }
 
-  function renderPanel() {
+  function renderPanel(quiet) {
     var d = currentData();
 
     /* On Open Play the chip carries the role too — "OPEN PLAY · HOST" — so the
@@ -371,11 +371,13 @@
 
     panel.setAttribute('aria-labelledby', 'actb-tab-' + d.id);
 
-    [].forEach.call(panel.querySelectorAll('[data-role]'), function (b) {
-      b.addEventListener('click', function () { setRole(b.dataset.role); });
-    });
+    if (!quiet) {
+      [].forEach.call(panel.querySelectorAll('[data-role]'), function (b) {
+        b.addEventListener('click', function () { setRole(b.dataset.role); });
+      });
+    }
 
-    if (!reduce) restartEnter();
+    if (!reduce && !quiet) restartEnter();
   }
 
   /* Re-adding the class alone does nothing — the browser has not finished the
@@ -395,10 +397,31 @@
     renderPanel();
   }
 
+  /* Participant ↔ Host is the same activity seen from another side: the photo
+     is the same, so it must not blink. Instead of rebuilding the panel (which
+     recreated the <img> — a dark frame while it decoded — and replayed the
+     whole rise + avatar pops), the photo and the toggle stay put and only the
+     words swap, with a short, quiet crossfade. */
   function setRole(r) {
     if (r === role) return;
     role = r;
-    renderPanel();
+    var oldMedia = panel.querySelector('.actb__media');
+    var oldRoles = panel.querySelector('.actb__roles');
+    if (reduce || !oldMedia || !oldRoles) { renderPanel(); return; }
+
+    var keepImg = oldMedia.querySelector('img');
+    renderPanel(true);
+    var media = panel.querySelector('.actb__media');
+    var img = media.querySelector('img');
+    if (keepImg && img && keepImg.getAttribute('src') === img.getAttribute('src')) media.replaceChild(keepImg, img);
+    var roles = panel.querySelector('.actb__roles');
+    roles.parentNode.replaceChild(oldRoles, roles);
+    [].forEach.call(oldRoles.querySelectorAll('[data-role]'), function (b) {
+      b.setAttribute('aria-pressed', b.dataset.role === role ? 'true' : 'false');
+    });
+    panel.classList.remove('actb__panel--enter', 'actb__panel--swap');
+    void panel.offsetWidth;
+    panel.classList.add('actb__panel--swap');
   }
 
   renderTabs();

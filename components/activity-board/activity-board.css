@@ -401,6 +401,20 @@
 }
 .actb__panel--enter { animation: actb-rise .45s ease-out; }
 
+/* Role switch (Participant ↔ Host): the photo and toggle stay still; only the
+   text that changed fades in — no rise of the whole panel, no avatar pops. */
+@keyframes actb-swap {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: none; }
+}
+.actb__panel--swap .actb__chip,
+.actb__panel--swap .actb__overlay,
+.actb__panel--swap .actb__desc,
+.actb__panel--swap .actb__proof,
+.actb__panel--swap .actb__features,
+.actb__panel--swap .actb__foot { animation: actb-swap .3s ease-out; }
+.actb__panel--swap .actb__features { animation-delay: .04s; animation-fill-mode: backwards; }
+
 /* The faces land one after another, after the panel itself has settled.
    `backwards` holds them hidden through their delay — without it they would
    flash at full size before their turn comes. */
