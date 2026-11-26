@@ -279,18 +279,19 @@ img.act-ico{object-fit:contain}
 .lang-menu .flag{font-size:18px;line-height:1;flex-shrink:0}
 /* Flags are drawn icons, not emoji: Windows and some Android/Linux browsers
    have no flag glyphs and print "GB"/"ID". The icons (assets/flags/*.svg)
-   keep the emoji look — a waving flag with soft fabric shading, rounded
-   corners and a hairline edge — so every browser shows the same thing. Sized
+   are flat 10:7 rectangles with 2px rounded corners and a 0.5px hairline
+   edge (same treatment as the Figma flags), so every browser shows the
+   same thing. Sized
    in em so the existing font-size rules (16px button, 18px menus) set them. */
-.flag[class*="flag--"]{display:inline-block;flex-shrink:0;width:1.25em;height:.9375em;vertical-align:-.16em;
+.flag[class*="flag--"]{display:inline-block;flex-shrink:0;width:1.25em;height:.875em;vertical-align:-.12em;
   background-position:center;background-size:contain;background-repeat:no-repeat}
-.flag--id{background-image:url("../assets/flags/id.svg")}
-.flag--gb{background-image:url("../assets/flags/gb.svg")}
-.flag--my{background-image:url("../assets/flags/my.svg")}
-.flag--th{background-image:url("../assets/flags/th.svg")}
-.flag--sg{background-image:url("../assets/flags/sg.svg")}
-.flag--au{background-image:url("../assets/flags/au.svg")}
-.flag--us{background-image:url("../assets/flags/us.svg")}
+.flag--id{background-image:url("../assets/flags/id.svg?v=2")}
+.flag--gb{background-image:url("../assets/flags/gb.svg?v=2")}
+.flag--my{background-image:url("../assets/flags/my.svg?v=2")}
+.flag--th{background-image:url("../assets/flags/th.svg?v=2")}
+.flag--sg{background-image:url("../assets/flags/sg.svg?v=2")}
+.flag--au{background-image:url("../assets/flags/au.svg?v=2")}
+.flag--us{background-image:url("../assets/flags/us.svg?v=2")}
 
 /* Country-code picker for phone fields (scripts/cc-picker.js): the native
    <select> stays in the form for its value; a button + listbox draws the
