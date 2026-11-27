@@ -296,18 +296,21 @@
     form.addEventListener('submit', function(e){
       e.preventDefault();
       if(!form.checkValidity()){ form.reportValidity(); return; }
-      form.hidden = true;
-      sent.hidden = false;
-      var h = sent.querySelector('h3'); h.tabIndex = -1; h.focus({preventScroll:true});
-      var top = sent.getBoundingClientRect().top;
-      if(top < 80 || top > innerHeight - 200) sent.scrollIntoView({block:'center', behavior: reduce ? 'auto' : 'smooth'});
+      var go = function(){
+        var h = sent.querySelector('h3'); h.tabIndex = -1; h.focus({preventScroll:true});
+        var top = sent.getBoundingClientRect().top;
+        if(top < 80 || top > innerHeight - 200) sent.scrollIntoView({block:'center', behavior: reduce ? 'auto' : 'smooth'});
+      };
+      if(window.AYOFormSent) AYOFormSent.show(form, sent, go);
+      else { form.hidden = true; sent.hidden = false; go(); }
     });
     var again = sent && sent.querySelector('[data-pt-again]');
     if(again) again.addEventListener('click', function(){
       form.reset();
       fields.forEach(sync);
-      sent.hidden = true; form.hidden = false;
-      var first = form.querySelector('input:not([type=hidden])'); if(first) first.focus();
+      var back = function(){ var first = form.querySelector('input:not([type=hidden])'); if(first) first.focus({preventScroll:true}); };
+      if(window.AYOFormSent) AYOFormSent.hide(form, sent, back);
+      else { sent.hidden = true; form.hidden = false; back(); }
     });
   }
 

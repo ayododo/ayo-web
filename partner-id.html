@@ -18,7 +18,8 @@
 <link rel="stylesheet" href="styles/bootstrap-compat.css">
 <link rel="stylesheet" href="styles/chrome.css?v=20261126a">
 <link rel="stylesheet" href="components/site-footer/site-footer.css?v=20261118b">
-<link rel="stylesheet" href="styles/partner.css?v=20261125e">
+<link rel="stylesheet" href="styles/form-sent.css?v=20261127a">
+<link rel="stylesheet" href="styles/partner.css?v=20261127a">
 </head>
 <body class="ayo-web">
 
@@ -278,11 +279,11 @@
         <p class="pt-form__legal">Dengan mengirim formulir ini, kamu menyetujui <a href="#">Syarat &amp; Ketentuan</a> serta <a href="#">Kebijakan Privasi</a> AYO.</p>
         <button class="pt-form__btn" type="submit">Kirim Pesan</button>
       </form>
-      <div class="pt-sent" data-pt-sent role="status" hidden>
-        <span class="pt-sent__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
-        <h3>Terima kasih, pesanmu sudah terkirim!</h3>
-        <p>Tim Partnership AYO akan menghubungimu dalam satu hari kerja untuk membahas kolaborasi yang paling sesuai.</p>
-        <button class="pt-pill" type="button" data-pt-again>Kirim pesan lain</button>
+      <div class="pt-sent form-sent" data-pt-sent role="status" aria-live="polite" hidden>
+        <span class="form-sent__ico" aria-hidden="true"><svg viewBox="0 0 56 56"><path pathLength="1" d="M17 28.5l6.5 6.5L39 20"/></svg></span>
+        <h3>Pesan berhasil terkirim</h3>
+        <p>Terima kasih sudah menghubungi AYO. Tim kami akan segera menghubungi kamu melalui email atau nomor HP yang kamu cantumkan.</p>
+        <button class="form-sent__btn" type="button" data-pt-again>Kirim Pesan Lain</button>
       </div>
     </div>
   </div>
@@ -362,6 +363,7 @@
 <script src="vendor/bootstrap-4.3.1/bootstrap.bundle.min.js"></script>
 <script src="scripts/chrome.js?v=20261125d"></script>
 <script src="scripts/cc-picker.js?v=20261125a"></script>
-<script src="scripts/partner.js?v=20261125d"></script>
+<script src="scripts/form-sent.js?v=20261127a"></script>
+<script src="scripts/partner.js?v=20261127a"></script>
 </body>
 </html>

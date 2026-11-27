@@ -235,12 +235,7 @@
 .pt-form__btn{height:48px;border:0;border-radius:8px;background:var(--pt-form-ink);color:#fff;font:var(--fw-bold) 14px/20px var(--font-sans);cursor:pointer;transition:filter .15s}
 .pt-form__btn:hover{filter:brightness(1.25)}
 .pt-form__btn:focus-visible{outline:2px solid var(--pt-form-ink);outline-offset:3px}
-.pt-sent{flex:0 1 640px;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:56px 32px;border:1px solid var(--pt-line);border-radius:12px;background:#fff;text-align:center}
-.pt-sent[hidden]{display:none}
-.pt-sent__ico{display:flex;align-items:center;justify-content:center;width:56px;height:56px;margin-bottom:8px;border-radius:50%;background:#33c773;color:#fff;animation:pt-pop .5s cubic-bezier(.34,1.56,.64,1)}
-.pt-sent__ico svg{width:26px;height:26px}
-.pt-sent h3{margin:0;font-size:22px;line-height:28px;font-weight:var(--fw-bold);color:var(--pt-form-ink)}
-.pt-sent p{max-width:400px;margin:0;font-size:16px;line-height:22px;color:var(--pt-form-sub)}
+.pt-sent{flex:0 1 640px;min-width:0}
 .pt-pill{display:inline-flex;align-items:center;gap:10px;margin-top:12px;padding:11px 19px;border:1px solid rgba(26,25,25,.22);border-radius:999px;background:#fff;
   font:var(--fw-semibold) 14px/18px var(--font-sans);color:var(--pt-dark);cursor:pointer;transition:border-color .2s}
 .pt-pill:hover{border-color:var(--pt-ink)}
@@ -347,7 +342,6 @@
   .pt-dialog__intro h2{font-size:28px;line-height:34px;letter-spacing:-.84px}
   .pt-form,.pt-sent{flex:none;width:100%}
   .pt-form{padding:20px}
-  .pt-sent{padding:40px 20px}
 
   .pt-faq{padding:48px 0 56px}
   .pt-faq .pt-sec-title{margin-bottom:24px}
@@ -361,5 +355,5 @@
   .pt-marquee.is-running .pt-marquee__track{animation:none}
   .pt-motion [data-reveal]{opacity:1;transform:none;transition:none}
   .pt-motion .pt-panel.is-enter *{animation:none!important}
-  .pt-wwd__glider,.pt-panel,.pt-faq__a,.pt-faq__a p,.pt-case,.pt-case__crop,.pt-sent__ico{transition:none;animation:none}
+  .pt-wwd__glider,.pt-panel,.pt-faq__a,.pt-faq__a p,.pt-case,.pt-case__crop{transition:none;animation:none}
 }

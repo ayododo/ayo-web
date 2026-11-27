@@ -1,0 +1,41 @@
+/* AYO — contact form success state (Figma 29087:51742), shared by the
+   Partner (B2B) and AVM pages. scripts/form-sent.js swaps it in for the
+   form: the form fades out, the card rises in, the tick circle pops and
+   the check draws itself, then the copy and button follow. */
+.form-sent{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:56px 40px;border:1px solid #dcdbdb;border-radius:12px;background:#fff;text-align:center;box-sizing:border-box}
+.form-sent[hidden]{display:none}
+.form-sent__ico{display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:50%;background:#e6f6f2;color:#00996d}
+.form-sent__ico svg{width:56px;height:56px;overflow:visible}
+.form-sent__ico path{fill:none;stroke:currentColor;stroke-width:3.11;stroke-linecap:round;stroke-linejoin:round}
+.form-sent h3{margin:0;font-size:18px;line-height:22px;font-weight:var(--fw-semibold,600);color:#25282b}
+.form-sent h3:focus{outline:none}
+.form-sent p{max-width:518px;margin:0;font-size:14px;line-height:20px;color:#52575c}
+.form-sent__btn{height:48px;margin-top:8px;padding:0 16px;border:1px solid #52575c;border-radius:8px;background:#fff;
+  font:var(--fw-bold,700) 14px/20px var(--font-sans,inherit);color:#25282b;cursor:pointer;transition:background .2s,border-color .2s}
+.form-sent__btn:hover{background:#f7f7f7;border-color:#25282b}
+.form-sent__btn:focus-visible{outline:2px solid #25282b;outline-offset:3px}
+
+/* Motion (only while the swap runs; reduced motion skips it entirely) */
+.fs-leave{animation:fs-leave .24s cubic-bezier(.4,0,1,1) both;pointer-events:none}
+.fs-return{animation:fs-rise .42s cubic-bezier(.22,1,.36,1) both}
+.form-sent.fs-play{animation:fs-card .5s cubic-bezier(.22,1,.36,1) both}
+.form-sent.fs-play .form-sent__ico{animation:fs-pop .6s cubic-bezier(.34,1.56,.64,1) .12s both}
+.form-sent.fs-play .form-sent__ico path{stroke-dasharray:1;stroke-dashoffset:1;animation:fs-draw .45s cubic-bezier(.65,0,.35,1) .42s forwards}
+.form-sent.fs-play h3{animation:fs-rise .45s cubic-bezier(.22,1,.36,1) .5s both}
+.form-sent.fs-play p{animation:fs-rise .45s cubic-bezier(.22,1,.36,1) .58s both}
+.form-sent.fs-play .form-sent__btn{animation:fs-rise .45s cubic-bezier(.22,1,.36,1) .66s both}
+.form-sent__ico{position:relative}
+.form-sent.fs-play .form-sent__ico::before{content:"";position:absolute;inset:0;border-radius:50%;background:#00996d;opacity:0;animation:fs-ring .8s cubic-bezier(.22,1,.36,1) .7s}
+
+@keyframes fs-leave{to{opacity:0;transform:translateY(-8px) scale(.99)}}
+@keyframes fs-rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes fs-card{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes fs-pop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
+@keyframes fs-draw{to{stroke-dashoffset:0}}
+@keyframes fs-ring{0%{opacity:.22;transform:scale(1)}100%{opacity:0;transform:scale(1.7)}}
+
+@media (max-width:640px){.form-sent{padding:40px 20px}}
+@media (prefers-reduced-motion:reduce){
+  .fs-leave,.fs-return,.form-sent.fs-play,.form-sent.fs-play *,.form-sent.fs-play .form-sent__ico::before{animation:none!important}
+  .form-sent.fs-play .form-sent__ico path{stroke-dashoffset:0}
+}

@@ -23,7 +23,8 @@
 <link rel="stylesheet" href="components/mini-ui/avm/addons-more.css?v=20261121c">
 <link rel="stylesheet" href="components/avm-hero/avm-hero.css?v=20261119c">
 <link rel="stylesheet" href="components/site-footer/site-footer.css?v=20261118b">
-<link rel="stylesheet" href="styles/avm.css?v=20261119b">
+<link rel="stylesheet" href="styles/form-sent.css?v=20261127a">
+<link rel="stylesheet" href="styles/avm.css?v=20261127a">
 </head>
 <body class="ayo-web">
 
@@ -255,11 +256,11 @@
         <p class="avm-form__legal">By submitting this form, you agree to AYO's <a href="#">Terms &amp; Conditions</a> and <a href="#">Privacy Policy</a>.</p>
         <button class="avm-form__btn" type="submit">Send Message</button>
       </form>
-      <div class="avm-sent" data-avm-sent role="status" hidden>
-        <span class="avm-sent__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
-        <h3>Thanks, your message is on its way!</h3>
-        <p>The AYO Venue Management team will get back to you within one working day to talk about your venue.</p>
-        <button class="avm-pill" type="button" data-avm-again>Send another message</button>
+      <div class="avm-sent form-sent" data-avm-sent role="status" aria-live="polite" hidden>
+        <span class="form-sent__ico" aria-hidden="true"><svg viewBox="0 0 56 56"><path pathLength="1" d="M17 28.5l6.5 6.5L39 20"/></svg></span>
+        <h3>Message sent successfully</h3>
+        <p>Thank you for contacting AYO. Our team will get back to you soon via the email or phone number you provided.</p>
+        <button class="form-sent__btn" type="button" data-avm-again>Send Another Message</button>
       </div>
     </div>
   </div>
@@ -350,6 +351,7 @@
 <script src="components/mini-ui/avm/addons-more.js?v=20261125usd"></script>
 <script src="components/avm-hero/avm-hero.js?v=20261125usd"></script>
 <script src="scripts/cc-picker.js?v=20261125a"></script>
-<script src="scripts/avm.js?v=20261125b"></script>
+<script src="scripts/form-sent.js?v=20261127a"></script>
+<script src="scripts/avm.js?v=20261127a"></script>
 </body>
 </html>
