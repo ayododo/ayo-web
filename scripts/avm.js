@@ -96,11 +96,9 @@
       if(!form.checkValidity()){ form.reportValidity(); return; }
       var go = function(){
         var h = sent.querySelector('h3'); h.tabIndex = -1; h.focus({preventScroll:true});
-        var top = sent.getBoundingClientRect().top;
-        if(top < 80 || top > innerHeight - 200) sent.scrollIntoView({block:'center', behavior: reduce ? 'auto' : 'smooth'});
       };
       if(window.AYOFormSent) AYOFormSent.show(form, sent, go);
-      else { form.hidden = true; sent.hidden = false; go(); }
+      else { form.hidden = true; sent.hidden = false; sent.scrollIntoView({block:'center'}); go(); }
     });
     var again = sent && sent.querySelector('[data-avm-again]');
     if(again) again.addEventListener('click', function(){
